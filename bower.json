@@ -1,0 +1,29 @@
+{
+  "name": "Humanitarian ID",
+  "version": "0.1.0",
+  "authors": [
+    "Joe Turgeon <jturgeon@phase2technology.com>",
+    "Tobby Hagler <thagler@phase2technology.com>",
+    "Brian McMurray <bmcmurray@phase2technology.com>"
+  ],
+  "license": "Copyright 2014",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-resource": "~1.3.0",
+    "angular-route": "~1.3.0",
+    "angular-sanitize": "~1.3.0",
+    "angular": "1.3.2",
+    "angular-busy": "~4.1.1",
+    "angular-spinkit": "~0.3.3",
+    "angucomplete-alt": "~0.0.31"
+  },
+  "resolutions": {
+    "angular": "1.3.2"
+  }
+}

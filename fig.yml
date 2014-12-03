@@ -1,0 +1,7 @@
+app:
+  image: unocha/nginx16
+  volumes:
+    - /code/contactsid_app/src:/var/www/html
+  environment:
+    DNSDOCK_NAME: app
+    DNSDOCK_IMAGE: contactsid

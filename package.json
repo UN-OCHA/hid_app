@@ -1,0 +1,9 @@
+{
+  "name": "hid-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Humanitarian ID Web App",
+  "devDependencies": {
+    "bower": "*"
+  }
+}
