@@ -3,71 +3,15 @@
 
 var contactsId = {
     "title": "Humanitarian ID",
-    "sourcePath": ""
+    "sourcePath": "",
+    "appBaseUrl": "http://app.contactsid.vm",
+    "authBaseUrl": "http://auth.contactsid.vm",
+    "profilesBaseUrl": "http://profiles.contactsid.vm",
+    "hrinfoBaseUrl": "http://hrinfo.local"
   },
   jso,
-  app,
-  oauthToken,
-  accountData;
+  app;
 
-
-// Initialize Oauth2 client
-jso = new JSO({
-  providerID: "hid",
-  client_id: "hid-local",
-  redirect_uri: "http://app.contactsid.vm/",
-  authorization: "http://auth.contactsid.vm/oauth/authorize",
-  scopes: { request: ['profile']}
-});
-jso.callback(null, function (token) {
-  alert('callback have token ', token);
-});
-
-function verifyAuth($scope, $location) {
-  var opts = {};
-  jso.getToken(function(token) {
-
-    if (token && token.access_token && token.access_token.length) {
-      // Store the Oauth token
-      contactsId.oauthToken = token.access_token;
-
-      // Request the account data from the auth system.
-      $.ajax({
-        success: function (data) {
-          contactsId.accountData = JSON.parse(data);
-          $scope.$apply(function () {
-            $location.path('/contactsId');
-          });
-        },
-        error: function (err) {
-          alert('err');
-        },
-        data: {
-          "access_token": token.access_token
-        },
-        url: "http://auth.contactsid.vm/account.json"
-      });
-    }
-  }, opts);
-}
-
-function parseLocation(location) {
-  var pairs = location.substring(1).split("&"),
-    obj = {},
-    pair,
-    i;
-
-  for (i in pairs) {
-    if (!pairs.hasOwnProperty(i) || pairs[i] === "") {
-      continue;
-    }
-
-    pair = pairs[i].split("=");
-    obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
-  }
-
-  return obj;
-};
 
 // Initialize ng
 app = angular.module('contactsId', ['ngRoute', 'cgBusy', 'angular-spinkit']);
@@ -103,31 +47,62 @@ app.directive('routeLoadingIndicator', function($rootScope) {
   };
 });
 
-app.controller("DefaultCtrl", function($scope, $location) {
+app.run(function ($rootScope, $location, authService) {
+  $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+    if (nextRoute.requireAuth && !authService.isAuthenticated()) {
+      $location.path('/login');
+    }
+  });
+});
+
+app.controller("DefaultCtrl", function($scope, $location, authService) {
+  function parseLocation(location) {
+    var pairs = location.substring(1).split("&"),
+      obj = {},
+      pair,
+      i;
+
+    for (i in pairs) {
+      if (!pairs.hasOwnProperty(i) || pairs[i] === "") {
+        continue;
+      }
+
+      pair = pairs[i].split("=");
+      obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+    }
+
+    return obj;
+  };
+
   // If the Oauth2 access code param is present, then redirect to login.
-  var query = parseLocation(window.location.search);//$location.search();
+  var query = parseLocation(window.location.search);
   if (query.code && query.code.length) {
-    verifyAuth($scope, $location);
+    authService.verify();
   }
 });
 
-app.controller("LoginCtrl", function($scope, $location) {
+app.controller("LoginCtrl", function($scope, $location, authService) {
   // Get the access token. If one in the browser cache is not found, then
   // redirect to the auth system for the user to login.
-  verifyAuth($scope, $location);
+  authService.verify(function (err) {
+    if (!err && authService.isAuthenticated()) {
+      $scope.$apply(function () {
+        $location.path('/contactsId');
+      });
+    }
+  });
 });
 
-app.controller("LogoutCtrl", function($scope) {
-  // Clear the tokens in browser cache.
-  jso.wipeTokens('hid');
+app.controller("LogoutCtrl", function($scope, authService) {
+  authService.logout();
 
   // Redirect to the logout page on the authentication system.
-  window.location.href = "http://auth.contactsid.vm/logout";
+  window.location.href = contactsId.authBaseUrl + "/logout";
 });
 
 app.controller("RegisterCtrl", function($scope) {
   // Redirect to the registration page on the authentication system.
-  window.location.href = "http://auth.contactsid.vm/#register";
+  window.location.href = contactsId.authBaseUrl + "/#register";
 });
 
 app.controller("404Ctrl", function($scope) {
@@ -369,6 +344,7 @@ app.config(function($routeProvider, $locationProvider) {
     when('/contactsId', {
       templateUrl: contactsId.sourcePath + '/partials/dashboard.html',
       controller: 'DashboardCtrl',
+      requireAuth: true,
       resolve: {
         userData : function(profileService) {
           return profileService.getUserData().then(function(data) {
@@ -392,6 +368,7 @@ app.config(function($routeProvider, $locationProvider) {
     when('/contactsId/checkin', {
       templateUrl: contactsId.sourcePath + '/partials/profile.html',
       controller: 'ProfileCtrl',
+      requireAuth: true,
       resolve: {
         userData : function(profileService) {
           return profileService.getUserData().then(function(data) {
@@ -399,7 +376,7 @@ app.config(function($routeProvider, $locationProvider) {
           });
         },
         placesOperations : function(profileService) {
-          return profileService.getOperationData().then(function(data) {
+          return profileService.getOperationsData().then(function(data) {
             return data;
           });
         }
@@ -408,6 +385,7 @@ app.config(function($routeProvider, $locationProvider) {
     when('/contactsId/profile/:profileId?', {
       templateUrl: contactsId.sourcePath + '/partials/profile.html',
       controller: 'ProfileCtrl',
+      requireAuth: true,
       resolve: {
         userData : function(profileService) {
           return profileService.getUserData().then(function(data) {
@@ -415,7 +393,7 @@ app.config(function($routeProvider, $locationProvider) {
           });
         },
         placesOperations : function(profileService) {
-          return profileService.getOperationData().then(function(data) {
+          return profileService.getOperationsData().then(function(data) {
             return data;
           });
         }
@@ -424,6 +402,7 @@ app.config(function($routeProvider, $locationProvider) {
     when('/contactsId/contact/:contactId', {
       templateUrl: contactsId.sourcePath + '/partials/contact.html',
       controller: 'ContactCtrl',
+      requireAuth: true,
       resolve: {
         contact : function(profileService, $route) {
           var query = {
@@ -438,6 +417,7 @@ app.config(function($routeProvider, $locationProvider) {
     when('/contactsId/list/:locationId', {
       templateUrl: contactsId.sourcePath + '/partials/list.html',
       controller: 'ListCtrl',
+      requireAuth: true,
       resolve: {
         userData : function(profileService) {
           return profileService.getUserData().then(function(data) {
@@ -461,7 +441,77 @@ app.config(function($routeProvider, $locationProvider) {
     });
 });
 
-app.service("profileService", function($http, $q) {
+app.service("authService", function() {
+  var authService = {},
+    oauthToken = false,
+    accountData = false,
+    jso = new JSO({
+      providerID: "hid",
+      client_id: "hid-local",
+      redirect_uri: contactsId.appBaseUrl + "/",
+      authorization: contactsId.authBaseUrl + "/oauth/authorize",
+      scopes: {request: ['profile']}
+    });
+
+  jso.callback(null, function (token) {
+    alert('callback have token ', token);
+  });
+
+  authService.getAccessToken = function () {
+    return oauthToken;
+  };
+
+  authService.getAccountData = function () {
+    return accountData;
+  };
+
+  authService.isAuthenticated = function () {
+    return oauthToken && accountData && accountData.user_id;
+  };
+
+  authService.logout = function () {
+    oauthToken = false;
+    accountData = false;
+
+    // Clear the tokens in browser cache.
+    jso.wipeTokens();
+
+    // Redirect the browser to reload the app.
+    window.location.path = '/'; 
+  };
+
+  authService.verify = function (cb) {
+    jso.getToken(function(token) {
+      if (token && token.access_token && token.access_token.length) {
+        // Store the Oauth token
+        oauthToken = token.access_token;
+
+        // Request the account data from the auth system.
+        $.ajax({
+          success: function (data) {
+            accountData = JSON.parse(data);
+            return cb();
+          },
+          error: function (err) {
+            console.log("Error encountered while verifying user account data: ", err);
+            return cb(err);
+          },
+          data: {
+            "access_token": token.access_token
+          },
+          url: contactsId.authBaseUrl + "/account.json"
+        });
+      }
+    }, {});
+  };
+
+  return authService;
+});
+
+app.service("profileService", function(authService, $http, $q) {
+  var cacheUserData = false,
+    cacheOperationsData = false;
+
   // Return public API.
   return({
     getUserData: getUserData,
@@ -473,9 +523,6 @@ app.service("profileService", function($http, $q) {
     saveProfile: saveProfile,
     saveContact: saveContact
   });
-
-  var cacheUserData = false,
-    cacheOperationsData = false;
 
   // Get app data.
   function getUserData() {
@@ -489,8 +536,8 @@ app.service("profileService", function($http, $q) {
     else {
       promise = $http({
         method: "get",
-        url: "http://profiles.contactsid.vm/v0/profile/view",
-        params: {userid: contactsId.accountData.user_id, access_token: contactsId.oauthToken}
+        url: contactsId.profilesBaseUrl + "/v0/profile/view",
+        params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()}
       })
       .then(handleSuccess, handleError).then(function(data) {
         if (data && data.profile && data.contacts) {
@@ -514,36 +561,33 @@ app.service("profileService", function($http, $q) {
       return promise.promise;
     }
     else {
-//TODO//
-/*
       promise = $http({
         method: "get",
-        url: "http://profiles.contactsid.vm/v0/profile/view",
-        params: {userid: contactsId.accountData.user_id, access_token: contactsId.oauthToken}
+        url: contactsId.hrinfoBaseUrl + "/hid/operations"
       })
       .then(handleSuccess, handleError).then(function(data) {
-        if (data && data.userData && data.placesOperations) {
+        if (data) {
           cacheOperationsData = data;
         }
 
         return cacheOperationsData;
       });
       return promise;
-*/
     }
   }
 
   // Clear stored app data.
   function clearData() {
-    cacheUserData = {};
-    cacheOperationsData = {};
+    cacheUserData = false;
+    cacheOperationsData = false;
   }
 
   // Get a profile by ID.
   function getProfile(profileId) {
     var request = $http({
       method: "get",
-      url: "/contactsid/profile/" + profileId
+      url: contactsId.profilesBaseUrl + "/v0/profile/view",
+      params: {access_token: authService.getAccessToken(), userid: profileId}
     });
     return(request.then(handleSuccess, handleError));
   }
@@ -555,9 +599,10 @@ app.service("profileService", function($http, $q) {
 
   // Get contacts that match specified parameters.
   function getContacts(terms) {
+    terms.access_token = authService.getAccessToken();
     var request = $http({
       method: "get",
-      url: "/contactsid/contact",
+      url: contactsId.profilesBaseUrl + "/v0/contact/view",
       params: terms
     });
     return(request.then(handleSuccess, handleError));
@@ -565,10 +610,12 @@ app.service("profileService", function($http, $q) {
 
   // Save a profile (create or update existing).
   function saveProfile(profile) {
-    var profileId = profile.profileId || "",
+    var request;
+    profile.userid = authService.getAccountData().user_id || "";
     request = $http({
       method: "post",
-      url: "/contactsid/profile/" + profileId,
+      url: contactsId.profilesBaseUrl + "/v0/profile/save",
+      params: {access_token: authService.getAccessToken()},
       data: profile
     });
     return(request.then(handleSuccess, handleError));
@@ -576,31 +623,33 @@ app.service("profileService", function($http, $q) {
 
   // Save a contact (create or update existing).
   function saveContact(contact) {
-    var contactId = contact.contactId || "",
+    var request;
+    contact.userid = authService.getAccountData().user_id || "";
     request = $http({
       method: "post",
-      url: "/contactsid/contact/" + contactId,
+      url: contactsId.profilesBaseUrl + "/v0/contact/save",
+      params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
       data: contact
     });
     return(request.then(handleSuccess, handleError));
   }
 
-  function handleError( response ) {
+  function handleError(response) {
     // The API response from the server should be returned in a
     // nomralized format. However, if the request was not handled by the
     // server (or what not handles properly - ex. server error), then we
     // may have to normalize it on our end, as best we can.
-    if ( !angular.isObject(response.data) || !response.data.message ) {
-      return ( $q.reject( "An unknown error occurred." ) );
+    if (!angular.isObject(response.data) || !response.data.message) {
+      return ($q.reject("An unknown error occurred."));
     }
 
     // Otherwise, use expected error message.
-    return ( $q.reject( response.data.message ) );
+    return ($q.reject(response.data.message));
   }
 
 
-  function handleSuccess( response ) {
-    return ( response.data );
+  function handleSuccess(response) {
+    return (response.data);
   }
 
 });
