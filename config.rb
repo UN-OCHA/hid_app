@@ -1,5 +1,6 @@
 # Required extra libraries
 require 'bootstrap-sass'
+require 'sass-globbing'
 
 # Project Type
 project_type = :stand_alone

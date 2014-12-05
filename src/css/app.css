@@ -1,3 +1,20 @@
+/* Functions */
+/* Mixins */
+/* Colors */
+/* Base */
+.contactsid-app p {
+  margin: 0 0 9px;
+}
+.contactsid-app .list-content {
+  margin-top: 20px;
+}
+.contactsid-app .active-countries-container li a,
+.contactsid-app .active-operations-container li a,
+.contactsid-app .active-contacts-container li a {
+  display: block;
+}
+
+/* No files to import found in layout/**\/* */
 .contactsid-app .spinner .three-dots-row-spinner {
   background-color: #0fa4de;
 }
@@ -13,15 +30,4 @@
   color: #555;
   text-align: left;
   max-width: 400px;
-}
-.contactsid-app p {
-  margin: 0 0 9px;
-}
-.contactsid-app .active-countries-container li a,
-.contactsid-app .active-operations-container li a,
-.contactsid-app .active-contacts-container li a {
-  display: block;
-}
-.contactsid-app .list-content {
-  margin-top: 20px;
 }
