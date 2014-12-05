@@ -1,5 +1,6 @@
 # Required extra libraries
 require 'bootstrap-sass'
+require 'font-awesome-sass'
 require 'sass-globbing'
 
 # Project Type
