@@ -5,13 +5,28 @@ var contactsId = {
     "title": "Humanitarian ID",
     "sourcePath": "",
     "appBaseUrl": "http://app.contactsid.vm",
-    "authBaseUrl": "http://auth.contactsid.vm",
-    "profilesBaseUrl": "http://profiles.contactsid.vm",
-    "hrinfoBaseUrl": "http://hrinfo.local"
+    "authBaseUrl": "http://auth.568elmp02.blackmesh.com",
+    "profilesBaseUrl": "http://profiles.568elmp02.blackmesh.com",
+    "hrinfoBaseUrl": "http://hrinfo.568elmp02.blackmesh.com"
+//    "authBaseUrl": "http://auth.contactsid.vm",
+//    "profilesBaseUrl": "http://profiles.contactsid.vm",
+//    "hrinfoBaseUrl": "http://hrinfo.local"
   },
   jso,
   app;
 
+// Initialize JSO
+jso = new JSO({
+  providerID: "hid",
+  client_id: "hid-local",
+  redirect_uri: contactsId.appBaseUrl + "/",
+  authorization: contactsId.authBaseUrl + "/oauth/authorize",
+  scopes: {request: ['profile']}
+});
+
+jso.callback(null, function (token) {
+//  alert('callback have token ', token);
+});
 
 // Initialize ng
 app = angular.module('contactsId', ['ngRoute', 'cgBusy', 'angular-spinkit']);
@@ -48,10 +63,25 @@ app.directive('routeLoadingIndicator', function($rootScope) {
 });
 
 app.run(function ($rootScope, $location, authService) {
+  var _currentRoute = false,
+    _nextRoute = false;
+
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
-    if (nextRoute.requireAuth && !authService.isAuthenticated()) {
-      $location.path('/login');
+    //_nextRoute = nextRoute;
+    //_currentRoute = currentRoute;
+    if (_nextRoute && _nextRoute.requireAuth && !authService.isAuthenticated()) {
+      event.preventDefault();
+      window.location.hash = '#/login';
     }
+  });
+
+  $rootScope.$on("$locationChangeStart", function (event, next, current) {
+    if (_nextRoute && _nextRoute.requireAuth && !authService.isAuthenticated()) {
+      $location.path('/login');
+      event.preventDefault();
+    }
+    _nextRoute = false;
+    _currentRoute = false;
   });
 });
 
@@ -95,9 +125,6 @@ app.controller("LoginCtrl", function($scope, $location, authService) {
 
 app.controller("LogoutCtrl", function($scope, authService) {
   authService.logout();
-
-  // Redirect to the logout page on the authentication system.
-  window.location.href = contactsId.authBaseUrl + "/logout";
 });
 
 app.controller("RegisterCtrl", function($scope) {
@@ -335,7 +362,7 @@ app.config(function($routeProvider, $locationProvider) {
     }).
     when('/logout', {
       template: 'Redirecting to authentication system...',
-      controller: 'LoginCtrl'
+      controller: 'LogoutCtrl'
     }).
     when('/register', {
       template: 'Redirecting to authentication system...',
@@ -444,18 +471,7 @@ app.config(function($routeProvider, $locationProvider) {
 app.service("authService", function() {
   var authService = {},
     oauthToken = false,
-    accountData = false,
-    jso = new JSO({
-      providerID: "hid",
-      client_id: "hid-local",
-      redirect_uri: contactsId.appBaseUrl + "/",
-      authorization: contactsId.authBaseUrl + "/oauth/authorize",
-      scopes: {request: ['profile']}
-    });
-
-  jso.callback(null, function (token) {
-    alert('callback have token ', token);
-  });
+    accountData = false;
 
   authService.getAccessToken = function () {
     return oauthToken;
@@ -476,8 +492,8 @@ app.service("authService", function() {
     // Clear the tokens in browser cache.
     jso.wipeTokens();
 
-    // Redirect the browser to reload the app.
-    window.location.path = '/'; 
+    // Redirect to the logout page on the authentication system.
+    window.location.href = contactsId.authBaseUrl + "/logout?redirect=" + contactsId.appBaseUrl;
   };
 
   authService.verify = function (cb) {
