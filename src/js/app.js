@@ -63,25 +63,11 @@ app.directive('routeLoadingIndicator', function($rootScope) {
 });
 
 app.run(function ($rootScope, $location, authService) {
-  var _currentRoute = false,
-    _nextRoute = false;
-
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
-    //_nextRoute = nextRoute;
-    //_currentRoute = currentRoute;
-    if (_nextRoute && _nextRoute.requireAuth && !authService.isAuthenticated()) {
+    if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
       event.preventDefault();
       window.location.hash = '#/login';
     }
-  });
-
-  $rootScope.$on("$locationChangeStart", function (event, next, current) {
-    if (_nextRoute && _nextRoute.requireAuth && !authService.isAuthenticated()) {
-      $location.path('/login');
-      event.preventDefault();
-    }
-    _nextRoute = false;
-    _currentRoute = false;
   });
 });
 
