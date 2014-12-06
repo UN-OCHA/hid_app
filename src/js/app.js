@@ -21,7 +21,7 @@ jso = new JSO({
   client_id: "hid-local",
   redirect_uri: contactsId.appBaseUrl + "/",
   authorization: contactsId.authBaseUrl + "/oauth/authorize",
-  scopes: {request: ['profile']}
+  scopes: {require: ['profile'], request: ['profile']}
 });
 
 jso.callback(null, function (token) {
