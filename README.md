@@ -1,5 +1,6 @@
 # Humanitarian ID Web App
 
-## Set Up
+## Running the App Locally
 
-## Running
+See RUNNING.md
+

@@ -20,25 +20,25 @@ In addition, your code and data are saved on a different disk partition, so the 
 - Install Vagrant and VirtualBox or Vagrant and VMware and the VMware provider.
 - Clone https://bitbucket.org/phase2tech/\_devtools\_vm and `vagrant up`.
 - Once the tonistiigi/dnsdock and phase2/devtools-fileserver containers have downloaded, mount the code and data shares on your Mac by choosing Go > Connect to Server in the finder and entering `smb://Dev-VM`. ![connecting to the VM file shares](https://www.evernote.com/shard/s2/sh/0287f382-0439-4dcd-9faf-8e60baf1e9d8/edd7ede8af6cfdebfdea2830c561d0be/res/493c94da-060c-481c-b30d-63d47e9ffd45/skitch.png). Mount both shares.
-- Add the line `export DOCKER_HOST=tcp://localhost:2375` to your shell config. This will let you run Docker commands against the dev VM while it is running.
+- Add the line `export DOCKER_HOST=tcp://localhost:2375` to your shell config. This will let you run Docker commands against the dev VM while it is running. After making this change active, you should be able to run `docker ps` to see at least two running containers.
 
 ### Running the site
 
 - Log into the UN OCHA docker hub by running `docker login`. Enter the username, password, and email address found on: https://wiki.phase2technology.com/display/UN/New+BlackMesh+Infrastructure
-- Using your tool of choice, clone git@bitbucket.org:phase2tech/hid_app.git into the code share.
+- Using your tool of choice, clone `git@bitbucket.org:phase2tech/hid_app.git` into the code share.
 - Run `fig up` from the `/Volumes/code/hid_app` directory.
-- This will download two containers from the Docker hub and then run them both.
-- At this point, you should be able to access the site at http://app.contactsid.vm/ in your browser.
+- This will download one container from the Docker hub and then run it.
+- After seeing the output, `Attaching to hidapp_app_1`, you should be able to access the site at http://app.contactsid.vm/ in your browser.
 
 ### Working with Docker
 
-- You may use the `docker ps` command to see all running containers. The dev VM runs three containers named 'file-server', 'buildtools', and 'dnsdock' to provide its base services.
+- You may use the `docker ps` command to see all running containers. The dev VM runs two containers named 'file-server' and 'buildtools' to provide its base services.
 - If you want to get a **shell** on either of the containers, you may do so with the `docker exec` command using its name.
-    - To get a shell on the mongo container, for example, you may do a `docker exec -it contactsidauth_mongo_1 /bin/bash` from your Mac. Note that you will be logged in as root and process ID 1 in your container will either be mongo or node or forego (a process manager for running multiple processes.)
+    - To get a shell on the mongo container, for example, you may do a `docker exec -it hidapp_app_1 /bin/bash` from your Mac. Note that you will be logged in as root and process ID 1 in your container will either be mongo or node or forego (a process manager for running multiple processes.)
 - By default, `fig up` will run the containers in the foreground and you will get nginx and node and Mongo logs in your terminal.
     - You can stop both services by hitting Ctrl-c.
 - If you wish to run the containers in the background, you may run them with `fig up -d`.
-    - Note that in this case, you can still get the logs for the containers by doing a `docker logs -f contactsidauth_auth_1` or `docker logs -f contactsidauth_mongo_1`.
+    - Note that in this case, you can still get the logs for the containers by doing a `docker logs -f hidapp_app_1` or `docker logs -f hidapp_app_1`.
     - You may then stop the containers either via direct `docker stop` commands
 - If you need to destroy the instances of the containers for some reason, you may `fig rm` and `fig up`. Note that the Mongo database will remain persistent, since it always uses the same location on the data partition, so this is not a lossy operation.
 
