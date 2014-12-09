@@ -1,10 +1,11 @@
+<div ng-include src="'partials/header.html'"></div>
 
-<div class="masthead">
+<div class="masthead container">
   <h2>{{title}}</h2>
   <div class="back-link" ng-show="!isRouteLoading"><a class="btn btn-warning btn-sm" href ng-click="back();"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
 </div>
 
-<div class="contact"  ng-show="!isRouteLoading">
+<div class="contact container"  ng-show="!isRouteLoading">
   <h3>{{contact.nameGiven}} {{contact.nameFamily}} ({{contact.location}})</h3>
   <div class="title">{{contact.jobtitle}}</div>
   <div class="organization">{{contact.organization[0].name}}</div>
