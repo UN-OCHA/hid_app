@@ -138,18 +138,20 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, profileService, userData, placesOperations) {
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, profileService, authService, userData, placesOperations) {
   $scope.title = contactsId.title;
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
   var pathParams = $location.path().split('/'),
-      checkinFlow = pathParams[2] === 'checkin';
+    checkinFlow = pathParams[2] === 'checkin',
+    accountData = authService.getAccountData();
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.userData = userData;
   $scope.placesOperations = placesOperations;
 
+  // When checking in to a new crisis, load the user's global profile to clone.
   if (checkinFlow) {
     $scope.selectedPlace = '';
     $scope.selectedOperation = '';
@@ -169,6 +171,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.selectedOperation = 'none';
   }
 
+  // If loading an existing contact profile by ID, find it in the user's data.
   if ($scope.profileId.length) {
     for (var idx = 0; idx < $scope.userData.contacts.length; idx++) {
       if ($scope.userData.contacts[idx]._id == $scope.profileId) {
@@ -189,8 +192,15 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.profileName = $scope.profile.type === 'global' ? 'Global' : $scope.profile.location;
   }
   else if (!checkinFlow) {
+    // If editing the global profile for the first time, add messaging.
     $scope.profile.type = 'global';
     $scope.profileName = $scope.profile.type === 'global' ? 'Global' : $scope.profile.location;
+  }
+
+  // Add the given and family name from the auth service as a default value.
+  if ((!$scope.profile.nameGiven || !$scope.profile.nameGiven.length) && (!$scope.profile.nameFamily || !$scope.profile.nameFamily.length)) {
+    $scope.profile.nameGiven = accountData.name_given || '';
+    $scope.profile.nameFamily = accountData.name_family || '';
   }
 
   $scope.setCountryCode = function() {
