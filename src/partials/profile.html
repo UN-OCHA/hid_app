@@ -1,8 +1,10 @@
-<div class="masthead">
+<div ng-include src="'partials/header.html'"></div>
+
+<div class="masthead container">
   <h2>{{title}}</h2>
 </div>
 
-<div ng-show="!isRouteLoading">
+<div ng-show="!isRouteLoading" class="container">
   <div class="active-countries" ng-hide="selectedPlace.length">
     <div class="back-link"><a class="btn btn-warning btn-sm" href="#/contactsId"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
     <h3>Select a country</h3>

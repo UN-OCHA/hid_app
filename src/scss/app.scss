@@ -4,7 +4,7 @@
 // This file gets turned into app.css. This file should really hold nothing except for imports of your global, base, layout, and component partials
 ////////////////////////
 
-//@import "font-awesome-sprockets";
+@import "compass";
 @import "font-awesome-compass";
 @import "font-awesome";
 @import "global/**/*";
