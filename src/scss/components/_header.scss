@@ -1,0 +1,47 @@
+.header {
+  background-color: #f9f9f9;
+  position: relative;
+
+  .utility {
+    padding: 9px 20px;
+  }
+}
+
+.primary-nav {
+  height: 34px;
+  position: absolute;
+  bottom: -8px;
+  left: 12px;
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+  }
+
+  a {
+    color: lighten($primary-color-3, 8);
+    font-family: exo2, "arial black";
+    font-size: 11px;
+    font-weight: normal;
+    padding: 0 15px 8px;
+    letter-spacing: 1px;
+
+    &:hover {
+      color: $white;
+      text-decoration: none;
+    }
+
+    &.active {
+      color: $white;
+      border-bottom: 5px solid $neutral-color-1;
+    }
+  }
+}
