@@ -1,0 +1,26 @@
+.btn-lg, .btn-md, .btn-sm {
+  @include border-radius(4px);
+  font-size: 12px;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 11px 16px;
+}
+
+.btn-default, .btn-warning {
+  border: none;
+  background-color: $neutral-color-1;
+  color: $white;
+
+  &:hover {
+    background-color: darken($neutral-color-1, 10);
+  }
+}
+
+.btn-primary {
+  border: none;
+  background-color: $primary-color-1;
+
+  &:hover {
+    background-color: darken($primary-color-1, 10);
+  }
+}
