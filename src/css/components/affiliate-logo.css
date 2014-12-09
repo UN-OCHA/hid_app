@@ -1,0 +1,74 @@
+/*
+Error: Undefined variable: "$neutral-color-3".
+        on line 4 of /Volumes/code/hid_app/src/scss/components/affiliate-logo.scss
+
+1: .affiliate-logo {
+2:   width: 77px;
+3:   height: 40px;
+4:   border-right: 1px solid $neutral-color-3;
+5:   display: inline-block;
+6:   background: url(../images/sprite.png) no-repeat;
+7: }
+8: 
+9: .humanitarian-response {
+
+Backtrace:
+/Volumes/code/hid_app/src/scss/components/affiliate-logo.scss:4
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/script/tree/variable.rb:49:in `_perform'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/script/tree/node.rb:50:in `perform'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/script/tree/list_literal.rb:62:in `block in _perform'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/script/tree/list_literal.rb:62:in `map'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/script/tree/list_literal.rb:62:in `_perform'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/script/tree/node.rb:50:in `perform'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:384:in `visit_prop'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/stack.rb:79:in `block in with_base'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/stack.rb:115:in `with_frame'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/stack.rb:79:in `with_base'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:420:in `block (2 levels) in visit_rule'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:420:in `map'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:420:in `block in visit_rule'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:418:in `visit_rule'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/stack.rb:79:in `block in with_base'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/stack.rb:115:in `with_frame'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/stack.rb:79:in `with_base'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/base.rb:52:in `map'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:157:in `visit'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:8:in `visit'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/root_node.rb:36:in `css_tree'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/tree/root_node.rb:20:in `render'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/engine.rb:269:in `block in render'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/util.rb:492:in `silence_sass_warnings'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/engine.rb:269:in `render'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/plugin/compiler.rb:492:in `update_stylesheet'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/plugin/compiler.rb:209:in `each'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/plugin/compiler.rb:470:in `on_file_changed'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/plugin/compiler.rb:328:in `block in watch'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/vendor/listen/lib/listen/listener.rb:252:in `call'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/vendor/listen/lib/listen/listener.rb:252:in `on_change'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/vendor/listen/lib/listen/listener.rb:290:in `block in initialize_adapter'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/vendor/listen/lib/listen/adapter.rb:254:in `call'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/vendor/listen/lib/listen/adapter.rb:254:in `report_changes'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/vendor/listen/lib/listen/adapter.rb:323:in `poll_changed_directories'
+/Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/vendor/listen/lib/listen/adapter.rb:299:in `block in start_poller'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Undefined variable: \"$neutral-color-3\".\A         on line 4 of /Volumes/code/hid_app/src/scss/components/affiliate-logo.scss\A \A 1: .affiliate-logo {\A 2:   width: 77px;\A 3:   height: 40px;\A 4:   border-right: 1px solid $neutral-color-3;\A 5:   display: inline-block;\A 6:   background: url(../images/sprite.png) no-repeat;\A 7: }\A 8: \A 9: .humanitarian-response {"; }

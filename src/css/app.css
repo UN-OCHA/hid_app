@@ -2182,6 +2182,7 @@
 /* Lighter blue color used in menu and sort grips */
 /* Used for grey tabs */
 /* Used for primary nav active state */
+/* Thin separating line */
 /* Used for repeating profile items */
 /* Text color variaibles */
 /* Base */
@@ -2200,6 +2201,10 @@ body {
 .contactsid-app .active-operations-container li a,
 .contactsid-app .active-contacts-container li a {
   display: block;
+}
+
+.header {
+  background-color: #f9f9f9;
 }
 
 .btn-lg, .btn-md, .btn-sm {
@@ -2284,4 +2289,24 @@ h3 {
   color: #555;
   text-align: left;
   max-width: 400px;
+}
+
+.affiliate-logo {
+  width: 77px;
+  height: 40px;
+  border-right: 1px solid #e4e4e4;
+  display: inline-block;
+  background: url(../images/sprite.png) no-repeat;
+}
+
+.humanitarian-response {
+  background-position: 0 10px;
+}
+
+.relief-web {
+  background-position: 0 -33px;
+}
+
+.hdx {
+  background-position: 0 -75px;
 }
