@@ -12,7 +12,7 @@
   color: $white;
 
   &:hover {
-    background-color: darken($neutral-color-1, 10);
+    background-color: darken($neutral-color-1, 5);
   }
 }
 
@@ -21,6 +21,18 @@
   background-color: $primary-color-1;
 
   &:hover {
-    background-color: darken($primary-color-1, 10);
+    background-color: darken($primary-color-1, 5);
+  }
+}
+
+.btn-login-controls {
+  color: $white;
+  background-color: $primary-color-1;
+  padding: 3px 16px;
+  font-size: 12px;
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: darken($primary-color-1, 5);
   }
 }
