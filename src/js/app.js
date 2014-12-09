@@ -277,6 +277,9 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 app.controller("ContactCtrl", function($scope, $route, $routeParams, profileService, contact) {
   $scope.title = contactsId.title;
   $scope.contact = contact;
+  if (contact.type === 'global') {
+    $scope.contact.location = 'Global';
+  }
 
   $scope.back = function () {
     if (history.length) {
@@ -298,12 +301,17 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
   $scope.mode = 'search';
   $scope.contactsPromise;
 
-  for (var place in $scope.placesOperations) {
-    if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.locationId)) {
-      $scope.location = place;
-      $scope.bundles = $scope.placesOperations[place][$scope.locationId].bundles;
-      break;
+  if ($scope.locationId !== 'global') {
+    for (var place in $scope.placesOperations) {
+      if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.locationId)) {
+        $scope.location = place;
+        $scope.bundles = $scope.placesOperations[place][$scope.locationId].bundles;
+        break;
+      }
     }
+  }
+  else {
+    $scope.location = 'Global';
   }
 
   $scope.showList = function () {
@@ -317,7 +325,13 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
 
   $scope.submitSearch = function () {
     var query = $scope.query;
-    query.locationId = $scope.locationId;
+    if ($scope.locationId === 'global') {
+      query.type = 'global';
+    }
+    else {
+      query.type = 'local';
+      query.locationId = $scope.locationId;
+    }
     query.status = 1;
     $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
       if (data && data.status && data.status === 'ok') {

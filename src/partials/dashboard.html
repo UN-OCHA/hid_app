@@ -14,6 +14,7 @@
         </h4>
         <div class="btn-group">
           <a class="btn btn-default btn-sm" href="#/contactsId/profile/{{profile._id}}"><i class="fa fa-pencil-square-o"></i> Edit</a>
+          <a class="btn btn-default btn-sm" href="#/contactsId/list/global" ng-if="profile.type == 'global'"><i class="fa fa-list-alt"></i> Contact List</a>
           <a class="btn btn-default btn-sm" href="#/contactsId/list/{{profile.locationId}}" ng-if="profile.type == 'local'"><i class="fa fa-list-alt"></i> Contact List</a>
           <a class="btn btn-warning btn-sm" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'"><i class="fa fa-times"></i> Checkout</a>
         </div>
