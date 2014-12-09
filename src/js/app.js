@@ -6,13 +6,13 @@ var contactsId = {
     "sourcePath": "",
     "authClientId": "hid-local",
     "appBaseUrl": "http://app.contactsid.vm",
-//    "authBaseUrl": "http://auth.568elmp02.blackmesh.com",
-//    "profilesBaseUrl": "http://profiles.568elmp02.blackmesh.com",
+    "authBaseUrl": "http://auth.568elmp02.blackmesh.com",
+    "profilesBaseUrl": "http://profiles.568elmp02.blackmesh.com",
     "hrinfoBaseUrl": "http://hrinfo.568elmp02.blackmesh.com",
-    "authBaseUrl": "http://auth.contactsid.vm",
-    "profilesBaseUrl": "http://profiles.contactsid.vm",
+//    "authBaseUrl": "http://auth.contactsid.vm",
+//    "profilesBaseUrl": "http://profiles.contactsid.vm",
 //    "hrinfoBaseUrl": "http://hrinfo.local"
-    "test": "test"
+    "placeholder": "placeholder"
   },
   jso,
   app;
