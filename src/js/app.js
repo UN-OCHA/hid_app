@@ -4,13 +4,15 @@
 var contactsId = {
     "title": "Humanitarian ID",
     "sourcePath": "",
+    "authClientId": "hid-local",
     "appBaseUrl": "http://app.contactsid.vm",
-    "authBaseUrl": "http://auth.568elmp02.blackmesh.com",
-    "profilesBaseUrl": "http://profiles.568elmp02.blackmesh.com",
-    "hrinfoBaseUrl": "http://hrinfo.568elmp02.blackmesh.com"
-//    "authBaseUrl": "http://auth.contactsid.vm",
-//    "profilesBaseUrl": "http://profiles.contactsid.vm",
+//    "authBaseUrl": "http://auth.568elmp02.blackmesh.com",
+//    "profilesBaseUrl": "http://profiles.568elmp02.blackmesh.com",
+    "hrinfoBaseUrl": "http://hrinfo.568elmp02.blackmesh.com",
+    "authBaseUrl": "http://auth.contactsid.vm",
+    "profilesBaseUrl": "http://profiles.contactsid.vm",
 //    "hrinfoBaseUrl": "http://hrinfo.local"
+    "test": "test"
   },
   jso,
   app;
@@ -115,7 +117,7 @@ app.controller("LogoutCtrl", function($scope, authService) {
 
 app.controller("RegisterCtrl", function($scope) {
   // Redirect to the registration page on the authentication system.
-  window.location.href = contactsId.authBaseUrl + "/#register";
+  window.location.href = contactsId.authBaseUrl + "/?client_id=" + contactsId.authClientId + "#register";
 });
 
 app.controller("404Ctrl", function($scope) {
