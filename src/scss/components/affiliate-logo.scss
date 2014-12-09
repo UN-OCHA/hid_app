@@ -1,19 +1,35 @@
+.affiliate-logo-wrapper {
+  border-right: 1px solid $white;
+  display: inline-block;
+
+  &:last-child {
+    border: none;
+
+    .affiliate-logo {
+      border: none;
+    }
+  }
+}
+
 .affiliate-logo {
+  height: 36px;
   width: 77px;
-  height: 40px;
   border-right: 1px solid $neutral-color-3;
   display: inline-block;
   background: url(../images/sprite.png) no-repeat;
+  margin: 0;
 }
 
 .humanitarian-response {
-  background-position: 0 10px;
+  background-position: 0 6px;
+
 }
 
 .relief-web {
-  background-position: 0 -33px;
+  background-position: 10px -36px;
+  width: 94px;
 }
 
 .hdx {
-  background-position: 0 -75px;
+  background-position: 10px -78px;
 }

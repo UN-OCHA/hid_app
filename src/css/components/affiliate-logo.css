@@ -1,19 +1,17 @@
 /*
-Error: Undefined variable: "$neutral-color-3".
-        on line 4 of /Volumes/code/hid_app/src/scss/components/affiliate-logo.scss
+Error: Undefined variable: "$white".
+        on line 2 of /Volumes/code/hid_app/src/scss/components/affiliate-logo.scss
 
-1: .affiliate-logo {
-2:   width: 77px;
-3:   height: 40px;
-4:   border-right: 1px solid $neutral-color-3;
-5:   display: inline-block;
-6:   background: url(../images/sprite.png) no-repeat;
-7: }
-8: 
-9: .humanitarian-response {
+1: .affiliate-logo-wrapper {
+2:   border-right: 1px solid $white;
+3:   display: inline-block;
+4: 
+5:   &:last-child {
+6:     border: none;
+7: 
 
 Backtrace:
-/Volumes/code/hid_app/src/scss/components/affiliate-logo.scss:4
+/Volumes/code/hid_app/src/scss/components/affiliate-logo.scss:2
 /Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/script/tree/variable.rb:49:in `_perform'
 /Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/script/tree/node.rb:50:in `perform'
 /Users/jgroh/.rvm/gems/ruby-2.0.0-p353/gems/sass-3.4.9/lib/sass/script/tree/list_literal.rb:62:in `block in _perform'
@@ -71,4 +69,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$neutral-color-3\".\A         on line 4 of /Volumes/code/hid_app/src/scss/components/affiliate-logo.scss\A \A 1: .affiliate-logo {\A 2:   width: 77px;\A 3:   height: 40px;\A 4:   border-right: 1px solid $neutral-color-3;\A 5:   display: inline-block;\A 6:   background: url(../images/sprite.png) no-repeat;\A 7: }\A 8: \A 9: .humanitarian-response {"; }
+  content: "Error: Undefined variable: \"$white\".\A         on line 2 of /Volumes/code/hid_app/src/scss/components/affiliate-logo.scss\A \A 1: .affiliate-logo-wrapper {\A 2:   border-right: 1px solid $white;\A 3:   display: inline-block;\A 4: \A 5:   &:last-child {\A 6:     border: none;\A 7: "; }
