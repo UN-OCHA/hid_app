@@ -1,0 +1,9 @@
+.sidebar-left {
+  @include span(4 of 12);
+  float: left;
+
+}
+.main-content {
+  @include span(last 8 of 12);
+  float: right;
+}

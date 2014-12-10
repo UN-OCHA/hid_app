@@ -1,10 +1,8 @@
-<div ng-include src="'partials/header.html'"></div>
-
-<div class="masthead container">
+<div class="masthead">
   <h2>{{title}}</h2>
 </div>
 
-<div ng-show="!isRouteLoading" class="container">
+<div ng-show="!isRouteLoading" class="">
   <div class="active-countries" ng-hide="selectedPlace.length">
     <div class="back-link"><a class="btn btn-warning btn-sm" href="#/contactsId"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
     <h3>Select a country</h3>
@@ -81,7 +79,8 @@
 
               <label class="col-sm-2 control-label" for="phone[{{$index}}][number]">Phone Number</label>
               <div class="col-sm-4">
-                <input class="form-control" type="text" name="phone[{{$index}}][number]" ng-model="profile.phone[$index].number" ng-change="checkMultiFields()" />
+                <input ng-model="profile.phone[$index].number" international-phone-number auto-format="true" national-mode="false" responsive-dropdown="true" class="form-control" type="text" name="phone[{{$index}}][number]" ng-change="setCountryCode(); checkMultiFields()" />
+                <input type="hidden" name="phone[{{$index}}][countryCode]" ng-model="profile.phone[$index].countryCode" />
               </div>
             </div>
           </div>

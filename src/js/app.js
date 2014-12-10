@@ -31,7 +31,7 @@ jso.callback(null, function (token) {
 });
 
 // Initialize ng
-app = angular.module('contactsId', ['ngRoute', 'cgBusy', 'angular-spinkit']);
+app = angular.module('contactsId', ['ngRoute', 'cgBusy', 'angular-spinkit', 'internationalPhoneNumber']);
 
 app.value('cgBusyDefaults',{
   message:'Loading...',
@@ -205,6 +205,13 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.profile.type = 'global';
     $scope.profileName = $scope.profile.type === 'global' ? 'Global' : $scope.profile.location;
   }
+
+  $scope.setCountryCode = function() {
+    var countryInfo = jQuery('input[name="phone[' + this.$index + '][number]"]').intlTelInput('getSelectedCountryData');
+    if (countryInfo && countryInfo.hasOwnProperty('dialCode')) {
+      this.profile.phone[this.$index].countryCode = countryInfo.dialCode;
+    }
+  };
 
   $scope.checkMultiFields = function (excludeExtras) {
     var multiFields = {'uri': null, 'voip': 'number', 'email': 'address', 'phone': 'number', 'bundle': null};
