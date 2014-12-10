@@ -1,9 +1,27 @@
 .sidebar-left {
-  @include span(4 of 12);
+  //@include span(4 of 12);
   float: left;
-
+  a{
+    line-height: 16px;
+    i.entypo {
+      @extend %rounded-icon;
+      color: $primary-color-1;
+    }
+  }
 }
 .main-content {
-  @include span(last 8 of 12);
+  //@include span(last 8 of 12);
   float: right;
+  .profile-item {
+    overflow: hidden;
+    h4 {
+      float: left;
+    }
+    .btn-group {
+      float: right;
+    }
+    .fa {
+      font-size: 16px;
+    }
+  }
 }
