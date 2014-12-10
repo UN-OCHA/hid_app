@@ -18,6 +18,13 @@ module.exports = function(grunt) {
         dest: 'build/<%= pkg.name %>.min.js'
       }
     },
+    compass: {
+      sass: {
+        options: {
+          config: 'config.rb'
+        }
+      }
+    },
     copy: {
       config: {
         src: 'src/js/config.' + target + '.js',
@@ -39,10 +46,11 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-bower-install-simple');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-symlink');
 
   // Default task(s).
-  grunt.registerTask('default', ['bower-install-simple', 'jshint', 'copy']);
+  grunt.registerTask('default', ['bower-install-simple', 'jshint', 'compass', 'copy']);
 };
