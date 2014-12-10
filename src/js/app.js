@@ -55,7 +55,7 @@ app.run(function ($rootScope, $location, authService) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
       event.preventDefault();
-      window.location.hash = '#/login';
+      $location.path('/login');
     }
   });
 });
@@ -77,12 +77,16 @@ app.controller("DefaultCtrl", function($scope, $location, authService) {
     }
 
     return obj;
-  };
+  }
 
   // If the Oauth2 access code param is present, then redirect to login.
   var query = parseLocation(window.location.search);
   if (query.code && query.code.length) {
     authService.verify();
+  }
+
+  if (authService.isAuthenticated()) {
+    $location.path('/contactsId');
   }
 });
 
@@ -474,7 +478,7 @@ app.config(function($routeProvider, $locationProvider) {
     });
 });
 
-app.service("authService", function() {
+app.service("authService", function($location) {
   var authService = {},
     oauthToken = false,
     accountData = false;
