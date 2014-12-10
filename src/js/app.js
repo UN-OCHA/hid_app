@@ -1,26 +1,13 @@
 
-(function($, angular) {
+(function($, angular, contactsId) {
 
-var contactsId = {
-    "title": "Humanitarian ID",
-    "sourcePath": "",
-    "authClientId": "hid-local",
-    "appBaseUrl": "http://app.contactsid.vm",
-    "authBaseUrl": "http://auth.568elmp02.blackmesh.com",
-    "profilesBaseUrl": "http://profiles.568elmp02.blackmesh.com",
-    "hrinfoBaseUrl": "http://hrinfo.568elmp02.blackmesh.com",
-//    "authBaseUrl": "http://auth.contactsid.vm",
-//    "profilesBaseUrl": "http://profiles.contactsid.vm",
-//    "hrinfoBaseUrl": "http://hrinfo.local"
-    "placeholder": "placeholder"
-  },
-  jso,
+var jso,
   app;
 
 // Initialize JSO
 jso = new JSO({
   providerID: "hid",
-  client_id: "hid-local",
+  client_id: contactsId.authClientId,
   redirect_uri: contactsId.appBaseUrl + "/",
   authorization: contactsId.authBaseUrl + "/oauth/authorize",
   scopes: {require: ['profile'], request: ['profile']}
@@ -68,7 +55,7 @@ app.run(function ($rootScope, $location, authService) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
       event.preventDefault();
-      window.location.hash = '#/login';
+      $location.path('/login');
     }
   });
 });
@@ -90,12 +77,16 @@ app.controller("DefaultCtrl", function($scope, $location, authService) {
     }
 
     return obj;
-  };
+  }
 
   // If the Oauth2 access code param is present, then redirect to login.
   var query = parseLocation(window.location.search);
   if (query.code && query.code.length) {
     authService.verify();
+  }
+
+  if (authService.isAuthenticated()) {
+    $location.path('/contactsId');
   }
 });
 
@@ -151,18 +142,20 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, profileService, userData, placesOperations) {
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, profileService, authService, userData, placesOperations) {
   $scope.title = contactsId.title;
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
   var pathParams = $location.path().split('/'),
-      checkinFlow = pathParams[2] === 'checkin';
+    checkinFlow = pathParams[2] === 'checkin',
+    accountData = authService.getAccountData();
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.userData = userData;
   $scope.placesOperations = placesOperations;
 
+  // When checking in to a new crisis, load the user's global profile to clone.
   if (checkinFlow) {
     $scope.selectedPlace = '';
     $scope.selectedOperation = '';
@@ -182,6 +175,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.selectedOperation = 'none';
   }
 
+  // If loading an existing contact profile by ID, find it in the user's data.
   if ($scope.profileId.length) {
     for (var idx = 0; idx < $scope.userData.contacts.length; idx++) {
       if ($scope.userData.contacts[idx]._id == $scope.profileId) {
@@ -202,8 +196,15 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.profileName = $scope.profile.type === 'global' ? 'Global' : $scope.profile.location;
   }
   else if (!checkinFlow) {
+    // If editing the global profile for the first time, add messaging.
     $scope.profile.type = 'global';
     $scope.profileName = $scope.profile.type === 'global' ? 'Global' : $scope.profile.location;
+  }
+
+  // Add the given and family name from the auth service as a default value.
+  if ((!$scope.profile.nameGiven || !$scope.profile.nameGiven.length) && (!$scope.profile.nameFamily || !$scope.profile.nameFamily.length)) {
+    $scope.profile.nameGiven = accountData.name_given || '';
+    $scope.profile.nameFamily = accountData.name_family || '';
   }
 
   $scope.setCountryCode = function() {
@@ -477,7 +478,7 @@ app.config(function($routeProvider, $locationProvider) {
     });
 });
 
-app.service("authService", function() {
+app.service("authService", function($location) {
   var authService = {},
     oauthToken = false,
     accountData = false;
@@ -678,6 +679,5 @@ app.service("profileService", function(authService, $http, $q) {
   }
 
 });
-//// END ANGULAR
 
-}(jQuery, angular));
+}(jQuery, angular, window.contactsId));
