@@ -1,26 +1,13 @@
 
-(function($, angular) {
+(function($, angular, contactsId) {
 
-var contactsId = {
-    "title": "Humanitarian ID",
-    "sourcePath": "",
-    "authClientId": "hid-local",
-    "appBaseUrl": "http://app.contactsid.vm",
-    "authBaseUrl": "http://auth.568elmp02.blackmesh.com",
-    "profilesBaseUrl": "http://profiles.568elmp02.blackmesh.com",
-    "hrinfoBaseUrl": "http://hrinfo.568elmp02.blackmesh.com",
-//    "authBaseUrl": "http://auth.contactsid.vm",
-//    "profilesBaseUrl": "http://profiles.contactsid.vm",
-//    "hrinfoBaseUrl": "http://hrinfo.local"
-    "placeholder": "placeholder"
-  },
-  jso,
+var jso,
   app;
 
 // Initialize JSO
 jso = new JSO({
   providerID: "hid",
-  client_id: "hid-local",
+  client_id: contactsId.authClientId,
   redirect_uri: contactsId.appBaseUrl + "/",
   authorization: contactsId.authBaseUrl + "/oauth/authorize",
   scopes: {require: ['profile'], request: ['profile']}
@@ -678,6 +665,5 @@ app.service("profileService", function(authService, $http, $q) {
   }
 
 });
-//// END ANGULAR
 
-}(jQuery, angular));
+}(jQuery, angular, window.contactsId));
