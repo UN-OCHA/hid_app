@@ -2353,8 +2353,9 @@ h3 {
 .main-content .profile-item h4, .main-content .profile-item h4 a {
   color: #54b1c8;
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 20px;
+  font-weight: bold;
 }
 .main-content .profile-item .btn-group {
   float: right;
