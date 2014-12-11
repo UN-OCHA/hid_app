@@ -14,7 +14,7 @@
   <div class="active-profiles main-content col-xs-9" cg-busy="dashboardDataTracker">
     <ul class="active-profiles-container list-group">
       <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts" ng-class="{'list-group-item-info' : profile.type == 'global'}">
-        <a style= "display: none;"class="btn btn-warning btn-sm btn-hidden" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'">Delete</a>
+        <a ng-show="profile.confirmDelete" class="btn btn-warning btn-sm btn-hidden" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'">Checkout</a>
         <h4>
           <span class="profile-item-name" ng-if="profile.type == 'global'">Global Contact List</span>
           <a href="#/contactsId/profile/{{profile._id}}">
@@ -25,7 +25,7 @@
         <div class="btn-group">
           <a class="btn btn-sm" href="#/contactsId/list/global" ng-if="profile.type == 'global'"><i class="fa fa-list-alt"></i></a>
           <a class="btn btn-sm" href="#/contactsId/list/{{profile.locationId}}" ng-if="profile.type == 'local'" title="Contact List"><i class="fa fa-list-alt"></i></a>
-          <a class="btn btn-checkout btn-sm" ng-if="profile.type == 'local'" title="Check Out"><i class="fa fa-times"></i></a>
+          <a class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="Checkout"><i class="fa fa-times"></i></a>
         </div>
       </li>
       <li class="disaster-item" ng-if="profilesActive.length == 0">
