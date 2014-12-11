@@ -14,14 +14,33 @@
   float: right;
   .profile-item {
     overflow: hidden;
+    .btn-warning.btn-hidden {
+      float: left;
+      background: $secundary-color-1;
+      height: 45px;
+      width: 109px;
+      line-height: 24px;
+    }
     h4 {
       float: left;
+      padding: 3px 15px;
     }
     .btn-group {
       float: right;
+      margin: 7px;
+      .btn {
+        padding: 8px 10px;
+      }
     }
     .fa {
       font-size: 16px;
+    }
+  }
+  .btn-group {
+    .btn-warning {
+      &:hover {
+        background: $secundary-color-1;
+      }
     }
   }
 }

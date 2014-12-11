@@ -2182,6 +2182,7 @@
 /* Main aqua color */
 /* Darker grey used in text and controls */
 /* Lighter blue color used in menu and sort grips */
+/*Red color used for cancel options*/
 /* Used for grey tabs */
 /* Used for primary nav active state */
 /* Thin separating line */
@@ -2208,6 +2209,7 @@
 /* Main aqua color */
 /* Darker grey used in text and controls */
 /* Lighter blue color used in menu and sort grips */
+/*Red color used for cancel options*/
 /* Used for grey tabs */
 /* Used for primary nav active state */
 /* Thin separating line */
@@ -2221,6 +2223,8 @@ body {
 body .entypo {
   float: left;
   font-family: "entypo";
+  font-size: 4em;
+  font-style: normal;
 }
 
 .contactsid-app p {
@@ -2334,14 +2338,29 @@ h3 {
 .main-content .profile-item {
   overflow: hidden;
 }
+.main-content .profile-item .btn-warning.btn-hidden {
+  float: left;
+  background: #b8303e;
+  height: 45px;
+  width: 109px;
+  line-height: 24px;
+}
 .main-content .profile-item h4 {
   float: left;
+  padding: 3px 15px;
 }
 .main-content .profile-item .btn-group {
   float: right;
+  margin: 7px;
+}
+.main-content .profile-item .btn-group .btn {
+  padding: 8px 10px;
 }
 .main-content .profile-item .fa {
   font-size: 16px;
+}
+.main-content .btn-group .btn-warning:hover {
+  background: #b8303e;
 }
 
 .header {
@@ -2452,7 +2471,7 @@ h3 {
 }
 
 .profile-item {
-  padding: 10px 15px;
+  padding: 0;
   margin-bottom: 8px;
   background-color: #fafafa;
   border: 1px solid white;

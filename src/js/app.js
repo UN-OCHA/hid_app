@@ -1,7 +1,13 @@
 
 (function($, angular, contactsId) {
+  jQuery(document).ready(function($){
+    $('.btn-group .btn-warning').click(function(){
+      $(this).parents('.profile-item').find('.btn-hidden').toggle('slide',"", 500);
+    })
+  });
 
-var jso,
+
+  var jso,
   app;
 
 // Initialize JSO
@@ -32,11 +38,11 @@ app.directive('routeLoadingIndicator', function($rootScope) {
   return {
     restrict: 'E',
     template: "<div ng-show='isRouteLoading' class='loading-indicator'>" +
-      "<div class='loading-indicator-body'>" +
-        "<h3 class='loading-title'>Loading...</h3>" +
-        "<div class='spinner'><rotating-plane-spinner></rotating-plane-spinner></div>" +
-      "</div>" +
-      "</div>",
+    "<div class='loading-indicator-body'>" +
+    "<h3 class='loading-title'>Loading...</h3>" +
+    "<div class='spinner'><rotating-plane-spinner></rotating-plane-spinner></div>" +
+    "</div>" +
+    "</div>",
     replace: true,
     link: function(scope, elem, attrs) {
       scope.isRouteLoading = false;
@@ -63,9 +69,9 @@ app.run(function ($rootScope, $location, authService) {
 app.controller("DefaultCtrl", function($scope, $location, authService) {
   function parseLocation(location) {
     var pairs = location.substring(1).split("&"),
-      obj = {},
-      pair,
-      i;
+    obj = {},
+    pair,
+    i;
 
     for (i in pairs) {
       if (!pairs.hasOwnProperty(i) || pairs[i] === "") {
@@ -148,8 +154,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.profile = {};
 
   var pathParams = $location.path().split('/'),
-    checkinFlow = pathParams[2] === 'checkin',
-    accountData = authService.getAccountData();
+  checkinFlow = pathParams[2] === 'checkin',
+  accountData = authService.getAccountData();
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.userData = userData;
@@ -240,10 +246,10 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   };
 
   $scope.checkMultiFields();
-  
+
   $scope.selectPlace = function () {
     var opkeys = [],
-      key;
+    key;
     for (key in this.operations) {
       if (this.operations.hasOwnProperty(key)) {
         opkeys.push(key);
@@ -362,126 +368,126 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
 
 app.config(function($routeProvider, $locationProvider) {
   $routeProvider.
-    when('/', {
-      templateUrl: contactsId.sourcePath + '/partials/index.html',
-      controller: 'DefaultCtrl'
-    }).
-    when('/login', {
-      template: 'Redirecting to authentication system...',
-      controller: 'LoginCtrl'
-    }).
-    when('/logout', {
-      template: 'Redirecting to authentication system...',
-      controller: 'LogoutCtrl'
-    }).
-    when('/register', {
-      template: 'Redirecting to authentication system...',
-      controller: 'RegisterCtrl'
-    }).
-    when('/contactsId', {
-      templateUrl: contactsId.sourcePath + '/partials/dashboard.html',
-      controller: 'DashboardCtrl',
-      requireAuth: true,
-      resolve: {
-        userData : function(profileService) {
-          return profileService.getUserData().then(function(data) {
-            if (!data || !data.profile || !data.contacts) {
-              throw new Error('Your user data cannot be retrieved. Please sign in again.');
+  when('/', {
+    templateUrl: contactsId.sourcePath + '/partials/index.html',
+    controller: 'DefaultCtrl'
+  }).
+  when('/login', {
+    template: 'Redirecting to authentication system...',
+    controller: 'LoginCtrl'
+  }).
+  when('/logout', {
+    template: 'Redirecting to authentication system...',
+    controller: 'LogoutCtrl'
+  }).
+  when('/register', {
+    template: 'Redirecting to authentication system...',
+    controller: 'RegisterCtrl'
+  }).
+  when('/contactsId', {
+    templateUrl: contactsId.sourcePath + '/partials/dashboard.html',
+    controller: 'DashboardCtrl',
+    requireAuth: true,
+    resolve: {
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
+      },
+      globalProfileId : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          for (var idx = 0; idx < data.contacts.length; idx++) {
+            if (data.contacts[idx].type === 'global') {
+              return data.contacts[idx]._id;
             }
-            return data;
-          });
-        },
-        globalProfileId : function(profileService) {
-          return profileService.getUserData().then(function(data) {
-            for (var idx = 0; idx < data.contacts.length; idx++) {
-              if (data.contacts[idx].type === 'global') {
-                return data.contacts[idx]._id;
-              }
-            }
-          });
-        }
+          }
+        });
       }
-    }).
-    when('/contactsId/checkin', {
-      templateUrl: contactsId.sourcePath + '/partials/profile.html',
-      controller: 'ProfileCtrl',
-      requireAuth: true,
-      resolve: {
-        userData : function(profileService) {
-          return profileService.getUserData().then(function(data) {
-            return data;
-          });
-        },
-        placesOperations : function(profileService) {
-          return profileService.getOperationsData().then(function(data) {
-            return data;
-          });
-        }
+    }
+  }).
+  when('/contactsId/checkin', {
+    templateUrl: contactsId.sourcePath + '/partials/profile.html',
+    controller: 'ProfileCtrl',
+    requireAuth: true,
+    resolve: {
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          return data;
+        });
+      },
+      placesOperations : function(profileService) {
+        return profileService.getOperationsData().then(function(data) {
+          return data;
+        });
       }
-    }).
-    when('/contactsId/profile/:profileId?', {
-      templateUrl: contactsId.sourcePath + '/partials/profile.html',
-      controller: 'ProfileCtrl',
-      requireAuth: true,
-      resolve: {
-        userData : function(profileService) {
-          return profileService.getUserData().then(function(data) {
-            return data;
-          });
-        },
-        placesOperations : function(profileService) {
-          return profileService.getOperationsData().then(function(data) {
-            return data;
-          });
-        }
+    }
+  }).
+  when('/contactsId/profile/:profileId?', {
+    templateUrl: contactsId.sourcePath + '/partials/profile.html',
+    controller: 'ProfileCtrl',
+    requireAuth: true,
+    resolve: {
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          return data;
+        });
+      },
+      placesOperations : function(profileService) {
+        return profileService.getOperationsData().then(function(data) {
+          return data;
+        });
       }
-    }).
-    when('/contactsId/contact/:contactId', {
-      templateUrl: contactsId.sourcePath + '/partials/contact.html',
-      controller: 'ContactCtrl',
-      requireAuth: true,
-      resolve: {
-        contact : function(profileService, $route) {
-          var query = {
-            '_id': $route.current.params.contactId || ''
-          };
-          return profileService.getContacts(query).then(function(data) {
-            return data.contacts[0] || {};
-          });
-        }
+    }
+  }).
+  when('/contactsId/contact/:contactId', {
+    templateUrl: contactsId.sourcePath + '/partials/contact.html',
+    controller: 'ContactCtrl',
+    requireAuth: true,
+    resolve: {
+      contact : function(profileService, $route) {
+        var query = {
+          '_id': $route.current.params.contactId || ''
+        };
+        return profileService.getContacts(query).then(function(data) {
+          return data.contacts[0] || {};
+        });
       }
-    }).
-    when('/contactsId/list/:locationId', {
-      templateUrl: contactsId.sourcePath + '/partials/list.html',
-      controller: 'ListCtrl',
-      requireAuth: true,
-      resolve: {
-        userData : function(profileService) {
-          return profileService.getUserData().then(function(data) {
-            return data;
-          });
-        },
-        placesOperations : function(profileService) {
-          return profileService.getOperationsData().then(function(data) {
-            return data;
-          });
-        }
+    }
+  }).
+  when('/contactsId/list/:locationId', {
+    templateUrl: contactsId.sourcePath + '/partials/list.html',
+    controller: 'ListCtrl',
+    requireAuth: true,
+    resolve: {
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          return data;
+        });
+      },
+      placesOperations : function(profileService) {
+        return profileService.getOperationsData().then(function(data) {
+          return data;
+        });
       }
-    }).
-    when('/about', {
-      templateUrl: contactsId.sourcePath + '/partials/about.html',
-      controller: 'AboutCtrl'
-    }).
-    otherwise({
-      templateUrl: contactsId.sourcePath + '/partials/404.html',
-      controller: '404Ctrl'
-    });
+    }
+  }).
+  when('/about', {
+    templateUrl: contactsId.sourcePath + '/partials/about.html',
+    controller: 'AboutCtrl'
+  }).
+  otherwise({
+    templateUrl: contactsId.sourcePath + '/partials/404.html',
+    controller: '404Ctrl'
+  });
 });
 
 app.service("authService", function($location) {
   var authService = {},
-    oauthToken = false,
-    accountData = false;
+  oauthToken = false,
+  accountData = false;
 
   authService.getAccessToken = function () {
     return oauthToken;
@@ -536,7 +542,7 @@ app.service("authService", function($location) {
 
 app.service("profileService", function(authService, $http, $q) {
   var cacheUserData = false,
-    cacheOperationsData = false;
+  cacheOperationsData = false;
 
   // Return public API.
   return({
