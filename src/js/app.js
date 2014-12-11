@@ -1,11 +1,5 @@
 
 (function($, angular, contactsId) {
-  jQuery(document).ready(function($){
-    $('.btn-group .btn-warning').click(function(){
-      $(this).parents('.profile-item').find('.btn-hidden').toggle('slide',"", 500);
-    })
-  });
-
 
   var jso,
   app;
