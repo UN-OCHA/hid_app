@@ -2349,17 +2349,30 @@ h3 {
   float: left;
   padding: 3px 15px;
 }
+.main-content .profile-item h4, .main-content .profile-item h4 a {
+  color: #54b1c8;
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 20px;
+}
 .main-content .profile-item .btn-group {
   float: right;
   margin: 7px;
 }
 .main-content .profile-item .btn-group .btn {
-  padding: 8px 10px;
+  padding: 4px 5px;
+  margin: 0 5px;
+  border-radius: 0;
+  background: #767676;
+}
+.main-content .profile-item .btn-group .btn i {
+  color: white;
 }
 .main-content .profile-item .fa {
-  font-size: 16px;
+  font-size: 24px;
+  font-weight: 100;
 }
-.main-content .btn-group .btn-warning:hover {
+.main-content .btn-group .btn-checkout:hover {
   background: #b8303e;
 }
 

@@ -16,8 +16,6 @@
       <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts" ng-class="{'list-group-item-info' : profile.type == 'global'}">
         <a style= "display: none;"class="btn btn-warning btn-sm btn-hidden" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'">Delete</a>
         <h4>
-          <span class="fa fa-globe" ng-if="profile.type == 'global'"></span>
-          <span class="fa fa-thumb-tack" ng-if="profile.type == 'local'"></span>
           <span class="profile-item-name" ng-if="profile.type == 'global'">Global Contact List</span>
           <a href="#/contactsId/profile/{{profile._id}}">
           <span class="profile-item-name" ng-if="profile.type == 'local'">{{profile.location}}
@@ -25,10 +23,9 @@
           </span></a>
         </h4>
         <div class="btn-group">
-          <!--a class="btn btn-default btn-sm" href="#/contactsId/profile/{{profile._id}}"><i class="fa fa-pencil-square-o"></i> Edit</a-->
-          <a class="btn btn-default btn-sm" href="#/contactsId/list/global" ng-if="profile.type == 'global'"><i class="fa fa-list-alt"></i></a>
-          <a class="btn btn-default btn-sm" href="#/contactsId/list/{{profile.locationId}}" ng-if="profile.type == 'local'"><i class="fa fa-list-alt"></i></a>
-          <a class="btn btn-warning btn-sm" ng-if="profile.type == 'local'"><i class="fa fa-times"></i></a>
+          <a class="btn btn-sm" href="#/contactsId/list/global" ng-if="profile.type == 'global'"><i class="fa fa-list-alt"></i></a>
+          <a class="btn btn-sm" href="#/contactsId/list/{{profile.locationId}}" ng-if="profile.type == 'local'" title="Contact List"><i class="fa fa-list-alt"></i></a>
+          <a class="btn btn-checkout btn-sm" ng-if="profile.type == 'local'" title="Check Out"><i class="fa fa-times"></i></a>
         </div>
       </li>
       <li class="disaster-item" ng-if="profilesActive.length == 0">
