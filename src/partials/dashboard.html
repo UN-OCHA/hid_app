@@ -14,7 +14,7 @@
   <div class="active-profiles main-content col-xs-9" cg-busy="dashboardDataTracker">
     <ul class="active-profiles-container list-group">
       <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts" ng-class="{'list-group-item-info' : profile.type == 'global'}">
-        <a ng-show="profile.confirmDelete" class="btn btn-warning btn-sm btn-hidden" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'">Checkout</a>
+        <a ng-show="profile.confirmDelete" class="slide btn btn-warning btn-sm btn-hidden" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'">Checkout</a>
         <h4>
           <span class="profile-item-name" ng-if="profile.type == 'global'">Global Contact List</span>
           <a href="#/contactsId/profile/{{profile._id}}">
