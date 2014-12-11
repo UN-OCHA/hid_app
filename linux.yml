@@ -1,0 +1,9 @@
+app:
+  image: unocha/nginx16
+  volumes:
+    - src:/var/www/html
+  environment:
+    DNSDOCK_NAME: app
+    DNSDOCK_IMAGE: contactsid
+  ports:
+    - 8987:80
