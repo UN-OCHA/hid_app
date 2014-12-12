@@ -66,11 +66,23 @@ app.run(function ($rootScope, $location, authService) {
   });
 });
 
-app.controller("HeaderCtrl", function($scope, $rootScope, authService) {
-  $rootScope.$on("appLoginSuccess", function() {
-    $scope.accountData = authService.getAccountData();
+app.controller("HeaderCtrl", function($scope, $rootScope) {
+  $rootScope.$on("appLoginSuccess", function(ev, accountData) {
+    $scope.isAuthenticated = accountData && accountData.user_id;
+    $scope.nameGiven = accountData.name_given;
+    $scope.nameFamily = accountData.name_family;
   });
-  $scope.accountData = authService.getAccountData;
+  $rootScope.$on("appUserData", function(ev, userData) {
+    if (userData && userData.contacts && userData.contacts.length) {
+      for (var idx = 0; idx < userData.contacts.length; idx++) {
+        if (userData.contacts[idx].type === 'global') {
+          $scope.nameGiven = userData.contacts[idx].nameGiven;
+          $scope.nameFamily = userData.contacts[idx].nameFamily;
+          break;
+        }
+      }
+    }
+  });
 });
 
 app.controller("DefaultCtrl", function($scope, $rootScope, $location, authService) {
@@ -550,7 +562,7 @@ app.service("authService", function($location, $rootScope) {
   return authService;
 });
 
-app.service("profileService", function(authService, $http, $q) {
+app.service("profileService", function(authService, $http, $q, $rootScope) {
   var cacheUserData = false,
   cacheOperationsData = false;
 
@@ -584,6 +596,7 @@ app.service("profileService", function(authService, $http, $q) {
       .then(handleSuccess, handleError).then(function(data) {
         if (data && data.profile && data.contacts) {
           cacheUserData = data;
+          $rootScope.$emit("appUserData", cacheUserData);
         }
 
         return cacheUserData;
