@@ -76,9 +76,13 @@
         // element.on('blur keyup change', function(event) {
         //   return scope.$apply(read);
         // });
-        // return element.on('$destroy', function() {
-        //   return element.off('blur keyup change');
-        // });
+        return element.on('$destroy', function() {
+          var parent = element.parent();
+          $timeout(function() {
+            parent.remove();
+          }, 50);
+          return element.off('blur keyup change');
+        });
       }
     };
   });

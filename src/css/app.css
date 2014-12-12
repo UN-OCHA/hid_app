@@ -2512,6 +2512,10 @@ h3 {
   border-radius: 1px;
 }
 
+.intl-tel-input {
+  display: block;
+}
+
 .contactsid-app .spinner .three-dots-row-spinner {
   background-color: #0fa4de;
 }
