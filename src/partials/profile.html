@@ -74,12 +74,17 @@
             <div class="row">
               <label class="col-sm-2 control-label" for="phone[{{$index}}][type]">Phone Number Description</label>
               <div class="col-sm-4">
-                <input class="form-control" type="text" name="phone[{{$index}}][type]" ng-model="profile.phone[$index].type" />
+                <select class="form-control" ng-options="type for type in phoneTypes" name="phone[{{$index}}][type]" ng-model="profile.phone[$index].type">
+                  <option value="">-- Choose Phone Type --</option>
+                </select>
               </div>
 
               <label class="col-sm-2 control-label" for="phone[{{$index}}][number]">Phone Number</label>
               <div class="col-sm-4">
-                <input ng-model="profile.phone[$index].number" international-phone-number auto-format="true" national-mode="false" responsive-dropdown="true" class="form-control" type="text" name="phone[{{$index}}][number]" ng-change="setCountryCode(); checkMultiFields()" />
+                <input ng-if="phone.type != 'Satellite'" ng-model="profile.phone[$index].number" international-phone-number auto-format="true" national-mode="false" responsive-dropdown="true" class="form-control" type="text" name="phone[{{$index}}][number]" ng-change="setCountryCode(); checkMultiFields()" />
+                
+                <input ng-if="phone.type == 'Satellite'" ng-model="profile.phone[$index].number" class="form-control" type="text" name="phone[{{$index}}][number]" ng-change="checkMultiFields()" />
+                
                 <input type="hidden" name="phone[{{$index}}][countryCode]" ng-model="profile.phone[$index].countryCode" />
               </div>
             </div>

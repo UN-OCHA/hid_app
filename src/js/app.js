@@ -153,6 +153,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
+  $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
+
   var pathParams = $location.path().split('/'),
   checkinFlow = pathParams[2] === 'checkin',
   accountData = authService.getAccountData();
