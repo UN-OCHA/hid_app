@@ -1,4 +1,4 @@
-<div class="header">
+<div class="header" ng-controller="HeaderCtrl">
   <div class="utility">
     <div class="affiliate-logos pull-left">
       <div class="affiliate-logo-wrapper"><div class="affiliate-logo humanitarian-response"></div></div>
@@ -7,15 +7,17 @@
     </div>
 
     <div class="login-controls pull-right">
-      <div class="login-controls-name">Dr. John Smith</div>
-      <a class="btn-login-controls btn" href="#/logout">Logout <span class="text-highlight">H</span>ID</a>
+      <div class="login-controls-name" ng-if="accountData && accountData.user_id">Welcome, <span ng-bind="accountData.name_given"></span> <span ng-bind="accountData.name_family"></span></div>
+      <a class="btn-login-controls btn" ng-if="!accountData || !accountData.user_id" href="#/login">Login <span class="text-highlight">H</span>ID</a>
+      <a class="btn-login-controls btn" ng-if="accountData && accountData.user_id" href="#/logout">Logout <span class="text-highlight">H</span>ID</a>
     </div>
   </div>
   <div class="logo-bar">
     <div class="logo"></div>
     <div class="primary-nav">
       <ul>
-        <li><a href="#/contactsId" class="active">Dashboard</a></li>
+        <li><a href="#/" ng-if="!accountData || !accountData.user_id" class="active">Home</a></li>
+        <li><a href="#/contactsId" ng-if="accountData && accountData.user_id" class="active">Dashboard</a></li>
         <li><a href="#/about">About</a></li>
       </ul>
     </div>

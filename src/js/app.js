@@ -66,7 +66,14 @@ app.run(function ($rootScope, $location, authService) {
   });
 });
 
-app.controller("DefaultCtrl", function($scope, $location, authService) {
+app.controller("HeaderCtrl", function($scope, $rootScope, authService) {
+  $rootScope.$on("appLoginSuccess", function() {
+    $scope.accountData = authService.getAccountData();
+  });
+  $scope.accountData = authService.getAccountData;
+});
+
+app.controller("DefaultCtrl", function($scope, $rootScope, $location, authService) {
   function parseLocation(location) {
     var pairs = location.substring(1).split("&"),
     obj = {},
@@ -486,7 +493,7 @@ app.config(function($routeProvider, $locationProvider) {
   });
 });
 
-app.service("authService", function($location) {
+app.service("authService", function($location, $rootScope) {
   var authService = {},
   oauthToken = false,
   accountData = false;
@@ -524,6 +531,7 @@ app.service("authService", function($location) {
         $.ajax({
           success: function (data) {
             accountData = JSON.parse(data);
+            $rootScope.$emit("appLoginSuccess", accountData);
             return cb();
           },
           error: function (err) {
