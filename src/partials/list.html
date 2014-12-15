@@ -19,11 +19,7 @@
 <div class="list-content row" ng-show="!isRouteLoading">
   <div class="col-xs-12">
     <div class="search" ng-show="mode !== 'list'">
-      <form class="search-form">
-        <div class="form-group">
-          <label class="control-label" for="text">Search</label>
-          <input class="form-control" type="search" name="text" placeholder="Search by name, title, or organization" ng-model="query.text" />
-        </div>
+      <form class="filter-form">
 
         <div class="form-group">
           <h4>Filter List:</h4>
@@ -41,14 +37,27 @@
     </div>
 
     <div class="active-contacts" ng-show="mode === 'list'" cg-busy="contactsPromise">
-      <div class="panel panel-default" ng-repeat="contact in contacts">
-        <div class="panel-heading"><a href="#/contactsId/contact/{{contact._id}}"><i class="fa fa-user"></i> {{contact.nameGiven}} {{contact.nameFamily}}</a></div>
-        <div class="panel-body">
-          <p ng-show="contact.jobtitle" class="contact-item-jobtitle"><span class="title">Job Title:</span> {{contact.jobtitle}}</p>
-          <p ng-show="contact.organization.length" class="contact-item-organization"><span class="title">Organization:</span> {{contact.organization[0].name}}</p>
-          <p><span class="title"><ng-pluralize count="contact.bundle.length" when="{'one': 'Bundle', 'other': 'Bundles'}"></ng-pluralize>:</span> {{contact.bundle.join(', ')}}</p>
+
+      <form class="search-form">
+        <div class="form-group">
+          <label class="control-label element-invisible" for="text">Search</label>
+          <input class="form-control contact-search" type="search" name="text" placeholder="Search by name, title, or organization" ng-model="query.text" />
         </div>
-      </div>
+
+        <div class="form-group">
+          <input class="btn btn-primary btn-md element-invisible" ng-click="submitSearch()" type="submit" value="Search" />
+        </div>
+      </form>
+
+      <ul class="list-group">
+        <li class="profile-item list-group-item" ng-repeat="contact in contacts">
+          <div class="contact-item contact-item--name"><a href="#/contactsId/contact/{{contact._id}}">{{contact.nameGiven}} {{contact.nameFamily}}</a></div>
+          <div class="contact-item contact-item--jobtitle">{{contact.jobtitle}}</div>
+          <div class="contact-item contact-item--organization">{{contact.organization[0].name}}</div>
+          <div class="contact-item contact-item--bundle">{{contact.bundle.join(', ')}}</div>
+        </li>
+      </ul>
+
       <div class="panel panel-danger" ng-if="contacts.length == 0">
         <div class="panel-heading"><em>No contacts found</em></div>
       </div>

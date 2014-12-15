@@ -1,0 +1,48 @@
+
+.contact-item {
+  display: inline-block;
+  padding: 11px 15px 11px 15px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 20px;
+  color: $primary-color-2;
+}
+
+.contact-item--name {
+  min-width: 180px;
+
+  a {
+    color: $primary-color-1;
+  }
+}
+
+.contact-item--jobtitle {
+  min-width: 180px;
+}
+
+.contact-item--organization {
+  min-width: 180px;
+}
+
+.contact-item--bundle {
+}
+
+.contact-search {
+  padding: 20px;
+}
+
+//::-webkit-input-placeholder {
+//  color: $primary-color-1;
+//}
+//
+//:-moz-placeholder { /* Firefox 18- */
+//  color: $primary-color-1;
+//}
+//
+//::-moz-placeholder {  /* Firefox 19+ */
+//  color: $primary-color-1;
+//}
+//
+//:-ms-input-placeholder {
+//  color: $primary-color-1;
+}
