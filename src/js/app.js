@@ -6,6 +6,14 @@
     })
   });
 
+  //var breakpoints = {
+  //  $mq_smaller: "screen and (min-width: 20em)",
+  //  $mq_small: "screen and (min-width: 30em)",
+  //  $mq_small_height: "screen and (min-height: 50em)",
+  //  $mq_medium: "screen and (min-width: 40em)",
+  //  $mq_large: "screen and (min-width: 50em)",
+  //  $mq_larger: "screen and (min-width: 65em)"
+  //};
 
   var jso,
   app;
@@ -24,7 +32,7 @@ jso.callback(null, function (token) {
 });
 
 // Initialize ng
-app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'angular-spinkit', 'internationalPhoneNumber']);
+app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'angular-spinkit', 'internationalPhoneNumber', 'angular-enquire-breakpoints']);
 
 app.value('cgBusyDefaults',{
   message:'Loading...',
