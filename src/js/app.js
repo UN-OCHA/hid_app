@@ -175,34 +175,34 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, profileService, authService, userData, placesOperations) {
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, profileService, authService, placesOperations, profileData) {
   $scope.title = contactsId.title;
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
+  $scope.adminRoleOptions = ['admin', 'manager'];
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
+  $scope.emailTypes = ['Work', 'Personal', 'Other'];
 
   var pathParams = $location.path().split('/'),
   checkinFlow = pathParams[2] === 'checkin',
   accountData = authService.getAccountData();
+  $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
+  $scope.userIsAdmin = profileService.hasRole('admin');
+  $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
 
   // Setup scope variables from data injected by routeProvider resolve
-  $scope.userData = userData;
   $scope.placesOperations = placesOperations;
+  $scope.profileData = profileData;
 
   // When checking in to a new crisis, load the user's global profile to clone.
   if (checkinFlow) {
     $scope.selectedPlace = '';
     $scope.selectedOperation = '';
 
-    for (var idx = 0; idx < $scope.userData.contacts.length; idx++) {
-      if ($scope.userData.contacts[idx].type === 'global') {
-        $scope.profile = angular.fromJson(angular.toJson($scope.userData.contacts[idx]));
-        delete $scope.profile._id;
-        delete $scope.profile._contact;
-        break;
-      }
-    }
+    $scope.profile = angular.fromJson(angular.toJson(profileData.global));
+    delete $scope.profile._id;
+    delete $scope.profile._contact;
     $scope.profile.type = 'local';
   }
   else {
@@ -212,20 +212,15 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   // If loading an existing contact profile by ID, find it in the user's data.
   if ($scope.profileId.length) {
-    for (var idx = 0; idx < $scope.userData.contacts.length; idx++) {
-      if ($scope.userData.contacts[idx]._id == $scope.profileId) {
-        $scope.profile = $scope.userData.contacts[idx];
+    $scope.profile = profileData.contact || {};
 
-        if ($scope.profile.locationId) {
-          for (var place in $scope.placesOperations) {
-            if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.profile.locationId)) {
-              $scope.selectedPlace = place;
-              $scope.selectedOperation = $scope.profile.locationId;
-              break;
-            }
-          }
+    if ($scope.profile.locationId) {
+      for (var place in $scope.placesOperations) {
+        if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.profile.locationId)) {
+          $scope.selectedPlace = place;
+          $scope.selectedOperation = $scope.profile.locationId;
+          break;
         }
-        break;
       }
     }
     $scope.profileName = $scope.profile.type === 'global' ? 'Global' : $scope.profile.location;
@@ -293,8 +288,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.submitProfile = function () {
     $scope.checkMultiFields(true);
     var profile = $scope.profile;
-    profile.userid = $scope.userData.profile.userid;
-    profile._profile = $scope.userData.profile._id;
+    profile.userid = profileData.profile.userid;
+    profile._profile = profileData.profile._id;
     profile.status = 1;
 
     if (checkinFlow) {
@@ -305,6 +300,12 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if ($scope.profileId.length) {
       profile._contact = $scope.profileId;
     }
+
+    if ($scope.userIsAdmin) {
+      profile.adminRoles = $scope.adminRoles;
+      profile.verified = $scope.verified;
+    }
+
     profileService.saveContact(profile).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         $location.path('/contactsId');
@@ -323,6 +324,8 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
   if (contact.type === 'global') {
     $scope.contact.location = 'Global';
   }
+
+  $scope.userIsAdmin = profileService.hasRole('admin');
 
   $scope.back = function () {
     if (history.length) {
@@ -464,6 +467,9 @@ app.config(function($routeProvider, $locationProvider) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
+      },
+      profileData : function (profileService) {
+        return {};
       }
     }
   }).
@@ -481,6 +487,77 @@ app.config(function($routeProvider, $locationProvider) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
+      },
+      profileData : function(profileService, $route) {
+        var contactId = $route.current.params.profileId || '',
+          profileData = {},
+          i,
+          num,
+          val;
+        if (contactId && contactId.length) {
+          // Check if the contact is for the current user
+          return profileService.getUserData().then(function (data) {
+            if (data && data.contacts && data.contacts.length) {
+              num = data.contacts.length;
+              for (i = 0; i < num; i++) {
+                val = data.contacts[i];
+                if (val && val._id && val._id === contactId) {
+                  // Contact is for the current user.
+                  profileData.contact = val;
+                  profileData.profile = data.profile;
+
+                  // If this contact is local, return the user's profile and global contact too.
+                  if (val.type === 'local') {
+                    profileData.global = {};
+                    for (i = 0; i < num; i++) {
+                      val = data.contacts[i];
+                      if (val && val.type && val.type === 'global') {
+                        profileData.global = val;
+                        break;
+                      }
+                    }
+                  }
+                  return profileData;
+                }
+              }
+            }
+            else {
+              return profileData;
+            }
+
+            // Contact is not for the current user
+            return profileService.getContacts({_id: contactId}).then(function (data) {
+              if (data && data.contacts && data.contacts[0] && data.contacts[0]._id && data.contacts[0]._profile) {
+                return profileService.getProfileById(data.contacts[0]._profile).then(function (data) {
+                  if (data && data.profile && data.contacts && data.contacts.length) {
+                    num = data.contacts.length;
+                    for (i = 0; i < num; i++) {
+                      val = data.contacts[i];
+                      // Find the matching contact
+                      if (val && val._id && val._id === contactId) {
+                        profileData.contact = val;
+                      }
+                      // And the user's global contact
+                      else if (val && val._id && val._id !== contactId && val.type && val.type === 'global') {
+                        profileData.global = val;
+                      }
+                    }
+                    if (profileData.contact && profileData.contact._id) {
+                      profileData.profile = data.profile;
+                    }
+                  }
+                  return profileData;
+                });
+              }
+              else {
+                return profileData;
+              }
+            });
+          });
+        }
+        else {
+          return profileData;
+        }
       }
     }
   }).
@@ -592,11 +669,13 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     getUserData: getUserData,
     getOperationsData: getOperationsData,
     clearData: clearData,
-    getProfile: getProfile,
+    getProfileById: getProfileById,
+    getProfileByUser: getProfileByUser,
     getProfiles: getProfiles,
     getContacts: getContacts,
     saveProfile: saveProfile,
-    saveContact: saveContact
+    saveContact: saveContact,
+    hasRole: hasRole
   });
 
   // Get app data.
@@ -659,18 +738,23 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   }
 
   // Get a profile by ID.
-  function getProfile(profileId) {
-    var request = $http({
-      method: "get",
-      url: contactsId.profilesBaseUrl + "/v0/profile/view",
-      params: {access_token: authService.getAccessToken(), userid: profileId}
-    });
-    return(request.then(handleSuccess, handleError));
+  function getProfileByUser(userId) {
+    return getProfiles({userid: userId});
+  }
+
+  // Get a profile by ID.
+  function getProfileById(profileId) {
+    return getProfiles({_id: profileId});
   }
 
   // Get profiles that match specified parameters.
   function getProfiles(terms) {
-    return;
+    var request = $http({
+      method: "get",
+      url: contactsId.profilesBaseUrl + "/v0/profile/view",
+      params: $.extend({}, terms, {access_token: authService.getAccessToken()})
+    });
+    return(request.then(handleSuccess, handleError));
   }
 
   // Get contacts that match specified parameters.
@@ -687,7 +771,6 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   // Save a profile (create or update existing).
   function saveProfile(profile) {
     var request;
-    profile.userid = authService.getAccountData().user_id || "";
     request = $http({
       method: "post",
       url: contactsId.profilesBaseUrl + "/v0/profile/save",
@@ -700,7 +783,6 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   // Save a contact (create or update existing).
   function saveContact(contact) {
     var request;
-    contact.userid = authService.getAccountData().user_id || "";
     request = $http({
       method: "post",
       url: contactsId.profilesBaseUrl + "/v0/contact/save",
@@ -708,6 +790,12 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
       data: contact
     });
     return(request.then(handleSuccess, handleError));
+  }
+
+  // Returns true/false for whether the user has/doesn't have the specified
+  // role. Assumes the user profile data is loaded.
+  function hasRole(role) {
+    return (cacheUserData && cacheUserData.profile && cacheUserData.profile.roles && cacheUserData.profile.roles.length && cacheUserData.profile.roles.indexOf(role) !== -1);
   }
 
   function handleError(response) {

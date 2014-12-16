@@ -68,6 +68,34 @@
           </div>
         </div>
 
+        <div class="form-group container operations" ng-show="userIsAdmin">
+          <h4>Local Administration</h4>
+          <div class="row">
+              <label class="col-sm-2 control-label" for="keyContact">Key Contact</label>
+              <div class="col-sm-10">
+                <input type="checkbox" class="form-control" name="keyContact" ng-model="profile.keyContact" />
+              </div>
+          </div>
+        </div>
+
+        <div class="form-group container operations" ng-show="userIsAdmin">
+          <h4>Global Administration</h4>
+          <div class="row">
+              <label class="col-sm-2 control-label" for="adminRoles">Admin Privileges</label>
+              <div class="col-sm-10">
+                <select class="form-control" name="adminRoles" multiple ng-model="adminRoles" ng-options="adminRoleOption for adminRoleOption in adminRoleOptions">
+                  <option value=""></option>
+                </select>
+              </div>
+          </div>
+          <div class="row">
+              <label class="col-sm-2 control-label" for="verified">Verified Responder</label>
+              <div class="col-sm-10">
+                <input type="checkbox" class="form-control" name="verified" ng-model="verified" />
+              </div>
+          </div>
+        </div>
+
         <div class="form-group container">
           <h4>Phone Numbers</h4>
           <div ng-repeat="phone in profile.phone track by $index">

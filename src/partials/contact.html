@@ -38,4 +38,8 @@
     <div class="label">Notes</div>
     <div class="notes">{{contact.notes}}</div>
   </div>
+
+  <div class="operations" ng-show="userIsAdmin">
+    <div class="edit"><a href="#/contactsId/profile/{{contact._id}}">Edit Profile</a></div>
+  </div>
 </div>
