@@ -7,7 +7,8 @@
   });
 
   var jso,
-  app;
+    app,
+    loginRedirect = '';
 
 // Initialize JSO
 jso = new JSO({
@@ -60,6 +61,7 @@ app.run(function ($rootScope, $location, authService) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
       event.preventDefault();
+      loginRedirect = $location.path();
       $location.path('/login');
     }
   });
@@ -126,7 +128,8 @@ app.controller("LoginCtrl", function($scope, $location, authService) {
   authService.verify(function (err) {
     if (!err && authService.isAuthenticated()) {
       $scope.$apply(function () {
-        $location.path('/contactsId');
+        $location.path(loginRedirect.length ? loginRedirect : '/contactsId');
+        loginRedirect = '';
       });
     }
   });
