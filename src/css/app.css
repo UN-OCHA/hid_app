@@ -2335,7 +2335,7 @@ body .entypo {
 
 .list-content .btn-primary, .list-content .btn-warning {
   width: 100%;
-  margin-bottom: 4px;
+  margin-bottom: 15px;
 }
 
 @font-face {
@@ -2406,14 +2406,18 @@ h3 {
 }
 .main-content .profile-item h4 {
   float: left;
-  padding: 3px 15px;
+  padding: 0;
+  margin: 0;
 }
-.main-content .profile-item h4, .main-content .profile-item h4 a {
+.main-content .profile-item h4 a {
+  display: block;
+  width: 100%;
   color: #54b1c8;
   text-transform: uppercase;
   font-size: 12px;
   font-weight: bold;
   line-height: 24px;
+  padding: 15px;
 }
 .main-content .profile-item .btn-group {
   float: right;
@@ -2541,6 +2545,11 @@ h3 {
   font-weight: bold;
   line-height: 24px;
   color: #767676;
+}
+@media (min-width: 768px) {
+  .contact-item {
+    font-size: 12px;
+  }
 }
 @media (min-width: 980px) {
   .contact-item {

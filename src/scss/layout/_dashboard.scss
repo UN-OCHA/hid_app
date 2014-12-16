@@ -24,13 +24,18 @@
     }
     h4 {
       float: left;
-      padding: 3px 15px;
-      &, a{
+      padding: 0;
+      margin: 0;
+
+      a {
+        display: block;
+        width: 100%;
         color: $primary-color-1;
         text-transform: uppercase;
         font-size: 12px;
         font-weight: bold;
         line-height: 24px;
+        padding: 15px;
       }
     }
     .btn-group {
