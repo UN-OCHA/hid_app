@@ -4,7 +4,11 @@
 
   @media(min-width: 768px) {
     height: 120px;
-    background-position: right -280px;
+    background-position: 480px -480px;
+  }
+
+  @media(min-width: 900px) {
+    background-position: right -480px;
   }
 }
 
