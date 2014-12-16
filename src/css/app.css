@@ -2318,8 +2318,14 @@ body .entypo {
   border: none;
   background-color: #54b1c8;
 }
-.btn-primary:hover {
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
   background-color: #41a8c2;
+  border: none;
 }
 
 .btn-login-controls {
