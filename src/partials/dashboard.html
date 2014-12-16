@@ -16,16 +16,17 @@
       <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts" ng-class="{'list-group-item-info' : profile.type == 'global'}">
         <a ng-show="profile.confirmDelete" class="slide btn btn-warning btn-sm btn-hidden" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'">Checkout</a>
         <h4>
-          <a href="#/contactsId/list/global">
-            <span class="profile-item-name" ng-if="profile.type == 'global'">Global Contact List</span>
-            <span class="profile-item-name" ng-if="profile.type == 'local'">{{profile.location}}
+          <a href="#/contactsId/list/{{profile.locationId}}" ng-if="profile.type == 'local'">
+            <span class="profile-item-name">{{profile.location}}
               <span class="operation" ng-show="profile.operation.length"> &ndash; {{profile.operation}}</span>
             </span>
           </a>
+          <a href="#/contactsId/list/global" ng-if="profile.type == 'global'">
+            <span class="profile-item-name">Global Contact List</span>
+          </a>
         </h4>
         <div class="btn-group">
-          <a class="btn btn-sm" href="#/contactsId/list/{{profile.locationId}}" ng-if="profile.type == 'global'"><i class="fa fa-pencil"></i></a>
-          <a class="btn btn-sm" href="#/contactsId/profile/{{profile._id}}" ng-if="profile.type == 'local'" title="Contact List Edit"><i class="fa fa-pencil"></i></a>
+          <a class="btn btn-sm" href="#/contactsId/profile/{{profile._id}}" title="Contact List Edit"><i class="fa fa-pencil"></i></a>
           <a class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="Checkout"><i class="fa fa-times"></i></a>
         </div>
       </li>
