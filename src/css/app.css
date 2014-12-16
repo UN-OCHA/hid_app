@@ -2270,6 +2270,31 @@ body .entypo {
   }
 }
 
+.contact-search {
+  background: #fff url(../images/sprite.png) no-repeat right -295px;
+}
+.contact-search::-webkit-input-placeholder {
+  color: #54b1c8;
+}
+.contact-search:-moz-placeholder {
+  /* Firefox 18- */
+  color: #54b1c8;
+}
+.contact-search::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #54b1c8;
+}
+.contact-search:-ms-input-placeholder {
+  color: #54b1c8;
+}
+
+.form-control {
+  -webkit-box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: none;
+}
+
 .btn-lg, .btn-md, .btn-sm {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -2644,7 +2669,7 @@ h3 {
 }
 
 .logo {
-  background: url(../images/sprite.png) -10px -94px;
+  background: url(../images/sprite.png) no-repeat -10px -94px;
   height: 52px;
   width: 276px;
   padding: 0;
