@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="/css/app.css">
 <base href="/">
 </head>
-<body ng-app="contactsId">
+<body ng-app="contactsId" breakpoint="{0:'smallscreen', 768:'break768', 960:'break960'}" class="{{breakpoints}}">
   <div id="contactsid-app-view-wrapper">
     <div id="contactsid-app" class="contactsid-app">
       <ng-include src="'partials/header.html'"></ng-include>
@@ -35,6 +35,7 @@
 <script type="text/javascript" src="/libraries/angular-spinkit/build/angular-spinkit.min.js"></script>
 <script type="text/javascript" src="/libraries/intl-tel-input/build/js/intlTelInput.js"></script>
 <script type="text/javascript" src="/libraries/intl-tel-input/lib/libphonenumber/build/utils.js"></script>
+<script type="text/javascript" src="/js/libraries/angularjs-breakpoint/breakpoint-0.0.1.min.js"></script>
 <script type="text/javascript" src="/js/directives/international-phone-number.js"></script>
 <script type="text/javascript" src="/js/jso.js"></script>
 <script type="text/javascript" src="/js/config.js"></script>

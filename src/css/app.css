@@ -7,8 +7,8 @@
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url(../fonts/font-awesome/fontawesome-webfont.eot?1418168325);
-  src: url(../fonts/font-awesome/fontawesome-webfont.eot?&1418168325#iefix) format("embedded-opentype"), url(../fonts/font-awesome/fontawesome-webfont.woff?1418168325) format("woff"), url(../fonts/font-awesome/fontawesome-webfont.ttf?1418168325) format("truetype"), url(../fonts/font-awesome/fontawesome-webfont.svg?1418168325#fontawesomeregular) format("svg");
+  src: url(../fonts/font-awesome/fontawesome-webfont.eot?1418164690);
+  src: url(../fonts/font-awesome/fontawesome-webfont.eot?&1418164690#iefix) format("embedded-opentype"), url(../fonts/font-awesome/fontawesome-webfont.woff?1418164690) format("woff"), url(../fonts/font-awesome/fontawesome-webfont.ttf?1418164690) format("truetype"), url(../fonts/font-awesome/fontawesome-webfont.svg?1418164690#fontawesomeregular) format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -2226,9 +2226,6 @@ body .entypo {
 .contactsid-app p {
   margin: 0 0 9px;
 }
-.contactsid-app .list-content {
-  margin-top: 20px;
-}
 .contactsid-app .active-countries-container li a,
 .contactsid-app .active-operations-container li a,
 .contactsid-app .active-contacts-container li a {
@@ -2237,6 +2234,40 @@ body .entypo {
 
 .text-highlight {
   color: #b1e3ec;
+}
+
+.element-invisible {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.bottom-controls {
+  padding-bottom: 60px;
+}
+
+.masthead, .main {
+  padding-left: 0;
+  padding-right: 0;
+}
+@media (min-width: 768px) {
+  .masthead, .main {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+
+@media (max-width: 767px) {
+  .col-xs-12 {
+    padding: 0 !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .col-space-above {
+    margin-top: 38px;
+  }
 }
 
 .btn-lg, .btn-md, .btn-sm {
@@ -2277,6 +2308,11 @@ body .entypo {
   background-color: #41a8c2;
 }
 
+.list-content .btn-primary, .list-content .btn-warning {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
 @font-face {
   font-family: 'exo2';
   src: url("../fonts/exo2/exo2-semibold-webfont.eot");
@@ -2307,6 +2343,12 @@ h3 {
   text-transform: uppercase;
   color: #afafaf;
   font-size: 12px;
+}
+
+.heading-contact-list {
+  color: #54b1c8;
+  width: 100%;
+  text-align: center;
 }
 
 .actions .btn {
@@ -2344,8 +2386,9 @@ h3 {
 .main-content .profile-item h4, .main-content .profile-item h4 a {
   color: #54b1c8;
   text-transform: uppercase;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 24px;
 }
 .main-content .profile-item .btn-group {
   float: right;
@@ -2420,12 +2463,120 @@ h3 {
   right: 109px;
 }
 
+.contact-item {
+  position: relative;
+  display: inline-block;
+  padding: 3px 15px 3px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 24px;
+  color: #767676;
+}
+@media (min-width: 980px) {
+  .contact-item {
+    padding: 11px 15px 11px 15px;
+  }
+}
+.contact-item:after {
+  content: "";
+  display: table;
+}
+
+.contact-item--name {
+  min-width: 180px;
+}
+.contact-item--name a {
+  color: #54b1c8;
+}
+
+.contact-item--jobtitle {
+  min-width: 180px;
+  clear: both;
+  display: block;
+}
+@media (min-width: 980px) {
+  .contact-item--jobtitle {
+    display: inline-block;
+  }
+}
+
+.contact-item--organization {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+@media (min-width: 980px) {
+  .contact-item--organization {
+    min-width: 180px;
+    position: relative;
+    right: auto;
+    bottom: auto;
+  }
+}
+
+.contact-item--bundle {
+  display: none;
+}
+@media (min-width: 768px) {
+  .contact-item--bundle {
+    display: inline-block;
+  }
+}
+
+.contact-search {
+  padding: 20px;
+}
+
+.contact-list-btn {
+  width: 100%;
+  background-color: #54b1c8;
+  text-align: center;
+  height: 50px;
+  position: fixed;
+  margin-left: -15px;
+  bottom: 0;
+  z-index: 10;
+}
+.contact-list-btn a {
+  position: relative;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 0;
+  display: block;
+  height: 100%;
+  width: 100%;
+  text-transform: uppercase;
+  line-height: 2.2;
+}
+
+.contact-list-btn__arrow {
+  position: relative;
+  margin-left: -25px;
+}
+.contact-list-btn__arrow:before {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 18px 18px 18px;
+  border-color: transparent transparent #54b1c8 transparent;
+  top: -28px;
+  margin: 0 auto;
+}
+
 .header {
   background-color: #f9f9f9;
   position: relative;
 }
 .header .utility {
   padding: 9px 20px;
+  display: none;
+}
+@media (min-width: 768px) {
+  .header .utility {
+    display: block;
+  }
 }
 
 .primary-nav {
@@ -2433,6 +2584,12 @@ h3 {
   position: absolute;
   bottom: -8px;
   left: 12px;
+  display: none;
+}
+@media (min-width: 768px) {
+  .primary-nav {
+    display: block;
+  }
 }
 .primary-nav ul {
   list-style-type: none;
@@ -2476,15 +2633,31 @@ h3 {
 }
 
 .logo-bar {
-  background: #54b1c8 url(../images/sprite.png) no-repeat right -280px;
-  height: 120px;
+  background: #54b1c8 url(../images/sprite.png) no-repeat 5000px 5000px;
+  height: 55px;
+}
+@media (min-width: 768px) {
+  .logo-bar {
+    height: 120px;
+    background-position: right -280px;
+  }
 }
 
 .logo {
-  background: url(../images/sprite.png) no-repeat 11px -139px;
-  height: 90px;
-  width: 420px;
-  padding: 15px 0 0 20px;
+  background: url(../images/sprite.png) -10px -94px;
+  height: 52px;
+  width: 276px;
+  padding: 0;
+  background-size: 100%;
+}
+@media (min-width: 768px) {
+  .logo {
+    height: 90px;
+    width: 420px;
+    padding: 15px 0 0 20px;
+    background-size: 100%;
+    background-position: 11px -139px;
+  }
 }
 
 .profile-item {

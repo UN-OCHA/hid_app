@@ -6,7 +6,6 @@
     })
   });
 
-
   var jso,
   app;
 
@@ -24,7 +23,7 @@ jso.callback(null, function (token) {
 });
 
 // Initialize ng
-app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'angular-spinkit', 'internationalPhoneNumber']);
+app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber']);
 
 app.value('cgBusyDefaults',{
   message:'Loading...',
@@ -64,6 +63,12 @@ app.run(function ($rootScope, $location, authService) {
       $location.path('/login');
     }
   });
+
+  //console.log($rootScope);
+  //console.log($rootScope.$eval(attr.breakpoint));
+  //if ($rootScope.breakpoint.windowSize !== 'smallscreeen') {
+  //  console.log('woot this is big screen!');
+  //}
 });
 
 app.controller("HeaderCtrl", function($scope, $rootScope) {
@@ -382,9 +387,22 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
       bundle: '',
       role: ''
     };
+    // Submit search after clearing query to show all.
+    $scope.submitSearch();
   };
 
+  $scope.$on('breakpointChange', function(event, breakpoint, oldClass) {
+    if ($scope.breakpoint.class !== 'smallscreen' && !$scope.contacts.length) {
+      $scope.submitSearch();
+    }
+  });
+
   $scope.resetSearch();
+
+  // Fire off search if larger screen size.
+  if ($scope.breakpoint.class !== 'smallscreen') {
+    $scope.submitSearch();
+  }
 });
 
 app.config(function($routeProvider, $locationProvider) {
