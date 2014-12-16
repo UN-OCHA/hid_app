@@ -8,12 +8,12 @@
 
     <div class="" ng-show="breakpoint.class === 'smallscreen' ">
 
-      <div class="contact-list-btn contact-list-btn--list" ng-show="mode === 'list'" role="presentation" ng-class="{active : mode !== 'list'}">
-        <a href ng-click="mode = 'search'"><div class="contact-list-btn__arrow"></div>Contact List Filters</a>
+      <div class="bottom-fixed-btn" ng-show="mode === 'list'" role="presentation" ng-class="{active : mode !== 'list'}">
+        <a href ng-click="mode = 'search'"><div class="bottom-fixed-btn__arrow"></div>Contact List Filters</a>
       </div>
 
-      <div class="contact-list-btn contact-list-btn--filter" ng-show="mode !== 'list'" role="presentation" ng-class="{active : mode === 'list'}">
-        <a href ng-click="showList()"><div class="contact-list-btn__arrow"></div>Contact List</a>
+      <div class="bottom-fixed-btn" ng-show="mode !== 'list'" role="presentation" ng-class="{active : mode === 'list'}">
+        <a href ng-click="showList()"><div class="bottom-fixed-btn__arrow"></div>Contact List</a>
       </div>
 
     </div>

@@ -1,6 +1,5 @@
-.contact-list-btn {
+.bottom-fixed-btn {
   width: 100%;
-  background-color: $primary-color-1;
   text-align: center;
   height: 50px;
   position: fixed;
@@ -9,6 +8,7 @@
   z-index: 10;
 
   a {
+    background-color: $primary-color-1;
     position: relative;
     color: $white;
     font-weight: bold;
@@ -18,10 +18,19 @@
     width: 100%;
     text-transform: uppercase;
     line-height: 2.2;
+
+    &:hover {
+      text-decoration: none;
+      background-color: darken($primary-color-1, 10);
+
+      .bottom-fixed-btn__arrow:before {
+        border-color: transparent transparent darken($primary-color-1, 10) transparent;
+      }
+    }
   }
 }
 
-.contact-list-btn__arrow {
+.bottom-fixed-btn__arrow {
   position: relative;
   margin-left: -25px;
 
@@ -36,12 +45,4 @@
     top: -28px;
     margin: 0 auto;
   }
-}
-
-.contact-list-btn--list {
-
-}
-
-.contact-list-btn--filter {
-
 }
