@@ -4,7 +4,13 @@
 </div>
 
 <div class="contact container"  ng-show="!isRouteLoading">
-  <h3>{{contact.nameGiven}} {{contact.nameFamily}} ({{contact.location}})</h3>
+  <h3>{{contact.nameGiven}} {{contact.nameFamily}} ({{contact.location}})
+    <span class="contact-item contact-item--verified" ng-if="contact._profile.verified"><i class="fa fa-check-circle"></i></span>
+    <span class="contact-item contact-item--key-contact" ng-if="contact.keyContact"><i class="fa fa-star"></i></span>
+    <span ng-if="contact._profile.verified || contact.keyContact">
+      (<span ng-if="contact.keyContact">key contact</span><span ng-if="contact._profile.verified && contact.keyContact">/</span><span ng-if="contact._profile.verified">verified</span>)
+    </span>
+  </h3>
   <div class="title">{{contact.jobtitle}}</div>
   <div class="organization">{{contact.organization[0].name}}</div>
   <div class="bundles">

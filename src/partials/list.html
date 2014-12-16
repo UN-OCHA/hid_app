@@ -57,8 +57,11 @@
 
     <ul class="list-group">
       <li class="profile-item list-group-item" ng-repeat="contact in contacts">
-        <div class="contact-item contact-item--name"><a href="#/contactsId/contact/{{contact._id}}">{{contact.nameGiven}}
-          {{contact.nameFamily}}</a></div>
+        <div class="contact-item contact-item--name">
+          <a href="#/contactsId/contact/{{contact._id}}">{{contact.nameGiven}} {{contact.nameFamily}}</a>
+          <span class="contact-item contact-item--verified" ng-if="contact._profile.verified"><i class="fa fa-check-circle"></i></span>
+          <span class="contact-item contact-item--key-contact" ng-if="contact.keyContact"><i class="fa fa-star"></i></span>
+        </div>
         <div class="contact-item contact-item--jobtitle">{{contact.jobtitle}}</div>
         <div class="contact-item contact-item--organization">{{contact.organization[0].name}}</div>
         <div class="contact-item contact-item--bundle">{{contact.bundle.join(', ')}}</div>
