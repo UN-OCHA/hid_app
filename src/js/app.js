@@ -6,16 +6,6 @@
     })
   });
 
-  //var breakpoints = {
-  //  $mq_smaller: "screen and (min-width: 20em)",
-  //  $mq_small: "screen and (min-width: 30em)",
-  //  $mq_small_height: "screen and (min-height: 50em)",
-  //  $mq_medium: "screen and (min-width: 40em)",
-  //  $mq_large: "screen and (min-width: 50em)",
-  //  $mq_larger: "screen and (min-width: 65em)"
-  //};
-
-
   var jso,
   app;
 
@@ -394,9 +384,9 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
   };
 
   $scope.$on('breakpointChange', function(event, breakpoint, oldClass) {
-    console.log('Entering:' + breakpoint.class);
-    console.log('Leaving:' + oldClass);
-    console.log('windowSize' + breakpoint.windowSize);
+    //console.log('Entering:' + breakpoint.class);
+    //console.log('Leaving:' + oldClass);
+    //console.log('windowSize' + breakpoint.windowSize);
   });
 
   $scope.resetSearch();
