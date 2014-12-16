@@ -527,8 +527,8 @@ app.config(function($routeProvider, $locationProvider) {
 
             // Contact is not for the current user
             return profileService.getContacts({_id: contactId}).then(function (data) {
-              if (data && data.contacts && data.contacts[0] && data.contacts[0]._id && data.contacts[0]._profile) {
-                return profileService.getProfileById(data.contacts[0]._profile).then(function (data) {
+              if (data && data.contacts && data.contacts[0] && data.contacts[0]._profile && data.contacts[0]._profile._id) {
+                return profileService.getProfileById(data.contacts[0]._profile._id).then(function (data) {
                   if (data && data.profile && data.contacts && data.contacts.length) {
                     num = data.contacts.length;
                     for (i = 0; i < num; i++) {
