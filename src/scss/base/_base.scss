@@ -17,10 +17,6 @@ body {
     margin: 0 0 9px;
   }
 
-  .list-content {
-    margin-top: 20px;
-  }
-
   .active-countries-container li a,
   .active-operations-container li a,
   .active-contacts-container li a {
@@ -36,4 +32,30 @@ body {
   position: absolute !important;
   clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
   clip: rect(1px, 1px, 1px, 1px);
+}
+
+.bottom-controls {
+  padding-bottom: 60px;
+}
+
+.masthead, .main {
+  padding-left: 0;
+  padding-right: 0;
+
+  @media(min-width: 768px) {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+
+.col-xs-12 {
+  @media(max-width: 767px) {
+    padding: 0 !important;
+  }
+}
+
+.col-space-above {
+  @media(min-width: 768px) {
+    margin-top: 38px;
+  }
 }

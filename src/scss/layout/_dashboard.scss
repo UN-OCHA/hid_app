@@ -17,7 +17,7 @@
     overflow: hidden;
     .btn-warning.btn-hidden {
       float: left;
-      background: $secundary-color-1;
+      background: $secondary-color-1;
       height: 45px;
       width: 109px;
       line-height: 24px;
@@ -30,7 +30,7 @@
         text-transform: uppercase;
         font-size: 12px;
         font-weight: bold;
-        line-height: 20px;
+        line-height: 24px;
       }
     }
     .btn-group {
@@ -56,7 +56,7 @@
   .btn-group {
     .btn-checkout {
       &:hover {
-        background: $secundary-color-1;
+        background: $secondary-color-1;
       }
     }
   }

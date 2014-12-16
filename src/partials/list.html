@@ -1,31 +1,32 @@
 <div class="masthead">
-  <h2>{{title}}</h2>
+  <h2 class="heading-contact-list">{{location}} Contact List</h2>
 
   <div ng-show="!isRouteLoading">
+    <!--
     <div class="back-link"><a class="btn btn-warning btn-sm" href="#/contactsId"><i class="fa fa-arrow-circle-left"></i>
-      Back</a></div>
+      Back</a></div>-->
 
-    <h3>{{location}} &mdash; Contact List</h3>
+    <div class="" ng-show="breakpoint.class === 'smallscreen' ">
 
-    <ul class="nav nav-pills" role="tablist">
-      <li role="presentation" ng-class="{active : mode !== 'list'}">
-        <a href ng-click="mode = 'search'"><i class="fa fa-search"></i> Search</a>
-      </li>
-      <li role="presentation" ng-class="{active : mode === 'list'}">
-        <a href ng-click="showList()"><i class="fa fa-list-alt"></i> List</a>
-      </li>
-    </ul>
+      <div class="contact-list-btn contact-list-btn--list" ng-show="mode === 'list'" role="presentation" ng-class="{active : mode !== 'list'}">
+        <a href ng-click="mode = 'search'"><div class="contact-list-btn__arrow"></div>Contact List Filters</a>
+      </div>
+
+      <div class="contact-list-btn contact-list-btn--filter" ng-show="mode !== 'list'" role="presentation" ng-class="{active : mode === 'list'}">
+        <a href ng-click="showList()"><div class="contact-list-btn__arrow"></div>Contact List</a>
+      </div>
+
+    </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="list-content sidebar-left col-xs-3" ng-show="!isRouteLoading">
-    <div class="search" ng-show="mode !== 'list'">
+<div class="container main bottom-controls">
+  <div class="list-content sidebar-left col-xs-12 col-sm-3" ng-show="!isRouteLoading">
+    <div class="search" ng-show="mode !== 'list' || breakpoint.class !== 'smallscreen' ">
       <form class="filter-form">
 
         <div class="form-group">
-          <h4>Filter List:</h4>
-          <label class="control-label" for="bundle">Bundle</label>
+          <label class="control-label element-invisible" for="bundle">Bundle</label>
           <select class="form-control" name="bundle" ng-model="query.bundle"
                   ng-options="bundleName for (bundleId, bundleName) in bundles">
             <option value=""></option>
@@ -40,7 +41,7 @@
     </div>
   </div>
 
-  <div class="active-contacts col-xs-9" ng-show="mode === 'list'" cg-busy="contactsPromise">
+  <div class="active-contacts col-xs-12 col-sm-9" ng-show="mode === 'list' || breakpoint.class !== 'smallscreen' " cg-busy="contactsPromise">
     <form class="search-form">
       <div class="form-group">
         <label class="control-label element-invisible" for="text">Search</label>
