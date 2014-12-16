@@ -15,6 +15,7 @@
   //  $mq_larger: "screen and (min-width: 65em)"
   //};
 
+
   var jso,
   app;
 
@@ -32,7 +33,7 @@ jso.callback(null, function (token) {
 });
 
 // Initialize ng
-app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'angular-spinkit', 'internationalPhoneNumber', 'angular-enquire-breakpoints']);
+app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber']);
 
 app.value('cgBusyDefaults',{
   message:'Loading...',
@@ -391,6 +392,12 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
       role: ''
     };
   };
+
+  $scope.$on('breakpointChange', function(event, breakpoint, oldClass) {
+    console.log('Entering:' + breakpoint.class);
+    console.log('Leaving:' + oldClass);
+    console.log('windowSize' + breakpoint.windowSize);
+  });
 
   $scope.resetSearch();
 });
