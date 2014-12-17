@@ -125,7 +125,9 @@
             <div class="row">
               <label class="col-sm-2 control-label" for="email[{{$index}}][type]">Email Description</label>
               <div class="col-sm-4">
-                <input class="form-control" type="text" name="email[{{$index}}][type]" ng-model="profile.email[$index].type" />
+                <select class="form-control" ng-options="type for type in emailTypes" name="email[{{$index}}][type]" ng-model="profile.email[$index].type">
+                  <option value="">-- Choose Email Type --</option>
+                </select>
               </div>
 
               <label class="col-sm-2 control-label" for="email[{{$index}}][address]">Email</label>
