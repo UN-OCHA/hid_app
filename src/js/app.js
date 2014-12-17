@@ -458,18 +458,30 @@ app.config(function($routeProvider, $locationProvider) {
     controller: 'ProfileCtrl',
     requireAuth: true,
     resolve: {
-      userData : function(profileService) {
-        return profileService.getUserData().then(function(data) {
-          return data;
-        });
-      },
       placesOperations : function(profileService) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
       },
       profileData : function (profileService) {
-        return {};
+        var i,
+          num,
+          val,
+          profileData = {contact: {}};
+        return profileService.getUserData().then(function (data) {
+          if (data && data.contacts && data.contacts.length) {
+            profileData.profile = data.profile;
+            num = data.contacts.length;
+            for (i = 0; i < num; i++) {
+              val = data.contacts[i];
+              if (val && val.type && val.type === 'global') {
+                profileData.global = val;
+                break;
+              }
+            }
+          }
+          return profileData;
+        });
       }
     }
   }).
@@ -478,11 +490,6 @@ app.config(function($routeProvider, $locationProvider) {
     controller: 'ProfileCtrl',
     requireAuth: true,
     resolve: {
-      userData : function(profileService) {
-        return profileService.getUserData().then(function(data) {
-          return data;
-        });
-      },
       placesOperations : function(profileService) {
         return profileService.getOperationsData().then(function(data) {
           return data;
