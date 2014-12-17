@@ -378,6 +378,8 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
       query.type = 'local';
       query.locationId = $scope.locationId;
     }
+    query.verified = query.verified ? true : null;
+    query.keyContact = query.keyContact ? true : null;
     query.status = 1;
     $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
       if (data && data.status && data.status === 'ok') {
