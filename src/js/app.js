@@ -65,12 +65,6 @@ app.run(function ($rootScope, $location, authService) {
       $location.path('/login');
     }
   });
-
-  //console.log($rootScope);
-  //console.log($rootScope.$eval(attr.breakpoint));
-  //if ($rootScope.breakpoint.windowSize !== 'smallscreeen') {
-  //  console.log('woot this is big screen!');
-  //}
 });
 
 app.controller("HeaderCtrl", function($scope, $rootScope) {
