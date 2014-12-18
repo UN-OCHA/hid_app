@@ -1,4 +1,8 @@
 .sidebar-left {
+  position: static;
+  @media(min-width: 768px) {
+    position: relative;
+  }
   a{
     line-height: 16px;
     i.entypo {
@@ -16,6 +20,23 @@
     position: fixed;
     bottom: 0px;
     left: 0;
+    cursor: pointer;
+    @media(min-width: 768px) {
+      display: none;
+    }
+  }
+  .actions {
+    position: absolute;
+    bottom: 70px;
+    width: 96%;
+    left: 2%;
+    display: none;
+    @media(min-width: 768px) {
+      display: block;
+      position: relative;
+      bottom: inherit;
+      left: inherit;
+    }
   }
 }
 .main-content {

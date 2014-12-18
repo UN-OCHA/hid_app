@@ -2648,6 +2648,14 @@ h3 {
   padding: 20px;
 }
 
+.sidebar-left {
+  position: static;
+}
+@media (min-width: 768px) {
+  .sidebar-left {
+    position: relative;
+  }
+}
 .sidebar-left a {
   line-height: 16px;
 }
@@ -2664,6 +2672,27 @@ h3 {
   position: fixed;
   bottom: 0px;
   left: 0;
+  cursor: pointer;
+}
+@media (min-width: 768px) {
+  .sidebar-left span.dashboard-options {
+    display: none;
+  }
+}
+.sidebar-left .actions {
+  position: absolute;
+  bottom: 70px;
+  width: 96%;
+  left: 2%;
+  display: none;
+}
+@media (min-width: 768px) {
+  .sidebar-left .actions {
+    display: block;
+    position: relative;
+    bottom: inherit;
+    left: inherit;
+  }
 }
 
 .main-content .profile-item .btn-warning.btn-hidden {
