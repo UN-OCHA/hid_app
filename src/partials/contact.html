@@ -39,7 +39,7 @@
 
         <div class="profile-view__item">
           <span class="title"><ng-pluralize count="contact.bundle.length"
-                                               when="{'one': 'Bundle', 'other': 'Bundles'}"></ng-pluralize>:</span>
+                                               when="{'one': 'Group', 'other': 'Groups'}"></ng-pluralize>:</span>
             {{contact.bundle.join(', ')}}
         </div>
         <div class="phone" ng-repeat="phone in contact.phone">

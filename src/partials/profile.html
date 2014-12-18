@@ -72,7 +72,7 @@
         </div>
 
         <div class="form-group reveal" ng-repeat="bundle in profile.bundle track by $index" ng-if="profile.type === 'local'">
-          <label class="col-sm-2 control-label" for="bundle[{{$index}}]">Bundle</label>
+          <label class="col-sm-2 control-label" for="bundle[{{$index}}]">Group</label>
           <div class="col-sm-10">
             <select class="form-control" name="bundle[{{$index}}]" ng-model="profile.bundle[$index]" ng-options="bundleName for (bundleId, bundleName) in placesOperations[selectedPlace][selectedOperation].bundles" ng-change="checkMultiFields()">
               <option value=""></option>
@@ -112,14 +112,14 @@
           <h4>Phone Numbers</h4>
           <div class="reveal" ng-repeat="phone in profile.phone track by $index">
             <div class="row">
-              <label class="col-sm-2 control-label" for="phone[{{$index}}][type]">Phone Number Description</label>
+              <label class="col-sm-2 control-label" for="phone[{{$index}}][type]">Type</label>
               <div class="col-sm-4">
                 <select class="form-control" ng-options="type for type in phoneTypes" name="phone[{{$index}}][type]" ng-model="profile.phone[$index].type">
-                  <option value="">-- Choose Phone Type --</option>
+                  <option value="">-- Choose Type --</option>
                 </select>
               </div>
 
-              <label class="col-sm-2 control-label" for="phone[{{$index}}][number]">Phone Number</label>
+              <label class="col-sm-2 control-label" for="phone[{{$index}}][number]">Number</label>
               <div class="col-sm-4">
                 <input ng-if="phone.type != 'Satellite'" ng-model="profile.phone[$index].number" international-phone-number auto-format="true" national-mode="false" responsive-dropdown="true" class="form-control" type="text" name="phone[{{$index}}][number]" ng-change="setCountryCode(); checkMultiFields()" />
                 
@@ -135,10 +135,10 @@
           <h4>Email Addresses</h4>
           <div class="reveal" ng-repeat="email in profile.email track by $index">
             <div class="row">
-              <label class="col-sm-2 control-label" for="email[{{$index}}][type]">Email Description</label>
+              <label class="col-sm-2 control-label" for="email[{{$index}}][type]">Type</label>
               <div class="col-sm-4">
                 <select class="form-control" ng-options="type for type in emailTypes" name="email[{{$index}}][type]" ng-model="profile.email[$index].type">
-                  <option value="">-- Choose Email Type --</option>
+                  <option value="">-- Choose Type --</option>
                 </select>
               </div>
 
@@ -154,7 +154,7 @@
           <h4>VOIP</h4>
           <div class="reveal" ng-repeat="voip in profile.voip track by $index">
             <div class="row">
-              <label class="col-sm-2 control-label" for="voip[{{$index}}][desc]">VOIP Description</label>
+              <label class="col-sm-2 control-label" for="voip[{{$index}}][desc]">Type</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="voip[{{$index}}][type]" ng-model="profile.voip[$index].type" />
               </div>
