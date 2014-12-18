@@ -1,51 +1,69 @@
 <div class="masthead container">
-  <h2>{{title}}</h2>
-  <div class="back-link" ng-show="!isRouteLoading"><a class="btn btn-warning btn-sm" href ng-click="back();"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
-</div>
 
-<div class="contact container"  ng-show="!isRouteLoading">
-  <h3>{{contact.nameGiven}} {{contact.nameFamily}} ({{contact.location}})
-    <span class="contact-item contact-item--verified" ng-if="contact._profile.verified"><i class="fa fa-check-circle"></i></span>
-    <span class="contact-item contact-item--key-contact" ng-if="contact.keyContact"><i class="fa fa-star"></i></span>
-    <span ng-if="contact._profile.verified || contact.keyContact">
-      (<span ng-if="contact.keyContact">key contact</span><span ng-if="contact._profile.verified && contact.keyContact">/</span><span ng-if="contact._profile.verified">verified</span>)
-    </span>
-  </h3>
-  <div class="title">{{contact.jobtitle}}</div>
-  <div class="organization">{{contact.organization[0].name}}</div>
-  <div class="bundles">
-    <p><span class="title"><ng-pluralize count="contact.bundle.length" when="{'one': 'Bundle', 'other': 'Bundles'}"></ng-pluralize>:</span> {{contact.bundle.join(', ')}}</p>
-  </div>
-  <div class="phone" ng-repeat="phone in contact.phone">
-    <div class="label">{{phone.type}}</div>
-    <div class="phone-number"><a href="tel:{{phone.number}}">{{phone.number}}</a></div>
-  </div>
-  <div class="email" ng-repeat="email in contact.email">
-    <div class="label">{{email.type}}</div>
-    <div class="email-address"><a href="mailto:{{email.address}}">{{email.address}}</a></div>
-  </div>
-  <div class="voip" ng-repeat="voip in contact.voip">
-    <div class="label">{{voip.type}}</div>
-    <div class="voip-number">{{voip.number}}</div>
-  </div>
-  <div class="location">
-    <div class="label">Country</div>
-    <div class="location-country">{{contact.address[0].country}}</div>
-    <div class="label">State/Province/Region</div>
-    <div class="location-region">{{contact.address[0].administrative_area}}</div>
-    <div class="label">City</div>
-    <div class="location-city">{{contact.address[0].locality}}</div>
-  </div>
-  <div class="uri">
-    <div class="label">Website/Social Media</div>
-    <div class="uri" ng-repeat="uri in contact.uri"><a href="{{uri}}">{{uri}}</a></div>
-  </div>
-  <div class="notes">
-    <div class="label">Notes</div>
-    <div class="notes">{{contact.notes}}</div>
-  </div>
+  <!--<div class="back-link" ng-show="!isRouteLoading"><a class="btn btn-warning btn-sm" href ng-click="back();"><i
+      class="fa fa-arrow-circle-left"></i> Back</a></div>
+</div>-->
 
-  <div class="operations" ng-show="userIsAdmin">
-    <div class="edit"><a href="#/contactsId/profile/{{contact._id}}">Edit Profile</a></div>
+  <div class="contact container" ng-show="!isRouteLoading">
+
+    <div class="col-xs-12 col-sm-3 profile-buttons">
+      <a class="btn btn-warning btn-block btn-sm" href ng-click="back();"><i
+          class="fa fa-arrow-circle-left"></i> Back</a>
+      <a class="btn btn-primary btn-lg btn-block" ng-show="userIsAdmin" href="#/contactsId/profile/{{contact._id}}">Edit
+        Profile</a>
+    </div>
+
+    <div class="col-xs-12 col-sm-9 profile-view">
+
+      <div class="profile-view__name-area">
+        <h1 class="profile-view__name">{{contact.nameGiven}} {{contact.nameFamily}} ({{contact.location}})</h1>
+
+        <div class="profile-view__markers">
+          <div class="contact-item__key-contact key-contact-profile-use" ng-if="contact.keyContact">*</div>
+          <div class="contact-item__verified verified-profile-use" ng-if="contact._profile.verified"><i
+            class="fa fa-check-circle"></i></div>
+
+          <span ng-if="contact._profile.verified || contact.keyContact" class="profile-view__key-contact-verified">
+          (<span ng-if="contact.keyContact">key contact</span><span ng-if="contact._profile.verified && contact.keyContact">/</span><span
+            ng-if="contact._profile.verified">verified</span>)
+          </span>
+        </div>
+      </div>
+
+      <div class="profile-view__items">
+        <div class="title"><strong>{{contact.jobtitle}}</strong></div>
+        <div class="organization"><strong>{{contact.organization[0].name}}</strong></div>
+
+        <div class="profile-view__item">
+          <span class="title"><ng-pluralize count="contact.bundle.length"
+                                               when="{'one': 'Bundle', 'other': 'Bundles'}"></ng-pluralize>:</span>
+            {{contact.bundle.join(', ')}}
+        </div>
+        <div class="phone" ng-repeat="phone in contact.phone">
+          <div class="profile-view__item">{{phone.type}}: <a href="tel:{{phone.number}}">{{phone.number}}</a></div>
+        </div>
+        <div class="email" ng-repeat="email in contact.email">
+          <div class="profile-view__item">{{email.type}}: <a href="mailto:{{email.address}}">{{email.address}}</a></div>
+        </div>
+        <div class="voip" ng-repeat="voip in contact.voip">
+          <div class="profile-view__item">{{voip.type}}: {{voip.number}}</div>
+        </div>
+        <div class="location">
+          <div class="profile-view__item">Country: {{contact.address[0].country}}</div>
+          <div class="profile-view__item">State/Province/Region: {{contact.address[0].administrative_area}}</div>
+          <div class="profile-view__item">City: {{contact.address[0].locality}}</div>
+        </div>
+        <div class="uri">
+          Website/Social Media:
+          <div class="uri" ng-repeat="uri in contact.uri"><a href="{{uri}}">{{uri}}</a></div>
+        </div>
+      </div>
+
+      <div class="notes">
+        Notes:
+        <div class="notes">{{contact.notes}}</div>
+      </div>
+
+    </div>
   </div>
 </div>

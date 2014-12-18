@@ -1,0 +1,62 @@
+.profile-view-contents {
+  .label {
+    display: inline-block;
+    color: $primary-color-2;
+    font-weight: normal;
+  }
+}
+
+.profile-view__item {
+  padding: 6px 0;
+}
+
+.contact {
+  background: $background-light;
+  padding: 30px 15px;
+  font-size: 13px;
+  color: $primary-color-2;
+}
+
+.profile-view__name {
+  float: left;
+  font-size: 22px;
+  font-weight: bold;
+  color: $primary-color-1;
+  margin: 0 15px 0 0;
+}
+
+.profile-view__markers {
+  float: left;
+}
+
+.profile-view__name-area {
+  clear: both;
+  padding-bottom: 25px;
+  margin-bottom: 35px;
+  border-bottom: 1px solid $neutral-color-3;
+  overflow: hidden;
+
+  &:after {
+    content: "";
+    display: table;
+  }
+}
+
+.profile-view__items {
+  clear: both;
+  padding-bottom: 35px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid $neutral-color-3;
+}
+
+.profile-view__key-contact-verified {
+  font-size: 13px;
+  color: $primary-color-2;
+  line-height: 24px;
+}
+
+.profile-buttons {
+  .btn {
+    margin-bottom: 15px;
+  }
+}

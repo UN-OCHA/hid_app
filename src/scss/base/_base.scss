@@ -11,6 +11,14 @@ body {
   }
 }
 
+a {
+  color: $primary-color-1;
+  text-decoration: underline;
+
+  &:hover {
+   color: darken($primary-color-1, 20);
+  }
+}
 .contactsid-app {
 
   p {
