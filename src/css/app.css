@@ -2648,6 +2648,15 @@ h3 {
   padding: 20px;
 }
 
+#contactsid-app-view {
+  padding-bottom: 40px;
+}
+@media (min-width: 768px) {
+  #contactsid-app-view {
+    padding-bottom: inherit;
+  }
+}
+
 .sidebar-left {
   position: static;
 }
