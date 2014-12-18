@@ -7,10 +7,10 @@
     <div class="actions">
 
       <span ng-repeat="profile in userData.contacts" ng-if="profile.type == 'global'">
-        <a class="btn btn-default btn-lg btn-block" href="#/contactsId/profile/{{profile._id}}"><i class="entypo">&#59234;</i> Edit Global Profile</a>
+        <a class="btn btn-default btn-lg btn-block" href="#/profile/{{profile._id}}"><i class="entypo">&#59234;</i> Edit Global Profile</a>
       </span>
-      <a class="btn btn-primary btn-lg btn-block" href="#/contactsId/checkin"><i class="entypo">&#59234;</i> Check-in</a>
-      <a class="btn btn-primary btn-lg btn-block" ng-show="!globalProfileId.length" href="#/contactsId/profile/{{globalProfileId}}"><i class="entypo">&#128100;</i> Global Profile</a>
+      <a class="btn btn-primary btn-lg btn-block" href="#/checkin"><i class="entypo">&#59234;</i> Check-in</a>
+      <a class="btn btn-primary btn-lg btn-block" ng-show="!globalProfileId.length" href="#/profile/{{globalProfileId}}"><i class="entypo">&#128100;</i> Global Profile</a>
       <a class="btn btn-default btn-lg btn-block" href="{{logoutPath}}">Logout</a>
     </div>
   </div>
@@ -20,7 +20,7 @@
     <ul class="active-profiles-container list-group">
       <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts" ng-if="profile.type == 'global'">
         <h4>
-          <a href="#/contactsId/list/global">
+          <a href="#/list/global">
             <span class="profile-item-name">Global Contact List</span>
           </a>
         </h4>
@@ -32,15 +32,15 @@
       <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts" ng-if="profile.type == 'local'">
         <a ng-show="profile.confirmDelete" class="slide btn btn-warning btn-sm btn-hidden" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'">Checkout</a>
         <h4>
-          <a href="#/contactsId/list/{{profile.locationId}}">
+          <a href="#/list/{{profile.locationId}}">
             <span class="profile-item-name">{{profile.location}}
               <span class="operation" ng-show="profile.operation.length"> &ndash; {{profile.operation}}</span>
             </span>
           </a>
         </h4>
         <div class="btn-group">
-          <a class="btn btn-sm" href="#/contactsId/profile/{{profile._id}}" title="Contact List Edit"><i class="fa fa-pencil"></i></a>
-          <a class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="Checkout"><i class="fa fa-times"></i></a>
+          <a class="btn btn-sm" href="#/profile/{{profile._id}}" title="Edit my {{profile.location}} profile"><i class="fa fa-pencil"></i></a>
+          <a class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="Check-out from {{profile.location}}"><i class="fa fa-times"></i></a>
         </div>
       </li>
       <li class="disaster-item" ng-if="profilesActive.length == 0">

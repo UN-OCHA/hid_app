@@ -4,7 +4,7 @@
 
 <div ng-show="!isRouteLoading" class="">
   <div class="active-countries" ng-hide="selectedPlace.length">
-    <div class="back-link"><a class="btn btn-warning btn-sm" href="#/contactsId"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
+    <div class="back-link"><a class="btn btn-warning btn-sm" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
     <h3>Select a country</h3>
     <ul class="active-countries-container list-group">
       <li class="country-item list-group-item" ng-repeat="(place, operations) in placesOperations">
@@ -27,7 +27,7 @@
   </div>
 
   <div class="update-profile" ng-show="selectedPlace.length && selectedOperation.length">
-    <div class="back-link"><a class="btn btn-warning btn-sm" href="#/contactsId"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
+    <div class="back-link"><a class="btn btn-warning btn-sm" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
     <h3>{{profileName}} Profile</h3>
     <div class="profile-form-wrapper">
       <form class="profile-form form-horizontal">

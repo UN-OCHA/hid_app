@@ -112,7 +112,7 @@ app.controller("DefaultCtrl", function($scope, $rootScope, $location, authServic
   }
 
   if (authService.isAuthenticated()) {
-    $location.path('/contactsId');
+    $location.path('/dashboard');
   }
 });
 
@@ -122,7 +122,7 @@ app.controller("LoginCtrl", function($scope, $location, authService) {
   authService.verify(function (err) {
     if (!err && authService.isAuthenticated()) {
       $scope.$apply(function () {
-        $location.path(loginRedirect.length ? loginRedirect : '/contactsId');
+        $location.path(loginRedirect.length ? loginRedirect : '/dashboard');
         loginRedirect = '';
       });
     }
@@ -180,7 +180,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
 
   var pathParams = $location.path().split('/'),
-  checkinFlow = pathParams[2] === 'checkin',
+  checkinFlow = pathParams[1] === 'checkin',
   accountData = authService.getAccountData();
   $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
   $scope.userIsAdmin = profileService.hasRole('admin');
@@ -427,7 +427,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
     profileService.saveContact(profile).then(function(data) {
       if (data && data.status && data.status === 'ok') {
-        $location.path('/contactsId');
+        $location.path('/dashboard');
         profileService.clearData();
       }
       else {
@@ -451,7 +451,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
       history.back();
     }
     else {
-      $location.path('/contactsId');
+      $location.path('/dashboard');
     }
   };
 
@@ -568,7 +568,7 @@ app.config(function($routeProvider, $locationProvider) {
     template: 'Redirecting to authentication system...',
     controller: 'RegisterCtrl'
   }).
-  when('/contactsId', {
+  when('/dashboard', {
     templateUrl: contactsId.sourcePath + '/partials/dashboard.html',
     controller: 'DashboardCtrl',
     requireAuth: true,
@@ -592,7 +592,7 @@ app.config(function($routeProvider, $locationProvider) {
       }
     }
   }).
-  when('/contactsId/checkin/:profileId?', {
+  when('/checkin/:profileId?', {
     templateUrl: contactsId.sourcePath + '/partials/profile.html',
     controller: 'ProfileCtrl',
     requireAuth: true,
@@ -634,7 +634,7 @@ app.config(function($routeProvider, $locationProvider) {
       }
     }
   }).
-  when('/contactsId/profile/:profileId?', {
+  when('/profile/:profileId?', {
     templateUrl: contactsId.sourcePath + '/partials/profile.html',
     controller: 'ProfileCtrl',
     requireAuth: true,
@@ -720,7 +720,7 @@ app.config(function($routeProvider, $locationProvider) {
       }
     }
   }).
-  when('/contactsId/contact/:contactId', {
+  when('/contact/:contactId', {
     templateUrl: contactsId.sourcePath + '/partials/contact.html',
     controller: 'ContactCtrl',
     requireAuth: true,
@@ -735,7 +735,7 @@ app.config(function($routeProvider, $locationProvider) {
       }
     }
   }).
-  when('/contactsId/list/:locationId', {
+  when('/list/:locationId', {
     templateUrl: contactsId.sourcePath + '/partials/list.html',
     controller: 'ListCtrl',
     requireAuth: true,

@@ -9,9 +9,9 @@
     <div class="col-xs-12 col-sm-3 profile-buttons">
       <a class="btn btn-warning btn-block btn-sm" href ng-click="back();"><i
           class="fa fa-arrow-circle-left"></i> Back</a>
-      <a class="btn btn-primary btn-lg btn-block" ng-show="userIsAdmin" href="#/contactsId/profile/{{contact._id}}">Edit
+      <a class="btn btn-primary btn-lg btn-block" ng-show="userIsAdmin" href="#/profile/{{contact._id}}">Edit
         Profile</a>
-      <a class="btn btn-primary btn-lg btn-block" ng-show="userIsAdmin" href="#/contactsId/checkin/{{contact._profile._id}}">Check-in User</a>
+      <a class="btn btn-primary btn-lg btn-block" ng-show="userIsAdmin" href="#/checkin/{{contact._profile._id}}">Check-in User</a>
       <a class="btn btn-primary btn-lg btn-checkout btn-block" ng-if="contact.type === 'local'" ng-show="userIsAdmin" ng-click="contact.confirmDelete = !contact.confirmDelete">Check-out User</a>
       <a ng-show="contact.confirmDelete" class="slide btn btn-warning btn-lg btn-block btn-hidden" ng-click="checkout(contact._id)">Confirm User Checkout</a>
     </div>
