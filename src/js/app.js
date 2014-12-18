@@ -201,6 +201,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     delete $scope.profile._id;
     delete $scope.profile._contact;
     $scope.profile.type = 'local';
+    $scope.profile.keyContact = false;
   }
   else {
     $scope.selectedPlace = 'none';
