@@ -19,10 +19,15 @@
 .btn-primary {
   border: none;
   background-color: $primary-color-1;
+}
 
-  &:hover {
-    background-color: darken($primary-color-1, 5);
-  }
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open>.dropdown-toggle.btn-primary {
+  background-color: darken($primary-color-1, 5);
+  border: none;
 }
 
 .btn-login-controls {
@@ -34,5 +39,12 @@
 
   &:hover {
     background-color: darken($primary-color-1, 5);
+  }
+}
+
+.list-content {
+  .btn-primary, .btn-warning {
+    width: 100%;
+    margin-bottom: 15px;
   }
 }

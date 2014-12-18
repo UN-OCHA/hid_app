@@ -1,0 +1,65 @@
+.contact-item {
+  position: relative;
+  display: inline-block;
+  padding: 3px 15px 3px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 24px;
+  color: $primary-color-2;
+
+  @media(min-width: 768px) {
+    font-size: 12px;
+  }
+
+  @media(min-width: 980px) {
+    padding: 11px 15px 11px 15px;
+  }
+
+  &:after {
+    content: "";
+    display: table;
+  }
+}
+
+.contact-item--name {
+  min-width: 180px;
+
+  a {
+    color: $primary-color-1;
+  }
+}
+
+.contact-item--jobtitle {
+  min-width: 180px;
+  clear: both;
+  display: block;
+
+  @media(min-width: 980px) {
+    display: inline-block;
+  }
+}
+
+.contact-item--organization {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+
+  @media(min-width: 980px) {
+    min-width: 180px;
+    position: relative;
+    right: auto;
+    bottom: auto;
+  }
+}
+
+.contact-item--bundle {
+  display: none;
+
+  @media(min-width: 768px) {
+    display: inline-block;
+  }
+}
+
+.contact-search {
+  padding: 20px;
+}

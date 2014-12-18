@@ -1,11 +1,32 @@
 .logo-bar {
-  background: $primary-color-1 url(../images/sprite.png) no-repeat right -280px;
-  height: 120px;
+  background: $primary-color-1 url(../images/sprite.png) no-repeat 5000px 5000px;
+  //height: 55px;
+
+  @media(min-width: 768px) {
+    height: 120px;
+    background-position: 480px -480px;
+  }
+
+  @media(min-width: 900px) {
+    background-position: right -480px;
+  }
+  &.open .log {
+    margin-bottom: 80px;
+  }
 }
 
 .logo {
-  background: url(../images/sprite.png) no-repeat 11px -139px;
-  height: 90px;
-  width: 420px;
-  padding: 15px 0 0 20px;
+  background: url(../images/sprite.png) no-repeat -10px -94px;
+  height: 52px;
+  width: 276px;
+  padding: 0;
+  background-size: 100%;
+
+  @media(min-width: 768px) {
+    height: 90px;
+    width: 420px;
+    padding: 15px 0 0 20px;
+    background-size: 100%;
+    background-position: 11px -139px;
+  }
 }

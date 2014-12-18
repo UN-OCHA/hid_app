@@ -2,7 +2,8 @@
 (function($, angular, contactsId) {
 
   var jso,
-  app;
+    app,
+    loginRedirect = '';
 
 // Initialize JSO
 jso = new JSO({
@@ -18,7 +19,7 @@ jso.callback(null, function (token) {
 });
 
 // Initialize ng
-app = angular.module('contactsId', ['ngRoute', 'cgBusy', 'angular-spinkit', 'internationalPhoneNumber']);
+app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'angucomplete-alt', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber']);
 
 app.value('cgBusyDefaults',{
   message:'Loading...',
@@ -55,12 +56,38 @@ app.run(function ($rootScope, $location, authService) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
       event.preventDefault();
+      loginRedirect = $location.path();
       $location.path('/login');
+    }
+  });
+
+  //console.log($rootScope);
+  //console.log($rootScope.$eval(attr.breakpoint));
+  //if ($rootScope.breakpoint.windowSize !== 'smallscreeen') {
+  //  console.log('woot this is big screen!');
+  //}
+});
+
+app.controller("HeaderCtrl", function($scope, $rootScope) {
+  $rootScope.$on("appLoginSuccess", function(ev, accountData) {
+    $scope.isAuthenticated = accountData && accountData.user_id;
+    $scope.nameGiven = accountData.name_given;
+    $scope.nameFamily = accountData.name_family;
+  });
+  $rootScope.$on("appUserData", function(ev, userData) {
+    if (userData && userData.contacts && userData.contacts.length) {
+      for (var idx = 0; idx < userData.contacts.length; idx++) {
+        if (userData.contacts[idx].type === 'global') {
+          $scope.nameGiven = userData.contacts[idx].nameGiven;
+          $scope.nameFamily = userData.contacts[idx].nameFamily;
+          break;
+        }
+      }
     }
   });
 });
 
-app.controller("DefaultCtrl", function($scope, $location, authService) {
+app.controller("DefaultCtrl", function($scope, $rootScope, $location, authService) {
   function parseLocation(location) {
     var pairs = location.substring(1).split("&"),
     obj = {},
@@ -96,7 +123,8 @@ app.controller("LoginCtrl", function($scope, $location, authService) {
   authService.verify(function (err) {
     if (!err && authService.isAuthenticated()) {
       $scope.$apply(function () {
-        $location.path('/contactsId');
+        $location.path(loginRedirect.length ? loginRedirect : '/contactsId');
+        loginRedirect = '';
       });
     }
   });
@@ -142,32 +170,36 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, profileService, authService, userData, placesOperations) {
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, profileService, authService, placesOperations, profileData, countries) {
   $scope.title = contactsId.title;
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
+  $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
+  $scope.adminRoleOptions = ['admin', 'manager'];
+  $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
+  $scope.emailTypes = ['Work', 'Personal', 'Other'];
+
   var pathParams = $location.path().split('/'),
   checkinFlow = pathParams[2] === 'checkin',
   accountData = authService.getAccountData();
+  $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
+  $scope.userIsAdmin = profileService.hasRole('admin');
+  $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
 
   // Setup scope variables from data injected by routeProvider resolve
-  $scope.userData = userData;
   $scope.placesOperations = placesOperations;
+  $scope.profileData = profileData;
+  $scope.countries = countries;
 
   // When checking in to a new crisis, load the user's global profile to clone.
   if (checkinFlow) {
     $scope.selectedPlace = '';
     $scope.selectedOperation = '';
 
-    for (var idx = 0; idx < $scope.userData.contacts.length; idx++) {
-      if ($scope.userData.contacts[idx].type === 'global') {
-        $scope.profile = angular.fromJson(angular.toJson($scope.userData.contacts[idx]));
-        delete $scope.profile._id;
-        delete $scope.profile._contact;
-        break;
-      }
-    }
+    $scope.profile = angular.fromJson(angular.toJson(profileData.global));
+    delete $scope.profile._id;
+    delete $scope.profile._contact;
     $scope.profile.type = 'local';
   }
   else {
@@ -177,20 +209,15 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   // If loading an existing contact profile by ID, find it in the user's data.
   if ($scope.profileId.length) {
-    for (var idx = 0; idx < $scope.userData.contacts.length; idx++) {
-      if ($scope.userData.contacts[idx]._id == $scope.profileId) {
-        $scope.profile = $scope.userData.contacts[idx];
+    $scope.profile = profileData.contact || {};
 
-        if ($scope.profile.locationId) {
-          for (var place in $scope.placesOperations) {
-            if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.profile.locationId)) {
-              $scope.selectedPlace = place;
-              $scope.selectedOperation = $scope.profile.locationId;
-              break;
-            }
-          }
+    if ($scope.profile.locationId) {
+      for (var place in $scope.placesOperations) {
+        if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.profile.locationId)) {
+          $scope.selectedPlace = place;
+          $scope.selectedOperation = $scope.profile.locationId;
+          break;
         }
-        break;
       }
     }
     $scope.profileName = $scope.profile.type === 'global' ? 'Global' : $scope.profile.location;
@@ -205,6 +232,32 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   if ((!$scope.profile.nameGiven || !$scope.profile.nameGiven.length) && (!$scope.profile.nameFamily || !$scope.profile.nameFamily.length)) {
     $scope.profile.nameGiven = accountData.name_given || '';
     $scope.profile.nameFamily = accountData.name_family || '';
+  }
+
+  // Now we have a profile, use the profile's country to fetch regions and cities
+  if ($scope.profile.address.length && $scope.profile.address[0].hasOwnProperty('country')) {
+    $scope.regions = [];
+    $scope.localities = [];
+    $scope.regionsPromise = profileService.getAdminArea(function() {
+      var remote_id = null;
+      angular.forEach($scope.countries, function(value, key) {
+        if (value.name === $scope.profile.address[0].country) {
+          remote_id = value.remote_id;
+        }
+      });
+      return remote_id;
+    }()).then(function(data) {
+      $scope.regions = data;
+      // If we already have an administrative area set, we should also populate the cities for
+      // autocomplete
+      if ($scope.profile.address[0].hasOwnProperty('administrative_area')) {
+        angular.forEach($scope.regions, function(value, key) {
+          if (value.name === $scope.profile.address[0].administrative_area) {
+            $scope.localities = value.cities;
+          }
+        });
+      }
+    });
   }
 
   $scope.setCountryCode = function() {
@@ -255,11 +308,108 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
+  /**
+   * Callback for angucomplete selection.
+   */
+  $scope.setOrganization = function(selectedOrganization) {
+    // This callback can get called if the user is deleting text from the
+    // input so we should check to see that there is an actual object for
+    // originalObject before attempting to modify profile information.
+    if (selectedOrganization && selectedOrganization.hasOwnProperty('originalObject') && selectedOrganization.originalObject.hasOwnProperty('name')) {
+      $scope.profile.organization = $scope.profile.organization || [];
+      $scope.profile.organization[0] = $scope.profile.organization[0] || {};
+      $scope.profile.organization[0] = angular.extend({}, $scope.profile.organization[0], selectedOrganization.originalObject);
+    }
+  };
+
+  /**
+   * AJAX autocomplete response formatter to massage data into format for the widget.
+   */
+  $scope.formatOrganizations = function(response) {
+    var responseArray = [];
+
+    angular.forEach(response, function(value, key) {
+      this.push({'name': value, 'remote_id': key});
+    }, responseArray);
+
+    return responseArray;
+  };
+
+  /**
+   * Callback for country angucomplete selection.
+   */
+  $scope.setCountry = function(selectedCountry) {
+    // This callback can get called if the user is deleting text from the
+    // input so we should check to see that there is an actual object for
+    // originalObject before attempting to modify profile information.
+    if (selectedCountry && selectedCountry.hasOwnProperty('originalObject') && selectedCountry.originalObject.hasOwnProperty('name')) {
+      $scope.profile.address = $scope.profile.address || [];
+      $scope.profile.address[0] = $scope.profile.address[0] || {};
+      var address = {
+        'country': selectedCountry.originalObject.name,
+        'administrative_area': '', // Intentionally empty out the administrative zone
+        'locality': '' // Intentionally empty out the locality
+      };
+      $scope.profile.address[0] = angular.extend({}, $scope.profile.address[0], address);
+
+      // Clear out autocomplete fields for administrative_area and locality
+      $scope.$broadcast('angucomplete-alt:clearInput', 'admin_area');
+      $scope.$broadcast('angucomplete-alt:clearInput', 'locality');
+
+      // Start querying for regions
+      $scope.localities = [];
+      $scope.regionsPromise = profileService.getAdminArea(selectedCountry.originalObject.remote_id).then(function(data) {
+        $scope.regions = data;
+      });
+    }
+  };
+
+  /**
+   * Callback for country angucomplete selection.
+   */
+  $scope.setAdminArea = function(selectedRegion) {
+    // This callback can get called if the user is deleting text from the
+    // input so we should check to see that there is an actual object for
+    // originalObject before attempting to modify profile information.
+    if (selectedRegion && selectedRegion.hasOwnProperty('originalObject') && selectedRegion.originalObject.hasOwnProperty('name')) {
+      $scope.profile.address = $scope.profile.address || [];
+      $scope.profile.address[0] = $scope.profile.address[0] || {};
+      var address = {
+        'administrative_area': selectedRegion.originalObject.name,
+        'locality': '' // Intentionally empty out the locality
+      };
+      $scope.profile.address[0] = angular.extend({}, $scope.profile.address[0], address);
+
+      // Clear out autocomplete field for locality
+      $scope.$broadcast('angucomplete-alt:clearInput', 'locality');
+
+      // Set the available cities for searching
+      $scope.localities = selectedRegion.originalObject.cities;
+    }
+  };
+
+  /**
+   * Callback for country angucomplete selection.
+   */
+  $scope.setLocality = function(selectedLocality) {
+    // This callback can get called if the user is deleting text from the
+    // input so we should check to see that there is an actual object for
+    // originalObject before attempting to modify profile information.
+    if (selectedLocality && selectedLocality.hasOwnProperty('originalObject') && selectedLocality.originalObject.hasOwnProperty('name')) {
+      $scope.profile.address = $scope.profile.address || [];
+      $scope.profile.address[0] = $scope.profile.address[0] || {};
+      var address = {
+        'locality': selectedLocality.originalObject.name
+      };
+      $scope.profile.address[0] = angular.extend({}, $scope.profile.address[0], address);
+    }
+  };
+
   $scope.submitProfile = function () {
     $scope.checkMultiFields(true);
     var profile = $scope.profile;
-    profile.userid = $scope.userData.profile.userid;
-    profile._profile = $scope.userData.profile._id;
+    profile.userid = profileData.profile.userid;
+    profile._profile = profileData.profile._id;
     profile.status = 1;
 
     if (checkinFlow) {
@@ -270,6 +420,12 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if ($scope.profileId.length) {
       profile._contact = $scope.profileId;
     }
+
+    if ($scope.userIsAdmin) {
+      profile.adminRoles = $scope.adminRoles;
+      profile.verified = $scope.verified;
+    }
+
     profileService.saveContact(profile).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         $location.path('/contactsId');
@@ -288,6 +444,8 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
   if (contact.type === 'global') {
     $scope.contact.location = 'Global';
   }
+
+  $scope.userIsAdmin = profileService.hasRole('admin');
 
   $scope.back = function () {
     if (history.length) {
@@ -340,6 +498,8 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
       query.type = 'local';
       query.locationId = $scope.locationId;
     }
+    query.verified = query.verified ? true : null;
+    query.keyContact = query.keyContact ? true : null;
     query.status = 1;
     $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
       if (data && data.status && data.status === 'ok') {
@@ -355,9 +515,22 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
       bundle: '',
       role: ''
     };
+    // Submit search after clearing query to show all.
+    $scope.submitSearch();
   };
 
+  $scope.$on('breakpointChange', function(event, breakpoint, oldClass) {
+    if ($scope.breakpoint.class !== 'smallscreen' && !$scope.contacts.length) {
+      $scope.submitSearch();
+    }
+  });
+
   $scope.resetSearch();
+
+  // Fire off search if larger screen size.
+  if ($scope.breakpoint.class !== 'smallscreen') {
+    $scope.submitSearch();
+  }
 });
 
 app.config(function($routeProvider, $locationProvider) {
@@ -407,15 +580,33 @@ app.config(function($routeProvider, $locationProvider) {
     controller: 'ProfileCtrl',
     requireAuth: true,
     resolve: {
-      userData : function(profileService) {
-        return profileService.getUserData().then(function(data) {
-          return data;
-        });
-      },
       placesOperations : function(profileService) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
+      },
+      profileData : function (profileService) {
+        var i,
+          num,
+          val,
+          profileData = {contact: {}};
+        return profileService.getUserData().then(function (data) {
+          if (data && data.contacts && data.contacts.length) {
+            profileData.profile = data.profile;
+            num = data.contacts.length;
+            for (i = 0; i < num; i++) {
+              val = data.contacts[i];
+              if (val && val.type && val.type === 'global') {
+                profileData.global = val;
+                break;
+              }
+            }
+          }
+          return profileData;
+        });
+      },
+      countries : function(profileService) {
+        return profileService.getCountries();
       }
     }
   }).
@@ -424,15 +615,84 @@ app.config(function($routeProvider, $locationProvider) {
     controller: 'ProfileCtrl',
     requireAuth: true,
     resolve: {
-      userData : function(profileService) {
-        return profileService.getUserData().then(function(data) {
-          return data;
-        });
-      },
       placesOperations : function(profileService) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
+      },
+      profileData : function(profileService, $route) {
+        var contactId = $route.current.params.profileId || '',
+          profileData = {},
+          i,
+          num,
+          val;
+        if (contactId && contactId.length) {
+          // Check if the contact is for the current user
+          return profileService.getUserData().then(function (data) {
+            if (data && data.contacts && data.contacts.length) {
+              num = data.contacts.length;
+              for (i = 0; i < num; i++) {
+                val = data.contacts[i];
+                if (val && val._id && val._id === contactId) {
+                  // Contact is for the current user.
+                  profileData.contact = val;
+                  profileData.profile = data.profile;
+
+                  // If this contact is local, return the user's profile and global contact too.
+                  if (val.type === 'local') {
+                    profileData.global = {};
+                    for (i = 0; i < num; i++) {
+                      val = data.contacts[i];
+                      if (val && val.type && val.type === 'global') {
+                        profileData.global = val;
+                        break;
+                      }
+                    }
+                  }
+                  return profileData;
+                }
+              }
+            }
+            else {
+              return profileData;
+            }
+
+            // Contact is not for the current user
+            return profileService.getContacts({_id: contactId}).then(function (data) {
+              if (data && data.contacts && data.contacts[0] && data.contacts[0]._profile && data.contacts[0]._profile._id) {
+                return profileService.getProfileById(data.contacts[0]._profile._id).then(function (data) {
+                  if (data && data.profile && data.contacts && data.contacts.length) {
+                    num = data.contacts.length;
+                    for (i = 0; i < num; i++) {
+                      val = data.contacts[i];
+                      // Find the matching contact
+                      if (val && val._id && val._id === contactId) {
+                        profileData.contact = val;
+                      }
+                      // And the user's global contact
+                      else if (val && val._id && val._id !== contactId && val.type && val.type === 'global') {
+                        profileData.global = val;
+                      }
+                    }
+                    if (profileData.contact && profileData.contact._id) {
+                      profileData.profile = data.profile;
+                    }
+                  }
+                  return profileData;
+                });
+              }
+              else {
+                return profileData;
+              }
+            });
+          });
+        }
+        else {
+          return profileData;
+        }
+      },
+      countries : function(profileService) {
+        return profileService.getCountries();
       }
     }
   }).
@@ -478,7 +738,7 @@ app.config(function($routeProvider, $locationProvider) {
   });
 });
 
-app.service("authService", function($location) {
+app.service("authService", function($location, $rootScope) {
   var authService = {},
   oauthToken = false,
   accountData = false;
@@ -516,6 +776,7 @@ app.service("authService", function($location) {
         $.ajax({
           success: function (data) {
             accountData = JSON.parse(data);
+            $rootScope.$emit("appLoginSuccess", accountData);
             return cb();
           },
           error: function (err) {
@@ -534,7 +795,7 @@ app.service("authService", function($location) {
   return authService;
 });
 
-app.service("profileService", function(authService, $http, $q) {
+app.service("profileService", function(authService, $http, $q, $rootScope) {
   var cacheUserData = false,
   cacheOperationsData = false;
 
@@ -543,11 +804,15 @@ app.service("profileService", function(authService, $http, $q) {
     getUserData: getUserData,
     getOperationsData: getOperationsData,
     clearData: clearData,
-    getProfile: getProfile,
+    getProfileById: getProfileById,
+    getProfileByUser: getProfileByUser,
     getProfiles: getProfiles,
     getContacts: getContacts,
     saveProfile: saveProfile,
-    saveContact: saveContact
+    saveContact: saveContact,
+    hasRole: hasRole,
+    getCountries: getCountries,
+    getAdminArea: getAdminArea
   });
 
   // Get app data.
@@ -568,6 +833,7 @@ app.service("profileService", function(authService, $http, $q) {
       .then(handleSuccess, handleError).then(function(data) {
         if (data && data.profile && data.contacts) {
           cacheUserData = data;
+          $rootScope.$emit("appUserData", cacheUserData);
         }
 
         return cacheUserData;
@@ -609,18 +875,23 @@ app.service("profileService", function(authService, $http, $q) {
   }
 
   // Get a profile by ID.
-  function getProfile(profileId) {
-    var request = $http({
-      method: "get",
-      url: contactsId.profilesBaseUrl + "/v0/profile/view",
-      params: {access_token: authService.getAccessToken(), userid: profileId}
-    });
-    return(request.then(handleSuccess, handleError));
+  function getProfileByUser(userId) {
+    return getProfiles({userid: userId});
+  }
+
+  // Get a profile by ID.
+  function getProfileById(profileId) {
+    return getProfiles({_id: profileId});
   }
 
   // Get profiles that match specified parameters.
   function getProfiles(terms) {
-    return;
+    var request = $http({
+      method: "get",
+      url: contactsId.profilesBaseUrl + "/v0/profile/view",
+      params: $.extend({}, terms, {access_token: authService.getAccessToken()})
+    });
+    return(request.then(handleSuccess, handleError));
   }
 
   // Get contacts that match specified parameters.
@@ -637,7 +908,6 @@ app.service("profileService", function(authService, $http, $q) {
   // Save a profile (create or update existing).
   function saveProfile(profile) {
     var request;
-    profile.userid = authService.getAccountData().user_id || "";
     request = $http({
       method: "post",
       url: contactsId.profilesBaseUrl + "/v0/profile/save",
@@ -650,7 +920,6 @@ app.service("profileService", function(authService, $http, $q) {
   // Save a contact (create or update existing).
   function saveContact(contact) {
     var request;
-    contact.userid = authService.getAccountData().user_id || "";
     request = $http({
       method: "post",
       url: contactsId.profilesBaseUrl + "/v0/contact/save",
@@ -658,6 +927,60 @@ app.service("profileService", function(authService, $http, $q) {
       data: contact
     });
     return(request.then(handleSuccess, handleError));
+  }
+
+  function getCountries() {
+    var promise;
+
+    promise = $http({
+      method: "get",
+      url: contactsId.hrinfoBaseUrl + "/hid/locations/countries"
+    })
+    .then(handleSuccess, handleError).then(function(data) {
+      var countryData = [];
+      if (data) {
+        angular.forEach(data, function(value, key) {
+          this.push({'name': value, 'remote_id': key});
+        }, countryData);
+      }
+      return countryData;
+    });
+
+    return promise;
+  }
+
+  function getAdminArea(country_id) {
+    var promise;
+
+    promise = $http({
+      method: "get",
+      url: contactsId.hrinfoBaseUrl + "/hid/locations/" + country_id
+    })
+    .then(handleSuccess, handleError).then(function(data) {
+      var regionData = [];
+      if (data && data.regions) {
+        angular.forEach(data.regions, function(value, key) {
+          var region = value;
+          var cities = [];
+          if (region.hasOwnProperty('cities')) {
+            angular.forEach(region.cities, function(value, key) {
+              this.push(angular.extend({}, {'remote_id': key, 'name': value}));
+            }, cities);
+          }
+          region.cities = cities;
+          this.push(angular.extend({}, value, {'remote_id' : key}));
+        }, regionData);
+      }
+      return regionData;
+    });
+
+    return promise;
+  }
+
+  // Returns true/false for whether the user has/doesn't have the specified
+  // role. Assumes the user profile data is loaded.
+  function hasRole(role) {
+    return (cacheUserData && cacheUserData.profile && cacheUserData.profile.roles && cacheUserData.profile.roles.length && cacheUserData.profile.roles.indexOf(role) !== -1);
   }
 
   function handleError(response) {

@@ -1,7 +1,10 @@
 .header {
   .utility {
+    height: 80px;
+    @media(min-width: 768px) {
     height: 59px;
   }
-  
+  }
+
   margin-bottom: 20px;
 }

@@ -14,3 +14,7 @@
 .list-group-item:last-child {
   @include border-radius(1px);
 }
+
+.intl-tel-input {
+  display: block;
+}

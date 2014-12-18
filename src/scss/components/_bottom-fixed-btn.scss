@@ -1,0 +1,48 @@
+.bottom-fixed-btn {
+  width: 100%;
+  text-align: center;
+  height: 50px;
+  position: fixed;
+  margin-left: -15px;
+  bottom: 0;
+  z-index: 10;
+
+  a {
+    background-color: $primary-color-1;
+    position: relative;
+    color: $white;
+    font-weight: bold;
+    padding: 10px 0;
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-transform: uppercase;
+    line-height: 2.2;
+
+    &:hover {
+      text-decoration: none;
+      background-color: darken($primary-color-1, 10);
+
+      .bottom-fixed-btn__arrow:before {
+        border-color: transparent transparent darken($primary-color-1, 10) transparent;
+      }
+    }
+  }
+}
+
+.bottom-fixed-btn__arrow {
+  position: relative;
+  margin-left: -25px;
+
+  &:before {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 18px 18px 18px;
+    border-color: transparent transparent $primary-color-1 transparent;
+    top: -28px;
+    margin: 0 auto;
+  }
+}

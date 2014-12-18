@@ -1,7 +1,4 @@
 .sidebar-left {
-  //@include span(4 of 12);
-  float: left;
-  padding-left: 0;
   a{
     line-height: 16px;
     i.entypo {
@@ -9,41 +6,37 @@
       color: $primary-color-1;
     }
   }
+  span.dashboard-options {
+    width: 100%;
+    background: #55B1C8;
+    display: block;
+    padding: 16px;
+    text-align: center;
+    color: white;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+  }
 }
 .main-content {
-  //@include span(last 8 of 12);
-  float: right;
   .profile-item {
-    overflow: hidden;
     .btn-warning.btn-hidden {
-      float: left;
-      background: $secundary-color-1;
-      height: 45px;
-      width: 109px;
-      line-height: 24px;
+      background: $secondary-color-1;
     }
     h4 {
-      float: left;
-      padding: 3px 15px;
-      &, a{
+      a {
         color: $primary-color-1;
         text-transform: uppercase;
         font-size: 12px;
-        line-height: 20px;
         font-weight: bold;
+        line-height: 24px;
       }
     }
     .btn-group {
-      float: right;
-      margin: 7px;
       .btn {
-        padding: 0;
-        margin: 3px 5px;
-        border-radius: 0;
         background: $primary-color-2;
         i{
           color: $white;
-          padding: 2px 4px;
           box-shadow: 1px 1px 2px 0px $neutral-color-1;
         }
       }
@@ -56,7 +49,7 @@
   .btn-group {
     .btn-checkout {
       &:hover {
-        background: $secundary-color-1;
+        background: $secondary-color-1;
       }
     }
   }

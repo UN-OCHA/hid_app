@@ -1,4 +1,4 @@
-<div class="header">
+<div class="header" ng-controller="HeaderCtrl">
   <div class="utility">
     <div class="affiliate-logos pull-left">
       <div class="affiliate-logo-wrapper"><div class="affiliate-logo humanitarian-response"></div></div>
@@ -7,15 +7,19 @@
     </div>
 
     <div class="login-controls pull-right">
-      <div class="login-controls-name">Dr. John Smith</div>
-      <a class="btn-login-controls btn" href="#/logout">Logout <span class="text-highlight">H</span>ID</a>
+      <div class="login-controls-name" ng-if="isAuthenticated">Welcome, <span ng-bind="nameGiven"></span> <span ng-bind="nameFamily"></span></div>
+      <a class="btn-login-controls btn" ng-if="!isAuthenticated" href="#/login">Login <span class="text-highlight">H</span>ID</a>
+      <a class="btn-login-controls btn" ng-if="isAuthenticated" href="#/logout">Logout <span class="text-highlight">H</span>ID</a>
     </div>
   </div>
   <div class="logo-bar">
     <div class="logo"></div>
     <div class="primary-nav">
-      <ul>
-        <li><a href="#/contactsId" class="active">Dashboard</a></li>
+    <span ng-click="show.mainMenu" class="touch-button"><i class="fa fa-bars"></i></span>
+      <ul ng-show="show.mainMenu">
+        <li><a href="#/" ng-if="!isAuthenticated" class="active">Home</a></li>
+        <li><a href="#/contactsId" ng-if="isAuthenticated" class="active">Dashboard</a></li>
+        <li><a id="external-links-item" href="#">External Links</a></li>
         <li><a href="#/about">About</a></li>
       </ul>
     </div>
