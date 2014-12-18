@@ -24,7 +24,7 @@ jso.callback(null, function (token) {
 });
 
 // Initialize ng
-app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber']);
+app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'angucomplete-alt', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber']);
 
 app.value('cgBusyDefaults',{
   message:'Loading...',
@@ -175,11 +175,12 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, profileService, authService, placesOperations, profileData) {
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, profileService, authService, placesOperations, profileData, countries) {
   $scope.title = contactsId.title;
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
+  $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.adminRoleOptions = ['admin', 'manager'];
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
@@ -194,6 +195,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.placesOperations = placesOperations;
   $scope.profileData = profileData;
+  $scope.countries = countries;
 
   // When checking in to a new crisis, load the user's global profile to clone.
   if (checkinFlow) {
@@ -235,6 +237,32 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   if ((!$scope.profile.nameGiven || !$scope.profile.nameGiven.length) && (!$scope.profile.nameFamily || !$scope.profile.nameFamily.length)) {
     $scope.profile.nameGiven = accountData.name_given || '';
     $scope.profile.nameFamily = accountData.name_family || '';
+  }
+
+  // Now we have a profile, use the profile's country to fetch regions and cities
+  if ($scope.profile.address.length && $scope.profile.address[0].hasOwnProperty('country')) {
+    $scope.regions = [];
+    $scope.localities = [];
+    $scope.regionsPromise = profileService.getAdminArea(function() {
+      var remote_id = null;
+      angular.forEach($scope.countries, function(value, key) {
+        if (value.name === $scope.profile.address[0].country) {
+          remote_id = value.remote_id;
+        }
+      });
+      return remote_id;
+    }()).then(function(data) {
+      $scope.regions = data;
+      // If we already have an administrative area set, we should also populate the cities for
+      // autocomplete
+      if ($scope.profile.address[0].hasOwnProperty('administrative_area')) {
+        angular.forEach($scope.regions, function(value, key) {
+          if (value.name === $scope.profile.address[0].administrative_area) {
+            $scope.localities = value.cities;
+          }
+        });
+      }
+    });
   }
 
   $scope.setCountryCode = function() {
@@ -282,6 +310,103 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.selectedPlace = this.place;
     if (opkeys.length == 1) {
       $scope.selectedOperation = opkeys[0];
+    }
+  };
+
+  /**
+   * Callback for angucomplete selection.
+   */
+  $scope.setOrganization = function(selectedOrganization) {
+    // This callback can get called if the user is deleting text from the
+    // input so we should check to see that there is an actual object for
+    // originalObject before attempting to modify profile information.
+    if (selectedOrganization && selectedOrganization.hasOwnProperty('originalObject') && selectedOrganization.originalObject.hasOwnProperty('name')) {
+      $scope.profile.organization = $scope.profile.organization || [];
+      $scope.profile.organization[0] = $scope.profile.organization[0] || {};
+      $scope.profile.organization[0] = angular.extend({}, $scope.profile.organization[0], selectedOrganization.originalObject);
+    }
+  };
+
+  /**
+   * AJAX autocomplete response formatter to massage data into format for the widget.
+   */
+  $scope.formatOrganizations = function(response) {
+    var responseArray = [];
+
+    angular.forEach(response, function(value, key) {
+      this.push({'name': value, 'remote_id': key});
+    }, responseArray);
+
+    return responseArray;
+  };
+
+  /**
+   * Callback for country angucomplete selection.
+   */
+  $scope.setCountry = function(selectedCountry) {
+    // This callback can get called if the user is deleting text from the
+    // input so we should check to see that there is an actual object for
+    // originalObject before attempting to modify profile information.
+    if (selectedCountry && selectedCountry.hasOwnProperty('originalObject') && selectedCountry.originalObject.hasOwnProperty('name')) {
+      $scope.profile.address = $scope.profile.address || [];
+      $scope.profile.address[0] = $scope.profile.address[0] || {};
+      var address = {
+        'country': selectedCountry.originalObject.name,
+        'administrative_area': '', // Intentionally empty out the administrative zone
+        'locality': '' // Intentionally empty out the locality
+      };
+      $scope.profile.address[0] = angular.extend({}, $scope.profile.address[0], address);
+
+      // Clear out autocomplete fields for administrative_area and locality
+      $scope.$broadcast('angucomplete-alt:clearInput', 'admin_area');
+      $scope.$broadcast('angucomplete-alt:clearInput', 'locality');
+
+      // Start querying for regions
+      $scope.localities = [];
+      $scope.regionsPromise = profileService.getAdminArea(selectedCountry.originalObject.remote_id).then(function(data) {
+        $scope.regions = data;
+      });
+    }
+  };
+
+  /**
+   * Callback for country angucomplete selection.
+   */
+  $scope.setAdminArea = function(selectedRegion) {
+    // This callback can get called if the user is deleting text from the
+    // input so we should check to see that there is an actual object for
+    // originalObject before attempting to modify profile information.
+    if (selectedRegion && selectedRegion.hasOwnProperty('originalObject') && selectedRegion.originalObject.hasOwnProperty('name')) {
+      $scope.profile.address = $scope.profile.address || [];
+      $scope.profile.address[0] = $scope.profile.address[0] || {};
+      var address = {
+        'administrative_area': selectedRegion.originalObject.name,
+        'locality': '' // Intentionally empty out the locality
+      };
+      $scope.profile.address[0] = angular.extend({}, $scope.profile.address[0], address);
+
+      // Clear out autocomplete field for locality
+      $scope.$broadcast('angucomplete-alt:clearInput', 'locality');
+
+      // Set the available cities for searching
+      $scope.localities = selectedRegion.originalObject.cities;
+    }
+  };
+
+  /**
+   * Callback for country angucomplete selection.
+   */
+  $scope.setLocality = function(selectedLocality) {
+    // This callback can get called if the user is deleting text from the
+    // input so we should check to see that there is an actual object for
+    // originalObject before attempting to modify profile information.
+    if (selectedLocality && selectedLocality.hasOwnProperty('originalObject') && selectedLocality.originalObject.hasOwnProperty('name')) {
+      $scope.profile.address = $scope.profile.address || [];
+      $scope.profile.address[0] = $scope.profile.address[0] || {};
+      var address = {
+        'locality': selectedLocality.originalObject.name
+      };
+      $scope.profile.address[0] = angular.extend({}, $scope.profile.address[0], address);
     }
   };
 
@@ -484,6 +609,9 @@ app.config(function($routeProvider, $locationProvider) {
           }
           return profileData;
         });
+      },
+      countries : function(profileService) {
+        return profileService.getCountries();
       }
     }
   }).
@@ -567,6 +695,9 @@ app.config(function($routeProvider, $locationProvider) {
         else {
           return profileData;
         }
+      },
+      countries : function(profileService) {
+        return profileService.getCountries();
       }
     }
   }).
@@ -684,7 +815,9 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     getContacts: getContacts,
     saveProfile: saveProfile,
     saveContact: saveContact,
-    hasRole: hasRole
+    hasRole: hasRole,
+    getCountries: getCountries,
+    getAdminArea: getAdminArea
   });
 
   // Get app data.
@@ -799,6 +932,54 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
       data: contact
     });
     return(request.then(handleSuccess, handleError));
+  }
+
+  function getCountries() {
+    var promise;
+
+    promise = $http({
+      method: "get",
+      url: contactsId.hrinfoBaseUrl + "/hid/locations/countries"
+    })
+    .then(handleSuccess, handleError).then(function(data) {
+      var countryData = [];
+      if (data) {
+        angular.forEach(data, function(value, key) {
+          this.push({'name': value, 'remote_id': key});
+        }, countryData);
+      }
+      return countryData;
+    });
+
+    return promise;
+  }
+
+  function getAdminArea(country_id) {
+    var promise;
+
+    promise = $http({
+      method: "get",
+      url: contactsId.hrinfoBaseUrl + "/hid/locations/" + country_id
+    })
+    .then(handleSuccess, handleError).then(function(data) {
+      var regionData = [];
+      if (data && data.regions) {
+        angular.forEach(data.regions, function(value, key) {
+          var region = value;
+          var cities = [];
+          if (region.hasOwnProperty('cities')) {
+            angular.forEach(region.cities, function(value, key) {
+              this.push(angular.extend({}, {'remote_id': key, 'name': value}));
+            }, cities);
+          }
+          region.cities = cities;
+          this.push(angular.extend({}, value, {'remote_id' : key}));
+        }, regionData);
+      }
+      return regionData;
+    });
+
+    return promise;
   }
 
   // Returns true/false for whether the user has/doesn't have the specified
