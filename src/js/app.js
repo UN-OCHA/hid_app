@@ -207,7 +207,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   }
 
   // If loading an existing contact profile by ID, find it in the user's data.
-  if ($scope.profileId.length) {
+  if (!checkinFlow && $scope.profileId.length) {
     $scope.profile = profileData.contact || {};
 
     if ($scope.profile.locationId) {
@@ -454,6 +454,24 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
       $location.path('/contactsId');
     }
   };
+
+  $scope.checkout = function (cid) {
+    var contact = {
+      _id: $scope.contact._id,
+      _profile: $scope.contact._profile._id,
+      userid: $scope.contact._profile.userid,
+      status: 0
+    };
+    profileService.saveContact(contact).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        profileService.clearData();
+        $scope.back();
+      }
+      else {
+        alert('error');
+      }
+    });
+  };
 });
 
 app.controller("ListCtrl", function($scope, $route, $routeParams, profileService, userData, placesOperations) {
@@ -574,7 +592,7 @@ app.config(function($routeProvider, $locationProvider) {
       }
     }
   }).
-  when('/contactsId/checkin', {
+  when('/contactsId/checkin/:profileId?', {
     templateUrl: contactsId.sourcePath + '/partials/profile.html',
     controller: 'ProfileCtrl',
     requireAuth: true,
@@ -584,25 +602,32 @@ app.config(function($routeProvider, $locationProvider) {
           return data;
         });
       },
-      profileData : function (profileService) {
+      profileData : function (profileService, $route) {
         var i,
           num,
           val,
-          profileData = {contact: {}};
-        return profileService.getUserData().then(function (data) {
-          if (data && data.contacts && data.contacts.length) {
-            profileData.profile = data.profile;
-            num = data.contacts.length;
-            for (i = 0; i < num; i++) {
-              val = data.contacts[i];
-              if (val && val.type && val.type === 'global') {
-                profileData.global = val;
-                break;
+          profileId = $route.current.params.profileId || '',
+          profileData = {contact: {}},
+          processProfile = function (data) {
+            if (data && data.profile && data.contacts) {
+              profileData.profile = data.profile;
+              num = data.contacts.length;
+              for (i = 0; i < num; i++) {
+                val = data.contacts[i];
+                // Find the user's global contact
+                if (val && val.type && val.type === 'global') {
+                  profileData.global = val;
+                }
               }
             }
-          }
-          return profileData;
-        });
+            return profileData;
+          };
+
+        // If we are not checking in the current user, then load that user's profile.
+        if (profileId && profileId.length) {
+          return profileService.getProfileById(profileId).then(processProfile);
+        }
+        return profileService.getUserData().then(processProfile);
       },
       countries : function(profileService) {
         return profileService.getCountries();
