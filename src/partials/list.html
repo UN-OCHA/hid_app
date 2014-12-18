@@ -39,7 +39,7 @@
         </div>
 
         <div class="form-group" ng-if="query.locationId">
-          <label class="control-label" for="keyContact"><i class="fa fa-star"></i> Key Contact</label>
+          <label class="control-label" for="keyContact"><span class="contact-item__key-contact key-contact-filter-use">*</span> Key Contact</label>
           <input type="checkbox" name="keyContact" ng-model="query.keyContact" />
         </div>
 
@@ -69,8 +69,11 @@
       <li class="profile-item list-group-item" ng-repeat="contact in contacts">
         <div class="contact-item contact-item--name">
           <a href="#/contactsId/contact/{{contact._id}}">{{contact.nameGiven}} {{contact.nameFamily}}</a>
-          <span class="contact-item contact-item--verified" ng-if="contact._profile.verified"><i class="fa fa-check-circle"></i></span>
-          <span class="contact-item contact-item--key-contact" ng-if="contact.keyContact"><i class="fa fa-star"></i></span>
+          <div class="contact-item__markers">
+            <span class="contact-item__key-contact" ng-if="contact.keyContact">*</span>
+            <span class="contact-item__verified" ng-if="contact._profile.verified"><i class="fa fa-check-circle"></i></span>
+          </div>
+
         </div>
         <div class="contact-item contact-item--jobtitle">{{contact.jobtitle}}</div>
         <div class="contact-item contact-item--organization">{{contact.organization[0].name}}</div>

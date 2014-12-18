@@ -119,3 +119,14 @@ body {
     opacity: 1;
   }
 }
+
+label[for=verified],
+label[for=keyContact]{
+  font-weight: normal;
+  color: $primary-color-2;
+  margin-right: 6px;
+
+  .fa {
+    color: lighten($primary-color-2, 10);
+  }
+}

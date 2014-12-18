@@ -35,7 +35,7 @@
         font-size: 12px;
         font-weight: bold;
         line-height: 24px;
-        padding: 15px;
+        padding: 10px 15px;
       }
     }
     .btn-group {
@@ -43,7 +43,7 @@
       margin: 7px;
       .btn {
         padding: 0;
-        margin: 3px 5px;
+        margin: 3px 0 0 4px;
         border-radius: 0;
         background: $primary-color-2;
         i{
@@ -54,7 +54,7 @@
       }
     }
     .fa {
-      font-size: 24px;
+      font-size: 18px;
       font-weight: 100;
     }
   }
@@ -65,4 +65,8 @@
       }
     }
   }
+}
+
+.active-profiles {
+  margin-top: 26px;
 }
