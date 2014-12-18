@@ -185,6 +185,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
   $scope.userIsAdmin = profileService.hasRole('admin');
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
+  $scope.submitText = !checkinFlow ? 'Update Profile' : 'Check-in';
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.placesOperations = placesOperations;
