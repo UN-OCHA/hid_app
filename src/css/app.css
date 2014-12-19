@@ -2682,6 +2682,8 @@ h3 {
   bottom: 0px;
   left: 0;
   cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 @media (min-width: 768px) {
   .sidebar-left span.dashboard-options {

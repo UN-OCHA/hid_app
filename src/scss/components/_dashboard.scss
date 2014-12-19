@@ -27,6 +27,8 @@
     bottom: 0px;
     left: 0;
     cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
     @media(min-width: 768px) {
       display: none;
     }
