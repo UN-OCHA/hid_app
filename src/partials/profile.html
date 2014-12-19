@@ -7,10 +7,10 @@
     <div class="back-link"><a class="btn btn-warning btn-sm" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
     <h3>Select a country</h3>
     <ul class="active-countries-container list-group">
-      <li class="country-item list-group-item" ng-repeat="(place, operations) in placesOperations | orderBy: 'place'">
+      <li class="country-item list-group-item" ng-repeat="(place, operations) in availPlacesOperations | orderBy: 'place'">
         <a href="" ng-click="selectPlace()">{{place}}</a>
       </li>
-      <li class="country-item" ng-if="placesOperations.length == 0">
+      <li class="country-item" ng-if="availPlacesOperations.length == 0">
         <em>No active operations found.</em>
       </li>
     </ul>
@@ -19,7 +19,7 @@
   <div class="active-operations" ng-show="selectedPlace.length && !selectedOperation.length">
     <div class="back-link"><a class="btn btn-warning btn-sm" href="" ng-click="selectedPlace = ''"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
     <h3>Select an operation</h3>
-    <ul class="active-operations-container list-group" ng-repeat="(place, operations) in placesOperations" ng-show="selectedPlace = '{{place}}'" data-place="{{place}}">
+    <ul class="active-operations-container list-group" ng-repeat="(place, operations) in availPlacesOperations" ng-show="selectedPlace = '{{place}}'" data-place="{{place}}">
       <li class="operation-item list-group-item" ng-repeat="(opid, operation) in operations">
         <a href="" ng-click="selectedOperation = '{{opid}}'">{{operation.name}}</a>
       </li>
