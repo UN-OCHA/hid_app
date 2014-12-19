@@ -192,6 +192,25 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.profileData = profileData;
   $scope.countries = countries;
 
+  // Exclude operations for which the user is already checked in.
+  if (profileData && profileData.contacts && profileData.contacts.length) {
+    var checkedInKeys = profileData.contacts.map(function (val, idx, arr) {
+      return (val.locationId && val.locationId.length) ? val.locationId : null;
+    });
+    for (var ckey in placesOperations) {
+      if (placesOperations.hasOwnProperty(ckey)) {
+        for (var okey in placesOperations[ckey]) {
+          if (placesOperations[ckey].hasOwnProperty(okey) && checkedInKeys.indexOf(okey) !== -1) {
+            delete placesOperations[ckey][okey];
+            if ($.isEmptyObject(placesOperations[ckey])) {
+              delete placesOperations[ckey];
+            }
+          }
+        }
+      }
+    }
+  }
+
   // When checking in to a new crisis, load the user's global profile to clone.
   if (checkinFlow) {
     $scope.selectedPlace = '';
@@ -613,6 +632,7 @@ app.config(function($routeProvider, $locationProvider) {
           processProfile = function (data) {
             if (data && data.profile && data.contacts) {
               profileData.profile = data.profile;
+              profileData.contacts = data.contacts;
               num = data.contacts.length;
               for (i = 0; i < num; i++) {
                 val = data.contacts[i];
@@ -662,6 +682,7 @@ app.config(function($routeProvider, $locationProvider) {
                 if (val && val._id && val._id === contactId) {
                   // Contact is for the current user.
                   profileData.contact = val;
+                  profileData.contacts = data.contacts;
                   profileData.profile = data.profile;
 
                   // If this contact is local, return the user's profile and global contact too.
