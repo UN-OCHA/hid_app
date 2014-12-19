@@ -74,7 +74,7 @@ app.controller("HeaderCtrl", function($scope, $rootScope) {
     $scope.nameFamily = accountData.name_family;
   });
   $rootScope.$on("appUserData", function(ev, userData) {
-    if (userData && userData.contacts && userData.contacts.length) {
+    if (userData && userData.contacts) {
       for (var idx = 0; idx < userData.contacts.length; idx++) {
         if (userData.contacts[idx].type === 'global') {
           $scope.nameGiven = userData.contacts[idx].nameGiven;
@@ -216,9 +216,13 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.selectedPlace = '';
     $scope.selectedOperation = '';
 
-    $scope.profile = angular.fromJson(angular.toJson(profileData.global));
-    delete $scope.profile._id;
-    delete $scope.profile._contact;
+    $scope.profile = profileData.global ? angular.fromJson(angular.toJson(profileData.global)) : {};
+    if ($scope.profile._id) {
+      delete $scope.profile._id;
+    }
+    if ($scope.profile._contact) {
+      delete $scope.profile._contact;
+    }
     $scope.profile.type = 'local';
     $scope.profile.keyContact = false;
   }
@@ -255,7 +259,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   }
 
   // Now we have a profile, use the profile's country to fetch regions and cities
-  if ($scope.profile.address.length && $scope.profile.address[0].hasOwnProperty('country')) {
+  if ($scope.profile.address && $scope.profile.address.length && $scope.profile.address[0].hasOwnProperty('country')) {
     $scope.regions = [];
     $scope.localities = [];
     $scope.regionsPromise = profileService.getAdminArea(function() {
@@ -428,8 +432,14 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.submitProfile = function () {
     $scope.checkMultiFields(true);
     var profile = $scope.profile;
-    profile.userid = profileData.profile.userid;
-    profile._profile = profileData.profile._id;
+    if (profileData.profile && profileData.profile.userid && profileData.profile._id) {
+      profile.userid = profileData.profile.userid;
+      profile._profile = profileData.profile._id;
+    }
+    else {
+      profile.userid = accountData.user_id;
+      profile._profile = null;
+    }
     profile.status = 1;
 
     if (checkinFlow) {
@@ -604,7 +614,8 @@ app.config(function($routeProvider, $locationProvider) {
       },
       globalProfileId : function(profileService) {
         return profileService.getUserData().then(function(data) {
-          for (var idx = 0; idx < data.contacts.length; idx++) {
+          var num = data.contacts.length;
+          for (var idx = 0; idx < num; idx++) {
             if (data.contacts[idx].type === 'global') {
               return data.contacts[idx]._id;
             }
