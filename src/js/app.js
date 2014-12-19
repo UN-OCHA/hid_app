@@ -189,6 +189,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.placesOperations = placesOperations;
+  var availPlacesOperations = angular.copy(placesOperations);
+  $scope.availPlacesOperations = availPlacesOperations;
   $scope.profileData = profileData;
   $scope.countries = countries;
 
@@ -197,13 +199,13 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     var checkedInKeys = profileData.contacts.map(function (val, idx, arr) {
       return (val.locationId && val.locationId.length) ? val.locationId : null;
     });
-    for (var ckey in placesOperations) {
-      if (placesOperations.hasOwnProperty(ckey)) {
-        for (var okey in placesOperations[ckey]) {
-          if (placesOperations[ckey].hasOwnProperty(okey) && checkedInKeys.indexOf(okey) !== -1) {
-            delete placesOperations[ckey][okey];
-            if ($.isEmptyObject(placesOperations[ckey])) {
-              delete placesOperations[ckey];
+    for (var ckey in availPlacesOperations) {
+      if (availPlacesOperations.hasOwnProperty(ckey)) {
+        for (var okey in availPlacesOperations[ckey]) {
+          if (availPlacesOperations[ckey].hasOwnProperty(okey) && checkedInKeys.indexOf(okey) !== -1) {
+            delete availPlacesOperations[ckey][okey];
+            if ($.isEmptyObject(availPlacesOperations[ckey])) {
+              delete availPlacesOperations[ckey];
             }
           }
         }
