@@ -29,7 +29,7 @@
 
     <h3>My checked-in lists :</h3>
     <ul class="active-profiles-container list-group">
-      <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts" ng-if="profile.type == 'local'">
+      <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts | orderBy: ['location', 'operation']" ng-if="profile.type == 'local'">
         <a ng-show="profile.confirmDelete" class="slide btn btn-warning btn-sm btn-hidden" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'">Checkout</a>
         <h4>
           <a href="#/list/{{profile.locationId}}">

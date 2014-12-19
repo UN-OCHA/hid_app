@@ -7,7 +7,7 @@
     <div class="back-link"><a class="btn btn-warning btn-sm" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
     <h3>Select a country</h3>
     <ul class="active-countries-container list-group">
-      <li class="country-item list-group-item" ng-repeat="(place, operations) in placesOperations">
+      <li class="country-item list-group-item" ng-repeat="(place, operations) in placesOperations | orderBy: 'place'">
         <a href="" ng-click="selectPlace()">{{place}}</a>
       </li>
       <li class="country-item" ng-if="placesOperations.length == 0">
