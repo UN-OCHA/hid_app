@@ -17,7 +17,7 @@
   border-right: 1px solid $neutral-color-3;
   display: inline-block;
   background: url(../images/sprite.png) no-repeat;
-  margin: 0 13px;
+  margin: 0 6px;
   @media(min-width: 768px) {
   margin: 0;
 }
@@ -31,9 +31,10 @@ background-position: -2px 6px;
 }
 
 .relief-web {
-  width: 94px;
+  width: 78px;
   background-position: -6px -36px;
   @media(min-width: 768px) {
+    width: 94px;
     background-position: 10px -36px;
   }
 

@@ -3,6 +3,34 @@
   @media(min-width: 768px) {
     padding-bottom: inherit;
   }
+  .active-countries {
+    background: $primary-color-1;
+    margin: 0 20% 20px;
+    padding: 20px 40px;
+    border-radius: 10px;
+    .back-link {
+      float: right;
+    }
+    h3 {
+      color: $white;
+      text-align: center;
+    }
+    li.list-group-item {
+      background: $secondary-color-2;
+      border: none;
+      border-top: 4px solid $primary-color-1;
+      &:hover{
+        background: $white;
+        a {
+          color: #000;
+        }
+      }
+      a{
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+    }
+  }
 }
 .sidebar-left {
   position: static;
@@ -38,7 +66,6 @@
     bottom: 70px;
     width: 96%;
     left: 2%;
-    display: none;
     @media(min-width: 768px) {
       display: block;
       position: relative;

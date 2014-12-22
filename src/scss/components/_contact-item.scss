@@ -12,7 +12,7 @@
   }
 
   @media(min-width: 980px) {
-    padding: 11px 15px 11px 15px;
+    padding: 11px 15px 0px 15px;
   }
 
   &:after {
@@ -23,9 +23,14 @@
 
 .contact-item--name {
   min-width: 180px;
+  height: 45px;
+  overflow: hidden;
 
   a {
     color: $primary-color-1;
+    display: inline-block;
+    margin: 2px 8px 0 0;
+    vertical-align: top;
   }
 }
 
@@ -36,6 +41,7 @@
 
   @media(min-width: 980px) {
     display: inline-block;
+    vertical-align: top;
   }
 }
 
@@ -49,6 +55,7 @@
     position: relative;
     right: auto;
     bottom: auto;
+    vertical-align: top;
   }
 }
 
@@ -57,9 +64,102 @@
 
   @media(min-width: 768px) {
     display: inline-block;
+    vertical-align: top;
   }
 }
 
 .contact-search {
   padding: 20px;
+}
+.contact-item__markers {
+  width: 20px;
+  display: inline-block;
+  height: 40px;
+
+  @media(min-width: 980px) {
+    margin-top: -6px;
+  }
+}
+
+.contact-item__verified {
+  height: 22px;
+  display: block;
+  font-size: 18px;
+  color: lighten($primary-color-2, 10);
+}
+
+.contact-item__key-contact {
+  display: block;
+  background-color: $primary-color-1;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  color: white;
+  font-size: 32px;
+  line-height: 30px;
+  font-weight: normal;
+  display: block;
+  padding-left: 1px;
+  font-family: helvetica;
+}
+
+.key-contact-filter-use {
+  float: left;
+  margin: 2px 4px 0 0;
+  width: 12px;
+  height: 12px;
+  font-size: 23px;
+  line-height: 23px;
+}
+
+.key-contact-profile-use {
+  float: left;
+  width: 24px;
+  height: 24px;
+  font-size: 54px;
+  line-height: 48px;
+  padding-left: 2px;
+  margin-right: 6px;
+}
+
+.verified-profile-use {
+  float: left;
+  font-size: 28px;
+  margin: -7px 5px 0 0;
+}
+.notes {
+  padding: 25px 0;
+  margin-bottom: 20px;
+}
+.right-sidebar-group {
+  padding: 0 10px 10px 0;
+  border-bottom: 1px dotted #D5D5D5;
+  color: $primary-color-1;
+  margin-bottom: 10px;
+  .profile-view__item, strong {
+    padding: 0 0 0 15px;
+    display: block;
+    &.country{
+      font-weight: bold;
+    }
+  }
+  .group-label {
+    display: block;
+    color: #A8A8A8;
+    margin-bottom: 15px;
+    font-size: 11px;
+  }
+}
+.same-height-wrap {
+  display: table;
+  .same-height-col {
+    display: table-cell;
+    vertical-align: top;
+    float: none;
+    padding: 20px 10px;
+    &.profile-right-sidebar{
+      background: $secondary-color-3;
+      padding: 6px;
+    }
+  }
 }

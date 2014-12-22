@@ -4,13 +4,13 @@
 
 <div ng-show="!isRouteLoading" class="">
   <div class="active-countries" ng-hide="selectedPlace.length">
-    <div class="back-link"><a class="btn btn-warning btn-sm" href="#/contactsId"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
+    <div class="back-link"><a class="btn btn-warning btn-sm" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
     <h3>Select a country</h3>
     <ul class="active-countries-container list-group">
-      <li class="country-item list-group-item" ng-repeat="(place, operations) in placesOperations">
+      <li class="country-item list-group-item" ng-repeat="(place, operations) in availPlacesOperations | orderBy: 'place'">
         <a href="" ng-click="selectPlace()">{{place}}</a>
       </li>
-      <li class="country-item" ng-if="placesOperations.length == 0">
+      <li class="country-item" ng-if="availPlacesOperations.length == 0">
         <em>No active operations found.</em>
       </li>
     </ul>
@@ -19,7 +19,7 @@
   <div class="active-operations" ng-show="selectedPlace.length && !selectedOperation.length">
     <div class="back-link"><a class="btn btn-warning btn-sm" href="" ng-click="selectedPlace = ''"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
     <h3>Select an operation</h3>
-    <ul class="active-operations-container list-group" ng-repeat="(place, operations) in placesOperations" ng-show="selectedPlace = '{{place}}'" data-place="{{place}}">
+    <ul class="active-operations-container list-group" ng-repeat="(place, operations) in availPlacesOperations" ng-show="selectedPlace = '{{place}}'" data-place="{{place}}">
       <li class="operation-item list-group-item" ng-repeat="(opid, operation) in operations">
         <a href="" ng-click="selectedOperation = '{{opid}}'">{{operation.name}}</a>
       </li>
@@ -27,53 +27,51 @@
   </div>
 
   <div class="update-profile" ng-show="selectedPlace.length && selectedOperation.length">
-    <div class="back-link"><a class="btn btn-warning btn-sm" href="#/contactsId"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
+    <div class="back-link"><a class="btn btn-warning btn-sm" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
     <h3>{{profileName}} Profile</h3>
     <div class="profile-form-wrapper">
       <form class="profile-form form-horizontal">
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="nameGiven">Given Name</label>
-          <div class="col-sm-10">
+          <label class="control-label" for="nameGiven">Given Name</label>
+          <div class="col-sm-12">
             <input class="form-control" type="text" name="nameGiven" ng-model="profile.nameGiven" />
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="nameFamily">Family Name</label>
-          <div class="col-sm-10">
+          <label class="control-label" for="nameFamily">Family Name</label>
+          <div class="col-sm-12">
             <input class="form-control" type="text" name="nameFamily" ng-model="profile.nameFamily" />
           </div>
         </div>
-
         <div class="form-group">
           <h4>Organizational Information</h4>
-          <label class="col-sm-2 control-label" for="jobtitle">Title</label>
-          <div class="col-sm-10">
+          <label class="control-label" for="organization[0][name]">Organization</label>
+          <div class="col-sm-12">
+            <angucomplete-alt
+            id="organization"
+            placeholder="Search for organizations"
+            pause="100"
+            selected-object="setOrganization"
+            remote-url-response-formatter="formatOrganizations"
+            remote-url="{{hrinfoBaseUrl}}/hid/organizations/autocomplete/"
+            search-fields="name"
+            title-field="name"
+            minlength="2"
+            text-searching="Searching..."
+            text-no-results="No results found."
+            initial-value="{{profile.organization[0].name}}"
+            input-class="form-control"></angucomplete-alt>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="jobtitle">Title</label>
+          <div class="col-sm-12">
             <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" />
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="organization[0][name]">Organization</label>
-          <div class="col-sm-10">
-            <angucomplete-alt
-              id="organization"
-              placeholder="Search for organizations"
-              pause="100"
-              selected-object="setOrganization"
-              remote-url-response-formatter="formatOrganizations"
-              remote-url="{{hrinfoBaseUrl}}/hid/organizations/autocomplete/"
-              search-fields="name"
-              title-field="name"
-              minlength="2"
-              text-searching="Searching..."
-              text-no-results="No results found."
-              initial-value="{{profile.organization[0].name}}"
-              input-class="form-control"></angucomplete-alt>
-          </div>
-        </div>
-
         <div class="form-group reveal" ng-repeat="bundle in profile.bundle track by $index" ng-if="profile.type === 'local'">
-          <label class="col-sm-2 control-label" for="bundle[{{$index}}]">Bundle</label>
-          <div class="col-sm-10">
+          <label class="control-label" for="bundle[{{$index}}]">Group</label>
+          <div class="col-sm-12">
             <select class="form-control" name="bundle[{{$index}}]" ng-model="profile.bundle[$index]" ng-options="bundleName for (bundleId, bundleName) in placesOperations[selectedPlace][selectedOperation].bundles" ng-change="checkMultiFields()">
               <option value=""></option>
             </select>
@@ -83,28 +81,28 @@
         <div class="form-group container operations" ng-show="userIsAdmin">
           <h4>Local Administration</h4>
           <div class="row">
-              <label class="col-sm-2 control-label" for="keyContact">Key Contact</label>
-              <div class="col-sm-10">
-                <input type="checkbox" class="form-control" name="keyContact" ng-model="profile.keyContact" />
-              </div>
+            <label class="control-label" for="keyContact">Key Contact</label>
+            <div class="col-sm-12">
+              <input type="checkbox" class="form-control" name="keyContact" ng-model="profile.keyContact" />
+            </div>
           </div>
         </div>
 
         <div class="form-group container operations" ng-show="userIsAdmin">
           <h4>Global Administration</h4>
           <div class="row">
-              <label class="col-sm-2 control-label" for="adminRoles">Admin Privileges</label>
-              <div class="col-sm-10">
-                <select class="form-control" name="adminRoles" multiple ng-model="adminRoles" ng-options="adminRoleOption for adminRoleOption in adminRoleOptions">
-                  <option value=""></option>
-                </select>
-              </div>
+            <label class="control-label" for="adminRoles">Admin Privileges</label>
+            <div class="col-sm-12">
+              <select class="form-control" name="adminRoles" multiple ng-model="adminRoles" ng-options="adminRoleOption for adminRoleOption in adminRoleOptions">
+                <option value=""></option>
+              </select>
+            </div>
           </div>
           <div class="row">
-              <label class="col-sm-2 control-label" for="verified">Verified Responder</label>
-              <div class="col-sm-10">
-                <input type="checkbox" class="form-control" name="verified" ng-model="verified" />
-              </div>
+            <label class="control-label" for="verified">Verified Responder</label>
+            <div class="col-sm-12">
+              <input type="checkbox" class="form-control" name="verified" ng-model="verified" />
+            </div>
           </div>
         </div>
 
@@ -112,19 +110,19 @@
           <h4>Phone Numbers</h4>
           <div class="reveal" ng-repeat="phone in profile.phone track by $index">
             <div class="row">
-              <label class="col-sm-2 control-label" for="phone[{{$index}}][type]">Phone Number Description</label>
+
               <div class="col-sm-4">
+                <label class="control-label" for="phone[{{$index}}][type]">Type</label>
                 <select class="form-control" ng-options="type for type in phoneTypes" name="phone[{{$index}}][type]" ng-model="profile.phone[$index].type">
-                  <option value="">-- Choose Phone Type --</option>
+                  <option value="">-- Choose Type --</option>
                 </select>
               </div>
 
-              <label class="col-sm-2 control-label" for="phone[{{$index}}][number]">Phone Number</label>
+
               <div class="col-sm-4">
+                <label class="control-label" for="phone[{{$index}}][number]">Number</label>
                 <input ng-if="phone.type != 'Satellite'" ng-model="profile.phone[$index].number" international-phone-number auto-format="true" national-mode="false" responsive-dropdown="true" class="form-control" type="text" name="phone[{{$index}}][number]" ng-change="setCountryCode(); checkMultiFields()" />
-                
                 <input ng-if="phone.type == 'Satellite'" ng-model="profile.phone[$index].number" class="form-control" type="text" name="phone[{{$index}}][number]" ng-change="checkMultiFields()" />
-                
                 <input type="hidden" name="phone[{{$index}}][countryCode]" ng-model="profile.phone[$index].countryCode" />
               </div>
             </div>
@@ -135,15 +133,17 @@
           <h4>Email Addresses</h4>
           <div class="reveal" ng-repeat="email in profile.email track by $index">
             <div class="row">
-              <label class="col-sm-2 control-label" for="email[{{$index}}][type]">Email Description</label>
+
               <div class="col-sm-4">
+                <label class="control-label" for="email[{{$index}}][type]">Type</label>
                 <select class="form-control" ng-options="type for type in emailTypes" name="email[{{$index}}][type]" ng-model="profile.email[$index].type">
-                  <option value="">-- Choose Email Type --</option>
+                  <option value="">-- Choose Type --</option>
                 </select>
               </div>
 
-              <label class="col-sm-2 control-label" for="email[{{$index}}][address]">Email</label>
+
               <div class="col-sm-4">
+                <label class="control-label" for="email[{{$index}}][address]">Email</label>
                 <input class="form-control" type="text" name="email[{{$index}}][address]" ng-model="profile.email[$index].address" ng-change="checkMultiFields()" />
               </div>
             </div>
@@ -154,13 +154,15 @@
           <h4>VOIP</h4>
           <div class="reveal" ng-repeat="voip in profile.voip track by $index">
             <div class="row">
-              <label class="col-sm-2 control-label" for="voip[{{$index}}][desc]">VOIP Description</label>
+
               <div class="col-sm-4">
+                <label class="control-label" for="voip[{{$index}}][desc]">Type</label>
                 <input class="form-control" type="text" name="voip[{{$index}}][type]" ng-model="profile.voip[$index].type" />
               </div>
 
-              <label class="col-sm-2 control-label" for="voip[{{$index}}][number]">VOIP</label>
+
               <div class="col-sm-4">
+                <label class="control-label" for="voip[{{$index}}][number]">VOIP</label>
                 <input class="form-control" type="text" name="voip[{{$index}}][number]" ng-model="profile.voip[$index].number" ng-change="checkMultiFields()" />
               </div>
             </div>
@@ -169,73 +171,73 @@
 
         <div class="form-group">
           <h4>Location</h4>
-          <label class="col-sm-2 control-label" for="address[0][country]">Country</label>
-          <div class="col-sm-10">
+          <label class="control-label" for="address[0][country]">Country</label>
+          <div class="col-sm-12">
             <angucomplete-alt
-              id="country"
-              placeholder="Search for countries"
-              pause="100"
-              selected-object="setCountry"
-              local-data="countries"
-              search-fields="name"
-              title-field="name"
-              minlength="2"
-              text-searching="Searching..."
-              text-no-results="No results found."
-              initial-value="{{profile.address[0].country}}"
-              input-class="form-control"></angucomplete-alt>
+            id="country"
+            placeholder="Search for countries"
+            pause="100"
+            selected-object="setCountry"
+            local-data="countries"
+            search-fields="name"
+            title-field="name"
+            minlength="2"
+            text-searching="Searching..."
+            text-no-results="No results found."
+            initial-value="{{profile.address[0].country}}"
+            input-class="form-control"></angucomplete-alt>
           </div>
         </div>
 
         <div cg-busy="regionsPromise">
           <div class="form-group reveal" ng-show="regions.length == 0">
-            <div class="col-sm-10 col-sm-offset-2">
+            <div class="col-sm-12 col-sm-offset-2">
               <span class="form-control-static alert alert-info" role="alert">We are not currently taking note of administrative areas or localities in this country.</span>
             </div>
           </div>
           <div class="form-group reveal" ng-show="profile.address[0].country && regions.length">
-            <label class="col-sm-2 control-label" for="address[0][administrative_area]">State/Province/Region</label>
-            <div class="col-sm-10">
+            <label class="control-label" for="address[0][administrative_area]">State/Province/Region</label>
+            <div class="col-sm-12">
               <angucomplete-alt
-                id="admin_area"
-                pause="0"
-                selected-object="setAdminArea"
-                local-data="regions"
-                search-fields="name"
-                title-field="name"
-                minlength="1"
-                text-searching="Searching..."
-                text-no-results="No results found."
-                initial-value="{{profile.address[0].administrative_area}}"
-                input-class="form-control"></angucomplete-alt>
+              id="admin_area"
+              pause="0"
+              selected-object="setAdminArea"
+              local-data="regions"
+              search-fields="name"
+              title-field="name"
+              minlength="1"
+              text-searching="Searching..."
+              text-no-results="No results found."
+              initial-value="{{profile.address[0].administrative_area}}"
+              input-class="form-control"></angucomplete-alt>
             </div>
           </div>
         </div>
 
         <div class="form-group reveal" ng-show="profile.address[0].country && regions.length && profile.address[0].administrative_area">
-          <label class="col-sm-2 control-label" for="address[0][locality]">City</label>
-            <div class="col-sm-10">
-              <angucomplete-alt
-                id="locality"
-                pause="0"
-                selected-object="setLocality"
-                local-data="localities"
-                search-fields="name"
-                title-field="name"
-                minlength="1"
-                text-searching="Searching..."
-                text-no-results="No results found."
-                initial-value="{{profile.address[0].locality}}"
-                input-class="form-control"></angucomplete-alt>
-            </div>
+          <label class="control-label" for="address[0][locality]">City</label>
+          <div class="col-sm-12">
+            <angucomplete-alt
+            id="locality"
+            pause="0"
+            selected-object="setLocality"
+            local-data="localities"
+            search-fields="name"
+            title-field="name"
+            minlength="1"
+            text-searching="Searching..."
+            text-no-results="No results found."
+            initial-value="{{profile.address[0].locality}}"
+            input-class="form-control"></angucomplete-alt>
           </div>
         </div>
+
 
         <div class="form-group">
           <h4>Websites &amp; Social Media</h4>
           <div class="reveal" ng-repeat="uri in profile.uri track by $index">
-            <label class="col-sm-2 control-label" for="uri[{{$index}}]">URL</label>
-            <div class="col-sm-10">
+            <label class="control-label" for="uri[{{$index}}]">URL</label>
+            <div class="col-sm-12">
               <input class="form-control" type="text" name="uri[{{$index}}]" ng-model="profile.uri[$index]" ng-change="checkMultiFields()" />
             </div>
           </div>
@@ -243,13 +245,13 @@
 
         <div class="form-group">
           <h4>Notes</h4>
-          <label class="col-sm-2 control-label" for="notes">Notes</label>
-          <div class="col-sm-10">
+          <label class="control-label" for="notes">Notes</label>
+          <div class="col-sm-12">
             <textarea class="form-control" name="notes" ng-model="profile.notes" rows="2"></textarea>
           </div>
         </div>
 
-        <input class="btn btn-primary btn-lg" type="submit" ng-click="submitProfile()" value="Update Profile" />
+        <input class="btn btn-primary btn-lg" type="submit" ng-click="submitProfile()" value="{{submitText}}" />
       </form>
     </div>
   </div>
