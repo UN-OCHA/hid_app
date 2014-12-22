@@ -4,39 +4,48 @@
 
 <div ng-show='!isRouteLoading' class="main container">
   <div class="active-profiles main-content col-xs-12 col-sm-9" cg-busy="dashboardDataTracker">
+    <div class="active-profiles-wrapper" ng-show="userData.contacts.length">
+      <h3>General List :</h3>
+      <ul class="active-profiles-container list-group">
+        <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts" ng-if="profile.type == 'global'">
+          <h4>
+            <a href="#/list/global">
+              <span class="profile-item-name">Global Contact List</span>
+            </a>
+          </h4>
+        </li>
+      </ul>
 
-    <h3>General List :</h3>
-    <ul class="active-profiles-container list-group">
-      <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts" ng-if="profile.type == 'global'">
-        <h4>
-          <a href="#/list/global">
-            <span class="profile-item-name">Global Contact List</span>
-          </a>
-        </h4>
-      </li>
-    </ul>
+      <h3>My checked-in lists :</h3>
+      <ul class="active-profiles-container list-group">
+        <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts | orderBy: ['location', 'operation']" ng-if="profile.type == 'local'">
+          <a ng-show="profile.confirmDelete" class="slide btn btn-warning btn-sm btn-hidden" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'">Checkout</a>
+          <h4>
+            <a href="#/list/{{profile.locationId}}">
+              <span class="profile-item-name">{{profile.location}}
+                <span class="operation" ng-show="profile.operation.length"> &ndash; {{profile.operation}}</span>
+              </span>
+            </a>
+          </h4>
+          <div class="btn-group">
+            <a class="btn btn-sm" href="#/profile/{{profile._id}}" title="Edit my {{profile.location}} profile"><i class="fa fa-pencil"></i></a>
+            <a class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="Check-out from {{profile.location}}"><i class="fa fa-times"></i></a>
+          </div>
+        </li>
+        <li class="disaster-item" ng-if="profilesActive.length == 0">
+          <em>No profiles found.</em>
+        </li>
+      </ul>
 
-    <h3>My checked-in lists :</h3>
-    <ul class="active-profiles-container list-group">
-      <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts | orderBy: ['location', 'operation']" ng-if="profile.type == 'local'">
-        <a ng-show="profile.confirmDelete" class="slide btn btn-warning btn-sm btn-hidden" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'">Checkout</a>
-        <h4>
-          <a href="#/list/{{profile.locationId}}">
-            <span class="profile-item-name">{{profile.location}}
-              <span class="operation" ng-show="profile.operation.length"> &ndash; {{profile.operation}}</span>
-            </span>
-          </a>
-        </h4>
-        </h4>
-        <div class="btn-group">
-          <a class="btn btn-sm" href="#/profile/{{profile._id}}" title="Edit my {{profile.location}} profile"><i class="fa fa-pencil"></i></a>
-          <a class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="Check-out from {{profile.location}}"><i class="fa fa-times"></i></a>
-        </div>
-      </li>
-      <li class="disaster-item" ng-if="profilesActive.length == 0">
-        <em>No profiles found.</em>
-      </li>
-    </ul>
+      <div class="empty-profiles" ng-hide="userData.contacts.length">
+        <p>Thank you for registering on Humanitarian.ID. With your help, we will ensure that humanitarian contact lists are always up-to-date. As you will notice, you do not have access to any lists just yet.</p>
+        <p>First, you will need to <em>create your Global profile</em>. In this profile, you will provide your usual details or information of where you are usually located.  After you have completed this step, you will see and have access to the Global contact list.</p>
+        <p>Second, if you are in a country/emergency, you should <em>"Check-in" for that country/emergency</em>.  When you perform the check-in, you will see a copy of your profile that you can edit for that country/emergency.  Once checked-in, you will then have access to the contact list specific to the country/emergency.  And, other responders will be able to easily find you.</p>
+        <p>When you leave a country/emergency, remember that <em>you need to check-out</em>. By doing so, you will remove your details from the contact list.</p>
+        <p>Again, thanks for helping to make humanitarian contact lists accurate.</p>
+        <p><em>The Humanitarian.ID team</em></p>
+      </div>
+    </div>
   </div>
   <div class="sidebar-left col-xs-12 col-sm-3 col-space-above">
     <div class="actions" ng-show="dashboardOptions || breakpoint.class !== 'smallscreen'">
@@ -47,7 +56,6 @@
       <a class="btn btn-primary btn-lg btn-block" ng-show="!globalProfileId.length" href="#/profile/{{globalProfileId}}"><i class="entypo">&#128100;</i> Global Profile</a>
       <a class="btn btn-default btn-lg btn-block" href="{{logoutPath}}">Logout</a>
     </div>
-
   </div>
   <div ng-show="!isRouteLoading">
     <div class="" ng-show="breakpoint.class === 'smallscreen' ">
