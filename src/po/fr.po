@@ -59,10 +59,13 @@ msgstr "émail"
 msgid "Global"
 msgstr "Global"
 
+#: src/partials/contact.html
 #: src/partials/list.html
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4581
+#: src/partials/profile.html
 msgid "Group"
-msgstr "Group"
+msgid_plural "Groups"
+msgstr[0] "Group"
+msgstr[1] "Groups"
 
 #: src/partials/header.html loco:54a29d9114d725ad5b8b4582
 msgid "Home"

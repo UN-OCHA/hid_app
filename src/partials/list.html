@@ -44,8 +44,8 @@
         </div>
 
         <div class="form-group">
-          <input class="btn btn-primary btn-md" type="submit" ng-click="submitSearch()" value="Search"/>
-          <input class="btn btn-warning btn-md" type="button" ng-click="resetSearch()" value="Reset Filters"/>
+          <input class="btn btn-primary btn-md" type="submit" ng-click="submitSearch()" value="{{'Search'|translate}}"/>
+          <input class="btn btn-warning btn-md" type="button" ng-click="resetSearch()" value="{{'Reset Filters'|translate}}"/>
         </div>
       </form>
     </div>
@@ -56,12 +56,12 @@
       <div class="form-group">
         <label class="control-label element-invisible" for="text" translate>Search</label>
         <input class="form-control contact-search" type="search" name="text"
-               placeholder="Search by name, title, or organization" ng-model="query.text"/>
+               placeholder="{{'Search by name, title, or organization'|translate}}" ng-model="query.text"/>
       </div>
 
       <div class="form-group">
         <input class="btn btn-primary btn-md element-invisible" ng-click="submitSearch()" type="submit"
-               value="Search"/>
+               value="{{'Search'|translate}}"/>
       </div>
     </form>
 
