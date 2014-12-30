@@ -24,7 +24,7 @@ jso.callback(null, function (token) {
 });
 
 // Initialize ng
-app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'angucomplete-alt', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber']);
+app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'gettext', 'angucomplete-alt', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber']);
 
 app.value('cgBusyDefaults',{
   message:'Loading...',

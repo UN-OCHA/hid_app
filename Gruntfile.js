@@ -30,7 +30,32 @@ module.exports = function(grunt) {
         src: 'src/js/config.' + target + '.js',
         dest: 'src/js/config.js',
       }
-    }
+    },
+    nggettext_extract: {
+      pot: {
+        files: {
+          'src/po/template.pot': [
+            'src/js/app.js',
+            'src/partials/*.html'
+          ]
+        },
+        options: {
+          postProcess: function (catalog) {
+            catalog.headers = {
+              'Language': '<<specify ISO language string here>>',
+              'Project-Id-Version': new Date().toISOString()
+            };
+          }
+        }
+      },
+    },
+    nggettext_compile: {
+      all: {
+        files: {
+          'src/js/translations.js': ['src/po/*.po']
+        }
+      },
+    },
 /*
     symlink: {
       options: {
@@ -50,6 +75,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-symlink');
+  grunt.loadNpmTasks('grunt-angular-gettext');
 
   // Default task(s).
   grunt.registerTask('default', ['bower-install-simple', 'jshint', 'compass', 'copy']);
