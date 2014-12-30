@@ -78,5 +78,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-angular-gettext');
 
   // Default task(s).
-  grunt.registerTask('default', ['bower-install-simple', 'jshint', 'compass', 'copy']);
+  grunt.registerTask('default', ['bower-install-simple', 'nggettext_extract', 'nggettext_compile', 'jshint', 'compass', 'copy']);
 };
