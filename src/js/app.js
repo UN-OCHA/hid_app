@@ -67,7 +67,7 @@ app.run(function ($rootScope, $location, authService) {
   });
 });
 
-app.controller("HeaderCtrl", function($scope, $rootScope, gettextCatalog) {
+app.controller("HeaderCtrl", function($scope, $rootScope, profileService, gettextCatalog) {
   $rootScope.$on("appLoginSuccess", function(ev, accountData) {
     $scope.isAuthenticated = accountData && accountData.user_id;
     $scope.nameGiven = accountData.name_given;
@@ -87,7 +87,7 @@ app.controller("HeaderCtrl", function($scope, $rootScope, gettextCatalog) {
   $scope.language = 'en';
   $scope.switchLanguage = function () {
     gettextCatalog.setCurrentLanguage($scope.language);
-    gettextCatalog.debug = true;
+    gettextCatalog.debug = profileService.hasRole('admin');
   };
 });
 
