@@ -84,6 +84,11 @@ app.controller("HeaderCtrl", function($scope, $rootScope, gettextCatalog) {
       }
     }
   });
+  $scope.language = 'en';
+  $scope.switchLanguage = function () {
+    gettextCatalog.setCurrentLanguage($scope.language);
+    gettextCatalog.debug = true;
+  };
 });
 
 app.controller("DefaultCtrl", function($scope, $rootScope, $location, authService) {
