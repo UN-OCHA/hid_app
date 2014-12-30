@@ -8,12 +8,12 @@
 
     <div class="col-xs-12 col-sm-3 profile-buttons">
       <a class="btn btn-warning btn-block btn-sm" href ng-click="back();"><i
-          class="fa fa-arrow-circle-left"></i> Back</a>
-      <a class="btn btn-primary btn-lg btn-block" ng-show="userIsAdmin" href="#/profile/{{contact._id}}">Edit
+          class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a>
+      <a class="btn btn-primary btn-lg btn-block" ng-show="userIsAdmin" href="#/profile/{{contact._id}}" translate>Edit
         Profile</a>
-      <a class="btn btn-primary btn-lg btn-block" ng-show="userIsAdmin" href="#/checkin/{{contact._profile._id}}">Check-in User</a>
-      <a class="btn btn-primary btn-lg btn-checkout btn-block" ng-if="contact.type === 'local'" ng-show="userIsAdmin" ng-click="contact.confirmDelete = !contact.confirmDelete">Check-out User</a>
-      <a ng-show="contact.confirmDelete" class="slide btn btn-warning btn-lg btn-block btn-hidden" ng-click="checkout(contact._id)">Confirm User Checkout</a>
+      <a class="btn btn-primary btn-lg btn-block" ng-show="userIsAdmin" href="#/checkin/{{contact._profile._id}}" translate>Check-in User</a>
+      <a class="btn btn-primary btn-lg btn-checkout btn-block" ng-if="contact.type === 'local'" ng-show="userIsAdmin" ng-click="contact.confirmDelete = !contact.confirmDelete" translate>Check-out User</a>
+      <a ng-show="contact.confirmDelete" class="slide btn btn-warning btn-lg btn-block btn-hidden" ng-click="checkout(contact._id)" translate>Confirm User Checkout</a>
     </div>
 
     <div class="col-xs-12 col-sm-9 profile-view">
@@ -27,8 +27,8 @@
             class="fa fa-check-circle"></i></div>
 
           <span ng-if="contact._profile.verified || contact.keyContact" class="profile-view__key-contact-verified">
-          (<span ng-if="contact.keyContact">key contact</span><span ng-if="contact._profile.verified && contact.keyContact">/</span><span
-            ng-if="contact._profile.verified">verified</span>)
+          (<span ng-if="contact.keyContact" translate>key contact</span><span ng-if="contact._profile.verified && contact.keyContact">/</span><span
+            ng-if="contact._profile.verified" translate>verified</span>)
           </span>
         </div>
       </div>
@@ -52,18 +52,18 @@
           <div class="profile-view__item">{{voip.type}}: {{voip.number}}</div>
         </div>
         <div class="location">
-          <div class="profile-view__item">Country: {{contact.address[0].country}}</div>
-          <div class="profile-view__item">State/Province/Region: {{contact.address[0].administrative_area}}</div>
-          <div class="profile-view__item">City: {{contact.address[0].locality}}</div>
+          <div class="profile-view__item"><span translate>Country</span>: {{contact.address[0].country}}</div>
+          <div class="profile-view__item"><span translate>State/Province/Region</span>: {{contact.address[0].administrative_area}}</div>
+          <div class="profile-view__item"><span translate>City</span>: {{contact.address[0].locality}}</div>
         </div>
         <div class="uri">
-          Website/Social Media:
+          <span translate>Website/Social Media</span>:
           <div class="uri" ng-repeat="uri in contact.uri"><a href="{{uri}}">{{uri}}</a></div>
         </div>
       </div>
 
       <div class="notes">
-        Notes:
+        <span translate>Notes</span>:
         <div class="notes">{{contact.notes}}</div>
       </div>
 

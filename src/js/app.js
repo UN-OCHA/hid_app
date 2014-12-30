@@ -67,7 +67,7 @@ app.run(function ($rootScope, $location, authService) {
   });
 });
 
-app.controller("HeaderCtrl", function($scope, $rootScope) {
+app.controller("HeaderCtrl", function($scope, $rootScope, gettextCatalog) {
   $rootScope.$on("appLoginSuccess", function(ev, accountData) {
     $scope.isAuthenticated = accountData && accountData.user_id;
     $scope.nameGiven = accountData.name_given;
@@ -169,8 +169,7 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, profileService, authService, placesOperations, profileData, countries) {
-  $scope.title = contactsId.title;
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, profileService, authService, placesOperations, profileData, countries, gettextCatalog) {
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
@@ -185,7 +184,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
   $scope.userIsAdmin = profileService.hasRole('admin');
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
-  $scope.submitText = !checkinFlow ? 'Update Profile' : 'Check-in';
+  $scope.submitText = !checkinFlow ? gettextCatalog.getString('Update Profile') : gettextCatalog.getString('Check-in');
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.placesOperations = placesOperations;
@@ -246,12 +245,12 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         }
       }
     }
-    $scope.profileName = $scope.profile.type === 'global' ? 'Global' : $scope.profile.location;
+    $scope.profileName = $scope.profile.type === 'global' ? gettextCatalog.getString('Global') : $scope.profile.location;
   }
   else if (!checkinFlow) {
     // If editing the global profile for the first time, add messaging.
     $scope.profile.type = 'global';
-    $scope.profileName = $scope.profile.type === 'global' ? 'Global' : $scope.profile.location;
+    $scope.profileName = $scope.profile.type === 'global' ? gettextCatalog.getString('Global') : $scope.profile.location;
   }
 
   // Add the given and family name from the auth service as a default value.
@@ -470,11 +469,10 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   };
 });
 
-app.controller("ContactCtrl", function($scope, $route, $routeParams, profileService, contact) {
-  $scope.title = contactsId.title;
+app.controller("ContactCtrl", function($scope, $route, $routeParams, profileService, contact, gettextCatalog) {
   $scope.contact = contact;
   if (contact.type === 'global') {
-    $scope.contact.location = 'Global';
+    $scope.contact.location = gettextCatalog.getString('Global');
   }
 
   $scope.userIsAdmin = profileService.hasRole('admin');
@@ -507,8 +505,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
   };
 });
 
-app.controller("ListCtrl", function($scope, $route, $routeParams, profileService, userData, placesOperations) {
-  $scope.title = contactsId.title;
+app.controller("ListCtrl", function($scope, $route, $routeParams, profileService, userData, placesOperations, gettextCatalog) {
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
   $scope.contacts = [];
@@ -527,7 +524,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
     }
   }
   else {
-    $scope.location = 'Global';
+    $scope.location = gettextCatalog.getString('Global');
   }
 
   $scope.showList = function () {
