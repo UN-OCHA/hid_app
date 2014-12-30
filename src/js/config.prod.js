@@ -1,5 +1,4 @@
 var contactsId = {
-    "title": "Humanitarian ID",
     "sourcePath": "",
     "authClientId": "hid-prod",
     "appBaseUrl": "https://app.humanitarian.id",

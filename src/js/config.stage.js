@@ -1,5 +1,4 @@
 var contactsId = {
-    "title": "Humanitarian ID",
     "sourcePath": "",
     "authClientId": "hid-stage",
     "appBaseUrl": "http://stage.app.568elmp02.blackmesh.com",

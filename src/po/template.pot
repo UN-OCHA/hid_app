@@ -1,0 +1,278 @@
+msgid ""
+msgstr ""
+"Language: <<specify ISO language string here>>\n"
+"Project-Id-Version: 2014-12-30T03:09:03.463Z\n"
+
+#: src/partials/header.html
+#: src/partials/index.html
+msgid "About"
+msgstr ""
+
+#: src/partials/about.html
+msgid "About Humanitarian.ID"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Admin Privileges"
+msgstr ""
+
+#: src/partials/contact.html
+#: src/partials/profile.html
+msgid "Back"
+msgstr ""
+
+#: src/js/app.js
+#: src/partials/dashboard.html
+msgid "Check-in"
+msgstr ""
+
+#: src/partials/contact.html
+msgid "Check-in User"
+msgstr ""
+
+#: src/partials/contact.html
+msgid "Check-out User"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Checkout"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Choose Type"
+msgstr ""
+
+#: src/partials/contact.html
+#: src/partials/profile.html
+msgid "City"
+msgstr ""
+
+#: src/partials/contact.html
+msgid "Confirm User Checkout"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Contact List"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Contact List Filters"
+msgstr ""
+
+#: src/partials/contact.html
+#: src/partials/profile.html
+msgid "Country"
+msgstr ""
+
+#: src/partials/header.html
+msgid "Dashboard"
+msgstr ""
+
+#: src/partials/contact.html
+msgid ""
+"Edit\n"
+"        Profile"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Edit Global Profile"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Email"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Email Addresses"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Family Name"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "General List"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Given Name"
+msgstr ""
+
+#: src/js/app.js
+msgid "Global"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Global Administration"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Global Contact List"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Global Profile"
+msgstr ""
+
+#: src/partials/list.html
+#: src/partials/profile.html
+msgid "Group"
+msgstr ""
+
+#: src/partials/header.html
+msgid "Home"
+msgstr ""
+
+#: src/partials/dashboard.html
+#: src/partials/profile.html
+msgid "Humanitarian ID"
+msgstr ""
+
+#: src/partials/index.html
+msgid "Humanitarian.ID: Responders"
+msgstr ""
+
+#: src/partials/list.html
+#: src/partials/profile.html
+msgid "Key Contact"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Local Administration"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Location"
+msgstr ""
+
+#: src/partials/header.html
+#: src/partials/index.html
+msgid "Login"
+msgstr ""
+
+#: src/partials/dashboard.html
+#: src/partials/header.html
+msgid "Logout"
+msgstr ""
+
+#: src/partials/index.html
+msgid "Manage your details on global and emergency-level humanitarian contact lists. Find and be found by other responders when needed. Check-in. Connect. Respond."
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "My checked-in lists"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "No active operations found."
+msgstr ""
+
+#: src/partials/list.html
+msgid "No contacts found"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "No profiles found."
+msgstr ""
+
+#: src/partials/404.html
+msgid "Not Found"
+msgstr ""
+
+#: src/partials/contact.html
+#: src/partials/profile.html
+msgid "Notes"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Number"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Organization"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Organizational Information"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Phone Numbers"
+msgstr ""
+
+#: src/partials/index.html
+msgid "Register"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Search"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Select a country"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Select an operation"
+msgstr ""
+
+#: src/partials/contact.html
+#: src/partials/profile.html
+msgid "State/Province/Region"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Title"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Type"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "URL"
+msgstr ""
+
+#: src/js/app.js
+msgid "Update Profile"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "VOIP"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Verified Responder"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Verified User"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "We are not currently taking note of administrative areas or localities in this country."
+msgstr ""
+
+#: src/partials/contact.html
+msgid "Website/Social Media"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Websites &amp; Social Media"
+msgstr ""
+
+#: src/partials/header.html
+msgid "Welcome"
+msgstr ""
+
+#: src/partials/contact.html
+msgid "key contact"
+msgstr ""
+
+#: src/partials/contact.html
+msgid "verified"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "{{profileName}} Profile"
+msgstr ""
