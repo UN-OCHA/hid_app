@@ -145,7 +145,6 @@ app.controller("AboutCtrl", function($scope) {
 });
 
 app.controller("DashboardCtrl", function($scope, $route, profileService, globalProfileId, userData) {
-  $scope.title = contactsId.title;
   $scope.logoutPath = '/#logout';
   $scope.globalProfileId = globalProfileId;
   $scope.userData = userData;
