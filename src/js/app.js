@@ -59,10 +59,10 @@ app.run(function ($rootScope, $location, authService) {
       loginRedirect = $location.path();
       $location.path('/login');
     }
+    $rootScope.isIndex = (nextRoute && nextRoute.controller === 'DefaultCtrl') ? 'index' : '';
   });
 
   //console.log($rootScope);
-  //console.log($rootScope.$eval(attr.breakpoint));
   //if ($rootScope.breakpoint.windowSize !== 'smallscreeen') {
   //  console.log('woot this is big screen!');
   //}
