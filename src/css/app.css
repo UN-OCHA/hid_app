@@ -3089,41 +3089,41 @@ h3 {
   font-size: 13px;
   line-height: 1.5;
 }
-.homepage .hoempage-wrapper {
+.homepage .homepage-wrapper {
   width: auto;
   max-width: 555px;
   margin: 0 auto 0;
   padding-top: 100px;
 }
-.homepage .hoempage-wrapper h2 {
+.homepage .homepage-wrapper h2 {
   text-align: center;
   margin: 0 0 12px;
 }
-.homepage .hoempage-wrapper .info {
+.homepage .homepage-wrapper .info {
   float: left;
   width: 48%;
   text-align: right;
   margin-right: 10px;
 }
-.homepage .hoempage-wrapper .actions {
+.homepage .homepage-wrapper .actions {
   width: 50%;
   float: none;
   margin: 40px auto 0;
 }
 @media (min-width: 640px) {
-  .homepage .hoempage-wrapper .actions {
+  .homepage .homepage-wrapper .actions {
     float: right;
   }
 }
-.homepage .hoempage-wrapper .info {
+.homepage .homepage-wrapper .info {
   display: none;
 }
-.homepage .hoempage-wrapper .info:after {
+.homepage .homepage-wrapper .info:after {
   content: "";
   display: table;
 }
 @media (min-width: 640px) {
-  .homepage .hoempage-wrapper .info {
+  .homepage .homepage-wrapper .info {
     display: block;
     float: left;
     margin: 15px 13px 0 60px;
@@ -3131,7 +3131,7 @@ h3 {
     text-align: right;
   }
 }
-.homepage .hoempage-wrapper .btn {
+.homepage .homepage-wrapper .btn {
   position: relative;
   text-transform: uppercase;
   font-size: 12px;
@@ -3143,17 +3143,17 @@ h3 {
   border-radius: 4px;
   -moz-border-radius: 4px;
 }
-.homepage .hoempage-wrapper .btn:hover,
-.homepage .hoempage-wrapper .btn:active,
-.homepage .hoempage-wrapper #aboutBtn:hover,
-.homepage .hoempage-wrapper #aboutBtn:active {
+.homepage .homepage-wrapper .btn:hover,
+.homepage .homepage-wrapper .btn:active,
+.homepage .homepage-wrapper #aboutBtn:hover,
+.homepage .homepage-wrapper #aboutBtn:active {
   background-color: #2a5d81;
 }
-.homepage .hoempage-wrapper .btn-arrow:hover .fa {
+.homepage .homepage-wrapper .btn-arrow:hover .fa {
   background-color: white;
   color: #2a5d81;
 }
-.homepage .hoempage-wrapper .btn-arrow .fa {
+.homepage .homepage-wrapper .btn-arrow .fa {
   position: absolute;
   left: 9px;
   top: 7px;
@@ -3163,25 +3163,25 @@ h3 {
   width: 19px;
   height: 19px;
 }
-.homepage .hoempage-wrapper .btn-arrow .fa:before {
+.homepage .homepage-wrapper .btn-arrow .fa:before {
   font-size: 19px;
   line-height: .9;
   margin-left: 3px;
 }
-.homepage .hoempage-wrapper #aboutBtn {
+.homepage .homepage-wrapper #aboutBtn {
   background: #bbb;
   color: white;
 }
-.homepage .hoempage-wrapper #aboutBtn .fa {
+.homepage .homepage-wrapper #aboutBtn .fa {
   background-color: white;
   color: #bbb;
 }
-.homepage .hoempage-wrapper .buttons:after {
+.homepage .homepage-wrapper .buttons:after {
   content: "";
   display: table;
 }
 @media (min-width: 640px) {
-  .homepage .hoempage-wrapper .buttons {
+  .homepage .homepage-wrapper .buttons {
     margin-top: 15px;
     float: left;
     width: 213px;

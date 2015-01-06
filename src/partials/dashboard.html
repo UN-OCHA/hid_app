@@ -1,25 +1,36 @@
 <div class="masthead container element-invisible">
-  <h2>{{title}}</h2>
+  <h2 translate>Humanitarian ID</h2>
 </div>
 
 <div ng-show='!isRouteLoading' class="main container">
+  <div class="sidebar-left col-xs-12 col-sm-3 col-space-above">
+    <div class="actions">
+      <span ng-repeat="profile in userData.contacts" ng-if="profile.type == 'global'">
+        <a class="btn btn-default btn-lg btn-block" href="#/profile/{{profile._id}}"><i class="entypo">&#59234;</i> <span translate>Edit Global Profile</span></a>
+      </span>
+      <a class="btn btn-primary btn-lg btn-block" href="#/checkin"><i class="entypo">&#59234;</i> <span translate>Check-in</span></a>
+      <a class="btn btn-primary btn-lg btn-block" ng-show="!globalProfileId.length" href="#/profile/{{globalProfileId}}"><i class="entypo">&#128100;</i> <span translate>Global Profile</span></a>
+      <a class="btn btn-default btn-lg btn-block" href="{{logoutPath}}" translate>Logout</a>
+    </div>
+  </div>
+
   <div class="active-profiles main-content col-xs-12 col-sm-9" cg-busy="dashboardDataTracker">
     <div class="active-profiles-wrapper" ng-show="userData.contacts.length">
-      <h3>General List :</h3>
+      <h3><span translate>General List</span> :</h3>
       <ul class="active-profiles-container list-group">
         <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts" ng-if="profile.type == 'global'">
           <h4>
             <a href="#/list/global">
-              <span class="profile-item-name">Global Contact List</span>
+              <span class="profile-item-name" translate>Global Contact List</span>
             </a>
           </h4>
         </li>
       </ul>
 
-      <h3>My checked-in lists :</h3>
+      <h3><span translate>My checked-in lists</span> :</h3>
       <ul class="active-profiles-container list-group">
         <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts | orderBy: ['location', 'operation']" ng-if="profile.type == 'local'">
-          <a ng-show="profile.confirmDelete" class="slide btn btn-warning btn-sm btn-hidden" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'">Checkout</a>
+          <a ng-show="profile.confirmDelete" class="slide btn btn-warning btn-sm btn-hidden" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'" translate>Checkout</a>
           <h4>
             <a href="#/list/{{profile.locationId}}">
               <span class="profile-item-name">{{profile.location}}
@@ -33,7 +44,7 @@
           </div>
         </li>
         <li class="disaster-item" ng-if="profilesActive.length == 0">
-          <em>No profiles found.</em>
+          <em translate>No profiles found.</em>
         </li>
       </ul>
 

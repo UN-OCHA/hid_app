@@ -7,15 +7,19 @@
     </div>
 
     <div class="login-controls pull-right">
-      <div class="login-controls-name" ng-if="isAuthenticated">Welcome, <span ng-bind="nameGiven"></span> <span ng-bind="nameFamily"></span></div>
-      <a class="btn-login-controls btn" ng-if="!isAuthenticated" href="#/login">Login <span class="text-highlight">H</span>ID</a>
-      <a class="btn-login-controls btn" ng-if="isAuthenticated" href="#/logout">Logout <span class="text-highlight">H</span>ID</a>
+      <div class="login-controls-name" ng-if="isAuthenticated"><span translate>Welcome</span>, <span ng-bind="nameGiven"></span> <span ng-bind="nameFamily"></span></div>
+      <a class="btn-login-controls btn" ng-if="!isAuthenticated" href="#/login"><span translate>Login</span> <span class="text-highlight">H</span>ID</a>
+      <a class="btn-login-controls btn" ng-if="isAuthenticated" href="#/logout"><span translate>Logout</span> <span class="text-highlight">H</span>ID</a>
+      <select name="language" ng-change="switchLanguage()" ng-model="language">
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+      </select>
     </div>
   </div>
   <div class="logo-bar">
     <div class="logo"></div>
     <div class="primary-nav">
-    <span ng-click="mainMenu = !mainMenu" class="touch-button"><i class="fa fa-bars"></i></span>
+      <span ng-click="mainMenu = !mainMenu" class="touch-button"><i class="fa fa-bars"></i></span>
       <ul ng-show="mainMenu || breakpoint.class !== 'smallscreen'">
         <li><a href="#/" ng-if="!isAuthenticated" class="active">Home</a></li>
         <li><a href="#/dashboard" ng-if="isAuthenticated" class="active">Dashboard</a></li>
