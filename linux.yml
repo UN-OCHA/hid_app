@@ -1,6 +1,7 @@
 app:
   image: unocha/nginx16
   volumes:
+    - config/etc/nginx/conf.d:/etc/nginx/conf.d
     - src:/var/www/html
   environment:
     DNSDOCK_NAME: app
