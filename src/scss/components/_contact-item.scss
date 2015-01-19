@@ -71,7 +71,6 @@
 .contact-search {
   padding: 20px;
 }
-
 .contact-item__markers {
   width: 20px;
   display: inline-block;
@@ -127,4 +126,40 @@
   float: left;
   font-size: 28px;
   margin: -7px 5px 0 0;
+}
+.notes {
+  padding: 25px 0;
+  margin-bottom: 20px;
+}
+.right-sidebar-group {
+  padding: 0 10px 10px 0;
+  border-bottom: 1px dotted #D5D5D5;
+  color: $primary-color-1;
+  margin-bottom: 10px;
+  .profile-view__item, strong {
+    padding: 0 0 0 15px;
+    display: block;
+    &.country{
+      font-weight: bold;
+    }
+  }
+  .group-label {
+    display: block;
+    color: #A8A8A8;
+    margin-bottom: 15px;
+    font-size: 11px;
+  }
+}
+.same-height-wrap {
+  display: table;
+  .same-height-col {
+    display: table-cell;
+    vertical-align: top;
+    float: none;
+    padding: 20px 10px;
+    &.profile-right-sidebar{
+      background: $secondary-color-3;
+      padding: 6px;
+    }
+  }
 }

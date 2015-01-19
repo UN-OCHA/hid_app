@@ -1,10 +1,5 @@
 
 (function($, angular, contactsId) {
-  jQuery(document).ready(function($){
-    $('.btn-group .btn-warning').click(function(){
-      $(this).parents('.profile-item').find('.btn-hidden').toggle('slide',"", 500);
-    })
-  });
 
   var jso,
     app,
@@ -63,6 +58,31 @@ app.run(function ($rootScope, $location, authService) {
       event.preventDefault();
       loginRedirect = $location.path();
       $location.path('/login');
+    }
+    $rootScope.isIndex = (nextRoute && nextRoute.controller === 'DefaultCtrl') ? 'index' : '';
+  });
+
+  //console.log($rootScope);
+  //if ($rootScope.breakpoint.windowSize !== 'smallscreeen') {
+  //  console.log('woot this is big screen!');
+  //}
+});
+
+app.controller("HeaderCtrl", function($scope, $rootScope) {
+  $rootScope.$on("appLoginSuccess", function(ev, accountData) {
+    $scope.isAuthenticated = accountData && accountData.user_id;
+    $scope.nameGiven = accountData.name_given;
+    $scope.nameFamily = accountData.name_family;
+  });
+  $rootScope.$on("appUserData", function(ev, userData) {
+    if (userData && userData.contacts && userData.contacts.length) {
+      for (var idx = 0; idx < userData.contacts.length; idx++) {
+        if (userData.contacts[idx].type === 'global') {
+          $scope.nameGiven = userData.contacts[idx].nameGiven;
+          $scope.nameFamily = userData.contacts[idx].nameFamily;
+          break;
+        }
+      }
     }
   });
 });
@@ -220,7 +240,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   if (checkinFlow) {
     $scope.selectedPlace = '';
     $scope.selectedOperation = '';
-
     $scope.profile = profileData.global ? angular.fromJson(angular.toJson(profileData.global)) : {};
     if ($scope.profile._id) {
       delete $scope.profile._id;

@@ -1,6 +1,6 @@
 .logo-bar {
   background: $primary-color-1 url(../images/sprite.png) no-repeat 5000px 5000px;
-  height: 55px;
+  //height: 55px;
 
   @media(min-width: 768px) {
     height: 120px;
@@ -9,6 +9,9 @@
 
   @media(min-width: 900px) {
     background-position: right -480px;
+  }
+  &.open .log {
+    margin-bottom: 80px;
   }
 }
 

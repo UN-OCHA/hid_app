@@ -3,6 +3,7 @@
 body {
   background: url(../images/bg.png);
   font-family: arial, sans serif;
+  margin-bottom: 25px;
   .entypo {
     float: left;
     font-family: "entypo";
@@ -97,7 +98,7 @@ a {
 
 .angucomplete-dropdown {
   overflow-y: auto;
-  max-height: 200px; 
+  max-height: 200px;
 }
 
 // Animations
@@ -127,7 +128,6 @@ a {
     opacity: 1;
   }
 }
-
 label[for=verified],
 label[for=keyContact]{
   font-weight: normal;

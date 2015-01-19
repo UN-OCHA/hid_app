@@ -5,6 +5,7 @@
 ////////////////////////
 
 @import "compass";
+@import "compass/css3/user-interface";
 @import "font-awesome-compass";
 @import "font-awesome";
 @import "global/variables/*";
@@ -12,4 +13,5 @@
 @import "base/**/*";
 @import "layout/**/*";
 @import "components/**/*";
-@import "compass/css3/transition";
+
+

@@ -1,5 +1,5 @@
 <div class="header" ng-controller="HeaderCtrl">
-  <div class="utility">
+  <div class="utility" ng-show="mainMenu || breakpoint.class !== 'smallscreen'">
     <div class="affiliate-logos pull-left">
       <div class="affiliate-logo-wrapper"><a href="http://www.humanitarianresponse.info" target="_blank"><div class="affiliate-logo humanitarian-response"></div></a></div>
       <div class="affiliate-logo-wrapper"><a href="http://reliefweb.int/" target="_blank"><div class="affiliate-logo relief-web"></div></a></div>
@@ -19,10 +19,11 @@
   <div class="logo-bar">
     <div class="logo"></div>
     <div class="primary-nav">
-      <ul>
-        <li><a href="#/" ng-if="!isAuthenticated" class="active" translate>Home</a></li>
-        <li><a href="#/dashboard" ng-if="isAuthenticated" class="active" translate>Dashboard</a></li>
-        <li><a href="#/about" translate>About</a></li>
+      <span ng-click="mainMenu = !mainMenu" class="touch-button"><i class="fa fa-bars"></i></span>
+      <ul ng-show="mainMenu || breakpoint.class !== 'smallscreen'">
+        <li><a href="#/" ng-if="!isAuthenticated" class="active">Home</a></li>
+        <li><a href="#/dashboard" ng-if="isAuthenticated" class="active">Dashboard</a></li>
+        <li><a href="#/about">About</a></li>
       </ul>
     </div>
   </div>
