@@ -5,10 +5,12 @@
 ////////////////////////
 
 @import "compass";
+@import "bootstrap-compass";
 @import "compass/css3/user-interface";
 @import "font-awesome-compass";
 @import "font-awesome";
 @import "global/variables/*";
+@import "bootstrap";
 @import "global/**/*";
 @import "base/**/*";
 @import "layout/**/*";

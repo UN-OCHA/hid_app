@@ -3,16 +3,16 @@
   margin-bottom: 8px;
   background-color: $background-light;
   border: 1px solid lighten($background-light, 5);
-  @include border-radius(1px);
+  @include border-radius($border-radius-small);
   @include single-box-shadow(0, 0, 2px, 1px, rgba($primary-color-2, .05));
 }
 
 .list-group-item:first-child {
-  @include border-radius(1px);
+  @include border-radius($border-radius-small);
 }
 
 .list-group-item:last-child {
-  @include border-radius(1px);
+  @include border-radius($border-radius-small);
 }
 
 .intl-tel-input {

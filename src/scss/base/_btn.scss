@@ -1,5 +1,5 @@
 .btn-lg, .btn-md, .btn-sm {
-  @include border-radius(4px);
+  @include border-radius($border-radius-base);
   font-size: 12px;
   text-transform: uppercase;
   line-height: 1;
@@ -9,9 +9,6 @@
 
 .btn-default, .btn-warning {
   border: none;
-  background-color: $neutral-color-1;
-  color: $white;
-
   &:hover {
     background-color: darken($neutral-color-1, 5);
   }
@@ -19,7 +16,6 @@
 
 .btn-primary {
   border: none;
-  background-color: $primary-color-1;
 }
 
 .btn-primary:hover,

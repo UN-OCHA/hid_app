@@ -2,7 +2,6 @@
 
 body {
   background: url(../images/bg.png);
-  font-family: arial, sans serif;
   margin-bottom: 25px;
   .entypo {
     float: left;
@@ -12,14 +11,6 @@ body {
   }
 }
 
-a {
-  color: $primary-color-1;
-  text-decoration: underline;
-
-  &:hover {
-   color: darken($primary-color-1, 20);
-  }
-}
 .contactsid-app {
 
   p {
@@ -71,28 +62,11 @@ a {
 
 .contact-search {
   background: $white url(../images/sprite.png) no-repeat right -295px;
-
-  &::-webkit-input-placeholder {
-    color: $primary-color-1;
-  }
-
-  &:-moz-placeholder { /* Firefox 18- */
-    color: $primary-color-1;
-  }
-
-  &::-moz-placeholder {  /* Firefox 19+ */
-    color: $primary-color-1;
-  }
-
-  &:-ms-input-placeholder {
-    color: $primary-color-1;
-  }
 }
 
 .form-control {
   -webkit-box-shadow: inset 1px 1px 5px rgba(0,0,0,.3);
   box-shadow: inset 1px 1px 5px rgba(0,0,0,.3);
-  border-radius: 8px;
   border: none;
 }
 
