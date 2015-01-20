@@ -67,6 +67,15 @@ module.exports = function(grunt) {
       },
     }
 */
+    watch: {
+      css: {
+        files: '**/*.scss',
+        tasks: ['compass'],
+        options: {
+          livereload: true
+        },
+      },
+    },
   });
 
   grunt.loadNpmTasks('grunt-bower-install-simple');
@@ -75,6 +84,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-symlink');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-angular-gettext');
 
   // Default task(s).
