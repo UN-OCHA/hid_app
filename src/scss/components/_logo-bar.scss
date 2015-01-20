@@ -1,8 +1,8 @@
 .logo-bar {
   background: $primary-color-1 url(../images/sprite.png) no-repeat 5000px 5000px;
-  //height: 55px;
-
+  padding: 5px 0 10px;
   @media(min-width: 768px) {
+    padding: 0;
     height: 120px;
     background-position: 480px -480px;
   }
@@ -25,8 +25,8 @@
   @media(min-width: 768px) {
     height: 90px;
     width: 420px;
-    padding: 15px 0 0 20px;
+    padding: 15px 0 0;
     background-size: 100%;
-    background-position: 11px -139px;
+    background-position: -20px -139px;
   }
 }

@@ -68,26 +68,7 @@ app.run(function ($rootScope, $location, authService) {
   //}
 });
 
-app.controller("HeaderCtrl", function($scope, $rootScope) {
-  $rootScope.$on("appLoginSuccess", function(ev, accountData) {
-    $scope.isAuthenticated = accountData && accountData.user_id;
-    $scope.nameGiven = accountData.name_given;
-    $scope.nameFamily = accountData.name_family;
-  });
-  $rootScope.$on("appUserData", function(ev, userData) {
-    if (userData && userData.contacts && userData.contacts.length) {
-      for (var idx = 0; idx < userData.contacts.length; idx++) {
-        if (userData.contacts[idx].type === 'global') {
-          $scope.nameGiven = userData.contacts[idx].nameGiven;
-          $scope.nameFamily = userData.contacts[idx].nameFamily;
-          break;
-        }
-      }
-    }
-  });
-});
-
-app.controller("HeaderCtrl", function($scope, $rootScope, profileService, gettextCatalog) {
+app.controller("HeaderCtrl", function($scope, $rootScope, $location, profileService, gettextCatalog) {
   $rootScope.$on("appLoginSuccess", function(ev, accountData) {
     $scope.isAuthenticated = accountData && accountData.user_id;
     $scope.nameGiven = accountData.name_given;
@@ -109,7 +90,39 @@ app.controller("HeaderCtrl", function($scope, $rootScope, profileService, gettex
     gettextCatalog.setCurrentLanguage($scope.language);
     gettextCatalog.debug = profileService.hasRole('admin');
   };
+
+  $scope.mainMenu = false;
+  $scope.externalLinks = false;
+  $scope.menuToggle = function () {
+    if ($scope.externalLinks) {
+      $scope.externalLinks = false;
+    }
+    else {
+      $scope.mainMenu = !$scope.mainMenu;
+    }
+  };
 });
+
+// Identifies active link via active-link attr.
+app.directive('activeLink', ['$location', function(location) {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs, controller) {
+      var linkClass = attrs.activeLink;
+      var path = attrs.href;
+      // Added because path does not return including hashbang
+      path = path.substring(1);
+      scope.location = location;
+      scope.$watch('location.path()', function(newPath) {
+        if (path === newPath) {
+          element.addClass(linkClass);
+        } else {
+          element.removeClass(linkClass);
+        }
+      });
+    }
+  };
+}]);
 
 app.controller("DefaultCtrl", function($scope, $rootScope, $location, authService) {
   function parseLocation(location) {

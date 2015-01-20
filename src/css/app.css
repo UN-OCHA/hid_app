@@ -9199,7 +9199,7 @@ label[for=keyContact] .fa {
 .btn-login-controls {
   color: #fff;
   background-color: #54b1c8;
-  padding: 3px 16px;
+  border: none;
   font-size: 12px;
   text-transform: uppercase;
 }
@@ -9368,8 +9368,15 @@ h3 {
 }
 
 .affiliate-logo-wrapper {
-  border-right: 1px solid #fff;
-  display: inline-block;
+  display: block;
+  float: left;
+  width: 33%;
+  border-right: 1px solid #e4e4e4;
+}
+@media (min-width: 768px) {
+  .affiliate-logo-wrapper {
+    width: auto;
+  }
 }
 .affiliate-logo-wrapper:last-child {
   border: none;
@@ -9381,10 +9388,10 @@ h3 {
 .affiliate-logo {
   height: 36px;
   width: 77px;
-  border-right: 1px solid #e4e4e4;
-  display: inline-block;
   background: url(../images/sprite.png) no-repeat;
-  margin: 0 6px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 @media (min-width: 768px) {
   .affiliate-logo {
@@ -9403,7 +9410,7 @@ h3 {
 
 .relief-web {
   width: 78px;
-  background-position: -6px -36px;
+  background-position: 0px -36px;
 }
 @media (min-width: 768px) {
   .relief-web {
@@ -9657,7 +9664,9 @@ h3 {
   background: #54b1c8;
   margin: 0 20% 20px;
   padding: 20px 40px;
-  border-radius: 10px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
 }
 #contactsid-app-view .active-countries .back-link {
   float: right;
@@ -9756,49 +9765,58 @@ h3 {
 }
 
 .header {
-  background-color: #f9f9f9;
+  background-color: #fff;
   position: relative;
 }
 .header .utility {
   padding: 23px 17px;
+  background-color: #fff;
   position: absolute;
-  background: white;
   bottom: -80px;
+  margin-bottom: 0;
   width: 100%;
   z-index: 999;
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
 }
 @media (min-width: 768px) {
   .header .utility {
+    position: relative;
     display: block;
     padding: 9px 20px;
-    position: static;
     width: auto;
+    bottom: auto;
+    box-shadow: none;
   }
 }
+.header .utility:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 14px 14px 14px;
+  border-color: transparent transparent #fff transparent;
+  top: -14px;
+  right: 15px;
+  margin: 0 auto;
+}
 .header .utility .affiliate-logos {
-  margin: 0 3%;
+  margin: 0;
+  width: 100%;
 }
 @media (min-width: 768px) {
   .header .utility .affiliate-logos {
     display: block;
+    width: auto;
   }
-}
-.header .primary-nav {
-  /*@media(min-width: 768px) {
-    bottom: -8px;
-    height: 34px;
-    left: 12px;
-    position: absolute;
-    display: none;
-  }*/
 }
 .header .primary-nav .touch-button {
   cursor: pointer;
   color: white;
   position: absolute;
-  right: 10px;
+  right: 15px;
   font-size: 33px;
-  top: 2px;
+  top: -50px;
 }
 @media (min-width: 768px) {
   .header .primary-nav .touch-button {
@@ -9812,16 +9830,35 @@ h3 {
   width: 100%;
   background: #80C5D5;
   list-style-type: none;
-  padding: 0 0 20px 15px;
-  margin: 0 0 80px;
+  position: absolute;
+  left: 0;
+  padding: 0 0 30px 15px;
+  margin: 5px 0 0 0;
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
+  z-index: 999;
 }
 @media (min-width: 768px) {
   .header .primary-nav ul {
+    box-shadow: none;
     display: block;
+    position: relative;
+    left: auto;
     padding: 0;
     background: none;
     margin: 0;
   }
+}
+.header .primary-nav ul:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 14px 14px 14px;
+  border-color: transparent transparent #80C5D5 transparent;
+  top: -14px;
+  right: 15px;
+  margin: 0 auto;
 }
 .header .primary-nav li {
   list-style-type: none;
@@ -9842,7 +9879,7 @@ h3 {
   font-size: 15px;
   line-height: 17px;
   font-weight: normal;
-  padding: 0 15px 8px;
+  padding: 0 15px 12px;
   letter-spacing: 1px;
 }
 @media (min-width: 768px) {
@@ -9851,12 +9888,9 @@ h3 {
     line-height: inherit;
   }
 }
-.header .primary-nav a:hover {
+.header .primary-nav a.active, .header .primary-nav a:hover {
   color: #fff;
   text-decoration: none;
-}
-.header .primary-nav a.active {
-  color: #fff;
 }
 @media (min-width: 768px) {
   .header .primary-nav a.active {
@@ -9944,8 +9978,9 @@ h3 {
   padding: 9px 12px;
   border: none;
   color: #51adc6;
-  border-radius: 4px;
   -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
 }
 .homepage .homepage-wrapper .btn:hover,
 .homepage .homepage-wrapper .btn:active,
@@ -9993,13 +10028,17 @@ h3 {
 }
 
 .login-controls {
-  padding-top: 18px;
+  padding: 6px 0 0;
+  margin: 0;
   display: none;
 }
 @media (min-width: 768px) {
   .login-controls {
     display: block;
   }
+}
+.login-controls .btn-login-controls {
+  margin-right: 10px;
 }
 
 .login-controls-name {
@@ -10012,9 +10051,11 @@ h3 {
 
 .logo-bar {
   background: #54b1c8 url(../images/sprite.png) no-repeat 5000px 5000px;
+  padding: 5px 0 10px;
 }
 @media (min-width: 768px) {
   .logo-bar {
+    padding: 0;
     height: 120px;
     background-position: 480px -480px;
   }
@@ -10039,9 +10080,9 @@ h3 {
   .logo {
     height: 90px;
     width: 420px;
-    padding: 15px 0 0 20px;
+    padding: 15px 0 0;
     background-size: 100%;
-    background-position: 11px -139px;
+    background-position: -20px -139px;
   }
 }
 
