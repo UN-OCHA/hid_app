@@ -78,8 +78,7 @@
       padding: 9px 12px;
       border: none;
       color: #51adc6;
-      border-radius: 4px;
-      -moz-border-radius: 4px;
+      @include border-radius($border-radius-base);
     }
     .btn:hover,
     .btn:active,
