@@ -1,24 +1,44 @@
 .header {
-  background-color: #f9f9f9;
+  background-color: $white;
   position: relative;
 
   .utility {
     padding: 23px 17px;
+    background-color: $white;
     position: absolute;
-    background: white;
     bottom: -80px;
+    margin-bottom: 0;
     width: 100%;
     z-index: 999;
+    box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.1);
     @media(min-width: 768px) {
+      position: relative;
       display: block;
       padding: 9px 20px;
-      position: static;
       width: auto;
+      bottom: auto;
+      box-shadow: none;
     }
+
+    &:after{
+      position: absolute;
+      content: "";
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 14px 14px 14px;
+      border-color: transparent transparent $white transparent;
+      top: -14px;
+      right: 15px;
+      margin: 0 auto;
+    }
+
     .affiliate-logos {
-      margin: 0 3%;
+      margin: 0;
+      width: 100%;
       @media(min-width: 768px) {
         display: block;
+        width: auto;
       }
     }
   }
@@ -28,9 +48,9 @@
       cursor: pointer;
       color: white;
       position: absolute;
-      right: 10px;
+      right: 15px;
       font-size: 33px;
-      top: 2px;
+      top: -50px;
       @media(min-width: 768px) {
         display: none;
       }
@@ -38,25 +58,39 @@
         color: #81C3D4;
       }
     }
-    /*@media(min-width: 768px) {
-      bottom: -8px;
-      height: 34px;
-      left: 12px;
-      position: absolute;
-      display: none;
-    }*/
 
     ul {
       width: 100%;
       background: #80C5D5;
       list-style-type: none;
-      padding: 0 0 20px 15px;
-      margin: 0 0 80px;
+      position: absolute;
+      left: 0;
+      padding: 0 0 30px 15px;
+      margin:5px 0 0 0;
+      box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.1);
+      z-index: 999;
+
       @media(min-width: 768px) {
+        box-shadow: none;
         display: block;
+        position: relative;
+        left: auto;
         padding: 0;
         background: none;
         margin: 0;
+      }
+
+      &:after{
+        position: absolute;
+        content: "";
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 14px 14px 14px;
+        border-color: transparent transparent #80C5D5 transparent;
+        top: -14px;
+        right: 15px;
+        margin: 0 auto;
       }
     }
 
@@ -78,19 +112,19 @@
       font-size: 15px;
       line-height: 17px;
       font-weight: normal;
-      padding: 0 15px 8px;
+      padding: 0 15px 12px;
       letter-spacing: 1px;
       @media(min-width: 768px) {
         font-size: 11px;
         line-height: inherit;
       }
+      &.active,
       &:hover {
         color: $white;
         text-decoration: none;
       }
 
       &.active {
-        color: $white;
         @media(min-width: 768px) {
           border-bottom: 5px solid $neutral-color-1;
         }

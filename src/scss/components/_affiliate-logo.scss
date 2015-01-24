@@ -1,6 +1,12 @@
 .affiliate-logo-wrapper {
-  border-right: 1px solid $white;
-  display: inline-block;
+  display: block;
+  float: left;
+  width: 33%;
+  border-right: 1px solid $neutral-color-3;
+
+  @media(min-width: 768px) {
+    width: auto;
+  }
 
   &:last-child {
     border: none;
@@ -14,10 +20,10 @@
 .affiliate-logo {
   height: 36px;
   width: 77px;
-  border-right: 1px solid $neutral-color-3;
-  display: inline-block;
   background: url(../images/sprite.png) no-repeat;
-  margin: 0 6px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   @media(min-width: 768px) {
     margin: 0;
   }
@@ -32,7 +38,7 @@ background-position: -2px 6px;
 
 .relief-web {
   width: 78px;
-  background-position: -6px -36px;
+  background-position: 0px -36px;
   @media(min-width: 768px) {
     width: 94px;
     background-position: 10px -36px;
