@@ -1,0 +1,71 @@
+.sidebar-left {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: url(../images/bg.png);
+  @media (min-width: 768px) {
+    position: relative;
+  }
+  span.dashboard-options {
+    width: 100%;
+    background: #55B1C8;
+    display: block;
+    padding: 16px;
+    text-align: center;
+    color: white;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+  .actions-wrapper {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    overflow-y: overlay;
+    display: none;
+    height: 100vh;
+
+    @media (min-width: 768px) {
+      padding-top: 0;
+      padding-bottom: 0;
+      overflow-y: auto;
+      display: block;
+      margin-top: 38px;
+    }
+
+    .actions {
+      padding: 0 30px 150px;
+      margin-top: -15px;
+      @media (min-width: 768px) {
+        bottom: inherit;
+        left: inherit;
+        padding: 0;
+
+      }
+      .btn-block {
+        margin-top: 15px;
+      }
+    }
+  }
+
+  &.show-options {
+    box-shadow: 0px -10px 10px 0px rgba(0,0,0,0.1);
+    @media (min-width: 768px) {
+      box-shadow: none;
+    }
+
+    .actions-wrapper {
+      display: block;
+      margin-bottom: -118px;
+      @media (min-width: 768px) {
+        height: auto;
+        margin-bottom: 0px;
+      }
+    }
+  }
+}

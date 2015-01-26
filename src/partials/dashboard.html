@@ -1,9 +1,9 @@
-<div class="masthead container element-invisible">
+<div class="masthead element-invisible">
   <h2 translate>Humanitarian ID</h2>
 </div>
 
-<div ng-show='!isRouteLoading' class="main container">
-  <div class="active-profiles main-content col-xs-12 col-sm-9" cg-busy="dashboardDataTracker">
+<div ng-show='!isRouteLoading' class="main row">
+  <div class="active-profiles main-content col-xs-12 col-sm-8 col-md-9 pull-right" cg-busy="dashboardDataTracker">
     <div class="active-profiles-wrapper" ng-show="userData.contacts.length">
       <h3><span translate>General List</span> :</h3>
       <ul class="active-profiles-container list-group">
@@ -19,7 +19,9 @@
       <h3><span translate>My checked-in lists</span> :</h3>
       <ul class="active-profiles-container list-group">
         <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts | orderBy: ['location', 'operation']" ng-if="profile.type == 'local'">
-          <a ng-show="profile.confirmDelete" class="slide btn btn-warning btn-sm btn-hidden" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'" translate>Checkout</a>
+
+          <a ng-show="profile.confirmDelete" class="slide btn btn-warning" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'" translate>Checkout</a>
+
           <h4>
             <a href="#/list/{{profile.locationId}}">
               <span class="profile-item-name">{{profile.location}}
@@ -36,6 +38,11 @@
           <em translate>No profiles found.</em>
         </li>
       </ul>
+      <div class="mobile-checkin visible-xs">
+        <a class="btn btn-primary btn-lg btn-block" href="#/checkin">
+          <i class="entypo chevron-thin-right"></i> <span translate>Check-in</span>
+        </a>
+      </div>
 
       <div class="empty-profiles" ng-hide="userData.contacts.length">
         <p>Thank you for registering on Humanitarian.ID. With your help, we will ensure that humanitarian contact lists are always up-to-date. As you will notice, you do not have access to any lists just yet.</p>
@@ -48,21 +55,30 @@
     </div>
   </div>
 
-  <div class="sidebar-left col-xs-12 col-sm-3 col-space-above">
-    <div class="actions" ng-show="dashboardOptions || breakpoint.class !== 'smallscreen'">
-      <span ng-repeat="profile in userData.contacts" ng-if="profile.type == 'global'">
-        <a class="btn btn-default btn-lg btn-block" href="#/profile/{{profile._id}}"><i class="entypo">&#59234;</i> <span translate>Edit Global Profile</span></a>
-      </span>
-      <a class="btn btn-primary btn-lg btn-block" href="#/checkin"><i class="entypo">&#59234;</i> <span translate>Check-in</span></a>
-      <a class="btn btn-primary btn-lg btn-block" ng-show="!globalProfileId.length" href="#/profile/{{globalProfileId}}"><i class="entypo">&#128100;</i> <span translate>Global Profile</span></a>
-      <a class="btn btn-default btn-lg btn-block" href="{{logoutPath}}" translate>Logout</a>
+  <div class="sidebar-left" ng-class="{'show-options': dashboardOptions}">
+    <div ng-show="!isRouteLoading">
+      <div class="visible-xs">
+        <div class="bottom-fixed-btn" role="presentation">
+          <a href ng-click="dashboardOptions = !dashboardOptions"><div class="bottom-fixed-btn__arrow"></div>Dashboard Options</a>
+        </div>
+      </div>
     </div>
-  </div>
-  <div ng-show="!isRouteLoading">
-    <div class="" ng-show="breakpoint.class === 'smallscreen' ">
-      <div class="bottom-fixed-btn" role="presentation">
-        <a href ng-click="dashboardOptions = !dashboardOptions"><div class="bottom-fixed-btn__arrow"></div>Dashboard Options</a>
+    <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
+      <div class="actions">
+        <span ng-repeat="profile in userData.contacts" ng-if="profile.type == 'global'">
+          <a class="btn btn-default btn-lg btn-block" href="#/profile/{{profile._id}}">
+            <i class="entypo chevron-thin-right"></i> <span translate>Edit Global Profile</span>
+          </a>
+        </span>
+        <a class="btn btn-primary btn-lg btn-block hidden-xs" href="#/checkin">
+          <i class="entypo chevron-thin-right"></i> <span translate>Check-in</span>
+        </a>
+        <a class="btn btn-primary btn-lg btn-block" ng-show="!globalProfileId.length" href="#/profile/{{globalProfileId}}">
+          <i class="entypo user"></i> <span translate>Global Profile</span>
+        </a>
+        <a class="btn btn-default btn-lg btn-block" href="{{logoutPath}}" translate>Logout</a>
       </div>
     </div>
   </div>
+
 </div>

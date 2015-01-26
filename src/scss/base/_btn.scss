@@ -45,3 +45,23 @@
     margin-bottom: 15px;
   }
 }
+
+.btn.btn-block {
+  line-height: 2.2;
+  font-size: 12px;
+
+  @media (min-width: 768px) {
+    line-height: 16px;
+  }
+  i {
+    margin-top: 3px;
+    @media (min-width: 768px) {
+      margin-top: -2px;
+    }
+
+    &.entypo:before {
+      @extend %rounded-icon;
+      color: $primary-color-1;
+    }
+  }
+}
