@@ -1,10 +1,10 @@
 .slide {
-  position: relative;
-  right: 0;
-  -webkit-transition:0.5s linear all;
-  transition:0.5s linear all;
-
+  margin-left: 0;
+  -webkit-transition:0.2s ease-out all;
+  transition:0.2s ease-out all;
   &.ng-hide {
-    right: 109px;
+    -webkit-transition:0.2s ease-in all;
+    transition:0.2s ease-in all;
+    margin-left: -109px;
   }
 }

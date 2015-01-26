@@ -1,6 +1,6 @@
 #contactsid-app-view {
   padding-bottom: 40px;
-  @media(min-width: 768px) {
+  @media (min-width: 768px) {
     padding-bottom: inherit;
   }
   .active-countries {
@@ -31,82 +31,8 @@
       }
     }
   }
-}
-.sidebar-left {
-  position: static;
-  @media(min-width: 768px) {
-    position: relative;
-  }
-  a{
-    line-height: 16px;
-    i.entypo {
-      @extend %rounded-icon;
-      color: $primary-color-1;
-    }
-  }
-  span.dashboard-options {
-    width: 100%;
-    background: #55B1C8;
-    display: block;
-    padding: 16px;
-    text-align: center;
-    color: white;
-    position: fixed;
-    bottom: 0px;
-    left: 0;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-weight: bold;
-    @media(min-width: 768px) {
-      display: none;
-    }
-  }
-  .actions {
-    position: absolute;
-    bottom: 70px;
-    width: 96%;
-    left: 2%;
-    @media(min-width: 768px) {
-      display: block;
-      position: relative;
-      bottom: inherit;
-      left: inherit;
-    }
-  }
-}
-.main-content {
-  .profile-item {
-    .btn-warning.btn-hidden {
-      background: $secondary-color-1;
-    }
-    h4 {
-      a {
-        color: $primary-color-1;
-        text-transform: uppercase;
-        font-size: 12px;
-        font-weight: bold;
-        line-height: 24px;
-      }
-    }
-    .btn-group {
-      .btn {
-        background: $primary-color-2;
-        i{
-          color: $white;
-          box-shadow: 1px 1px 2px 0px $neutral-color-1;
-        }
-      }
-    }
-    .fa {
-      font-size: 20px;
-      font-weight: 100;
-    }
-  }
-  .btn-group {
-    .btn-checkout {
-      &:hover {
-        background: $secondary-color-1;
-      }
-    }
+
+  .mobile-checkin {
+    padding: 30px 30px 0;
   }
 }

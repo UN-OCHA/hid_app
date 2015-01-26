@@ -684,11 +684,11 @@ $progress-bar-info-bg:        $brand-info !default;
 //##
 
 //** Background color on `.list-group-item`
-$list-group-bg:                 #fff !default;
+$list-group-bg:                 $background-light;
 //** `.list-group-item` border color
-$list-group-border:             #ddd !default;
+$list-group-border:             $white;
 //** List group border radius
-$list-group-border-radius:      $border-radius-base !default;
+$list-group-border-radius:      $border-radius-small;
 
 //** Background color of single list items on hover
 $list-group-hover-bg:           #f5f5f5 !default;

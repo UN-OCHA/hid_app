@@ -3,12 +3,6 @@
 body {
   background: url(../images/bg.png);
   margin-bottom: 25px;
-  .entypo {
-    float: left;
-    font-family: "entypo";
-    font-size: 4em;
-    font-style: normal;
-  }
 }
 
 .contactsid-app {
@@ -36,28 +30,6 @@ body {
 
 .bottom-controls {
   padding-bottom: 60px;
-}
-
-.masthead, .main {
-  padding-left: 0;
-  padding-right: 0;
-
-  @media(min-width: 768px) {
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-}
-
-.col-xs-12 {
-  @media(max-width: 767px) {
-    padding: 0 !important;
-  }
-}
-
-.col-space-above {
-  @media(min-width: 768px) {
-    margin-top: 38px;
-  }
 }
 
 .contact-search {
