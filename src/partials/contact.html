@@ -25,8 +25,8 @@
               class="fa fa-check-circle"></i></div>
 
           <span ng-if="contact._profile.verified || contact.keyContact" class="profile-view__key-contact-verified">
-            (<span ng-if="contact.keyContact">key contact</span><span ng-if="contact._profile.verified && contact.keyContact">/</span><span
-                ng-if="contact._profile.verified">verified</span>)
+            (<span ng-if="contact.keyContact" translate>key contact</span><span ng-if="contact._profile.verified && contact.keyContact">/</span><span
+                ng-if="contact._profile.verified" translate>verified</span>)
           </span>
         </div>
       </div>
@@ -42,34 +42,34 @@
           <div class="profile-view__item">{{voip.type}}: {{voip.number}}</div>
         </div>
         <div class="uri">
-          Website/Social Media:
+          <span translate>Website/Social Media</span>:
           <div class="uri" ng-repeat="uri in contact.uri"><a href="{{uri}}">{{uri}}</a></div>
         </div>
       </div>
 
       <div class="notes">
-        Notes:
+        <span translate>Notes</span>:
         <div class="notes">{{contact.notes}}</div>
       </div>
     </div>
 
     <div class="col-xs-12 col-sm-3 profile-right-sidebar same-height-col">
       <div class="location right-sidebar-group">
-        <span class="group-label">Location</span>
+        <span class="group-label" translate>Location</span>
         <div class="country profile-view__item">{{contact.address[0].country}}</div>
         <div class="profile-view__item">{{contact.address[0].administrative_area}}</div>
         <div class="profile-view__item">{{contact.address[0].locality}}</div>
       </div>
       <div class="organization right-sidebar-group">
-        <span class="group-label">Organization</span>
+        <span class="group-label" translate>Organization</span>
         <strong>{{contact.organization[0].name}}</strong>
       </div>
       <div class="jobtitle right-sidebar-group">
-        <span class="group-label">Job Title</span>
+        <span class="group-label" translate>Job Title</span>
         <strong>{{contact.jobtitle}}</strong>
       </div>
       <div class="right-sidebar-group">
-        <span class="group-label">Clusters</span>
+        <span class="group-label" translate>Clusters</span>
         <span class="title"><strong>{{contact.bundle.join(', ')}}</strong></span>
       </div>
     </div>
