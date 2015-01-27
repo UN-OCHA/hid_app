@@ -9104,12 +9104,6 @@ body {
   background: #fff url(../images/sprite.png) no-repeat right -295px;
 }
 
-.form-control {
-  -webkit-box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
-  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
-  border: none;
-}
-
 .angucomplete-dropdown {
   overflow-y: auto;
   max-height: 200px;
@@ -9233,6 +9227,71 @@ label[for=keyContact] .fa {
   font-weight: normal;
   font-style: normal;
 }
+/* Forms */
+.form-control {
+  -webkit-box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
+  border: none;
+}
+
+.form-control,
+.angucomplete-searching {
+  color: #54b1c8;
+}
+.form-control:-moz-placeholder,
+.angucomplete-searching:-moz-placeholder {
+  color: #afafaf;
+}
+.form-control::-moz-placeholder,
+.angucomplete-searching::-moz-placeholder {
+  color: #afafaf;
+}
+.form-control:-ms-input-placeholder,
+.angucomplete-searching:-ms-input-placeholder {
+  color: #afafaf;
+}
+.form-control::-webkit-input-placeholder,
+.angucomplete-searching::-webkit-input-placeholder {
+  color: #afafaf;
+}
+
+.form-elements-email .form-control,
+.form-elements-voip .form-control {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  border: 1px solid #b9b9b9;
+}
+.form-elements-email .col-xs-5,
+.form-elements-voip .col-xs-5 {
+  padding-right: 0px;
+}
+.form-elements-email .col-xs-5 .form-control,
+.form-elements-voip .col-xs-5 .form-control {
+  border-right: none;
+}
+.form-elements-email .col-xs-7,
+.form-elements-voip .col-xs-7 {
+  padding-left: 0px;
+}
+.form-elements-email .col-xs-7:before,
+.form-elements-voip .col-xs-7:before {
+  content: "";
+  border-left: 1px solid #b9b9b9;
+  height: 20px;
+  padding: 6px 0;
+  position: absolute;
+  bottom: 6px;
+}
+.form-elements-email .col-xs-7 .form-control,
+.form-elements-voip .col-xs-7 .form-control {
+  border-left: none;
+  text-align: right;
+}
+
 .h1, h2, .h2, h3, .h3 {
   margin-bottom: 12px;
 }
@@ -9566,7 +9625,6 @@ h3 {
 }
 #contactsid-app-view .active-countries {
   background: #54b1c8;
-  margin: 0 20% 20px;
   padding: 20px 40px;
   -moz-border-radius: 8px;
   -webkit-border-radius: 8px;
@@ -10072,34 +10130,14 @@ h3 {
   margin-bottom: 15px;
 }
 
-.container .form-group {
-  margin-right: 0;
-  margin-left: 0;
-}
 .container .control-label {
   font-weight: normal;
   color: #767676;
   display: block;
   text-align: left;
-  padding-left: 17px;
 }
 .container .col-sm-4 .control-label {
   padding-left: 3px;
-}
-.container .form-control, .container .angucomplete-searching {
-  color: #54b1c8;
-}
-.container .form-control:-moz-placeholder, .container .angucomplete-searching:-moz-placeholder {
-  color: #54b1c8;
-}
-.container .form-control::-moz-placeholder, .container .angucomplete-searching::-moz-placeholder {
-  color: #54b1c8;
-}
-.container .form-control:-ms-input-placeholder, .container .angucomplete-searching:-ms-input-placeholder {
-  color: #54b1c8;
-}
-.container .form-control::-webkit-input-placeholder, .container .angucomplete-searching::-webkit-input-placeholder {
-  color: #54b1c8;
 }
 
 .sidebar-left {

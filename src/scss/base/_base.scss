@@ -36,12 +36,6 @@ body {
   background: $white url(../images/sprite.png) no-repeat right -295px;
 }
 
-.form-control {
-  -webkit-box-shadow: inset 1px 1px 5px rgba(0,0,0,.3);
-  box-shadow: inset 1px 1px 5px rgba(0,0,0,.3);
-  border: none;
-}
-
 .angucomplete-dropdown {
   overflow-y: auto;
   max-height: 200px;

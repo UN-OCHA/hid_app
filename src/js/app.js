@@ -32,12 +32,7 @@ app.value('cgBusyDefaults',{
 app.directive('routeLoadingIndicator', function($rootScope) {
   return {
     restrict: 'E',
-    template: "<div ng-show='isRouteLoading' class='loading-indicator'>" +
-    "<div class='loading-indicator-body'>" +
-    "<h3 class='loading-title'>Loading...</h3>" +
-    "<div class='spinner'><rotating-plane-spinner></rotating-plane-spinner></div>" +
-    "</div>" +
-    "</div>",
+    templateUrl: contactsId.sourcePath + '/partials/loading.html',
     replace: true,
     link: function(scope, elem, attrs) {
       scope.isRouteLoading = false;
