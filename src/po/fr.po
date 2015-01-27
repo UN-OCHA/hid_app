@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: H.ID Translation\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-30 12:32+0000\n"
-"PO-Revision-Date: 2014-12-30 14:58+0000\n"
+"PO-Revision-Date: 2014-12-31 09:07+0000\n"
 "Last-Translator: Andrej Verity\n"
 "Language-Team: andrejverity\n"
 "Language: fr\n"
@@ -61,11 +61,11 @@ msgstr "Global"
 
 #: src/partials/contact.html
 #: src/partials/list.html
-#: src/partials/profile.html
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4581
 msgid "Group"
 msgid_plural "Groups"
 msgstr[0] "Group"
-msgstr[1] "Groups"
+msgstr[1] "Groupes "
 
 #: src/partials/header.html loco:54a29d9114d725ad5b8b4582
 msgid "Home"
@@ -105,6 +105,10 @@ msgstr "S'inscrire"
 #: src/partials/list.html loco:54a29d9114d725ad5b8b4596
 msgid "Search"
 msgstr "Rechercher"
+
+#: src/partials/profile.html loco:54a3b77214d725cc518b456d
+msgid "Searching..."
+msgstr "Recherche..."
 
 #: src/partials/profile.html loco:54a29d9114d725ad5b8b459a
 msgid "Title"
@@ -256,6 +260,10 @@ msgstr ""
 "Aucun profil \n"
 "trouvé."
 
+#: src/partials/profile.html loco:54a3b77214d725cc518b4568
+msgid "No results found."
+msgstr "Aucun résultat trouvé."
+
 #: src/partials/404.html loco:54a29d9114d725ad5b8b458f
 msgid "Not Found"
 msgstr "Aucun résultat"
@@ -276,6 +284,22 @@ msgstr ""
 #: src/partials/profile.html loco:54a29d9114d725ad5b8b45a7
 msgid "{{profileName}} Profile"
 msgstr "{{profileName}} Profil"
+
+#: src/partials/list.html loco:54a3b77214d725cc518b4569
+msgid "Reset Filters"
+msgstr "Réinitialisez les filtres"
+
+#: src/partials/list.html loco:54a3b77214d725cc518b456a
+msgid "Search by name, title, or organization"
+msgstr "Recherchez des noms, titres ou organisations"
+
+#: src/partials/profile.html loco:54a3b77214d725cc518b456b
+msgid "Search for countries"
+msgstr "Recherchez des pays"
+
+#: src/partials/profile.html loco:54a3b77214d725cc518b456c
+msgid "Search for organizations"
+msgstr "Recherchez des organisations"
 
 #: src/partials/profile.html loco:54a29d9114d725ad5b8b4597
 msgid "Select a country"
