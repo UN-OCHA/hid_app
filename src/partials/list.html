@@ -66,7 +66,7 @@
     </form>
 
     <ul class="list-group">
-      <li class="profile-item list-group-item" ng-repeat="contact in contacts | orderBy: ['nameFamily', 'nameGiven']">
+      <li class="profile-item list-group-item" ng-repeat="contact in contacts | orderBy: ['nameGiven', 'nameFamily']">
         <div class="contact-item contact-item--name">
           <a href="#/contact/{{contact._id}}">{{contact.nameGiven}} {{contact.nameFamily}}</a>
           <div class="contact-item__markers">
