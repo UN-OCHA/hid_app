@@ -10,11 +10,16 @@
   padding: 6px 0;
 }
 
-.contact {
+.page-contact {
   background: $background-light;
   font-size: 13px;
   color: $primary-color-2;
   padding: 0;
+
+  margin-top: 35px;
+  .col-fill-inner {
+    padding: 20px 10px;
+  }
 }
 
 .profile-view__name {

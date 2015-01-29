@@ -2,6 +2,7 @@
   position: fixed;
   bottom: 0;
   width: 100%;
+  z-index: 1000;
   background: url(../images/bg.png);
   @media (min-width: 768px) {
     position: relative;
@@ -23,6 +24,10 @@
       display: none;
     }
   }
+
+  input[type="checkbox"] {
+    margin-left: 10px;
+  }
   .actions-wrapper {
     padding-top: 30px;
     padding-bottom: 30px;
@@ -33,14 +38,13 @@
     @media (min-width: 768px) {
       padding-top: 0;
       padding-bottom: 0;
-      overflow-y: auto;
+      overflow-y: visible;
       display: block;
-      margin-top: 38px;
+      height: auto;
     }
 
     .actions {
       padding: 0 30px 150px;
-      margin-top: -15px;
       @media (min-width: 768px) {
         bottom: inherit;
         left: inherit;
@@ -66,6 +70,17 @@
         height: auto;
         margin-bottom: 0px;
       }
+    }
+  }
+}
+
+.page-dashboard .sidebar-left{
+  .actions-wrapper {
+    @media (min-width: 768px) {
+      margin-top: 38px;
+    }
+    .actions {
+      margin-top: -15px;
     }
   }
 }

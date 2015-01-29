@@ -547,7 +547,6 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
   $scope.contacts = [];
   $scope.placesOperations = placesOperations;
   $scope.bundles = {};
-  $scope.mode = 'search';
   $scope.contactsPromise;
 
   if ($scope.locationId !== 'global') {
@@ -563,14 +562,6 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
     $scope.location = gettextCatalog.getString('Global');
   }
 
-  $scope.showList = function () {
-    if ($scope.contacts.length) {
-      $scope.mode = 'list';
-    }
-    else {
-      $scope.submitSearch();
-    }
-  };
 
   $scope.submitSearch = function () {
     var query = $scope.query;
@@ -589,7 +580,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
         $scope.contacts = data.contacts || [];
       }
     });
-    $scope.mode = 'list';
+    sidebarOptions = false;
   };
 
   $scope.resetSearch = function () {

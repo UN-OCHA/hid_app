@@ -1,57 +1,9 @@
 <div class="masthead">
   <h2 class="heading-contact-list">{{location}} <span translate>Contact List</span></h2>
-
-  <div ng-show="!isRouteLoading">
-    <!--
-    <div class="back-link"><a class="btn btn-warning btn-sm" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i>
-      <span translate>Back</span></a></div>-->
-
-    <div class="" ng-show="breakpoint.class === 'smallscreen' ">
-
-      <div class="bottom-fixed-btn" ng-show="mode === 'list'" role="presentation" ng-class="{active : mode !== 'list'}">
-        <a href ng-click="mode = 'search'"><div class="bottom-fixed-btn__arrow"></div><span translate>Contact List Filters</span></a>
-      </div>
-
-      <div class="bottom-fixed-btn" ng-show="mode !== 'list'" role="presentation" ng-class="{active : mode === 'list'}">
-        <a href ng-click="showList()"><div class="bottom-fixed-btn__arrow"></div><span translate>Contact List</span></a>
-      </div>
-
-    </div>
-  </div>
 </div>
 
-<div class="container main bottom-controls">
-  <div class="list-content sidebar-left col-xs-12 col-sm-3" ng-show="!isRouteLoading">
-    <div class="search" ng-show="mode !== 'list' || breakpoint.class !== 'smallscreen' ">
-      <form class="filter-form">
-
-        <div class="form-group">
-          <label class="control-label element-invisible" for="bundle" translate>Group</label>
-          <select class="form-control" name="bundle" ng-model="query.bundle"
-                  ng-options="bundleName for (bundleId, bundleName) in bundles">
-            <option value=""></option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="control-label" for="verified"><i class="fa fa-check-circle"></i> <span translate>Verified User</span></label>
-          <input type="checkbox" name="verified" ng-model="query.verified" />
-        </div>
-
-        <div class="form-group" ng-if="query.locationId">
-          <label class="control-label" for="keyContact"><span class="contact-item__key-contact key-contact-filter-use">*</span> <span translate>Key Contact</span></label>
-          <input type="checkbox" name="keyContact" ng-model="query.keyContact" />
-        </div>
-
-        <div class="form-group">
-          <input class="btn btn-primary btn-md" type="submit" ng-click="submitSearch()" value="{{'Search'|translate}}"/>
-          <input class="btn btn-warning btn-md" type="button" ng-click="resetSearch()" value="{{'Reset Filters'|translate}}"/>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div class="active-contacts col-xs-12 col-sm-9" ng-show="mode === 'list' || breakpoint.class !== 'smallscreen' " cg-busy="contactsPromise">
+<div class="main row page-list">
+  <div class="active-contacts col-xs-12 col-sm-8 col-md-9 pull-right" cg-busy="contactsPromise">
     <form class="search-form">
       <div class="form-group">
         <label class="control-label element-invisible" for="text" translate>Search</label>
@@ -82,6 +34,48 @@
 
     <div class="panel panel-danger" ng-if="contacts.length == 0">
       <div class="panel-heading"><em translate>No contacts found</em></div>
+    </div>
+  </div>
+
+
+  <div class="sidebar-left" ng-class="{'show-options': sidebarOptions}">
+    <div ng-show="!isRouteLoading">
+      <div class="visible-xs">
+        <div class="bottom-fixed-btn" role="presentation">
+          <a href ng-click="sidebarOptions = !sidebarOptions"><div class="bottom-fixed-btn__arrow"></div>Contact List Filters</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions-wrapper col-xs-12 col-sm-4 col-md-3">
+      <form class="filter-form actions">
+
+        <div class="form-group">
+          <label class="control-label element-invisible" for="bundle" translate>Group</label>
+          <select class="form-control" name="bundle" ng-model="query.bundle"
+                  ng-options="bundleName for (bundleId, bundleName) in bundles">
+            <option value="">Groups</option>
+          </select>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="form-group">
+          <label class="control-label" for="verified"><i class="fa fa-check-circle"></i> <span translate>Verified User</span> <input type="checkbox" name="verified" ng-model="query.verified" /></label>
+
+        </div>
+
+        <div class="form-group" ng-if="query.locationId">
+          <label class="control-label" for="keyContact"><span class="contact-item__key-contact key-contact-filter-use">*</span> <span translate>Key Contact</span> <input type="checkbox" name="keyContact" ng-model="query.keyContact" /></label>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="form-group">
+          <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitSearch()" value="{{'Search'|translate}}"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="resetSearch()" value="{{'Reset Filters'|translate}}"/>
+        </div>
+      </form>
     </div>
   </div>
 </div>

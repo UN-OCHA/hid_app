@@ -28,10 +28,6 @@ body {
   clip: rect(1px, 1px, 1px, 1px);
 }
 
-.bottom-controls {
-  padding-bottom: 60px;
-}
-
 .contact-search {
   background: $white url(../images/sprite.png) no-repeat right -295px;
 }
@@ -82,5 +78,21 @@ label[for=keyContact]{
 
   .fa {
     color: lighten($primary-color-2, 10);
+  }
+}
+
+.divider {
+  border-top: 1px solid $neutral-color-3;
+  border-bottom: 1px solid $white;
+  margin: 10px 0;
+
+  @extend .clearfix;
+}
+
+.col-fill-wrap {
+  overflow: hidden;
+  .col-fill {
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
   }
 }
