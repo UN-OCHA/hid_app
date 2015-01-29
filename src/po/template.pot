@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-02-02T18:24:09.558Z\n"
+"Project-Id-Version: 2015-02-02T21:15:14.825Z\n"
 
 #: src/partials/header.html
 #: src/partials/index.html
@@ -58,10 +58,6 @@ msgstr ""
 msgid "Contact List"
 msgstr ""
 
-#: src/partials/list.html
-msgid "Contact List Filters"
-msgstr ""
-
 #: src/partials/profile.html
 msgid "Country"
 msgstr ""
@@ -70,14 +66,12 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: src/partials/contact.html
-msgid ""
-"Edit\n"
-"        Profile"
-msgstr ""
-
 #: src/partials/dashboard.html
 msgid "Edit Global Profile"
+msgstr ""
+
+#: src/partials/contact.html
+msgid "Edit Profile"
 msgstr ""
 
 #: src/partials/profile.html
@@ -217,6 +211,10 @@ msgstr ""
 msgid "Phone Numbers"
 msgstr ""
 
+#: src/partials/profile.html
+msgid "Profile"
+msgstr ""
+
 #: src/partials/index.html
 msgid "Register"
 msgstr ""
@@ -307,8 +305,4 @@ msgstr ""
 
 #: src/partials/contact.html
 msgid "verified"
-msgstr ""
-
-#: src/partials/profile.html
-msgid "{{profileName}} Profile"
 msgstr ""
