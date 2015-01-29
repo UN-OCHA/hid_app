@@ -97,6 +97,12 @@ app.controller("HeaderCtrl", function($scope, $rootScope, $location, profileServ
       $scope.mainMenu = !$scope.mainMenu;
     }
   };
+
+  $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+    $scope.mainMenu = false;
+    $scope.externalLinks = false;
+  });
+
 });
 
 // Identifies active link via active-link attr.
