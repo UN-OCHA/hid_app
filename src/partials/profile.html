@@ -8,8 +8,8 @@
       <div class="back-link"><a class="btn btn-warning btn-sm" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a></div>
       <h3 translate>Select a country</h3>
       <ul class="active-countries-container list-group">
-        <li class="country-item list-group-item" ng-repeat="(place, operations) in availPlacesOperations | orderBy: 'place'">
-          <a href="" ng-click="selectPlace()">{{place}}</a>
+        <li class="country-item list-group-item" ng-repeat="(pKey, place) in availPlacesOperations | orderBy: 'place'">
+          <a href="" ng-click="selectPlace()">{{place.place}}</a>
         </li>
         <li class="country-item" ng-if="availPlacesOperations.length == 0">
           <em translate>No active operations found.</em>
@@ -20,8 +20,8 @@
     <div class="active-operations" ng-show="selectedPlace.length && !selectedOperation.length">
       <div class="back-link"><a class="btn btn-warning btn-sm" href="" ng-click="selectedPlace = ''"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a></div>
       <h3 translate>Select an operation</h3>
-      <ul class="active-operations-container list-group" ng-repeat="(place, operations) in availPlacesOperations" ng-show="selectedPlace = '{{place}}'" data-place="{{place}}">
-        <li class="operation-item list-group-item" ng-repeat="(opid, operation) in operations">
+      <ul class="active-operations-container list-group" ng-repeat="(pKey, place) in availPlacesOperations" ng-show="selectedPlace = '{{place.place}}'" data-place="{{place.place}}">
+        <li class="operation-item list-group-item" ng-repeat="(opid, operation) in place.operations">
           <a href="" ng-click="selectedOperation = '{{opid}}'">{{operation.name}}</a>
         </li>
       </ul>
@@ -142,17 +142,19 @@
         <div class="col-sm-12 col-md-6">
           <h4 translate>Phone Numbers</h4>
           <div class="form-group">
+            <div class="row">
+              <div class="col-xs-5"><label class="control-label" translate>Type</label></div>
+              <div class="col-xs-7"><label class="control-label" translate>Number</label></div>
+            </div>
             <div class="reveal" ng-repeat="phone in profile.phone track by $index">
-              <div class="row">
+              <div class="row form-elements-phone">
                 <div class="col-xs-5">
-                  <label class="control-label" for="phone[{{$index}}][type]" translate>Type</label>
                   <select class="form-control" ng-options="type for type in phoneTypes" name="phone[{{$index}}][type]" ng-model="profile.phone[$index].type">
                     <option value=""><span translate>Choose Type</span></option>
                   </select>
                 </div>
 
                 <div class="col-xs-7">
-                  <label class="control-label" for="phone[{{$index}}][number]" translate>Number</label>
                   <input ng-if="phone.type != 'Satellite'" ng-model="profile.phone[$index].number" international-phone-number auto-format="true" national-mode="false" responsive-dropdown="true" class="form-control" type="text" name="phone[{{$index}}][number]" ng-change="setCountryCode(); checkMultiFields()" />
                   <input ng-if="phone.type == 'Satellite'" ng-model="profile.phone[$index].number" class="form-control" type="text" name="phone[{{$index}}][number]" ng-change="checkMultiFields()" />
                   <input type="hidden" name="phone[{{$index}}][countryCode]" ng-model="profile.phone[$index].countryCode" />
@@ -187,11 +189,11 @@
         <div class="col-sm-12 col-md-6">
           <h4 translate>Email Addresses</h4>
           <div class="form-group">
+            <div class="row">
+              <div class="col-xs-5"><label class="control-label" translate>Type</label></div>
+              <div class="col-xs-7"><label class="control-label" translate>Email</label></div>
+            </div>
             <div class="reveal" ng-repeat="email in profile.email track by $index">
-              <div class="row">
-                <div class="col-xs-5"><label class="control-label" translate>Type</label></div>
-                <div class="col-xs-7"><label class="control-label" translate>Email</label></div>
-              </div>
               <div class="row form-elements-email">
                 <div class="col-xs-5">
                   <select class="form-control" ng-options="type for type in emailTypes" name="email[{{$index}}][type]" ng-model="profile.email[$index].type">

@@ -1,4 +1,7 @@
 /* Forms */
+.form-group {
+  margin-bottom: 5px;
+}
 
 .form-control {
   -webkit-box-shadow: inset 1px 1px 5px rgba(0,0,0,.3);
@@ -14,6 +17,7 @@
   }
 }
 
+.form-elements-phone,
 .form-elements-email,
 .form-elements-voip {
   .form-control {
@@ -26,20 +30,21 @@
 
   .col-xs-5 {
     padding-right: 0px;
-    .form-control {
-      border-right: none;
-    }
-  }
-  .col-xs-7 {
-    padding-left: 0px;
     &:before {
       content: "";
       border-left: 1px solid $neutral-color-2;
       height: 20px;
       padding: 6px 0;
       position: absolute;
+      right: 0;
       bottom: 6px;
     }
+    .form-control {
+      border-right: none;
+    }
+  }
+  .col-xs-7 {
+    padding-left: 0px;
     .form-control {
       border-left: none;
       text-align: right;
