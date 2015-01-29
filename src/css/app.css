@@ -9598,6 +9598,7 @@ h3 {
 #contactsid-app-view .active-countries h3 {
   color: #fff;
   text-align: center;
+  display: inline-block;
 }
 #contactsid-app-view .active-countries li.list-group-item {
   background: #D4E9EE;
