@@ -28,7 +28,7 @@
         <div class="form-group">
           <label class="control-label element-invisible" for="bundle" translate>Group</label>
           <select class="form-control" name="bundle" ng-model="query.bundle"
-                  ng-options="bundleName for (bundleId, bundleName) in bundles">
+                  ng-options="bundle.value as bundle.value for bundle in bundles | orderBy:'value'">
             <option value=""></option>
           </select>
         </div>
