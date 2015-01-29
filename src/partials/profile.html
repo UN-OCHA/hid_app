@@ -7,8 +7,8 @@
     <div class="back-link"><a class="btn btn-warning btn-sm" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a></div>
     <h3 translate>Select a country</h3>
     <ul class="active-countries-container list-group">
-      <li class="country-item list-group-item" ng-repeat="(place, operations) in availPlacesOperations | orderBy: 'place'">
-        <a href="" ng-click="selectPlace()">{{place}}</a>
+      <li class="country-item list-group-item" ng-repeat="(pKey, place) in availPlacesOperations | orderBy: 'place'">
+        <a href="" ng-click="selectPlace()">{{place.place}}</a>
       </li>
       <li class="country-item" ng-if="availPlacesOperations.length == 0">
         <em translate>No active operations found.</em>
@@ -19,8 +19,9 @@
   <div class="active-operations" ng-show="selectedPlace.length && !selectedOperation.length">
     <div class="back-link"><a class="btn btn-warning btn-sm" href="" ng-click="selectedPlace = ''"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a></div>
     <h3 translate>Select an operation</h3>
-    <ul class="active-operations-container list-group" ng-repeat="(place, operations) in availPlacesOperations" ng-show="selectedPlace = '{{place}}'" data-place="{{place}}">
-      <li class="operation-item list-group-item" ng-repeat="(opid, operation) in operations">
+    <ul class="active-operations-container list-group" ng-repeat="(pKey, place) in availPlacesOperations" ng-show="selectedPlace = '{{place.place}}'" data-place="{{place.place}}">
+
+      <li class="operation-item list-group-item" ng-repeat="(opid, operation) in place.operations">
         <a href="" ng-click="selectedOperation = '{{opid}}'">{{operation.name}}</a>
       </li>
     </ul>
@@ -72,7 +73,7 @@
         <div class="form-group reveal" ng-repeat="bundle in profile.bundle track by $index" ng-if="profile.type === 'local'">
           <label class="control-label" for="bundle[{{$index}}]" translate>Group</label>
           <div class="col-sm-12">
-            <select class="form-control" name="bundle[{{$index}}]" ng-model="profile.bundle[$index]" ng-options="bundleName for (bundleId, bundleName) in placesOperations[selectedPlace][selectedOperation].bundles" ng-change="checkMultiFields()">
+            <select class="form-control" name="bundle[{{$index}}]" ng-model="profile.bundle[$index]" ng-options="bundle.value as bundle.value for bundle in bundles | orderBy:'value'" ng-change="checkMultiFields()">
               <option value=""></option>
             </select>
           </div>

@@ -61,12 +61,8 @@ app.run(function ($rootScope, $location, authService) {
     }
     $rootScope.isIndex = (nextRoute && nextRoute.controller === 'DefaultCtrl') ? 'index' : '';
   });
-
-  //console.log($rootScope);
-  //if ($rootScope.breakpoint.windowSize !== 'smallscreeen') {
-  //  console.log('woot this is big screen!');
-  //}
 });
+
 
 app.controller("HeaderCtrl", function($scope, $rootScope, $location, profileService, gettextCatalog) {
   $rootScope.$on("appLoginSuccess", function(ev, accountData) {
@@ -206,7 +202,7 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, profileService, authService, placesOperations, profileData, countries, gettextCatalog) {
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, profileService, authService, placesOperations, profileData, countries, gettextCatalog) {
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
@@ -247,6 +243,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         }
       }
     }
+    // Convert list into an array that can be sorted
+    $scope.availPlacesOperations = listObjectToArray(availPlacesOperations, 'place', 'operations');
   }
 
   // When checking in to a new crisis, load the user's global profile to clone.
@@ -268,6 +266,13 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.selectedOperation = 'none';
   }
 
+  // Creates an array to be used as options for group select
+  $scope.$watch("selectedOperation", function(newValue, oldValue) {
+    if (newValue !== oldValue && $scope.selectedPlace.length && $scope.selectedOperation.length) {
+      setBundles();
+    }
+  });
+
   // If loading an existing contact profile by ID, find it in the user's data.
   if (!checkinFlow && $scope.profileId.length) {
     $scope.profile = profileData.contact || {};
@@ -277,6 +282,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.profile.locationId)) {
           $scope.selectedPlace = place;
           $scope.selectedOperation = $scope.profile.locationId;
+          setBundles();
           break;
         }
       }
@@ -357,13 +363,13 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.selectPlace = function () {
     var opkeys = [],
-    key;
-    for (key in this.operations) {
-      if (this.operations.hasOwnProperty(key)) {
+        key;
+    for (key in this.place.operations) {
+      if (this.place.operations.hasOwnProperty(key)) {
         opkeys.push(key);
       }
     }
-    $scope.selectedPlace = this.place;
+    $scope.selectedPlace = this.place.place;
     if (opkeys.length == 1) {
       $scope.selectedOperation = opkeys[0];
     }
@@ -503,6 +509,27 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
     });
   };
+
+  // Converts object to a sortable array.
+  function listObjectToArray(obj, kLabel, vLabel) {
+    var listArray = [];
+    // Having difficulty getting location to work when keys are generalized.
+    kLabel = kLabel || 'key';
+    vLabel = vLabel || 'value';
+    angular.forEach(obj, function(v, k) {
+      var tmp = {};
+      tmp[kLabel] = k;
+      tmp[vLabel] = v;
+      this.push(tmp);
+    }, listArray);
+    return listArray;
+  }
+
+  function setBundles(){
+    var bundles = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].bundles;
+    $scope.bundles = listObjectToArray(bundles);
+  }
+
 });
 
 app.controller("ContactCtrl", function($scope, $route, $routeParams, profileService, contact, gettextCatalog) {
@@ -546,14 +573,14 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
   $scope.locationId = $routeParams.locationId || '';
   $scope.contacts = [];
   $scope.placesOperations = placesOperations;
-  $scope.bundles = {};
+  $scope.bundles = [];
   $scope.contactsPromise;
 
   if ($scope.locationId !== 'global') {
     for (var place in $scope.placesOperations) {
       if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.locationId)) {
         $scope.location = place;
-        $scope.bundles = $scope.placesOperations[place][$scope.locationId].bundles;
+        $scope.bundles = listObjectToArray($scope.placesOperations[place][$scope.locationId].bundles);
         break;
       }
     }
@@ -604,6 +631,15 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
   // Fire off search if larger screen size.
   if ($scope.breakpoint.class !== 'smallscreen') {
     $scope.submitSearch();
+  }
+
+  // Converts object to a sortable array.
+  function listObjectToArray(obj) {
+    var listArray = [];
+    angular.forEach(obj, function(v, k) {
+      this.push({key:k, value: v});
+    }, listArray);
+    return listArray;
   }
 });
 
