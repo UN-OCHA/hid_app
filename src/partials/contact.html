@@ -27,9 +27,8 @@
       </div>
     </div>
     <div class="col-xs-12 col-sm-8 col-md-9">
-      <div class="row">
-        <div class="col-fill-wrap">
-          <div class="col-xs-12 col-sm-8 profile-view col-fill">
+      <div class="row col-fill-wrap">
+        <div class="col-xs-12 col-sm-8 profile-view col-fill">
             <div class="col-fill-inner">
               <div class="profile-view__name-area">
                 <h1 class="profile-view__name">{{contact.nameGiven}} {{contact.nameFamily}} ({{contact.location}})</h1>
@@ -67,28 +66,27 @@
                 <div class="notes">{{contact.notes}}</div>
               </div>
             </div>
-          </div>
+        </div>
 
-          <div class="col-xs-12  col-sm-4 profile-right-sidebar col-fill">
-            <div class="col-fill-inner">
-              <div class="location right-sidebar-group">
-                <span class="group-label" translate>Location</span>
-                <div class="country profile-view__item">{{contact.address[0].country}}</div>
-                <div class="profile-view__item">{{contact.address[0].administrative_area}}</div>
-                <div class="profile-view__item">{{contact.address[0].locality}}</div>
-              </div>
-              <div class="organization right-sidebar-group">
-                <span class="group-label" translate>Organization</span>
-                <strong>{{contact.organization[0].name}}</strong>
-              </div>
-              <div class="jobtitle right-sidebar-group">
-                <span class="group-label" translate>Job Title</span>
-                <strong>{{contact.jobtitle}}</strong>
-              </div>
-              <div class="right-sidebar-group">
-                <span class="group-label" translate>Clusters</span>
-                <span class="title"><strong>{{contact.bundle.join(', ')}}</strong></span>
-              </div>
+        <div class="col-xs-12  col-sm-4 profile-right-sidebar col-fill">
+          <div class="col-fill-inner">
+            <div class="location right-sidebar-group">
+              <span class="group-label" translate>Location</span>
+              <div class="country profile-view__item">{{contact.address[0].country}}</div>
+              <div class="profile-view__item">{{contact.address[0].administrative_area}}</div>
+              <div class="profile-view__item">{{contact.address[0].locality}}</div>
+            </div>
+            <div class="organization right-sidebar-group">
+              <span class="group-label" translate>Organization</span>
+              <strong>{{contact.organization[0].name}}</strong>
+            </div>
+            <div class="jobtitle right-sidebar-group">
+              <span class="group-label" translate>Job Title</span>
+              <strong>{{contact.jobtitle}}</strong>
+            </div>
+            <div class="right-sidebar-group">
+              <span class="group-label" translate>Clusters</span>
+              <span class="title"><strong>{{contact.bundle.join(', ')}}</strong></span>
             </div>
           </div>
         </div>
