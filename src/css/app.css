@@ -8742,11 +8742,11 @@ button.close {
     bottom: 20px;
   }
 }
-.clearfix:before, .clearfix:after {
+.clearfix:before, .divider:before, .clearfix:after, .divider:after {
   content: " ";
   display: table;
 }
-.clearfix:after {
+.clearfix:after, .divider:after {
   clear: both;
 }
 
@@ -9096,10 +9096,6 @@ body {
   clip: rect(1px, 1px, 1px, 1px);
 }
 
-.bottom-controls {
-  padding-bottom: 60px;
-}
-
 .contact-search {
   background: #fff url(../images/sprite.png) no-repeat right -295px;
 }
@@ -9144,6 +9140,20 @@ label[for=keyContact] .fa {
   color: #909090;
 }
 
+.divider {
+  border-top: 1px solid #e4e4e4;
+  border-bottom: 1px solid #fff;
+  margin: 10px 0;
+}
+
+.col-fill-wrap {
+  overflow: hidden;
+}
+.col-fill-wrap .col-fill {
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
+}
+
 .btn-lg, .btn-group-lg > .btn, .btn-md, .btn-sm, .btn-group-sm > .btn {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -9184,11 +9194,6 @@ label[for=keyContact] .fa {
 }
 .btn-login-controls:hover {
   background-color: #41a8c2;
-}
-
-.list-content .btn-primary, .list-content .btn-warning {
-  width: 100%;
-  margin-bottom: 15px;
 }
 
 .btn.btn-block {
@@ -9481,24 +9486,25 @@ h3 {
   display: block;
   background-color: #54b1c8;
   border-radius: 50%;
-  width: 15px;
-  height: 15px;
+  width: 17px;
+  height: 17px;
   color: white;
-  font-size: 32px;
-  line-height: 30px;
+  font-size: 30px;
+  line-height: 35px;
   font-weight: normal;
   display: block;
-  padding-left: 1px;
+  padding-left: 2px;
   font-family: helvetica;
 }
 
 .key-contact-filter-use {
   float: left;
-  margin: 2px 4px 0 0;
+  margin: 2px 10px 0 0;
   width: 12px;
   height: 12px;
-  font-size: 23px;
-  line-height: 23px;
+  font-size: 19px;
+  line-height: 24;
+  padding-left: 2px;
 }
 
 .key-contact-profile-use {
@@ -9511,6 +9517,10 @@ h3 {
   margin-right: 6px;
 }
 
+.sidebar-left .fa-check-circle {
+  margin-right: 7px;
+}
+
 .verified-profile-use {
   float: left;
   font-size: 28px;
@@ -9520,6 +9530,20 @@ h3 {
 .notes {
   padding: 25px 0;
   margin-bottom: 20px;
+}
+
+.profile-right-sidebar {
+  background: #F0F0F0;
+  padding: 6px;
+}
+.profile-right-sidebar:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  left: 60%;
+  background-color: #F0F0F0;
 }
 
 .right-sidebar-group {
@@ -9551,10 +9575,6 @@ h3 {
   float: none;
   padding: 20px 10px;
 }
-.same-height-wrap .same-height-col.profile-right-sidebar {
-  background: #F0F0F0;
-  padding: 6px;
-}
 
 #contactsid-app-view {
   padding-bottom: 40px;
@@ -9578,6 +9598,7 @@ h3 {
 #contactsid-app-view .active-countries h3 {
   color: #fff;
   text-align: center;
+  display: inline-block;
 }
 #contactsid-app-view .active-countries li.list-group-item {
   background: #D4E9EE;
@@ -10024,11 +10045,15 @@ h3 {
   padding: 6px 0;
 }
 
-.contact {
+.page-contact {
   background: #fafafa;
   font-size: 13px;
   color: #767676;
   padding: 0;
+  margin-top: 35px;
+}
+.page-contact .col-fill-inner {
+  padding: 20px 10px;
 }
 
 .profile-view__name {
@@ -10106,6 +10131,7 @@ h3 {
   position: fixed;
   bottom: 0;
   width: 100%;
+  z-index: 1000;
   background: url(../images/bg.png);
 }
 @media (min-width: 768px) {
@@ -10132,6 +10158,9 @@ h3 {
     display: none;
   }
 }
+.sidebar-left input[type="checkbox"] {
+  margin-left: 10px;
+}
 .sidebar-left .actions-wrapper {
   padding-top: 30px;
   padding-bottom: 30px;
@@ -10143,14 +10172,13 @@ h3 {
   .sidebar-left .actions-wrapper {
     padding-top: 0;
     padding-bottom: 0;
-    overflow-y: auto;
+    overflow-y: visible;
     display: block;
-    margin-top: 38px;
+    height: auto;
   }
 }
 .sidebar-left .actions-wrapper .actions {
   padding: 0 30px 150px;
-  margin-top: -15px;
 }
 @media (min-width: 768px) {
   .sidebar-left .actions-wrapper .actions {
@@ -10179,6 +10207,15 @@ h3 {
     height: auto;
     margin-bottom: 0px;
   }
+}
+
+@media (min-width: 768px) {
+  .page-dashboard .sidebar-left .actions-wrapper {
+    margin-top: 38px;
+  }
+}
+.page-dashboard .sidebar-left .actions-wrapper .actions {
+  margin-top: -15px;
 }
 
 .contactsid-app .spinner .three-dots-row-spinner {

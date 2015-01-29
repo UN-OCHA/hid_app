@@ -1,78 +1,96 @@
-<div class="masthead container">
+<div class="masthead">
   <!--<div class="back-link" ng-show="!isRouteLoading"><a class="btn btn-warning btn-sm" href ng-click="back();"><i
       class="fa fa-arrow-circle-left"></i> Back</a></div>
     </div>-->
 
-  <div class="contact container same-height-wrap" ng-show="!isRouteLoading">
+  <div class="main row page-contact" ng-show="!isRouteLoading">
 
-    <div class="col-xs-12 col-sm-3 profile-left-sidebar same-height-col">
-      <a class="btn btn-warning btn-block btn-sm" href ng-click="back();"><i
+    <div class="sidebar-left" ng-class="{'show-options': sidebarOptions}">
+      <div ng-show="!isRouteLoading">
+        <div class="visible-xs">
+          <div class="bottom-fixed-btn" role="presentation">
+            <a href ng-click="sidebarOptions = !sidebarOptions"><div class="bottom-fixed-btn__arrow"></div>Contact Options</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
+        <div class="actions">
+          <a class="btn btn-warning btn-lg btn-block" href ng-click="back();"><i
           class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a>
-      <a class="btn btn-primary btn-lg btn-block" ng-show="userIsAdmin" href="#/profile/{{contact._id}}" translate>Edit
-        Profile</a>
-      <a class="btn btn-primary btn-lg btn-block" ng-show="userIsAdmin" href="#/checkin/{{contact._profile._id}}" translate>Check-in User</a>
-      <a class="btn btn-primary btn-lg btn-checkout btn-block" ng-if="contact.type === 'local'" ng-show="userIsAdmin" ng-click="contact.confirmDelete = !contact.confirmDelete" translate>Check-out User</a>
-      <a ng-show="contact.confirmDelete" class="slide btn btn-warning btn-lg btn-block" ng-click="checkout(contact._id)" translate>Confirm User Checkout</a>
-    </div>
-
-    <div class="col-xs-12 col-sm-7 profile-view same-height-col">
-      <div class="profile-view__name-area">
-        <h1 class="profile-view__name">{{contact.nameGiven}} {{contact.nameFamily}} ({{contact.location}})</h1>
-
-        <div class="profile-view__markers">
-          <div class="contact-item__key-contact key-contact-profile-use" ng-if="contact.keyContact">*</div>
-          <div class="contact-item__verified verified-profile-use" ng-if="contact._profile.verified"><i
-              class="fa fa-check-circle"></i></div>
-
-          <span ng-if="contact._profile.verified || contact.keyContact" class="profile-view__key-contact-verified">
-            (<span ng-if="contact.keyContact" translate>key contact</span><span ng-if="contact._profile.verified && contact.keyContact">/</span><span
-                ng-if="contact._profile.verified" translate>verified</span>)
-          </span>
+          <a class="btn btn-primary btn-lg btn-block" ng-show="userIsAdmin" href="#/profile/{{contact._id}}" translate>Edit
+            Profile</a>
+          <a class="btn btn-primary btn-lg btn-block" ng-show="userIsAdmin" href="#/checkin/{{contact._profile._id}}" translate>Check-in User</a>
+          <a class="btn btn-primary btn-lg btn-checkout btn-block" ng-if="contact.type === 'local'" ng-show="userIsAdmin" ng-click="contact.confirmDelete = !contact.confirmDelete" translate>Check-out User</a>
+          <a ng-show="contact.confirmDelete" class="slide btn btn-warning btn-lg btn-block" ng-click="checkout(contact._id)" translate>Confirm User Checkout</a>
         </div>
-      </div>
-
-      <div class="profile-view__items same-height-col">
-        <div class="phone" ng-repeat="phone in contact.phone">
-          <div class="profile-view__item">{{phone.type}}: <a href="tel:{{phone.number}}">{{phone.number}}</a></div>
-        </div>
-        <div class="email" ng-repeat="email in contact.email">
-          <div class="profile-view__item">{{email.type}}: <a href="mailto:{{email.address}}">{{email.address}}</a></div>
-        </div>
-        <div class="voip" ng-repeat="voip in contact.voip">
-          <div class="profile-view__item">{{voip.type}}: {{voip.number}}</div>
-        </div>
-        <div class="uri">
-          <span translate>Website/Social Media</span>:
-          <div class="uri" ng-repeat="uri in contact.uri"><a href="{{uri}}">{{uri}}</a></div>
-        </div>
-      </div>
-
-      <div class="notes">
-        <span translate>Notes</span>:
-        <div class="notes">{{contact.notes}}</div>
       </div>
     </div>
+    <div class="col-xs-12 col-sm-8 col-md-9">
+      <div class="row col-fill-wrap">
+        <div class="col-xs-12 col-sm-8 profile-view col-fill">
+            <div class="col-fill-inner">
+              <div class="profile-view__name-area">
+                <h1 class="profile-view__name">{{contact.nameGiven}} {{contact.nameFamily}} ({{contact.location}})</h1>
 
-    <div class="col-xs-12 col-sm-3 profile-right-sidebar same-height-col">
-      <div class="location right-sidebar-group">
-        <span class="group-label" translate>Location</span>
-        <div class="country profile-view__item">{{contact.address[0].country}}</div>
-        <div class="profile-view__item">{{contact.address[0].administrative_area}}</div>
-        <div class="profile-view__item">{{contact.address[0].locality}}</div>
-      </div>
-      <div class="organization right-sidebar-group">
-        <span class="group-label" translate>Organization</span>
-        <strong>{{contact.organization[0].name}}</strong>
-      </div>
-      <div class="jobtitle right-sidebar-group">
-        <span class="group-label" translate>Job Title</span>
-        <strong>{{contact.jobtitle}}</strong>
-      </div>
-      <div class="right-sidebar-group">
-        <span class="group-label" translate>Clusters</span>
-        <span class="title"><strong>{{contact.bundle.join(', ')}}</strong></span>
+                <div class="profile-view__markers">
+                  <div class="contact-item__key-contact key-contact-profile-use" ng-if="contact.keyContact">*</div>
+                  <div class="contact-item__verified verified-profile-use" ng-if="contact._profile.verified"><i
+                      class="fa fa-check-circle"></i></div>
+
+                  <span ng-if="contact._profile.verified || contact.keyContact" class="profile-view__key-contact-verified">
+                    (<span ng-if="contact.keyContact" translate>key contact</span><span ng-if="contact._profile.verified && contact.keyContact">/</span><span
+                        ng-if="contact._profile.verified" translate>verified</span>)
+                  </span>
+                </div>
+              </div>
+
+              <div class="profile-view__items same-height-col">
+                <div class="phone" ng-repeat="phone in contact.phone">
+                  <div class="profile-view__item">{{phone.type}}: <a href="tel:{{phone.number}}">{{phone.number}}</a></div>
+                </div>
+                <div class="email" ng-repeat="email in contact.email">
+                  <div class="profile-view__item">{{email.type}}: <a href="mailto:{{email.address}}">{{email.address}}</a></div>
+                </div>
+                <div class="voip" ng-repeat="voip in contact.voip">
+                  <div class="profile-view__item">{{voip.type}}: {{voip.number}}</div>
+                </div>
+                <div class="uri">
+                  <span translate>Website/Social Media</span>:
+                  <div class="uri" ng-repeat="uri in contact.uri"><a href="{{uri}}">{{uri}}</a></div>
+                </div>
+              </div>
+
+              <div class="notes">
+                <span translate>Notes</span>:
+                <div class="notes">{{contact.notes}}</div>
+              </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12  col-sm-4 profile-right-sidebar col-fill">
+          <div class="col-fill-inner">
+            <div class="location right-sidebar-group">
+              <span class="group-label" translate>Location</span>
+              <div class="country profile-view__item">{{contact.address[0].country}}</div>
+              <div class="profile-view__item">{{contact.address[0].administrative_area}}</div>
+              <div class="profile-view__item">{{contact.address[0].locality}}</div>
+            </div>
+            <div class="organization right-sidebar-group">
+              <span class="group-label" translate>Organization</span>
+              <strong>{{contact.organization[0].name}}</strong>
+            </div>
+            <div class="jobtitle right-sidebar-group">
+              <span class="group-label" translate>Job Title</span>
+              <strong>{{contact.jobtitle}}</strong>
+            </div>
+            <div class="right-sidebar-group">
+              <span class="group-label" translate>Clusters</span>
+              <span class="title"><strong>{{contact.bundle.join(', ')}}</strong></span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
   </div>
 </div>
