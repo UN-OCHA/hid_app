@@ -4,5 +4,5 @@ var contactsId = {
     "appBaseUrl": "https://app.humanitarian.id",
     "authBaseUrl": "https://auth.humanitarian.id",
     "profilesBaseUrl": "https://profiles.humanitarian.id",
-    "hrinfoBaseUrl": "http://dev1.humanitarianresponse.info"
+    "hrinfoBaseUrl": "https://www.humanitarianresponse.info"
   };

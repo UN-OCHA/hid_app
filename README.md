@@ -21,3 +21,17 @@ When running `grunt`, you may specify the environment targeted for the build by 
 ```
 grunt --target=dev
 ```
+
+The following shows the valid environment target values, and the services used by each.
+
+|------------|--------------------------------------------|
+| Target     | Services Used                              |
+|------------|--------------------------------------------|
+| local      | dev (edit config.js to use local services) |
+|------------|--------------------------------------------|
+| dev        | dev                                        |
+|------------|--------------------------------------------|
+| stage      | stage                                      |
+|------------|--------------------------------------------|
+| prod       | prod                                       |
+|------------|--------------------------------------------|
