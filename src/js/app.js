@@ -767,6 +767,32 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
       }
     });
   };
+
+  $scope.generateVcard = function () {
+    var vcard = "BEGIN:VCARD\n" +
+      "VERSION:4.0\n" +
+      "N:" + contact.nameFamily + ";" + contact.nameGiven + ";;;\n" +
+      "FN:" + contact.nameGiven + " " + contact.nameFamily + "\n";
+    if (contact.organization[0] && contact.organization[0].name) {
+      vcard += "ORG:" + contact.organization[0].name + "\n";
+    }
+    if (contact.jobtitle) {
+      vcard += "TITLE:" + contact.jobtitle + "\n";
+    }
+    angular.forEach(contact.phone, function (item) {
+      if (item.type && item.number) {
+        vcard += "TEL;TYPE=" + item.type + ";VALUE=uri:tel:" + item.number + "\n";
+      }
+    });
+    angular.forEach(contact.email, function (item) {
+      if (item.address) {
+        vcard += "EMAIL:" + item.address + "\n";
+      }
+    });
+    vcard += "REV:" + new Date().toISOString() + "\n" +
+      "END:VCARD\n";
+    window.location.href = 'data:text/vcard;charset=UTF-8,' + encodeURIComponent(vcard);
+  };
 });
 
 app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, profileService, userData, placesOperations, gettextCatalog, protectedRoles) {
