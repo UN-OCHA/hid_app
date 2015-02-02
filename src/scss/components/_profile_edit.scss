@@ -1,24 +1,13 @@
 .container {
-  .form-group {
-   margin-right: 0;
-   margin-left: 0;
- }
- .control-label {
-  font-weight: normal;
-  color: $primary-color-2;
-  display: block;
-  text-align: left;
-  padding-left: 17px;
-}
+  .control-label {
+    font-weight: normal;
+    color: $primary-color-2;
+    display: block;
+    text-align: left;
+  }
   .col-sm-4 {
     .control-label {
       padding-left: 3px;
-    }
-  }
-  .form-control, .angucomplete-searching {
-    color: $primary-color-1;
-    @include placeholder {
-      color: $primary-color-1;
     }
   }
 }

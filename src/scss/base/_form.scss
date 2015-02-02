@@ -1,0 +1,89 @@
+/* Forms */
+.form-group {
+  .reveal {
+    margin-bottom: 5px;
+  }
+}
+
+.form-control {
+  -webkit-box-shadow: inset 1px 1px 5px rgba(0,0,0,.3);
+  box-shadow: inset 1px 1px 5px rgba(0,0,0,.3);
+  border: none;
+}
+
+.form-control,
+.angucomplete-searching {
+  color: $primary-color-1;
+  @include placeholder {
+    color: $text-light;
+  }
+}
+
+.form-elements-phone,
+.form-elements-email,
+.form-elements-voip {
+  .form-control {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    @include border-radius(0px);
+    border: 1px solid $neutral-color-2;
+  }
+
+  .col-xs-5 {
+    padding-right: 0px;
+    &:before {
+      content: "";
+      border-left: 1px solid $neutral-color-2;
+      height: 22px;
+      position: absolute;
+      right: 0;
+      bottom: 10px;
+    }
+    .form-control {
+      border-right: none;
+    }
+  }
+  .col-xs-7 {
+    padding-left: 0px;
+    .form-control {
+      border-left: none;
+      text-align: right;
+    }
+  }
+}
+.btn-reveal {
+  position: relative;
+  padding-right:25px;
+
+  button {
+    position: absolute;
+    top:5px;
+    right:0;
+    width: 30px;
+    height: 30px;
+    border:none;
+    @include border-radius(20px);
+    background-color: $primary-color-2;
+
+    &.add {
+      background-color: $primary-color-1;
+    }
+    i {
+      color: $white;
+    }
+  }
+
+  .form-elements-phone,
+  .form-elements-email,
+  .form-elements-voip {
+    button {
+      right:-10px;
+    }
+  }
+}
+
+.angucomplete-dropdown {
+  width: 100%;
+}
+

@@ -216,6 +216,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.adminRoleOptions = ['admin', 'manager'];
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
+  var multiFields = {'uri': null, 'voip': 'number', 'email': 'address', 'phone': 'number', 'bundle': null};
 
   var pathParams = $location.path().split('/'),
   checkinFlow = pathParams[1] === 'checkin',
@@ -308,7 +309,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   }
 
   // Now we have a profile, use the profile's country to fetch regions and cities
-  if ($scope.profile.address && $scope.profile.address.length && $scope.profile.address[0].hasOwnProperty('country')) {
+  if ($scope.profile.address) {
+    if (!$scope.profile.address.length || !$scope.profile.address[0].hasOwnProperty('country')) {
+      $scope.profile.address = [];
+      $scope.profile.address[0] = {country: $scope.selectedPlace};
+    }
     $scope.regions = [];
     $scope.localities = [];
     $scope.regionsPromise = profileService.getAdminArea(function() {
@@ -340,13 +345,25 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
+  $scope.vaildFieldEntry = function(field, el) {
+    return ((multiFields[field] === null && el && el.length)
+          || (multiFields[field] && el && el[multiFields[field]] && el[multiFields[field]].length))
+  }
+
+  $scope.checkForValidEntry = function(field, index){
+    return (multiFields.hasOwnProperty(field)
+          && $scope.profile[field]
+          && $scope.profile[field][index]
+          && $scope.vaildFieldEntry(field, $scope.profile[field][index]));
+
+  }
+
   $scope.checkMultiFields = function (excludeExtras) {
-    var multiFields = {'uri': null, 'voip': 'number', 'email': 'address', 'phone': 'number', 'bundle': null};
     for (var field in multiFields) {
       if (multiFields.hasOwnProperty(field)) {
         if ($scope.profile[field] && $scope.profile[field].filter) {
           $scope.profile[field] = $scope.profile[field].filter(function (el) {
-            return ((multiFields[field] === null && el && el.length) || (multiFields[field] && el && el[multiFields[field]] && el[multiFields[field]].length));
+            return $scope.vaildFieldEntry(field, el);
           });
         }
         else {
@@ -366,6 +383,38 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   };
 
   $scope.checkMultiFields();
+
+
+
+  $scope.changeFieldEntries = function(field, index, last){
+    var validEntry = $scope.checkForValidEntry(field, index);
+
+    if (last && validEntry) {
+      // Add new field.
+      $scope.profile[field].push("");
+    }
+    else if(last){
+      // Focus on field.
+      this.focus = true;
+    }
+    else {
+      // Remove new field.
+      $scope.profile[field].splice(index, 1);
+    }
+  }
+
+  $scope.styleFieldEntries = function(field, index, last){
+    var validEntry = $scope.checkForValidEntry(field, index);
+    if (last && validEntry) {
+      return 'fa-plus';
+    }
+    else if (last) {
+      return 'fa-pencil';
+    }
+    else {
+      return 'fa-remove';
+    }
+  }
 
   $scope.selectPlace = function () {
     var opkeys = [],
@@ -536,6 +585,16 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.bundles = listObjectToArray(bundles);
   }
 
+});
+
+// Trigger focus on field.
+app.directive('focusField', function() {
+  return function(scope, element, attrs) {
+    scope.$watch(attrs.focusField,
+    function (newValue) {
+      newValue && element.focus();
+    },true);
+  };
 });
 
 app.controller("ContactCtrl", function($scope, $route, $routeParams, profileService, contact, gettextCatalog) {
