@@ -1,15 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-01-27T16:48:52.037Z\n"
-
-#: src/partials/profile.html
-msgid "<input type=\"checkbox\" name=\"keyContact\" ng-model=\"profile.keyContact\">Key Contact"
-msgstr ""
-
-#: src/partials/profile.html
-msgid "<input type=\"checkbox\" name=\"verified\" ng-model=\"verified\">Verified Responder"
-msgstr ""
+"Project-Id-Version: 2015-02-02T18:24:09.558Z\n"
 
 #: src/partials/header.html
 #: src/partials/index.html
@@ -151,6 +143,7 @@ msgid "Job Title"
 msgstr ""
 
 #: src/partials/list.html
+#: src/partials/profile.html
 msgid "Key Contact"
 msgstr ""
 
@@ -282,6 +275,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "VOIP"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Verified Responder"
 msgstr ""
 
 #: src/partials/list.html

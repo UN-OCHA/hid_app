@@ -1,6 +1,8 @@
 /* Forms */
 .form-group {
-  margin-bottom: 5px;
+  .reveal {
+    margin-bottom: 5px;
+  }
 }
 
 .form-control {
@@ -33,11 +35,10 @@
     &:before {
       content: "";
       border-left: 1px solid $neutral-color-2;
-      height: 20px;
-      padding: 6px 0;
+      height: 22px;
       position: absolute;
       right: 0;
-      bottom: 6px;
+      bottom: 10px;
     }
     .form-control {
       border-right: none;
@@ -50,5 +51,39 @@
       text-align: right;
     }
   }
+}
+.btn-reveal {
+  position: relative;
+  padding-right:25px;
+
+  button {
+    position: absolute;
+    top:5px;
+    right:0;
+    width: 30px;
+    height: 30px;
+    border:none;
+    @include border-radius(20px);
+    background-color: $primary-color-2;
+
+    &.add {
+      background-color: $primary-color-1;
+    }
+    i {
+      color: $white;
+    }
+  }
+
+  .form-elements-phone,
+  .form-elements-email,
+  .form-elements-voip {
+    button {
+      right:-10px;
+    }
+  }
+}
+
+.angucomplete-dropdown {
+  width: 100%;
 }
 
