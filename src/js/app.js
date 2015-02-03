@@ -398,7 +398,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     return true;
   }
 
-  // Checks all multi require fields for for incomplete entries.
+  // Checks ALL multi field with 2 or more requires inputs for incomplete entries.
   $scope.checkAllMultiRequireFields = function () {
     var allValid = true;
     for (var field in multiFields) {
