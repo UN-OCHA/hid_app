@@ -338,6 +338,24 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     });
   }
 
+  // If profile is local, set preferred county code to checkin location.
+  if ($scope.profile.type === 'local') {
+    $scope.defaultPreferredCountryAbbr = [];
+    var match, countryMatch;
+
+    match = $scope.selectedPlace.toUpperCase();
+    countryMatch = $.fn.intlTelInput.getCountryData().filter(function (el) {
+      // Returns country data that is similar to selectedPlace.
+      return el.name.toUpperCase().match(match);
+    });
+    for (var i in countryMatch) {
+      $scope.defaultPreferredCountryAbbr.push(countryMatch[i].iso2)
+    };
+    // Converts array to a string.
+    $scope.defaultPreferredCountryAbbr = $scope.defaultPreferredCountryAbbr.join(', ') || "us";
+  }
+
+
   $scope.setCountryCode = function() {
     var countryInfo = jQuery('input[name="phone[' + this.$index + '][number]"]').intlTelInput('getSelectedCountryData');
     if (countryInfo && countryInfo.hasOwnProperty('dialCode')) {

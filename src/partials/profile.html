@@ -161,7 +161,7 @@
                 </div>
 
                 <div class="col-xs-7">
-                  <input ng-if="phone.type != 'Satellite'" ng-model="profile.phone[$index].number" international-phone-number auto-format="true"  national-mode="false" responsive-dropdown="true" class="form-control" type="text" name="phone[{{$index}}][number]"  ng-change="setCountryCode();" ng-blur="focus=0" focus-field="focus"/>
+                  <input ng-if="phone.type != 'Satellite'" ng-model="profile.phone[$index].number" international-phone-number auto-format="true"  national-mode="false" responsive-dropdown="true" preferred-countries="{{defaultPreferredCountryAbbr}}" class="form-control" type="text" name="phone[{{$index}}][number]"  ng-change="setCountryCode();" ng-blur="focus=0" focus-field="focus"/>
                   <input ng-if="phone.type == 'Satellite'" ng-model="profile.phone[$index].number" class="form-control" type="text" name="phone[{{$index}}][number]"/>
                   <input type="hidden" name="phone[{{$index}}][countryCode]" ng-model="profile.phone[$index].countryCode" />
 
