@@ -32,12 +32,7 @@ app.value('cgBusyDefaults',{
 app.directive('routeLoadingIndicator', function($rootScope) {
   return {
     restrict: 'E',
-    template: "<div ng-show='isRouteLoading' class='loading-indicator'>" +
-    "<div class='loading-indicator-body'>" +
-    "<h3 class='loading-title'>Loading...</h3>" +
-    "<div class='spinner'><rotating-plane-spinner></rotating-plane-spinner></div>" +
-    "</div>" +
-    "</div>",
+    templateUrl: contactsId.sourcePath + '/partials/loading.html',
     replace: true,
     link: function(scope, elem, attrs) {
       scope.isRouteLoading = false;
@@ -213,10 +208,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.profile = {};
 
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
+  $scope.invalidFields = {};
   $scope.adminRoleOptions = ['admin', 'manager'];
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
-  var multiFields = {'uri': null, 'voip': 'number', 'email': 'address', 'phone': 'number', 'bundle': null};
+  var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': []};
 
   var pathParams = $location.path().split('/'),
   checkinFlow = pathParams[1] === 'checkin',
@@ -354,6 +350,9 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     // Converts array to a string.
     $scope.defaultPreferredCountryAbbr = $scope.defaultPreferredCountryAbbr.join(', ') || "us";
   }
+  else {
+    $scope.defaultPreferredCountryAbbr = "us";
+  }
 
 
   $scope.setCountryCode = function() {
@@ -364,16 +363,67 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   };
 
   $scope.vaildFieldEntry = function(field, el) {
-    return ((multiFields[field] === null && el && el.length)
-          || (multiFields[field] && el && el[multiFields[field]] && el[multiFields[field]].length))
+    if (multiFields[field].length) {
+      var valid = !!el;
+      for (var reqField in multiFields[field]) {
+        if (!el[multiFields[field][reqField]] || !el[multiFields[field][reqField]].length) {
+          valid = false;
+          break;
+        }
+      };
+      return valid;
+    }
+    else {
+      return el && el.length;
+    }
+    // Prior validation
+    //return ((multiFields[field] === null && el && el.length)
+    //      || (multiFields[field] && el && el[multiFields[field]] && el[multiFields[field]].length))
   }
 
-  $scope.checkForValidEntry = function(field, index){
-    return (multiFields.hasOwnProperty(field)
-          && $scope.profile[field]
-          && $scope.profile[field][index]
-          && $scope.vaildFieldEntry(field, $scope.profile[field][index]));
+  // Check field with 2 or more requires inputs for incomplete entries.
+  $scope.checkMultiRequireFields = function (field, el) {
+    var valid = undefined;
+    for (var reqField in multiFields[field]) {
+      var subValid = (!el[multiFields[field][reqField]] || !el[multiFields[field][reqField]].length);
+      if (valid === undefined) {
+        valid = subValid;
+      }
+      else if (subValid != valid) {
+        // Field is incomplete.
+        return false;
+      }
+    }
+    // Field is complete or empty.
+    return true;
+  }
 
+  // Checks all multi require fields for for incomplete entries.
+  $scope.checkAllMultiRequireFields = function () {
+    var allValid = true;
+    for (var field in multiFields) {
+      if (multiFields.hasOwnProperty(field) && multiFields[field].length > 1 && $scope.profile[field]) {
+        $scope.invalidFields[field] = {};
+        for (var index in $scope.profile[field]) {
+
+          if (!$scope.checkMultiRequireFields(field, $scope.profile[field][index])) {
+            $scope.invalidFields[field][index] =  true;
+            allValid = false;
+          }
+        };
+      }
+      else if (typeof $scope.invalidFields[field] !== 'undefined') {
+        delete $scope.invalidFields[field];
+      }
+    }
+    return allValid;
+  }
+
+  // Remove error styling when corrected.
+  $scope.removeFieldError = function(field) {
+    if ($scope.invalidFields[field] && $scope.invalidFields[field][this.$index] && $scope.checkMultiRequireFields(field, this[field])) {
+      delete $scope.invalidFields[field][this.$index]
+    }
   }
 
   $scope.checkMultiFields = function (excludeExtras) {
@@ -389,10 +439,10 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         }
         var len = $scope.profile[field].length;
         if (!excludeExtras) {
-          if (multiFields[field] === null && (!len || $scope.profile[field][len - 1].length)) {
+          if (!multiFields[field].length && (!len || $scope.profile[field][len - 1].length)) {
             $scope.profile[field].push('');
           }
-          else if (multiFields[field].length && (!len || $scope.profile[field][len - 1][multiFields[field]].length)) {
+          else if (multiFields[field].length && (!len || $scope.profile[field][len - 1][multiFields[field][0]].length)) {
             $scope.profile[field].push('');
           }
         }
@@ -402,8 +452,12 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.checkMultiFields();
 
-
-
+  $scope.checkForValidEntry = function(field, index){
+    return (multiFields.hasOwnProperty(field)
+          && $scope.profile[field]
+          && $scope.profile[field][index]
+          && $scope.vaildFieldEntry(field, $scope.profile[field][index]));
+  }
   $scope.changeFieldEntries = function(field, index, last){
     var validEntry = $scope.checkForValidEntry(field, index);
 
@@ -446,6 +500,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if (opkeys.length == 1) {
       $scope.selectedOperation = opkeys[0];
     }
+  };
+
+  // Used in validation alerts.
+  $scope.bumpIndex = function() {
+    return parseInt(this.index) + 1;
   };
 
   /**
@@ -546,41 +605,45 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   };
 
   $scope.submitProfile = function () {
-    $scope.checkMultiFields(true);
-    var profile = $scope.profile;
-    if (profileData.profile && profileData.profile.userid && profileData.profile._id) {
-      profile.userid = profileData.profile.userid;
-      profile._profile = profileData.profile._id;
-    }
-    else {
-      profile.userid = accountData.user_id;
-      profile._profile = null;
-    }
-    profile.status = 1;
-
-    if (checkinFlow) {
-      profile.locationId = $scope.selectedOperation;
-      profile.location = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].name;
-    }
-
-    if ($scope.profileId.length) {
-      profile._contact = $scope.profileId;
-    }
-
-    if ($scope.userIsAdmin) {
-      profile.adminRoles = $scope.adminRoles;
-      profile.verified = $scope.verified;
-    }
-
-    profileService.saveContact(profile).then(function(data) {
-      if (data && data.status && data.status === 'ok') {
-        $location.path('/dashboard');
-        profileService.clearData();
+    // Checks for incomplete entries.
+    if ($scope.checkAllMultiRequireFields()) {
+      // Removes empty entries.
+      $scope.checkMultiFields(true);
+      var profile = $scope.profile;
+      if (profileData.profile && profileData.profile.userid && profileData.profile._id) {
+        profile.userid = profileData.profile.userid;
+        profile._profile = profileData.profile._id;
       }
       else {
-        alert('error');
+        profile.userid = accountData.user_id;
+        profile._profile = null;
       }
-    });
+      profile.status = 1;
+
+      if (checkinFlow) {
+        profile.locationId = $scope.selectedOperation;
+        profile.location = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].name;
+      }
+
+      if ($scope.profileId.length) {
+        profile._contact = $scope.profileId;
+      }
+
+      if ($scope.userIsAdmin) {
+        profile.adminRoles = $scope.adminRoles;
+        profile.verified = $scope.verified;
+      }
+
+      profileService.saveContact(profile).then(function(data) {
+        if (data && data.status && data.status === 'ok') {
+          $location.path('/dashboard');
+          profileService.clearData();
+        }
+        else {
+          alert('error');
+        }
+      });
+    }
   };
 
   // Converts object to a sortable array.

@@ -17,6 +17,9 @@
   @include placeholder {
     color: $text-light;
   }
+  &.disabled {
+    color: $text-light;
+  }
 }
 
 .form-elements-phone,
@@ -44,6 +47,7 @@
       border-right: none;
     }
   }
+
   .col-xs-7 {
     padding-left: 0px;
     .form-control {
@@ -51,6 +55,19 @@
       text-align: right;
     }
   }
+
+  &.has-error {
+    .form-control {
+      border-color: /*1px solid */$secondary-color-1;
+    }
+
+    .col-xs-5 {
+      &:before {
+        border-left: 1px solid $secondary-color-1;
+      }
+    }
+  }
+
 }
 .btn-reveal {
   position: relative;
