@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-02-03T20:39:32.534Z\n"
+"Project-Id-Version: 2015-02-04T20:04:23.514Z\n"
 
 #: src/partials/header.html
 #: src/partials/index.html
@@ -68,6 +68,10 @@ msgstr ""
 
 #: src/partials/header.html
 msgid "Dashboard"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Dashboard Options"
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -223,6 +227,10 @@ msgstr ""
 msgid "Phone Numbers"
 msgstr ""
 
+#: src/partials/dashboard.html
+msgid "Please create a"
+msgstr ""
+
 #: src/partials/profile.html
 msgid "Profile"
 msgstr ""
@@ -309,6 +317,10 @@ msgstr ""
 
 #: src/partials/header.html
 msgid "Welcome"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "before checking-in to a country/emergency."
 msgstr ""
 
 #: src/partials/profile.html
