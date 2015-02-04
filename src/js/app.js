@@ -203,7 +203,7 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, profileService, authService, placesOperations, profileData, countries, gettextCatalog) {
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, gettextCatalog) {
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
@@ -267,12 +267,18 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   else {
     $scope.selectedPlace = 'none';
     $scope.selectedOperation = 'none';
+    setPreferedCountries();
   }
 
   // Creates an array to be used as options for group select
   $scope.$watch("selectedOperation", function(newValue, oldValue) {
     if (newValue !== oldValue && $scope.selectedPlace.length && $scope.selectedOperation.length) {
       setBundles();
+
+      $scope.profileName = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].name;
+      setPreferedCountries();
+      // Need timeout to fix dropdown width issues.
+      $timeout($scope.checkMultiFields, 100);
     }
   });
 
@@ -286,6 +292,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
           $scope.selectedPlace = place;
           $scope.selectedOperation = $scope.profile.locationId;
           setBundles();
+          setPreferedCountries();
           break;
         }
       }
@@ -333,27 +340,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
     });
   }
-
-  // If profile is local, set preferred county code to checkin location.
-  if ($scope.profile.type === 'local') {
-    $scope.defaultPreferredCountryAbbr = [];
-    var match, countryMatch;
-
-    match = $scope.selectedPlace.toUpperCase();
-    countryMatch = $.fn.intlTelInput.getCountryData().filter(function (el) {
-      // Returns country data that is similar to selectedPlace.
-      return el.name.toUpperCase().match(match);
-    });
-    for (var i in countryMatch) {
-      $scope.defaultPreferredCountryAbbr.push(countryMatch[i].iso2)
-    };
-    // Converts array to a string.
-    $scope.defaultPreferredCountryAbbr = $scope.defaultPreferredCountryAbbr.join(', ') || "us";
-  }
-  else {
-    $scope.defaultPreferredCountryAbbr = "us";
-  }
-
 
   $scope.setCountryCode = function() {
     var countryInfo = jQuery('input[name="phone[' + this.$index + '][number]"]').intlTelInput('getSelectedCountryData');
@@ -449,8 +435,10 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
     }
   };
-
-  $scope.checkMultiFields();
+  // Add extra blank fields when editing a profile
+  if (!checkinFlow) {
+    $scope.checkMultiFields();
+  }
 
   $scope.checkForValidEntry = function(field, index){
     return (multiFields.hasOwnProperty(field)
@@ -664,6 +652,28 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   function setBundles(){
     var bundles = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].bundles;
     $scope.bundles = listObjectToArray(bundles);
+  }
+
+  // If profile is local, set preferred county code to checkin location.
+  function setPreferedCountries() {
+    if ($scope.profile.type === 'local') {
+      $scope.defaultPreferredCountryAbbr = [];
+      var match, countryMatch;
+
+      match = $scope.selectedPlace.toUpperCase();
+      countryMatch = $.fn.intlTelInput.getCountryData().filter(function (el) {
+        // Returns country data that is similar to selectedPlace.
+        return el.name.toUpperCase().match(match);
+      });
+      for (var i in countryMatch) {
+        $scope.defaultPreferredCountryAbbr.push(countryMatch[i].iso2)
+      };
+      // Converts array to a string.
+      $scope.defaultPreferredCountryAbbr = $scope.defaultPreferredCountryAbbr.join(', ') || "us";
+    }
+    else {
+      $scope.defaultPreferredCountryAbbr = "us";
+    }
   }
 
 });
