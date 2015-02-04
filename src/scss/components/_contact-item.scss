@@ -92,24 +92,25 @@
   display: block;
   background-color: $primary-color-1;
   border-radius: 50%;
-  width: 15px;
-  height: 15px;
+  width: 17px;
+  height: 17px;
   color: white;
-  font-size: 32px;
-  line-height: 30px;
+  font-size: 30px;
+  line-height: 35px;
   font-weight: normal;
   display: block;
-  padding-left: 1px;
+  padding-left: 2px;
   font-family: helvetica;
 }
 
 .key-contact-filter-use {
   float: left;
-  margin: 2px 4px 0 0;
+  margin: 2px 10px 0 0;
   width: 12px;
   height: 12px;
-  font-size: 23px;
-  line-height: 23px;
+  font-size: 19px;
+  line-height: 24;
+  padding-left: 2px;
 }
 
 .key-contact-profile-use {
@@ -121,7 +122,9 @@
   padding-left: 2px;
   margin-right: 6px;
 }
-
+.sidebar-left .fa-check-circle {
+  margin-right: 7px;
+}
 .verified-profile-use {
   float: left;
   font-size: 28px;
@@ -130,6 +133,19 @@
 .notes {
   padding: 25px 0;
   margin-bottom: 20px;
+}
+.profile-right-sidebar{
+  background: $secondary-color-3;
+  padding: 6px;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+    left: 60%;
+    background-color: $secondary-color-3;
+  }
 }
 .right-sidebar-group {
   padding: 0 10px 10px 0;
@@ -150,6 +166,7 @@
     font-size: 11px;
   }
 }
+
 .same-height-wrap {
   display: table;
   .same-height-col {
@@ -157,9 +174,5 @@
     vertical-align: top;
     float: none;
     padding: 20px 10px;
-    &.profile-right-sidebar{
-      background: $secondary-color-3;
-      padding: 6px;
-    }
   }
 }

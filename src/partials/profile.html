@@ -2,58 +2,58 @@
   <h2 translate>Humanitarian ID</h2>
 </div>
 
-<div ng-show="!isRouteLoading" class="">
-  <div class="active-countries" ng-hide="selectedPlace.length">
-    <div class="back-link"><a class="btn btn-warning btn-sm" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a></div>
-    <h3 translate>Select a country</h3>
-    <ul class="active-countries-container list-group">
-      <li class="country-item list-group-item" ng-repeat="(pKey, place) in availPlacesOperations | orderBy: 'place'">
-        <a href="" ng-click="selectPlace()">{{place.place}}</a>
-      </li>
-      <li class="country-item" ng-if="availPlacesOperations.length == 0">
-        <em translate>No active operations found.</em>
-      </li>
-    </ul>
+<div ng-show="!isRouteLoading">
+  <div class="row">
+    <div class="active-countries col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3" ng-hide="selectedPlace.length">
+      <div class="back-link"><a class="btn btn-warning btn-sm" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a></div>
+      <h3 translate>Select a country</h3>
+      <ul class="active-countries-container list-group">
+        <li class="country-item list-group-item" ng-repeat="(pKey, place) in availPlacesOperations | orderBy: 'place'">
+          <a href="" ng-click="selectPlace()">{{place.place}}</a>
+        </li>
+        <li class="country-item" ng-if="availPlacesOperations.length == 0">
+          <em translate>No active operations found.</em>
+        </li>
+      </ul>
+    </div>
+
+    <div class="active-operations" ng-show="selectedPlace.length && !selectedOperation.length">
+      <div class="back-link"><a class="btn btn-warning btn-sm" href="" ng-click="selectedPlace = ''"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a></div>
+      <h3 translate>Select an operation</h3>
+      <ul class="active-operations-container list-group" ng-repeat="(pKey, place) in availPlacesOperations" ng-show="selectedPlace = '{{place.place}}'" data-place="{{place.place}}">
+        <li class="operation-item list-group-item" ng-repeat="(opid, operation) in place.operations">
+          <a href="" ng-click="selectedOperation = '{{opid}}'">{{operation.name}}</a>
+        </li>
+      </ul>
+    </div>
   </div>
 
-  <div class="active-operations" ng-show="selectedPlace.length && !selectedOperation.length">
-    <div class="back-link"><a class="btn btn-warning btn-sm" href="" ng-click="selectedPlace = ''"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a></div>
-    <h3 translate>Select an operation</h3>
-    <ul class="active-operations-container list-group" ng-repeat="(pKey, place) in availPlacesOperations" ng-show="selectedPlace = '{{place.place}}'" data-place="{{place.place}}">
-
-      <li class="operation-item list-group-item" ng-repeat="(opid, operation) in place.operations">
-        <a href="" ng-click="selectedOperation = '{{opid}}'">{{operation.name}}</a>
-      </li>
-    </ul>
-  </div>
-
-  <div class="update-profile" ng-show="selectedPlace.length && selectedOperation.length">
-    <div class="back-link"><a class="btn btn-warning btn-sm" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a></div>
-    <h3>{{profileName}} <span translate>Profile</span></h3>
-    <div class="profile-form-wrapper">
-      <form class="profile-form form-horizontal">
-        <div class="form-group">
-          <label class="control-label" for="nameGiven" translate>Given Name</label>
-          <div class="col-sm-12">
+  <form class="update-profile profile-form row" ng-show="selectedPlace.length && selectedOperation.length">
+    <div class="form-content col-xs-12 col-sm-8 col-md-9 pull-right" >
+      <h3>{{profileName}} <span translate>Profile</span></h3>
+      <div class="row alert-wrapper">
+        <div ng-repeat="(type, fields) in invalidFields" >
+          <div class="alert alert-danger col-xs-12" role="alert" ng-repeat="(index, value) in fields" ><span translate>Required value for</span> {{type}} <span translate>entry</span> {{ bumpIndex() }} <span translate>missing.</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group">
+            <label class="control-label" for="nameGiven" translate>Given Name</label>
             <input class="form-control" type="text" name="nameGiven" ng-model="profile.nameGiven" />
           </div>
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="nameFamily" translate>Family Name</label>
-          <div class="col-sm-12">
+          <div class="form-group">
+            <label class="control-label" for="nameFamily" translate>Family Name</label>
             <input class="form-control" type="text" name="nameFamily" ng-model="profile.nameFamily" />
           </div>
         </div>
-        <div class="form-group">
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
           <h4 translate>Organizational Information</h4>
-          <label class="control-label" for="jobtitle" translate>Title</label>
-          <div class="col-sm-12">
-            <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="organization[0][name]" translate>Organization</label>
-          <div class="col-sm-12">
+          <div class="form-group">
+            <label class="control-label" for="organization[0][name]" translate>Organization</label>
             <angucomplete-alt
               id="organization"
               placeholder="{{'Search for organizations'|translate}}"
@@ -69,105 +69,30 @@
               initial-value="{{profile.organization[0].name}}"
               input-class="form-control"></angucomplete-alt>
           </div>
-        </div>
-        <div class="form-group reveal" ng-repeat="bundle in profile.bundle track by $index" ng-if="profile.type === 'local'">
-          <label class="control-label" for="bundle[{{$index}}]" translate>Group</label>
-          <div class="col-sm-12">
-            <select class="form-control" name="bundle[{{$index}}]" ng-model="profile.bundle[$index]" ng-options="bundle.value as bundle.value for bundle in bundles | orderBy:'value'" ng-change="checkMultiFields()">
-              <option value=""></option>
-            </select>
-          </div>
-        </div>
 
-        <div class="form-group container operations" ng-show="userIsAdmin">
-          <h4 translate>Local Administration</h4>
-          <div class="row">
-            <label class="control-label" for="keyContact" translate>Key Contact</label>
-            <div class="col-sm-12">
-              <input type="checkbox" class="form-control" name="keyContact" ng-model="profile.keyContact" />
-            </div>
+          <div class="form-group">
+            <label class="control-label" for="jobtitle" translate>Title</label>
+            <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" />
           </div>
-        </div>
+          <div class="form-group">
+            <label class="control-label" for="bundle[{{profile.bundle.length - 1}}]" translate>Group</label>
 
-        <div class="form-group container operations" ng-show="userIsAdmin">
-          <h4 translate>Global Administration</h4>
-          <div class="row">
-            <label class="control-label" for="adminRoles" translate>Admin Privileges</label>
-            <div class="col-sm-12">
-              <select class="form-control" name="adminRoles" multiple ng-model="adminRoles" ng-options="adminRoleOption for adminRoleOption in adminRoleOptions">
-                <option value=""></option>
+            <div class="reveal btn-reveal" ng-repeat="bundle in profile.bundle track by $index" ng-if="profile.type === 'local'">
+              <select class="form-control" name="bundle[{{$index}}]" ng-model="profile.bundle[$index]" ng-options="bundle.value as bundle.value for bundle in bundles | orderBy:'value'" ng-blur="focus=0" focus-field="focus">
+                  <option value=""></option>
               </select>
-            </div>
-          </div>
-          <div class="row">
-            <label class="control-label" for="verified" translate>Verified Responder</label>
-            <div class="col-sm-12">
-              <input type="checkbox" class="form-control" name="verified" ng-model="verified" />
-            </div>
-          </div>
-        </div>
 
-        <div class="form-group container">
-          <h4 translate>Phone Numbers</h4>
-          <div class="reveal" ng-repeat="phone in profile.phone track by $index">
-            <div class="row">
-              <div class="col-sm-4">
-                <label class="control-label" for="phone[{{$index}}][type]" translate>Type</label>
-                <select class="form-control" ng-options="type for type in phoneTypes" name="phone[{{$index}}][type]" ng-model="profile.phone[$index].type">
-                  <option value="">-- <span translate>Choose Type</span> --</option>
-                </select>
-              </div>
-
-              <div class="col-sm-4">
-                <label class="control-label" for="phone[{{$index}}][number]" translate>Number</label>
-                <input ng-if="phone.type != 'Satellite'" ng-model="profile.phone[$index].number" international-phone-number auto-format="true" national-mode="false" responsive-dropdown="true" class="form-control" type="text" name="phone[{{$index}}][number]" ng-change="setCountryCode(); checkMultiFields()" />
-                <input ng-if="phone.type == 'Satellite'" ng-model="profile.phone[$index].number" class="form-control" type="text" name="phone[{{$index}}][number]" ng-change="checkMultiFields()" />
-                <input type="hidden" name="phone[{{$index}}][countryCode]" ng-model="profile.phone[$index].countryCode" />
-              </div>
+              <button ng-click="changeFieldEntries('bundle', $index, $last)" ng-class="{'add' : $last && checkForValidEntry('bundle', $index)}">
+                <i class="fa" ng-class="styleFieldEntries('bundle', $index, $last)"></i>
+              </button>
             </div>
           </div>
         </div>
 
-        <div class="form-group container">
-          <h4 translate>Email Addresses</h4>
-          <div class="reveal" ng-repeat="email in profile.email track by $index">
-            <div class="row">
-              <div class="col-sm-4">
-                <label class="control-label" for="email[{{$index}}][type]" translate>Type</label>
-                <select class="form-control" ng-options="type for type in emailTypes" name="email[{{$index}}][type]" ng-model="profile.email[$index].type">
-                  <option value="">-- <span translate>Choose Type</span> --</option>
-                </select>
-              </div>
-
-              <div class="col-sm-4">
-                <label class="control-label" for="email[{{$index}}][address]" translate>Email</label>
-                <input class="form-control" type="text" name="email[{{$index}}][address]" ng-model="profile.email[$index].address" ng-change="checkMultiFields()" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group container">
-          <h4 translate>VOIP</h4>
-          <div class="reveal" ng-repeat="voip in profile.voip track by $index">
-            <div class="row">
-              <div class="col-sm-4">
-                <label class="control-label" for="voip[{{$index}}][desc]" translate>Type</label>
-                <input class="form-control" type="text" name="voip[{{$index}}][type]" ng-model="profile.voip[$index].type" />
-              </div>
-
-              <div class="col-sm-4">
-                <label class="control-label" for="voip[{{$index}}][number]" translate>VOIP</label>
-                <input class="form-control" type="text" name="voip[{{$index}}][number]" ng-model="profile.voip[$index].number" ng-change="checkMultiFields()" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
+        <div class="col-sm-12 col-md-6">
           <h4 translate>Location</h4>
-          <label class="control-label" for="address[0][country]" translate>Country</label>
-          <div class="col-sm-12">
+          <div class="form-group">
+            <label class="control-label" for="address[0][country]" translate>Country</label>
             <angucomplete-alt
               id="country"
               placeholder="{{'Search for countries'|translate}}"
@@ -182,17 +107,14 @@
               initial-value="{{profile.address[0].country}}"
               input-class="form-control"></angucomplete-alt>
           </div>
-        </div>
 
-        <div cg-busy="regionsPromise">
-          <div class="form-group reveal" ng-show="regions.length == 0">
-            <div class="col-sm-12 col-sm-offset-2">
-              <span class="form-control-static alert alert-info" role="alert" translate>We are not currently taking note of administrative areas or localities in this country.</span>
+          <div cg-busy="regionsPromise">
+            <div class="form-group reveal" ng-show="regions.length == 0">
+
+              <p class="help-block">We are not currently taking note of administrative areas or localities in this country.</p>
             </div>
-          </div>
-          <div class="form-group reveal" ng-show="profile.address[0].country && regions.length">
-            <label class="control-label" for="address[0][administrative_area]" translate>State/Province/Region</label>
-            <div class="col-sm-12">
+            <div class="form-group reveal" ng-show="profile.address[0].country && regions.length">
+              <label class="control-label" for="address[0][administrative_area]" translate>State/Province/Region</label>
               <angucomplete-alt
                 id="admin_area"
                 pause="0"
@@ -207,11 +129,9 @@
                 input-class="form-control"></angucomplete-alt>
             </div>
           </div>
-        </div>
 
-        <div class="form-group reveal" ng-show="profile.address[0].country && regions.length && profile.address[0].administrative_area">
-          <label class="control-label" for="address[0][locality]" translate>City</label>
-          <div class="col-sm-12">
+          <div class="form-group reveal" ng-show="profile.address[0].country && regions.length && profile.address[0].administrative_area">
+            <label class="control-label" for="address[0][locality]" translate>City</label>
             <angucomplete-alt
               id="locality"
               pause="0"
@@ -225,30 +145,154 @@
               initial-value="{{profile.address[0].locality}}"
               input-class="form-control"></angucomplete-alt>
           </div>
-          </div>
         </div>
+      </div>
 
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <h4 translate>Phone Numbers</h4>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-xs-5"><label class="control-label" for="phone[{{ profile.phone.length - 1 }}][type]" translate>Type</label></div>
+              <div class="col-xs-7"><label class="control-label" for="phone[{{ profile.phone.length - 1 }}][number]" translate>Number</label></div>
+            </div>
+            <div class="reveal btn-reveal" ng-repeat="phone in profile.phone track by $index">
+              <div class="row form-elements-phone" ng-class="{'has-error': invalidFields.phone[$index]}">
+                <div class="col-xs-5">
+                  <select class="form-control" ng-options="type for type in phoneTypes" name="phone[{{$index}}][type]" ng-blur="removeFieldError('phone')" ng-model="profile.phone[$index].type" ng-class="{'disabled': !profile.phone[$index].type}">
+                    <option value=""><span translate>Choose Type *</span></option>
+                  </select>
+                </div>
 
-        <div class="form-group">
-          <h4 translate>Websites &amp; Social Media</h4>
-          <div class="reveal" ng-repeat="uri in profile.uri track by $index">
-            <label class="control-label" for="uri[{{$index}}]" translate>URL</label>
-            <div class="col-sm-12">
-              <input class="form-control" type="text" name="uri[{{$index}}]" ng-model="profile.uri[$index]" ng-change="checkMultiFields()" />
+                <div class="col-xs-7">
+                  <input ng-if="phone.type != 'Satellite'" ng-model="profile.phone[$index].number" international-phone-number auto-format="true"  national-mode="false" responsive-dropdown="true" preferred-countries="{{defaultPreferredCountryAbbr}}" class="form-control" type="text" name="phone[{{$index}}][number]"  ng-change="setCountryCode();" ng-blur="focus=0; removeFieldError('phone')" focus-field="focus"/>
+                  <input ng-if="phone.type == 'Satellite'" ng-model="profile.phone[$index].number" class="form-control" type="text" name="phone[{{$index}}][number]"/>
+                  <input type="hidden" name="phone[{{$index}}][countryCode]" ng-model="profile.phone[$index].countryCode" />
+
+                  <button ng-click="changeFieldEntries('phone', $index, $last)" ng-class="{'add' : $last && checkForValidEntry('phone', $index)}" >
+                    <i class="fa" ng-class="styleFieldEntries('phone', $index, $last)"></i>
+                  </button>
+                </div>
+                <span class="help-block col-xs-12" ng-show="invalidFields.phone[$index]" translate>Invalid entry. Both type and number are required.</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="form-group">
-          <h4 translate>Notes</h4>
-          <label class="control-label" for="notes" translate>Notes</label>
-          <div class="col-sm-12">
-            <textarea class="form-control" name="notes" ng-model="profile.notes" rows="2"></textarea>
+        <div class="col-sm-12 col-md-6">
+          <h4 translate>VOIP</h4>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-xs-5"><label class="control-label" for="voip[{{ profile.voip.length - 1 }}][type]" translate>Type</label></div>
+              <div class="col-xs-7"><label class="control-label" for="voip[{{ profile.voip.length - 1 }}][number]" translate>VOIP</label></div>
+            </div>
+            <div class="reveal btn-reveal" ng-repeat="voip in profile.voip track by $index">
+              <div class="row form-elements-voip" ng-class="{'has-error': invalidFields.voip[$index]}">
+                <div class="col-xs-5">
+                  <input class="form-control" placeholder="Type *" type="text" name="voip[{{$index}}][type]" ng-model="profile.voip[$index].type" ng-blur="removeFieldError('voip')"/>
+                </div>
+                <div class="col-xs-7">
+                  <input class="form-control" placeholder="VOIP" type="text" name="voip[{{$index}}][number]" ng-model="profile.voip[$index].number" ng-blur="focus=0; removeFieldError('voip')" focus-field="focus"/>
+                  <button ng-click="changeFieldEntries('voip', $index, $last)" ng-class="{'add' : $last && checkForValidEntry('voip', $index)}" >
+                    <i class="fa" ng-class="styleFieldEntries('voip', $index, $last)"></i>
+                  </button>
+                </div>
+                <span class="help-block col-xs-12" ng-show="invalidFields.voip[$index]" translate>Invalid entry. Both type and VOIP are required.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <h4 translate>Email Addresses</h4>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-xs-5"><label class="control-label" for="email[{{ profile.email.length - 1 }}][type]" translate>Type</label></div>
+              <div class="col-xs-7"><label class="control-label" for="email[{{ profile.email.length - 1 }}][address]"  translate>Email</label></div>
+            </div>
+            <div class="reveal btn-reveal" ng-repeat="email in profile.email track by $index">
+              <div class="row form-elements-email" ng-class="{'has-error': invalidFields.email[$index]}">
+                <div class="col-xs-5">
+                  <select class="form-control" ng-options="type for type in emailTypes" name="email[{{$index}}][type]" ng-model="profile.email[$index].type" ng-class="{'disabled': !profile.phone[$index].type}">
+                    <option value=""><span translate>Choose Type</span></option>
+                  </select>
+                </div>
+                <div class="col-xs-7">
+                  <input class="form-control" placeholder="Address" type="text"  name="email[{{$index}}][address]" ng-model="profile.email[$index].address" ng-blur="focus=0" focus-field="focus"/>
+
+                  <button ng-click="changeFieldEntries('email', $index, $last)" ng-class="{'add' : $last && checkForValidEntry('email', $index)}">
+                    <i class="fa" ng-class="styleFieldEntries('email', $index, $last)"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <input class="btn btn-primary btn-lg" type="submit" ng-click="submitProfile()" value="{{submitText}}" />
-      </form>
+        <div class="col-sm-12 col-md-6">
+          <h4 translate>Websites &amp; Social Media</h4>
+          <div class="form-group">
+            <label class="control-label" for="uri[{{ profile.uri.length - 1 }}]" translate>URL</label>
+            <div class="reveal btn-reveal" ng-repeat="uri in profile.uri track by $index">
+              <input class="form-control" type="text" name="uri[{{$index}}]" ng-model="profile.uri[$index]" ng-blur="focus=0" focus-field="focus"/>
+              <button ng-click="changeFieldEntries('uri', $index, $last)" ng-class="{'add' : $last && checkForValidEntry('uri', $index)}">
+                <i class="fa" ng-class="styleFieldEntries('uri', $index, $last)"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <h4 translate>Notes</h4>
+          <div class="form-group">
+            <label class="control-label" for="notes" translate>Notes</label>
+            <textarea class="form-control" name="notes" ng-model="profile.notes" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12  col-md-6 operations" ng-show="userIsAdmin">
+          <h4 translate>Local Administration</h4>
+          <div class="checkbox">
+            <label for="keyContact" ng-click="profile.keyContact = !profile.keyContact"><input type="checkbox" name="keyContact" ng-model="profile.keyContact" /><span translate>Key Contact</span></label>
+          </div>
+        </div>
+
+        <div class="col-sm-12  col-md-6 operations" ng-show="userIsAdmin">
+          <h4 translate>Global Administration</h4>
+          <div class="form-group">
+            <label class="control-label" for="adminRoles" translate>Admin Privileges</label>
+            <select class="form-control" name="adminRoles" multiple ng-model="adminRoles" ng-options="adminRoleOption for adminRoleOption in adminRoleOptions">
+              <option value=""></option>
+            </select>
+          </div>
+          <div class="checkbox">
+            <label for="verified" ng-click="verified = !verified"><input type="checkbox" name="verified" ng-model="verified" /><span translate>Verified Responder</span></label>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+
+    <div class="sidebar-left" ng-class="{'show-options': profileOptions}">
+      <div ng-show="!isRouteLoading">
+        <div class="visible-xs">
+          <div class="bottom-fixed-btn" role="presentation">
+            <a href ng-click="profileOptions = !profileOptions"><div class="bottom-fixed-btn__arrow"></div>Profile Options</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
+        <div class="actions">
+          <a class="btn btn-default btn-lg btn-block" href="{{logoutPath}}" translate>Logout</a>
+          <a class="btn btn-default btn-lg btn-block" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a>
+          <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitProfile()" value="{{submitText}}" />
+        </div>
+      </div>
+    </div>
+  </form>
 </div>

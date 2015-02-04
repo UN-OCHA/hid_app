@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-01-29T21:29:24.813Z\n"
+"Project-Id-Version: 2015-02-03T20:39:32.534Z\n"
 
 #: src/partials/header.html
 #: src/partials/index.html
@@ -43,6 +43,10 @@ msgid "Choose Type"
 msgstr ""
 
 #: src/partials/profile.html
+msgid "Choose Type *"
+msgstr ""
+
+#: src/partials/profile.html
 msgid "City"
 msgstr ""
 
@@ -56,10 +60,6 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "Contact List"
-msgstr ""
-
-#: src/partials/list.html
-msgid "Contact List Filters"
 msgstr ""
 
 #: src/partials/profile.html
@@ -136,6 +136,14 @@ msgstr ""
 msgid "Humanitarian.ID: Responders"
 msgstr ""
 
+#: src/partials/profile.html
+msgid "Invalid entry. Both type and VOIP are required."
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Invalid entry. Both type and number are required."
+msgstr ""
+
 #: src/partials/contact.html
 msgid "Job Title"
 msgstr ""
@@ -161,6 +169,7 @@ msgstr ""
 
 #: src/partials/dashboard.html
 #: src/partials/header.html
+#: src/partials/profile.html
 msgid "Logout"
 msgstr ""
 
@@ -220,6 +229,10 @@ msgstr ""
 
 #: src/partials/index.html
 msgid "Register"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Required value for"
 msgstr ""
 
 #: src/partials/list.html
@@ -286,10 +299,6 @@ msgstr ""
 msgid "Verified User"
 msgstr ""
 
-#: src/partials/profile.html
-msgid "We are not currently taking note of administrative areas or localities in this country."
-msgstr ""
-
 #: src/partials/contact.html
 msgid "Website/Social Media"
 msgstr ""
@@ -302,8 +311,16 @@ msgstr ""
 msgid "Welcome"
 msgstr ""
 
+#: src/partials/profile.html
+msgid "entry"
+msgstr ""
+
 #: src/partials/contact.html
 msgid "key contact"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "missing."
 msgstr ""
 
 #: src/partials/contact.html
