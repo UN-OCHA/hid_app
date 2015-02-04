@@ -9263,6 +9263,10 @@ label[for=keyContact] .fa {
 .angucomplete-searching::-webkit-input-placeholder {
   color: #afafaf;
 }
+.form-control.disabled,
+.angucomplete-searching.disabled {
+  color: #afafaf;
+}
 
 .form-elements-phone .form-control,
 .form-elements-email .form-control,
@@ -9305,6 +9309,16 @@ label[for=keyContact] .fa {
 .form-elements-voip .col-xs-7 .form-control {
   border-left: none;
   text-align: right;
+}
+.form-elements-phone.has-error .form-control,
+.form-elements-email.has-error .form-control,
+.form-elements-voip.has-error .form-control {
+  border-color: #B8303E;
+}
+.form-elements-phone.has-error .col-xs-5:before,
+.form-elements-email.has-error .col-xs-5:before,
+.form-elements-voip.has-error .col-xs-5:before {
+  border-left: 1px solid #B8303E;
 }
 
 .btn-reveal {
