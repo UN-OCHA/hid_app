@@ -340,7 +340,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
     });
   }
-
   $scope.setCountryCode = function() {
     var countryInfo = jQuery('input[name="phone[' + this.$index + '][number]"]').intlTelInput('getSelectedCountryData');
     if (countryInfo && countryInfo.hasOwnProperty('dialCode')) {
@@ -592,6 +591,15 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
+  $scope.back = function () {
+    if (history.length) {
+      history.back();
+    }
+    else {
+      $location.path('/dashboard');
+    }
+  };
+
   $scope.submitProfile = function () {
     // Checks for incomplete entries.
     if ($scope.checkAllMultiRequireFields()) {
@@ -624,7 +632,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
       profileService.saveContact(profile).then(function(data) {
         if (data && data.status && data.status === 'ok') {
-          $location.path('/dashboard');
+          //$location.path('/dashboard');
+          $scope.$parent.$back();
           profileService.clearData();
         }
         else {
@@ -724,13 +733,16 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
   };
 });
 
-app.controller("ListCtrl", function($scope, $route, $routeParams, profileService, userData, placesOperations, gettextCatalog) {
+app.controller("ListCtrl", function($scope, $route, $routeParams, $location, profileService, userData, placesOperations, gettextCatalog) {
+  var searchKeys = ['bundle','keyContact','role','text','verified'];
+
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
   $scope.contacts = [];
   $scope.placesOperations = placesOperations;
   $scope.bundles = [];
   $scope.contactsPromise;
+  $scope.query = $location.search();
 
   if ($scope.locationId !== 'global') {
     for (var place in $scope.placesOperations) {
@@ -745,8 +757,45 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
     $scope.location = gettextCatalog.getString('Global');
   }
 
+  $scope.resetSearch = function () {
+    for (var i in searchKeys) {
+      $scope.query[searchKeys[i]] = null;
+    }
+    // Submit search after clearing query to show all.
+    $scope.submitSearch();
+  };
 
-  $scope.submitSearch = function () {
+  $scope.$on('breakpointChange', function(event, breakpoint, oldClass) {
+    if ($scope.breakpoint.class !== 'smallscreen' && Object.getOwnPropertyNames($scope.query).length !== 0) {
+      $scope.submitSearch();
+    }
+  });
+
+  //$scope.resetSearch();
+
+  // Sets sets url params thru $location.search().
+  $scope.submitSearch = function(){
+    var query = $scope.query,
+        sObj = {};
+
+    for (var i in searchKeys) {
+      if (query[searchKeys[i]]) {
+        sObj[searchKeys[i]] = query[searchKeys[i]]
+      }
+    }
+    // Close sidebar on mobile.
+    sidebarOptions = false;
+
+    $location.search(sObj);
+  }
+
+  // Fire off search if larger screen size.
+  if ($scope.breakpoint.class !== 'smallscreen' || Object.getOwnPropertyNames($scope.query).length !== 0) {
+    createContactList();
+  }
+
+  // Builds the list of contacts.
+  function createContactList() {
     var query = $scope.query;
     if ($scope.locationId === 'global') {
       query.type = 'global';
@@ -758,35 +807,12 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
     query.verified = query.verified ? true : null;
     query.keyContact = query.keyContact ? true : null;
     query.status = 1;
+
     $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         $scope.contacts = data.contacts || [];
       }
     });
-    sidebarOptions = false;
-  };
-
-  $scope.resetSearch = function () {
-    $scope.query = {
-      text: '',
-      bundle: '',
-      role: ''
-    };
-    // Submit search after clearing query to show all.
-    $scope.submitSearch();
-  };
-
-  $scope.$on('breakpointChange', function(event, breakpoint, oldClass) {
-    if ($scope.breakpoint.class !== 'smallscreen' && !$scope.contacts.length) {
-      $scope.submitSearch();
-    }
-  });
-
-  $scope.resetSearch();
-
-  // Fire off search if larger screen size.
-  if ($scope.breakpoint.class !== 'smallscreen') {
-    $scope.submitSearch();
   }
 
   // Converts object to a sortable array.
@@ -797,6 +823,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
     }, listArray);
     return listArray;
   }
+
 });
 
 app.config(function($routeProvider, $locationProvider) {

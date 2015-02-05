@@ -9618,7 +9618,7 @@ h3 {
   width: 12px;
   height: 12px;
   font-size: 19px;
-  line-height: 24;
+  line-height: 24px;
   padding-left: 2px;
 }
 
@@ -9626,9 +9626,9 @@ h3 {
   float: left;
   width: 24px;
   height: 24px;
-  font-size: 54px;
-  line-height: 48px;
-  padding-left: 2px;
+  font-size: 52px;
+  line-height: 56px;
+  padding-left: 1px;
   margin-right: 6px;
 }
 
