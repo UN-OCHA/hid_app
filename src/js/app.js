@@ -1264,7 +1264,8 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
 
     promise = $http({
       method: "get",
-      url: contactsId.profilesBaseUrl + "/v0/app/data"
+      url: contactsId.profilesBaseUrl + "/v0/app/data",
+      params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
     })
     .then(handleSuccess, handleError).then(function(data) {
       return data.roles;
