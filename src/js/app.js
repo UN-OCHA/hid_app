@@ -668,10 +668,10 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         $scope.defaultPreferredCountryAbbr.push(countryMatch[i].iso2)
       };
       // Converts array to a string.
-      $scope.defaultPreferredCountryAbbr = $scope.defaultPreferredCountryAbbr.join(', ') || "us";
+      $scope.defaultPreferredCountryAbbr = $scope.defaultPreferredCountryAbbr.join(', ') || "ch";
     }
     else {
-      $scope.defaultPreferredCountryAbbr = "us";
+      $scope.defaultPreferredCountryAbbr = "ch";
     }
   }
 
