@@ -1,9 +1,9 @@
 
 (function($, angular, contactsId) {
 
-  var jso,
-    app,
-    loginRedirect = '';
+var jso,
+  app,
+  loginRedirect = '';
 
 // Initialize JSO
 jso = new JSO({
@@ -14,9 +14,8 @@ jso = new JSO({
   scopes: {require: ['profile'], request: ['profile']}
 });
 
-jso.callback(null, function (token) {
-//  alert('callback have token ', token);
-});
+// Run JSO callback to catch an authentication token, if present.
+jso.callback(null, function (token) {});
 
 // Initialize ng
 app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'gettext', 'angucomplete-alt', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber']);
@@ -203,13 +202,13 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, gettextCatalog) {
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, roles, gettextCatalog) {
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.invalidFields = {};
-  $scope.adminRoleOptions = ['admin', 'manager'];
+  $scope.adminRoleOptions = roles;
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
   var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': []};
@@ -882,6 +881,9 @@ app.config(function($routeProvider, $locationProvider) {
       },
       countries : function(profileService) {
         return profileService.getCountries();
+      },
+      roles : function(profileService) {
+        return profileService.getRoles();
       }
     }
   }).
@@ -969,6 +971,9 @@ app.config(function($routeProvider, $locationProvider) {
       },
       countries : function(profileService) {
         return profileService.getCountries();
+      },
+      roles : function(profileService) {
+        return profileService.getRoles();
       }
     }
   }).
@@ -1088,7 +1093,8 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     saveContact: saveContact,
     hasRole: hasRole,
     getCountries: getCountries,
-    getAdminArea: getAdminArea
+    getAdminArea: getAdminArea,
+    getRoles: getRoles
   });
 
   // Get app data.
@@ -1248,6 +1254,21 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
         }, regionData);
       }
       return regionData;
+    });
+
+    return promise;
+  }
+
+  function getRoles() {
+    var promise;
+
+    promise = $http({
+      method: "get",
+      url: contactsId.profilesBaseUrl + "/v0/app/data",
+      params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
+    })
+    .then(handleSuccess, handleError).then(function(data) {
+      return data.roles;
     });
 
     return promise;
