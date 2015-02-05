@@ -632,8 +632,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
       profileService.saveContact(profile).then(function(data) {
         if (data && data.status && data.status === 'ok') {
-          //$location.path('/dashboard');
-          $scope.$parent.$back();
+          $scope.back();
           profileService.clearData();
         }
         else {
