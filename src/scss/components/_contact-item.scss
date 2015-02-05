@@ -1,18 +1,17 @@
 .contact-item {
   position: relative;
-  display: inline-block;
-  padding: 3px 15px 3px 15px;
   font-size: 14px;
   font-weight: bold;
-  line-height: 24px;
+  line-height: 22px;
   color: $primary-color-2;
 
-  @media(min-width: 768px) {
-    font-size: 12px;
-  }
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-  @media(min-width: 980px) {
-    padding: 11px 15px 0px 15px;
+  @media(min-width: $screen-md) {
+    font-size: 12px;
+    line-height: 45px;
   }
 
   &:after {
@@ -22,49 +21,32 @@
 }
 
 .contact-item--name {
-  min-width: 180px;
-  height: 45px;
   overflow: hidden;
-
+  margin-bottom: 5px;
   a {
     color: $primary-color-1;
-    display: inline-block;
-    margin: 2px 8px 0 0;
-    vertical-align: top;
+    float: left;
+  }
+  @media(min-width: $screen-md) {
+    margin-bottom: 0;
   }
 }
 
 .contact-item--jobtitle {
-  min-width: 180px;
-  clear: both;
-  display: block;
-
-  @media(min-width: 980px) {
-    display: inline-block;
-    vertical-align: top;
-  }
 }
 
 .contact-item--organization {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-
-  @media(min-width: 980px) {
-    min-width: 180px;
-    position: relative;
-    right: auto;
-    bottom: auto;
-    vertical-align: top;
+  text-align: right;
+  @media(min-width: $screen-md) {
+    text-align: left;
   }
 }
 
 .contact-item--bundle {
   display: none;
 
-  @media(min-width: 768px) {
-    display: inline-block;
-    vertical-align: top;
+  @media(min-width: $screen-md) {
+    display: block;
   }
 }
 
@@ -74,33 +56,44 @@
 .contact-item__markers {
   width: 20px;
   display: inline-block;
-  height: 40px;
-
-  @media(min-width: 980px) {
-    margin-top: -6px;
+  float: left;
+  margin-left: 10px;
+  @media(min-width: $screen-md) {
+    margin-top: 5px;
+    height: 40px;
   }
 }
 
 .contact-item__verified {
   height: 22px;
   display: block;
-  font-size: 18px;
+  line-height: 24px;
   color: lighten($primary-color-2, 10);
+
+  i.fa {
+    font-size: 20px;
+  }
 }
 
 .contact-item__key-contact {
   display: block;
+  float: left;
   background-color: $primary-color-1;
   border-radius: 50%;
   width: 17px;
   height: 17px;
   color: white;
   font-size: 30px;
-  line-height: 35px;
+  line-height: 36px;
   font-weight: normal;
-  display: block;
   padding-left: 2px;
   font-family: helvetica;
+  margin: 2px 5px 0 0;
+  @media(min-width: $screen-md) {
+    float: none;
+    margin: 0;
+  }
+
 }
 
 .key-contact-filter-use {
@@ -109,7 +102,7 @@
   width: 12px;
   height: 12px;
   font-size: 19px;
-  line-height: 24;
+  line-height: 24px;
   padding-left: 2px;
 }
 

@@ -744,6 +744,9 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
     $scope.location = gettextCatalog.getString('Global');
   }
 
+  $scope.contactItemClass = function () {
+    console.log(this)
+  }
 
   $scope.submitSearch = function () {
     var query = $scope.query;

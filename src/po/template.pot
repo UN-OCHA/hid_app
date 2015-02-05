@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-02-04T20:04:23.514Z\n"
+"Project-Id-Version: 2015-02-05T20:48:02.339Z\n"
 
 #: src/partials/header.html
 #: src/partials/index.html
