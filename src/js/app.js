@@ -1,9 +1,9 @@
 
 (function($, angular, contactsId) {
 
-  var jso,
-    app,
-    loginRedirect = '';
+var jso,
+  app,
+  loginRedirect = '';
 
 // Initialize JSO
 jso = new JSO({
@@ -14,9 +14,8 @@ jso = new JSO({
   scopes: {require: ['profile'], request: ['profile']}
 });
 
-jso.callback(null, function (token) {
-//  alert('callback have token ', token);
-});
+// Run JSO callback to catch an authentication token, if present.
+jso.callback(null, function (token) {});
 
 // Initialize ng
 app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'gettext', 'angucomplete-alt', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber']);
@@ -203,13 +202,13 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, profileService, authService, placesOperations, profileData, countries, gettextCatalog) {
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, roles, gettextCatalog) {
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.invalidFields = {};
-  $scope.adminRoleOptions = ['admin', 'manager'];
+  $scope.adminRoleOptions = roles;
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
   var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': []};
@@ -267,12 +266,18 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   else {
     $scope.selectedPlace = 'none';
     $scope.selectedOperation = 'none';
+    setPreferedCountries();
   }
 
   // Creates an array to be used as options for group select
   $scope.$watch("selectedOperation", function(newValue, oldValue) {
     if (newValue !== oldValue && $scope.selectedPlace.length && $scope.selectedOperation.length) {
       setBundles();
+
+      $scope.profileName = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].name;
+      setPreferedCountries();
+      // Need timeout to fix dropdown width issues.
+      $timeout($scope.checkMultiFields, 100);
     }
   });
 
@@ -286,6 +291,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
           $scope.selectedPlace = place;
           $scope.selectedOperation = $scope.profile.locationId;
           setBundles();
+          setPreferedCountries();
           break;
         }
       }
@@ -333,27 +339,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
     });
   }
-
-  // If profile is local, set preferred county code to checkin location.
-  if ($scope.profile.type === 'local') {
-    $scope.defaultPreferredCountryAbbr = [];
-    var match, countryMatch;
-
-    match = $scope.selectedPlace.toUpperCase();
-    countryMatch = $.fn.intlTelInput.getCountryData().filter(function (el) {
-      // Returns country data that is similar to selectedPlace.
-      return el.name.toUpperCase().match(match);
-    });
-    for (var i in countryMatch) {
-      $scope.defaultPreferredCountryAbbr.push(countryMatch[i].iso2)
-    };
-    // Converts array to a string.
-    $scope.defaultPreferredCountryAbbr = $scope.defaultPreferredCountryAbbr.join(', ') || "us";
-  }
-  else {
-    $scope.defaultPreferredCountryAbbr = "us";
-  }
-
 
   $scope.setCountryCode = function() {
     var countryInfo = jQuery('input[name="phone[' + this.$index + '][number]"]').intlTelInput('getSelectedCountryData');
@@ -449,8 +434,10 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
     }
   };
-
-  $scope.checkMultiFields();
+  // Add extra blank fields when editing a profile
+  if (!checkinFlow) {
+    $scope.checkMultiFields();
+  }
 
   $scope.checkForValidEntry = function(field, index){
     return (multiFields.hasOwnProperty(field)
@@ -666,6 +653,28 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.bundles = listObjectToArray(bundles);
   }
 
+  // If profile is local, set preferred county code to checkin location.
+  function setPreferedCountries() {
+    if ($scope.profile.type === 'local') {
+      $scope.defaultPreferredCountryAbbr = [];
+      var match, countryMatch;
+
+      match = $scope.selectedPlace.toUpperCase();
+      countryMatch = $.fn.intlTelInput.getCountryData().filter(function (el) {
+        // Returns country data that is similar to selectedPlace.
+        return el.name.toUpperCase().match(match);
+      });
+      for (var i in countryMatch) {
+        $scope.defaultPreferredCountryAbbr.push(countryMatch[i].iso2)
+      };
+      // Converts array to a string.
+      $scope.defaultPreferredCountryAbbr = $scope.defaultPreferredCountryAbbr.join(', ') || "us";
+    }
+    else {
+      $scope.defaultPreferredCountryAbbr = "us";
+    }
+  }
+
 });
 
 // Trigger focus on field.
@@ -872,6 +881,9 @@ app.config(function($routeProvider, $locationProvider) {
       },
       countries : function(profileService) {
         return profileService.getCountries();
+      },
+      roles : function(profileService) {
+        return profileService.getRoles();
       }
     }
   }).
@@ -959,6 +971,9 @@ app.config(function($routeProvider, $locationProvider) {
       },
       countries : function(profileService) {
         return profileService.getCountries();
+      },
+      roles : function(profileService) {
+        return profileService.getRoles();
       }
     }
   }).
@@ -1078,7 +1093,8 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     saveContact: saveContact,
     hasRole: hasRole,
     getCountries: getCountries,
-    getAdminArea: getAdminArea
+    getAdminArea: getAdminArea,
+    getRoles: getRoles
   });
 
   // Get app data.
@@ -1238,6 +1254,21 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
         }, regionData);
       }
       return regionData;
+    });
+
+    return promise;
+  }
+
+  function getRoles() {
+    var promise;
+
+    promise = $http({
+      method: "get",
+      url: contactsId.profilesBaseUrl + "/v0/app/data",
+      params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
+    })
+    .then(handleSuccess, handleError).then(function(data) {
+      return data.roles;
     });
 
     return promise;

@@ -267,7 +267,7 @@
           <h4 translate>Global Administration</h4>
           <div class="form-group">
             <label class="control-label" for="adminRoles" translate>Admin Privileges</label>
-            <select class="form-control" name="adminRoles" multiple ng-model="adminRoles" ng-options="adminRoleOption for adminRoleOption in adminRoleOptions">
+            <select class="form-control" name="adminRoles" multiple ng-model="adminRoles" ng-options="role.id as role.name for role in adminRoleOptions">
               <option value=""></option>
             </select>
           </div>
