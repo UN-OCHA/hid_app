@@ -245,9 +245,10 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         }
       }
     }
-    // Convert list into an array that can be sorted
-    $scope.availPlacesOperations = listObjectToArray(availPlacesOperations, 'place', 'operations');
   }
+
+  // Convert list into an array that can be sorted
+  $scope.availPlacesOperations = listObjectToArray(availPlacesOperations, 'place', 'operations');
 
   // When checking in to a new crisis, load the user's global profile to clone.
   if (checkinFlow) {
