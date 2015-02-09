@@ -9448,7 +9448,7 @@ h3 {
 }
 
 .slide {
-  margin-left: 0;
+  margin-left: -15px;
   -webkit-transition: 0.2s ease-out all;
   transition: 0.2s ease-out all;
 }
@@ -9500,6 +9500,10 @@ h3 {
   border-color: transparent transparent #54b1c8 transparent;
   top: -28px;
   margin: 0 auto;
+}
+
+.show-options .sidebar-left .bottom-fixed-btn .bottom-fixed-btn__arrow {
+  display: none;
 }
 
 .contact-item {
@@ -10071,6 +10075,10 @@ h3 {
   width: 109px;
   line-height: 42px;
   border-radius: 0;
+  margin-top: -15px;
+  margin-bottom: -15px;
+  padding-top: 21px;
+  padding-bottom: 21px;
 }
 @media (min-width: 768px) {
   .profile-item .btn-warning.slide {
@@ -10275,20 +10283,26 @@ h3 {
 .sidebar-left .actions-wrapper .actions .btn-block {
   margin-top: 15px;
 }
-.sidebar-left.show-options {
+
+.show-options {
+  overflow-y: hidden;
+  height: 0px;
+}
+.show-options .sidebar-left {
   box-shadow: 0px -10px 10px 0px rgba(0, 0, 0, 0.1);
+  bottom: auto;
+  top: 68px;
 }
 @media (min-width: 768px) {
-  .sidebar-left.show-options {
+  .show-options .sidebar-left {
     box-shadow: none;
   }
 }
-.sidebar-left.show-options .actions-wrapper {
+.show-options .sidebar-left .actions-wrapper {
   display: block;
-  margin-bottom: -118px;
 }
 @media (min-width: 768px) {
-  .sidebar-left.show-options .actions-wrapper {
+  .show-options .sidebar-left .actions-wrapper {
     height: auto;
     margin-bottom: 0px;
   }
