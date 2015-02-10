@@ -29,7 +29,7 @@
   </div>
 
 
-  <form class="update-profile profile-form row" ng-show="selectedPlace.length && selectedOperation.length">
+  <form class="update-profile profile-form row" ng-show="selectedPlace.length && selectedOperation.length" ng-class="{'show-options': profileOptions}">
     <div class="form-content col-xs-12 col-sm-8 col-md-9 pull-right" >
       <h3>{{profileName}} <span translate>Profile</span></h3>
       <div class="row alert-wrapper">
@@ -279,7 +279,7 @@
       </div>
     </div>
 
-    <div class="sidebar-left" ng-class="{'show-options': profileOptions}">
+    <div class="sidebar-left">
       <div ng-show="!isRouteLoading">
         <div class="visible-xs">
           <div class="bottom-fixed-btn" role="presentation">

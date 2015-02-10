@@ -764,14 +764,6 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, pro
     $scope.submitSearch();
   };
 
-  $scope.$on('breakpointChange', function(event, breakpoint, oldClass) {
-    if ($scope.breakpoint.class !== 'smallscreen' && Object.getOwnPropertyNames($scope.query).length !== 0) {
-      $scope.submitSearch();
-    }
-  });
-
-  //$scope.resetSearch();
-
   // Sets sets url params thru $location.search().
   $scope.submitSearch = function(){
     var query = $scope.query,
@@ -788,14 +780,12 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, pro
     $location.search(sObj);
   }
 
-  // Fire off search if larger screen size.
-  if ($scope.breakpoint.class !== 'smallscreen' || Object.getOwnPropertyNames($scope.query).length !== 0) {
-    createContactList();
-  }
+  createContactList();
 
   // Builds the list of contacts.
   function createContactList() {
     var query = $scope.query;
+
     if ($scope.locationId === 'global') {
       query.type = 'global';
     }
