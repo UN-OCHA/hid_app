@@ -22,7 +22,9 @@
     "angular-busy": "~4.1.1",
     "angular-spinkit": "~0.3.3",
     "angular-gettext": "~1.1.4",
+    "angular-ui-select": "~0.9.6",
     "angucomplete-alt": "~0.0.31",
-    "intl-tel-input": "~3.7.1"
+    "intl-tel-input": "~3.7.1",
+    "selectize": "~0.8.5"
   }
 }

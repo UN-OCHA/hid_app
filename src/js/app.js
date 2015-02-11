@@ -18,7 +18,7 @@ jso = new JSO({
 jso.callback(null, function (token) {});
 
 // Initialize ng
-app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'gettext', 'angucomplete-alt', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber']);
+app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'angucomplete-alt', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber']);
 
 app.value('cgBusyDefaults',{
   message:'Loading...',
@@ -732,22 +732,25 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
   };
 });
 
-app.controller("ListCtrl", function($scope, $route, $routeParams, $location, profileService, userData, placesOperations, gettextCatalog) {
-  var searchKeys = ['bundle','keyContact','role','text','verified'];
+app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, profileService, userData, placesOperations, gettextCatalog) {
+  var searchKeys = ['bundle','keyContact', 'organization.name','role','text','verified'];
 
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
   $scope.contacts = [];
   $scope.placesOperations = placesOperations;
   $scope.bundles = [];
+  $scope.organizations = [];
   $scope.contactsPromise;
   $scope.query = $location.search();
+  $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
 
   if ($scope.locationId !== 'global') {
     for (var place in $scope.placesOperations) {
       if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.locationId)) {
         $scope.location = place;
         $scope.bundles = listObjectToArray($scope.placesOperations[place][$scope.locationId].bundles);
+        $scope.bundles.unshift({action:'clear', value:"", alt:'Groups'});
         break;
       }
     }
@@ -780,12 +783,42 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, pro
     $location.search(sObj);
   }
 
+  $scope.refreshOrganization = function(select, lengthReq) {
+    var clearOption = {action:'clear', name:"", alt:'Organizations'};
+
+    if (select.search.length > (lengthReq || 0)) {
+      $http.get($scope.hrinfoBaseUrl + '/hid/organizations/autocomplete/' + select.search)
+        .then(function(response) {
+          $scope.organizations = [];
+          angular.forEach(response.data, function(value, key) {
+            this.push({'name': value, 'remote_id': key});
+          }, $scope.organizations);
+          if ($scope.organizations.length) {
+            $scope.organizations.unshift(clearOption);
+          }
+        });
+    }
+    else {
+      $scope.organizations = [];
+      if (typeof $scope.query['organization.name'] !== 'undefined' && $scope.query['organization.name'].length) {
+        $scope.organizations.push(clearOption);
+      }
+    }
+  };
+  $scope.onSelect = function(item, qProp) {
+    if (item.action === "clear") {
+      $scope.query[qProp] = undefined;
+    }
+  }
+
   createContactList();
+  if ($scope.query['organization.name']){
+    $scope.refreshOrganization({search:$scope.query['organization.name']})
+  }
 
   // Builds the list of contacts.
   function createContactList() {
     var query = $scope.query;
-
     if ($scope.locationId === 'global') {
       query.type = 'global';
     }
@@ -1196,6 +1229,7 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   // Get contacts that match specified parameters.
   function getContacts(terms) {
     terms.access_token = authService.getAccessToken();
+
     var request = $http({
       method: "get",
       url: contactsId.profilesBaseUrl + "/v0/contact/view",

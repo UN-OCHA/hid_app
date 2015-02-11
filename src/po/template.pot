@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-02-06T15:54:05.554Z\n"
+"Project-Id-Version: 2015-02-09T19:56:47.401Z\n"
 
 #: src/partials/header.html
 #: src/partials/index.html
@@ -197,6 +197,7 @@ msgstr ""
 msgid "No profiles found."
 msgstr ""
 
+#: src/partials/list.html
 #: src/partials/profile.html
 msgid "No results found."
 msgstr ""
@@ -215,6 +216,7 @@ msgid "Number"
 msgstr ""
 
 #: src/partials/contact.html
+#: src/partials/list.html
 #: src/partials/profile.html
 msgid "Organization"
 msgstr ""
@@ -259,10 +261,12 @@ msgstr ""
 msgid "Search for countries"
 msgstr ""
 
+#: src/partials/list.html
 #: src/partials/profile.html
 msgid "Search for organizations"
 msgstr ""
 
+#: src/partials/list.html
 #: src/partials/profile.html
 msgid "Searching..."
 msgstr ""
