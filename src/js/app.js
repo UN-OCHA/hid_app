@@ -219,7 +219,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   checkinFlow = pathParams[1] === 'checkin',
   accountData = authService.getAccountData();
   $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
-  $scope.selectedProtectedRoles = profileData.contact.protectedRoles ; //(profileData.profile && profileData.profile.protectedRoles && profileData.profile.protectedRoles.length) ? profileData.profile.protectedRoles : [];
+  $scope.selectedProtectedRoles = (profileData.contact && profileData.contact.protectedRoles && profileData.contact.protectedRoles.length) ? profileData.contact.protectedRoles : [];
 
   $scope.userIsAdmin = profileService.hasRole('admin');
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
