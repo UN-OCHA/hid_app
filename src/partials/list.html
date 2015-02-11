@@ -52,7 +52,7 @@
     <div class="actions-wrapper col-xs-12 col-sm-4 col-md-3">
       <form class="filter-form actions">
 
-        <div class="form-group">
+        <div class="form-group" ng-show="bundles.length">
           <label class="control-label element-invisible" for="bundle" translate>Group</label>
           <ui-select ng-model="query.bundle" theme="selectize" class="form-control"  name="organization" on-select="onSelect($item, 'bundle')">
             <ui-select-match placeholder="{{'Groups'|translate}}">{{$select.selected.value}}</ui-select-match>
