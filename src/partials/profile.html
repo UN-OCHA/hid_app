@@ -246,15 +246,31 @@
         </div>
       </div>
 
+  <!-- Does "Notes" section within "Notes" section make sense? -->
+
       <div class="row">
         <div class="col-sm-12">
           <h4 translate>Notes</h4>
           <div class="form-group">
-            <label class="control-label" for="notes" translate>Notes</label>
             <textarea class="form-control" name="notes" ng-model="profile.notes" rows="2"></textarea>
           </div>
         </div>
       </div>
+
+
+
+      <div class="row">
+        <div class="col-sm-12" ng-show="userIsAdmin">
+          <h4 translate>Protected Roles</h4>
+          <div class="form-group">
+            <select class="form-control" name="selectedProtectedRoles" multiple ng-model="selectedProtectedRoles" ng-options="protectedRole.id as protectedRole.name for protectedRole in protectedRoles">
+              <option value=""></option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+<!-- Should we put a new section for all "Admin" privliges? -->
 
       <div class="row">
         <div class="col-sm-12  col-md-6 operations" ng-show="userIsAdmin">

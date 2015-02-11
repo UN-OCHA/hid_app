@@ -202,13 +202,15 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, roles, gettextCatalog) {
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, roles, protectedRoles, gettextCatalog) {
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.invalidFields = {};
   $scope.adminRoleOptions = roles;
+  $scope.protectedRoles = protectedRoles;
+
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
   var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': []};
@@ -217,6 +219,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   checkinFlow = pathParams[1] === 'checkin',
   accountData = authService.getAccountData();
   $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
+  $scope.selectedProtectedRoles = profileData.contact.protectedRoles ; //(profileData.profile && profileData.profile.protectedRoles && profileData.profile.protectedRoles.length) ? profileData.profile.protectedRoles : [];
+
   $scope.userIsAdmin = profileService.hasRole('admin');
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
   $scope.submitText = !checkinFlow ? gettextCatalog.getString('Update Profile') : gettextCatalog.getString('Check-in');
@@ -619,6 +623,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       if ($scope.userIsAdmin) {
         profile.adminRoles = $scope.adminRoles;
         profile.verified = $scope.verified;
+        profile.newProtectedRoles = $scope.selectedProtectedRoles;
       }
 
       profileService.saveContact(profile).then(function(data) {
@@ -884,6 +889,9 @@ app.config(function($routeProvider, $locationProvider) {
       },
       roles : function(profileService) {
         return profileService.getRoles();
+      },
+      protectedRoles : function(profileService) {
+        return profileService.getProtectedRoles();
       }
     }
   }).
@@ -974,6 +982,9 @@ app.config(function($routeProvider, $locationProvider) {
       },
       roles : function(profileService) {
         return profileService.getRoles();
+      },
+      protectedRoles : function(profileService) {
+        return profileService.getProtectedRoles();
       }
     }
   }).
@@ -1094,7 +1105,8 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     hasRole: hasRole,
     getCountries: getCountries,
     getAdminArea: getAdminArea,
-    getRoles: getRoles
+    getRoles: getRoles,
+    getProtectedRoles: getProtectedRoles
   });
 
   // Get app data.
@@ -1269,6 +1281,21 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     })
     .then(handleSuccess, handleError).then(function(data) {
       return data.roles;
+    });
+
+    return promise;
+  }
+
+  function getProtectedRoles() {
+    var promise;
+
+    promise = $http({
+      method: "get",
+      url: contactsId.profilesBaseUrl + "/v0/app/data",
+      params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
+    })
+    .then(handleSuccess, handleError).then(function(data) {
+      return data.protectedRoles;
     });
 
     return promise;
