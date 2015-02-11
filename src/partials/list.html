@@ -54,19 +54,27 @@
 
         <div class="form-group">
           <label class="control-label element-invisible" for="bundle" translate>Group</label>
-          <select class="form-control" name="bundle" ng-model="query.bundle"
-                  ng-options="bundle.value as bundle.value for bundle in bundles | orderBy:'value'">
-            <option value="">Groups</option>
-          </select>
+          <ui-select ng-model="query.bundle" theme="selectize" class="form-control"  name="organization" on-select="onSelect($item, 'bundle')">
+            <ui-select-match placeholder="{{'Groups'|translate}}">{{$select.selected.value}}</ui-select-match>
+            <ui-select-choices ng-class="{'not-empty': bundles.length}" repeat="bundle.value as bundle in bundles | filter: $select.search">
+              <div ng-bind-html="bundle.alt || (bundle.value | highlight: $select.search)"></div>
+            </ui-select-choices>
+          </ui-select>
         </div>
 
         <div class="form-group">
           <label class="control-label element-invisible" for="organization" translate>Organization</label>
-          <ui-select ng-model="query.organization" theme="selectize" class="form-control"  name="organization" on-select="setOrganization($item, $model)">
-            <ui-select-match placeholder="{{'Search for organization'|translate}}">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="org in organizations | filter: $select.search | orderBy:'name'" refresh="refreshOrganization($select.search)" refresh-delay="500" reset-search-input="true">
-              <div ng-bind-html="org.name | highlight: $select.search"></div>
-            </ui-select-choices>
+          <ui-select
+            class="form-control"
+            name="organization"
+            ng-model="query['organization.name']"
+            theme="selectize"
+            reset-search-input="true"
+            on-select="onSelect($item, 'organization.name')">
+              <ui-select-match placeholder="{{'Search for organization'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices ng-class="{'not-empty': organizations.length}" repeat="org.name as org in organizations | orderBy:'name'" refresh="refreshOrganization($select, 2)" refresh-delay="200">
+                <div ng-bind-html="org.alt || (org.name | highlight: $select.search) "></div>
+              </ui-select-choices>
           </ui-select>
         </div>
 
