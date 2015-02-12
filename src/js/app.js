@@ -150,12 +150,12 @@ app.controller("DefaultCtrl", function($scope, $rootScope, $location, authServic
   }
 });
 
-app.controller("LoginCtrl", function($scope, $location, authService) {
+app.controller("LoginCtrl", function($scope, $location, authService, profileService) {
   // Get the access token. If one in the browser cache is not found, then
   // redirect to the auth system for the user to login.
   authService.verify(function (err) {
     if (!err && authService.isAuthenticated()) {
-      $scope.$apply(function () {
+      profileService.getUserData().then(function(data) {
         $location.path(loginRedirect.length ? loginRedirect : '/dashboard');
         loginRedirect = '';
       });
@@ -221,9 +221,25 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
   $scope.selectedProtectedRoles = (profileData.contact && profileData.contact.protectedRoles && profileData.contact.protectedRoles.length) ? profileData.contact.protectedRoles : [];
 
-  $scope.userIsAdmin = profileService.hasRole('admin');
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
   $scope.submitText = !checkinFlow ? gettextCatalog.getString('Update Profile') : gettextCatalog.getString('Check-in');
+
+  $scope.userCanViewAllFields = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
+  $scope.userCanEditProfile = profileService.hasRole('admin') || ((checkinFlow || profileData.contact.type === 'local') && (profileService.hasRole('manager', profileData.contact.locationId) || profileService.hasRole('editor', profileData.contact.locationId)));
+  $scope.userCanEditRoles = $scope.userCanViewAllFields;
+  if ($scope.userCanEditRoles) {
+    if (profileService.hasRole('admin', null, profileData) && !profileService.hasRole('admin')) {
+      $scope.userCanEditRoles = false;
+    }
+    if (profileService.hasRole('manager', null, profileData) && !(profileService.hasRole('admin') || profileService.hasRole('manager'))) {
+      $scope.userCanEditRoles = false;
+    }
+    if (profileService.hasRole('editor', null, profileData) && !(profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor'))) {
+      $scope.userCanEditRoles = false;
+    }
+  }
+  $scope.userCanEditKeyContact = profileService.hasRole('admin') || ((checkinFlow || profileData.contact.type === 'local') && profileService.hasRole('manager', profileData.contact.locationId));
+  $scope.userCanEditProtectedRoles = $scope.userCanEditKeyContact;
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.placesOperations = placesOperations;
@@ -629,7 +645,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         profile._contact = $scope.profileId;
       }
 
-      if ($scope.userIsAdmin) {
+      if ($scope.userCanEditRoles) {
         profile.adminRoles = $scope.adminRoles;
         profile.verified = $scope.verified;
         profile.newProtectedRoles = $scope.selectedProtectedRoles;
@@ -707,7 +723,8 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
     $scope.contact.location = gettextCatalog.getString('Global');
   }
 
-  $scope.userIsAdmin = profileService.hasRole('admin');
+  $scope.userCanEdit = $scope.userCanCheckIn = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
+  $scope.userCanCheckOut = (contact.type === 'local') && (profileService.hasRole('admin') || profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId));
 
   $scope.back = function () {
     if (history.length) {
@@ -725,6 +742,9 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
       userid: $scope.contact._profile.userid,
       status: 0
     };
+    if (!$scope.userCanCheckOut) {
+      return;
+    }
     profileService.saveContact(contact).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         profileService.clearData();
@@ -1354,8 +1374,11 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
 
   // Returns true/false for whether the user has/doesn't have the specified
   // role. Assumes the user profile data is loaded.
-  function hasRole(role) {
-    return (cacheUserData && cacheUserData.profile && cacheUserData.profile.roles && cacheUserData.profile.roles.length && cacheUserData.profile.roles.indexOf(role) !== -1);
+  function hasRole(role, subrole, profile) {
+    var matchString = (subrole && subrole.length) ? "^" + role + ":" + subrole + "$" : "^" + role;
+      match = new RegExp(matchString),
+      data = profile || cacheUserData;
+    return (data && data.profile && data.profile.roles && data.profile.roles.length && data.profile.roles.reIndexOf(match) !== -1);
   }
 
   function handleError(response) {
@@ -1371,11 +1394,30 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     return ($q.reject(response.data.message));
   }
 
-
   function handleSuccess(response) {
     return (response.data);
   }
 
 });
+
+/**
+ * Regular Expresion IndexOf for Arrays
+ * This little addition to the Array prototype will iterate over array
+ * and return the index of the first element which matches the provided
+ * regular expresion.
+ * Note: This will not match on objects.
+ * @param  {RegEx}   rx The regular expression to test with. E.g. /-ba/gim
+ * @return {Numeric} -1 means not found
+ */
+if (typeof Array.prototype.reIndexOf === 'undefined') {
+  Array.prototype.reIndexOf = function (rx) {
+    for (var i in this) {
+      if (this[i].toString().match(rx)) {
+        return i;
+      }
+    }
+    return -1;
+  };
+}
 
 }(jQuery, angular, window.contactsId));

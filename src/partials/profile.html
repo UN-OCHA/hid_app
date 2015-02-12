@@ -260,7 +260,7 @@
 
 
       <div class="row">
-        <div class="col-sm-12" ng-show="userIsAdmin">
+        <div class="col-sm-12" ng-show="userCanEditProtectedRoles">
           <h4 translate>Protected Roles</h4>
           <div class="form-group">
             <select class="form-control" name="selectedProtectedRoles" multiple ng-model="selectedProtectedRoles" ng-options="protectedRole.id as protectedRole.name for protectedRole in protectedRoles">
@@ -273,23 +273,23 @@
 <!-- Should we put a new section for all "Admin" privliges? -->
 
       <div class="row">
-        <div class="col-sm-12  col-md-6 operations" ng-show="userIsAdmin">
+        <div class="col-sm-12 col-md-6 operations" ng-show="userCanEditKeyContact">
           <h4 translate>Local Administration</h4>
           <div class="checkbox">
             <label for="keyContact" ng-click="profile.keyContact = !profile.keyContact"><input type="checkbox" name="keyContact" ng-model="profile.keyContact" /><span translate>Key Contact</span></label>
           </div>
         </div>
 
-        <div class="col-sm-12  col-md-6 operations" ng-show="userIsAdmin">
+        <div class="col-sm-12 col-md-6 operations" ng-show="userCanViewAllFields">
           <h4 translate>Global Administration</h4>
           <div class="form-group">
             <label class="control-label" for="adminRoles" translate>Admin Privileges</label>
-            <select class="form-control" name="adminRoles" multiple ng-model="adminRoles" ng-options="role.id as role.name for role in adminRoleOptions">
+            <select class="form-control" name="adminRoles" multiple ng-model="adminRoles" ng-options="role.id as role.name for role in adminRoleOptions" ng-disabled="!userCanEditRoles">
               <option value=""></option>
             </select>
           </div>
           <div class="checkbox">
-            <label for="verified" ng-click="verified = !verified"><input type="checkbox" name="verified" ng-model="verified" /><span translate>Verified Responder</span></label>
+            <label for="verified" ng-click="verified = !verified"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="!userCanEditProfile" ng-readonly="!userCanEditProfile" /><span translate>Verified Responder</span></label>
           </div>
         </div>
       </div>
