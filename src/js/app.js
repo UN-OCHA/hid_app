@@ -1347,6 +1347,11 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   function getAdminArea(country_id) {
     var promise;
 
+    if (!country_id) {
+      promise = $q.defer();
+      promise.resolve(null);
+      return promise.promise;
+    }
     promise = $http({
       method: "get",
       url: contactsId.hrinfoBaseUrl + "/hid/locations/" + country_id
