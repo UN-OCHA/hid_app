@@ -22,4 +22,82 @@
       max-width: 400px;
     }
   }
+
+  .contact-loader {
+    min-height: 70px;
+    &.list-complete .three-bounce-spinner {
+      opacity: 0.5;
+    }
+  }
+  .list-spinner {
+    &.ng-hide {
+      display: block !important;
+
+      &:not(.ng-hide-animate) {
+        .three-bounce-spinner > div {
+          -webkit-animation: none;
+          animation: none;
+
+          transform: scale(1.0);
+          -webkit-transform: scale(1.0);
+          -webkit-transition: scale 1s;
+          transition: scale 1s;
+        }
+      }
+    }
+  }
+}
+
+
+/* Three bounce spinner */
+.three-bounce-spinner {
+
+  margin: 10px auto 0;
+  width: 70px;
+  text-align: center;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+  opacity: 1;
+
+
+  & > div {
+    width: 15px;
+    height: 15px;
+    background-color: $neutral-color-3;
+    box-shadow: inset 1px 1px 2px 0px $neutral-color-1;
+    border-radius: 100%;
+    display: inline-block;
+
+    -webkit-animation:bouncedelay 1s infinite ease-in-out both;
+    animation:bouncedelay 1s infinite ease-in-out both;
+  }
+  .bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+  }
+
+  .bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+  }
+}
+
+@-webkit-keyframes bouncedelay {
+  0%, 80%, 100% {
+    -webkit-transform: scale(0.8)
+  }
+  40% {
+    -webkit-transform: scale(1.0)
+  }
+}
+
+@keyframes bouncedelay {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+  }
+  40% {
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
 }

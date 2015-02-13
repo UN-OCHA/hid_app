@@ -1,9 +1,11 @@
-<div class="masthead">
-  <h2 class="heading-contact-list">{{location}} <span translate>Contact List</span></h2>
+<div class="masthead row">
+  <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 pull-right">
+    <h2 class="heading-contact-list">{{location}} <span translate>Contact List</span></h2>
+  </div>
 </div>
 
 <div class="main row page-list" ng-class="{'show-options': sidebarOptions}">
-  <div class="active-contacts col-xs-12 col-sm-8 col-md-9 pull-right" cg-busy="contactsPromise">
+  <div class="active-contacts col-xs-12 col-sm-8 col-md-9 pull-right" xcg-busy="contactsPromise">
     <form class="search-form">
       <div class="form-group">
         <label class="control-label element-invisible" for="text" translate>Search</label>
@@ -37,8 +39,9 @@
     <div class="panel panel-danger" ng-if="contacts.length == 0">
       <div class="panel-heading"><em translate>No contacts found</em></div>
     </div>
-  </div>
 
+    <div class="contact-loader" ng-class="{'list-complete': listComplete || !contacts.length}" in-view="loadMoreContacts($inview, $inviewpart)" in-view-options="{debounce: 1000}" cg-busy="{promise:contactsPromise, message:'', backdrop:false, templateUrl:spinTpl, minDuration:2800, wrapperClass:'list-spinner'}"></div>
+  </div>
 
   <div class="sidebar-left">
     <div ng-show="!isRouteLoading">
@@ -54,7 +57,7 @@
 
         <div class="form-group" ng-show="bundles.length">
           <label class="control-label element-invisible" for="bundle" translate>Group</label>
-          <ui-select ng-model="query.bundle" theme="selectize" class="form-control"  name="organization" on-select="onSelect($item, 'bundle')">
+          <ui-select ng-model="query.bundle" theme="selectize" search-enabled='false' class="form-control"  name="organization" on-select="onSelect($item, 'bundle')">
             <ui-select-match placeholder="{{'Groups'|translate}}">{{$select.selected.value}}</ui-select-match>
             <ui-select-choices ng-class="{'not-empty': bundles.length}" repeat="bundle.value as bundle in bundles | filter: $select.search">
               <div ng-bind-html="bundle.alt || (bundle.value | highlight: $select.search)"></div>
