@@ -5,7 +5,7 @@
 </div>
 
 <div class="main row page-list" ng-class="{'show-options': sidebarOptions}">
-  <div class="active-contacts col-xs-12 col-sm-8 col-md-9 pull-right" xcg-busy="contactsPromise">
+  <div class="active-contacts col-xs-12 col-sm-8 col-md-9 pull-right">
     <form class="search-form">
       <div class="form-group">
         <label class="control-label element-invisible" for="text" translate>Search</label>
@@ -19,7 +19,7 @@
       </div>
     </form>
 
-    <ul class="list-group">
+    <ul class="list-group" cg-busy="contactsPromise">
       <li class="profile-item list-group-item" ng-repeat="contact in contacts | orderBy: ['nameGiven', 'nameFamily']">
         <div class="row">
           <div class="contact-item contact-item--name col-xs-12 col-md-3" >
@@ -40,7 +40,7 @@
       <div class="panel-heading"><em translate>No contacts found</em></div>
     </div>
 
-    <div class="contact-loader" ng-class="{'list-complete': listComplete || !contacts.length}" in-view="loadMoreContacts($inview, $inviewpart)" in-view-options="{debounce: 1000}" cg-busy="{promise:contactsPromise, message:'', backdrop:false, templateUrl:spinTpl, minDuration:2000, wrapperClass:'list-spinner'}"></div>
+    <div class="contact-loader" ng-class="{'list-complete': listComplete || !contacts.length}" in-view="loadMoreContacts($inview, $inviewpart)" in-view-options="{debounce: 1000}" cg-busy="{promise:contactsPromise, message:'', backdrop:false, templateUrl:spinTpl, minDuration:1400, wrapperClass:'list-spinner'}"></div>
   </div>
 
   <div class="sidebar-left">
