@@ -225,7 +225,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.submitText = !checkinFlow ? gettextCatalog.getString('Update Profile') : gettextCatalog.getString('Check-in');
 
   $scope.userCanViewAllFields = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
-  $scope.userCanEditProfile = profileService.hasRole('admin') || ((checkinFlow || profileData.contact.type === 'local') && (profileService.hasRole('manager', profileData.contact.locationId) || profileService.hasRole('editor', profileData.contact.locationId)));
+  $scope.userCanEditProfile = profileService.hasRole('admin') || (profileData.contact && profileData.contact.type === 'local' && (profileService.hasRole('manager', profileData.contact.locationId) || profileService.hasRole('editor', profileData.contact.locationId))) || (checkinFlow && (profileService.hasRole('manager') || profileService.hasRole('editor')));
   $scope.userCanEditRoles = $scope.userCanViewAllFields;
   if ($scope.userCanEditRoles) {
     if (profileService.hasRole('admin', null, profileData) && !profileService.hasRole('admin')) {
@@ -238,7 +238,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       $scope.userCanEditRoles = false;
     }
   }
-  $scope.userCanEditKeyContact = profileService.hasRole('admin') || ((checkinFlow || profileData.contact.type === 'local') && profileService.hasRole('manager', profileData.contact.locationId));
+  $scope.userCanEditKeyContact = profileService.hasRole('admin') || (checkinFlow && profileService.hasRole('manager')) || (profileData.contact && profileData.contact.type === 'local' && profileService.hasRole('manager', profileData.contact.locationId));
   $scope.userCanEditProtectedRoles = $scope.userCanEditKeyContact;
 
   // Setup scope variables from data injected by routeProvider resolve
@@ -1347,6 +1347,11 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   function getAdminArea(country_id) {
     var promise;
 
+    if (!country_id) {
+      promise = $q.defer();
+      promise.resolve(null);
+      return promise.promise;
+    }
     promise = $http({
       method: "get",
       url: contactsId.hrinfoBaseUrl + "/hid/locations/" + country_id
