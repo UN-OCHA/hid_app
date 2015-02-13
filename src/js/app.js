@@ -18,7 +18,7 @@ jso = new JSO({
 jso.callback(null, function (token) {});
 
 // Initialize ng
-app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'angucomplete-alt', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber']);
+app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'angucomplete-alt', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview']);
 
 app.value('cgBusyDefaults',{
   message:'Loading...',
@@ -675,6 +675,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       tmp[vLabel] = v;
       this.push(tmp);
     }, listArray);
+
     return listArray;
   }
 
@@ -762,13 +763,21 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
 
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
-  $scope.contacts = [];
+  $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.placesOperations = placesOperations;
+
+  $scope.contacts = [];
   $scope.bundles = [];
   $scope.organizations = [];
+
   $scope.contactsPromise;
   $scope.query = $location.search();
-  $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
+  $scope.loadLimit = 30;
+  $scope.contactsCount = 0;
+
+  $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
+  $scope.listComplete = false;
+  $scope.contactsCreated = false;
 
   if ($scope.locationId !== 'global') {
     for (var place in $scope.placesOperations) {
@@ -808,6 +817,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
     $location.search(sObj);
   }
 
+  // Autocomplete call for Orgs
   $scope.refreshOrganization = function(select, lengthReq) {
     var clearOption = {action:'clear', name:"", alt:'Organizations'};
 
@@ -830,14 +840,30 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
       }
     }
   };
+
   $scope.onSelect = function(item, qProp) {
     if (item.action === "clear") {
       $scope.query[qProp] = undefined;
     }
   }
 
+  $scope.loadMoreContacts = function(inview, inviewpart) {
+    // Don't do anything if elem not completely visible
+    if (!inview || inviewpart !== 'both') {
+      return;
+    }
+
+    if ($scope.contacts.length >= ($scope.contactsCount+$scope.loadLimit)) {
+      $scope.contactsCount = $scope.contacts.length;
+      createContactList();
+    }
+    else {
+      $scope.listComplete = true;
+    }
+  }
+
   createContactList();
-  if ($scope.query['organization.name']){
+  if ($scope.query['organization.name']) {
     $scope.refreshOrganization({search:$scope.query['organization.name']})
   }
 
@@ -854,10 +880,14 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
     query.verified = query.verified ? true : null;
     query.keyContact = query.keyContact ? true : null;
     query.status = 1;
+    query.limit = $scope.loadLimit;
+    query.skip = $scope.contactsCount;
 
     $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
       if (data && data.status && data.status === 'ok') {
-        $scope.contacts = data.contacts || [];
+        data.contacts = data.contacts || [];
+        $scope.contacts = $scope.contacts.concat(data.contacts);
+        $scope.contactsCreated = true;
       }
     });
   }

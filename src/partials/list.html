@@ -1,9 +1,11 @@
-<div class="masthead">
-  <h2 class="heading-contact-list">{{location}} <span translate>Contact List</span></h2>
+<div class="masthead row">
+  <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 pull-right">
+    <h2 class="heading-contact-list">{{location}} <span translate>Contact List</span></h2>
+  </div>
 </div>
 
 <div class="main row page-list" ng-class="{'show-options': sidebarOptions}">
-  <div class="active-contacts col-xs-12 col-sm-8 col-md-9 pull-right" cg-busy="contactsPromise">
+  <div class="active-contacts col-xs-12 col-sm-8 col-md-9 pull-right">
     <form class="search-form">
       <div class="form-group">
         <label class="control-label element-invisible" for="text" translate>Search</label>
@@ -17,7 +19,7 @@
       </div>
     </form>
 
-    <ul class="list-group">
+    <ul class="list-group" cg-busy="contactsPromise">
       <li class="profile-item list-group-item" ng-repeat="contact in contacts | orderBy: ['nameGiven', 'nameFamily']">
         <div class="row">
           <div class="contact-item contact-item--name col-xs-12 col-md-3" >
@@ -34,11 +36,12 @@
       </li>
     </ul>
 
-    <div class="panel panel-danger" ng-if="contacts.length == 0">
+    <div class="panel panel-danger" ng-if="contacts.length == 0 && contactsCreated">
       <div class="panel-heading"><em translate>No contacts found</em></div>
     </div>
-  </div>
 
+    <div class="contact-loader" ng-class="{'list-complete': listComplete || !contacts.length}" in-view="loadMoreContacts($inview, $inviewpart)" in-view-options="{debounce: 1000}" cg-busy="{promise:contactsPromise, message:'', backdrop:false, templateUrl:spinTpl, minDuration:1400, wrapperClass:'list-spinner'}"></div>
+  </div>
 
   <div class="sidebar-left">
     <div ng-show="!isRouteLoading">
@@ -56,7 +59,7 @@
           <label class="control-label element-invisible" for="bundle" translate>Group</label>
           <ui-select ng-model="query.bundle" theme="selectize" class="form-control"  name="organization" on-select="onSelect($item, 'bundle')">
             <ui-select-match placeholder="{{'Groups'|translate}}">{{$select.selected.value}}</ui-select-match>
-            <ui-select-choices ng-class="{'not-empty': bundles.length}" repeat="bundle.value as bundle in bundles | filter: $select.search">
+            <ui-select-choices ng-class="{'not-empty': bundles.length}" repeat="bundle.value as bundle in bundles | orderBy:'value' | filter: $select.search">
               <div ng-bind-html="bundle.alt || (bundle.value | highlight: $select.search)"></div>
             </ui-select-choices>
           </ui-select>
