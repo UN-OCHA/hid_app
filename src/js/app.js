@@ -25,7 +25,7 @@ app.value('cgBusyDefaults',{
   backdrop: true,
   templateUrl: contactsId.sourcePath + '/partials/busy.html',
   delay: 0,
-  minDuration: 300,
+  minDuration: 300
 });
 
 app.directive('routeLoadingIndicator', function($rootScope) {
