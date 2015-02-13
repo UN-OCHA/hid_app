@@ -35,8 +35,8 @@
 
       &:not(.ng-hide-animate) {
         .three-bounce-spinner > div {
-          -webkit-animation: none;
-          animation: none;
+          -webkit-animation-name: none;
+          animation-name: none;
 
           transform: scale(1.0);
           -webkit-transform: scale(1.0);
@@ -58,7 +58,6 @@
   -webkit-transition: opacity 1s;
   transition: opacity 1s;
   opacity: 1;
-
 
   & > div {
     width: 15px;

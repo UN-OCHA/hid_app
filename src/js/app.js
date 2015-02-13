@@ -659,6 +659,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       tmp[vLabel] = v;
       this.push(tmp);
     }, listArray);
+
     return listArray;
   }
 
@@ -754,9 +755,9 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   $scope.loadLimit = 30;
   $scope.contactsCount = 0;
 
-
   $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
   $scope.listComplete = false;
+  $scope.contactsCreated = false;
 
   if ($scope.locationId !== 'global') {
     for (var place in $scope.placesOperations) {
@@ -866,6 +867,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
       if (data && data.status && data.status === 'ok') {
         data.contacts = data.contacts || [];
         $scope.contacts = $scope.contacts.concat(data.contacts);
+        $scope.contactsCreated = true;
       }
     });
   }

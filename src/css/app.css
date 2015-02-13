@@ -10696,8 +10696,8 @@ h3 {
   display: block !important;
 }
 .contactsid-app .list-spinner.ng-hide:not(.ng-hide-animate) .three-bounce-spinner > div {
-  -webkit-animation: none;
-  animation: none;
+  -webkit-animation-name: none;
+  animation-name: none;
   transform: scale(1);
   -webkit-transform: scale(1);
   -webkit-transition: scale 1s;
