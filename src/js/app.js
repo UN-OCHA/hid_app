@@ -202,6 +202,95 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
+app.controller("CreateAccountCtrl", function($scope, $route, $http, profileService, placesOperations, globalProfileId, userData) {
+  $scope.logoutPath = '/#logout';
+  $scope.globalProfileId = globalProfileId;
+  $scope.userData = userData;
+  $scope.organizations = [];
+  $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
+  //$scope.query = $location.search();
+
+
+  // Setup scope variables from data injected by routeProvider resolve
+  $scope.placesOperations = placesOperations;
+  var availPlacesOperations = angular.copy(placesOperations);
+  //
+  // Convert list into an array that can be sorted
+  $scope.availPlacesOperations = listObjectToArray(availPlacesOperations, 'place', 'operations');
+
+  $scope.checkout = function (cid) {
+    var contact = {
+      _id: cid,
+      _profile: $scope.userData.profile._id,
+      userid: $scope.userData.profile.userid,
+      status: 0
+    };
+    profileService.saveContact(contact).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        profileService.clearData();
+        $route.reload();
+      }
+      else {
+        alert('error');
+      }
+    });
+  };
+
+  $scope.back = function () {
+    if (history.length) {
+      history.back();
+    }
+    else {
+      $location.path('/dashboard');
+    }
+  };
+
+  // Converts object to a sortable array.
+  function listObjectToArray(obj, kLabel, vLabel) {
+    var listArray = [];
+    // Having difficulty getting location to work when keys are generalized.
+    kLabel = kLabel || 'key';
+    vLabel = vLabel || 'value';
+    angular.forEach(obj, function(v, k) {
+      var tmp = {};
+      tmp[kLabel] = k;
+      tmp[vLabel] = v;
+      this.push(tmp);
+    }, listArray);
+    return listArray;
+  }
+
+  $scope.refreshOrganization = function(select, lengthReq) {
+    var clearOption = {action:'clear', name:"", alt:'Organizations'};
+
+    if (select.search.length > (lengthReq || 0)) {
+      $http.get($scope.hrinfoBaseUrl + '/hid/organizations/autocomplete/' + select.search)
+        .then(function(response) {
+          $scope.organizations = [];
+          angular.forEach(response.data, function(value, key) {
+            this.push({'name': value, 'remote_id': key});
+          }, $scope.organizations);
+          if ($scope.organizations.length) {
+            $scope.organizations.unshift(clearOption);
+          }
+        });
+    }
+    else {
+      $scope.organizations = [];
+    }
+  };
+  $scope.onSelect = function(item, qProp) {
+    if (item.action === "clear") {
+      $scope.query[qProp] = undefined;
+    }
+  }
+
+});
+
+
+
+
+
 app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, roles, protectedRoles, gettextCatalog) {
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
@@ -1086,6 +1175,36 @@ app.config(function($routeProvider, $locationProvider) {
       placesOperations : function(profileService) {
         return profileService.getOperationsData().then(function(data) {
           return data;
+        });
+      }
+    }
+  }).
+  when('/createaccount', {
+    templateUrl: contactsId.sourcePath + '/partials/createAccount.html',
+    controller: 'CreateAccountCtrl',
+    requireAuth: true,
+    resolve: {
+      placesOperations : function(profileService) {
+        return profileService.getOperationsData().then(function(data) {
+          return data;
+        });
+      },
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
+      },
+      globalProfileId : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          var num = data.contacts.length;
+          for (var idx = 0; idx < num; idx++) {
+            if (data.contacts[idx].type === 'global') {
+              return data.contacts[idx]._id;
+            }
+          }
         });
       }
     }

@@ -1,0 +1,62 @@
+<div class="masthead">
+  <h2 translate>Create New Account</h2>
+</div>
+
+<div ng-show="!isRouteLoading">
+  <div class="row">
+    <div class="account-create  col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+
+      <div class="form-group">
+        <label class="control-label-light" for="nameGiven" translate>Crisis</label>
+        <select class="form-control" name="location" ng-model="profile.location"    ng-options="item.place for item in availPlacesOperations | orderBy:'place'" ng-blur="focus=0" focus-field="focus">
+            <option value=""></option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label-light" for="nameGiven" translate>Given Name</label>
+        <input class="form-control" type="text" name="nameGiven" ng-model="profile.nameGiven" />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label-light" for="nameFamily" translate>Family Name</label>
+        <input class="form-control" type="text" name="nameFamily" ng-model="profile.nameFamily" />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label-light" for="jobtitle" translate>Title</label>
+        <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label element-invisible" for="organization" translate>Organization</label>
+        <ui-select
+          class="form-control"
+          name="organization"
+          ng-model="query['organization.name']"
+          theme="selectize"
+          reset-search-input="true"
+          on-select="onSelect($item, 'organization.name')">
+            <ui-select-match placeholder="{{'Search for organization'|translate}}">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices ng-class="{'not-empty': organizations.length}" repeat="org.name as org in organizations | orderBy:'name'" refresh="refreshOrganization($select, 2)" refresh-delay="200">
+              <div ng-bind-html="org.alt || (org.name | highlight: $select.search) "></div>
+            </ui-select-choices>
+        </ui-select>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label-light" for="jobtitle" translate>Phone</label>
+        <input class="form-control" type="text" name="jobtitle" ng-model="profile.phone" />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label-light" for="jobtitle" translate>Email</label>
+        <input class="form-control" type="text" name="jobtitle" ng-model="profile.email" />
+      </div>
+
+      <a class="btn btn-default btn-lg btn-block" ng-click="back()">
+        <i class="entypo chevron-thin-right"></i> <span translate>Create Account</span>
+      </a>
+    </div>
+  </div>
+</div>
