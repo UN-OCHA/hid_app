@@ -10644,6 +10644,12 @@ h3 {
   overflow-y: hidden;
   height: 0px;
 }
+@media (min-width: 768px) {
+  .show-options {
+    overflow-y: auto;
+    height: initial;
+  }
+}
 .show-options .sidebar-left {
   box-shadow: 0px -10px 10px 0px rgba(0, 0, 0, 0.1);
   bottom: auto;

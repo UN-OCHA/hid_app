@@ -798,7 +798,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
 
   // Create protected roles array.
   $scope.protectedRoles = protectedRoles;
-  $scope.protectedRoles.unshift({action:'clear', name:"", id:"", alt:'Titles'});
+  $scope.protectedRoles.unshift({action:'clear', name:"", id:"", alt:'Title'});
 
   $scope.resetSearch = function () {
     for (var i in searchKeys) {
