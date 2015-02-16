@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: H.ID Translation\n"
+"Project-Id-Version: H.ID French\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-30 12:32+0000\n"
-"PO-Revision-Date: 2014-12-31 09:07+0000\n"
+"POT-Creation-Date: 2015-02-06 10:02+0000\n"
+"PO-Revision-Date: 2015-02-06 10:17+0000\n"
 "Last-Translator: Andrej Verity\n"
 "Language-Team: andrejverity\n"
 "Language: fr\n"
@@ -15,220 +15,232 @@ msgstr ""
 "X-Generator: Loco https://localise.biz\n"
 "X-Loco-Source-Locale: en_GB\n"
 "X-Loco-Target-Locale: fr_FR\n"
-"X-Loco-Project-Id: 4801\n"
+"X-Loco-Project-Id: 5384\n"
 "X-Loco-Api-Version: 1.0.8"
 
 #: src/partials/header.html
-#: src/partials/index.html loco:54a29d9114d725ad5b8b4567
+#: src/partials/index.html loco:54d4936a14d725ee048b4569
 msgid "About"
 msgstr "A propos"
 
 #: src/partials/contact.html
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b456a
+#: src/partials/profile.html loco:54d4936a14d725ee048b456a
 msgid "Back"
 msgstr "Retour"
 
 #: src/js/app.js
-#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b456b
+#: src/partials/dashboard.html loco:54d4936a14d725ee048b456b
 msgid "Check-in"
 msgstr "Se connecter"
 
-#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b456e
+#: src/partials/dashboard.html loco:54d4936a14d725ee048b456c
 msgid "Checkout"
 msgstr "Se déconnecter"
 
 #: src/partials/contact.html
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4570
+#: src/partials/profile.html loco:54d4936a14d725ee048b456d
 msgid "City"
 msgstr "Ville"
 
 #: src/partials/contact.html
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4574
+#: src/partials/profile.html loco:54d4936a14d725ee048b456e
 msgid "Country"
 msgstr "Pays"
 
-#: src/partials/header.html loco:54a29d9114d725ad5b8b4575
+#: src/partials/header.html loco:54d4936a14d725ee048b456f
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4578
+#: src/partials/profile.html loco:54d4936a14d725ee048b4570
 msgid "Email"
 msgstr "émail"
 
-#: src/js/app.js loco:54a29d9114d725ad5b8b457d
+#: src/js/app.js loco:54d4936a14d725ee048b4571
 msgid "Global"
 msgstr "Global"
 
 #: src/partials/contact.html
 #: src/partials/list.html
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4581
+#: src/partials/profile.html loco:54d4936a14d725ee048b4567
 msgid "Group"
 msgid_plural "Groups"
 msgstr[0] "Group"
 msgstr[1] "Groupes "
 
-#: src/partials/header.html loco:54a29d9114d725ad5b8b4582
+#: src/partials/header.html loco:54d4936a14d725ee048b4572
 msgid "Home"
 msgstr "Accueil"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4587
+#: src/partials/profile.html loco:54d4936a14d725ee048b4573
 msgid "Location"
 msgstr "Lieu"
 
 #: src/partials/header.html
-#: src/partials/index.html loco:54a29d9114d725ad5b8b4588
+#: src/partials/index.html loco:54d4936a14d725ee048b4574
 msgid "Login"
 msgstr "Connexion"
 
 #: src/partials/dashboard.html
-#: src/partials/header.html loco:54a29d9114d725ad5b8b4589
+#: src/partials/header.html loco:54d4936a14d725ee048b4575
 msgid "Logout"
 msgstr "Déconnexion"
 
 #: src/partials/contact.html
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4590
+#: src/partials/profile.html loco:54d4936a14d725ee048b4576
 msgid "Notes"
 msgstr "Notes"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4591
+#: src/partials/profile.html loco:54d4936a14d725ee048b4577
 msgid "Number"
 msgstr "Numéro"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4592
+#: src/partials/profile.html loco:54d4936a14d725ee048b4578
 msgid "Organization"
 msgstr "Organisation"
 
-#: src/partials/index.html loco:54a29d9114d725ad5b8b4595
+#: src/partials/index.html loco:54d4936a14d725ee048b4579
 msgid "Register"
 msgstr "S'inscrire"
 
-#: src/partials/list.html loco:54a29d9114d725ad5b8b4596
+#: src/partials/list.html loco:54d4936a14d725ee048b457a
 msgid "Search"
 msgstr "Rechercher"
 
-#: src/partials/profile.html loco:54a3b77214d725cc518b456d
+#: src/partials/profile.html loco:54d4936a14d725ee048b457b
 msgid "Searching..."
 msgstr "Recherche..."
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b459a
+#: src/partials/profile.html loco:54d4936a14d725ee048b457c
 msgid "Title"
 msgstr "Titre"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b459b
+#: src/partials/profile.html loco:54d4936a14d725ee048b457d
 msgid "Type"
 msgstr "Type"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b459c
+#: src/partials/profile.html loco:54d4936a14d725ee048b457e
 msgid "URL"
 msgstr "URL"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b459e
+#: src/partials/profile.html loco:54d4936a14d725ee048b457f
 msgid "VOIP"
 msgstr "VOIP"
 
-#: src/partials/header.html loco:54a29d9114d725ad5b8b45a4
+#: src/partials/header.html loco:54d4936a14d725ee048b4580
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: src/partials/about.html loco:54a29d9114d725ad5b8b4568
+#: src/partials/about.html loco:54d4936a14d725ee048b4581
 msgid "About Humanitarian.ID"
 msgstr ""
 "A propos \n"
 "Humanitarian.ID"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4569
+#: src/partials/profile.html loco:54d4936a14d725ee048b4582
 msgid "Admin Privileges"
 msgstr "Privilèges administratifs "
 
-#: src/partials/contact.html loco:54a29d9114d725ad5b8b456c
+#: src/partials/contact.html loco:54d4936a14d725ee048b4583
 msgid "Check-in User"
 msgstr "Connecter une personne"
 
-#: src/partials/contact.html loco:54a29d9114d725ad5b8b456d
+#: src/partials/contact.html loco:54d4936a14d725ee048b4584
 msgid "Check-out User"
 msgstr "Déconnecter une personne"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b456f
+#: src/partials/profile.html loco:54d4936a14d725ee048b4585
 msgid "Choose Type"
 msgstr "Sélectionner un type"
 
-#: src/partials/contact.html loco:54a29d9114d725ad5b8b4571
+#: loco:54d4946714d725ce078b4583
+msgid "Clusters"
+msgstr "Clusters"
+
+#: src/partials/contact.html loco:54d4936a14d725ee048b4586
 msgid "Confirm User Checkout"
 msgstr "Confirmer la déconnexion d'un utilisateur"
 
-#: src/partials/list.html loco:54a29d9114d725ad5b8b4572
+#: src/partials/list.html loco:54d4936a14d725ee048b4587
 msgid "Contact List"
 msgstr "Liste de contacts"
 
-#: src/partials/list.html loco:54a29d9114d725ad5b8b4573
+#: src/partials/list.html loco:54d4936a14d725ee048b4588
 msgid "Contact List Filters"
 msgstr "Filtre liste de contacts"
 
-#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b4577
+#: src/partials/dashboard.html loco:54d4936a14d725ee048b4589
 msgid "Edit Global Profile"
 msgstr "Modifier profil global"
 
-#: src/partials/contact.html loco:54a29d9114d725ad5b8b4576
+#: loco:54d4948414d7255d0a8b456a
+msgid "Edit Profile"
+msgstr "Modifier profile"
+
+#: src/partials/contact.html loco:54d4936a14d725ee048b458a
 msgid ""
 "Edit\n"
 "        Profile"
 msgstr "Modifier profil"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4579
+#: src/partials/profile.html loco:54d4936a14d725ee048b458b
 msgid "Email Addresses"
 msgstr "Adresse émail"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b457a
+#: loco:54d4949a14d72566058b457a
+msgid "External Links"
+msgstr "Autres liens"
+
+#: src/partials/profile.html loco:54d4936a14d725ee048b458c
 msgid "Family Name"
 msgstr "Nom"
 
-#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b457b
+#: src/partials/dashboard.html loco:54d4936a14d725ee048b458d
 msgid "General List"
 msgstr "Liste générale"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b457c
+#: src/partials/profile.html loco:54d4936a14d725ee048b458e
 msgid "Given Name"
 msgstr "Prénom"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b457e
+#: src/partials/profile.html loco:54d4936a14d725ee048b458f
 msgid "Global Administration"
 msgstr "Administration Globale"
 
-#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b457f
+#: src/partials/dashboard.html loco:54d4936a14d725ee048b4590
 msgid "Global Contact List"
 msgstr "Liste de contacts globale"
 
-#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b4580
+#: src/partials/dashboard.html loco:54d4936a14d725ee048b4591
 msgid "Global Profile"
 msgstr "Profil global"
 
-#: loco:54a29b7c14d725254f8b4567
+#: loco:54d4936a14d725ee048b4592
 msgid "H.ID Template"
 msgstr "H.ID brouillon"
 
 #: src/partials/dashboard.html
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4583
+#: src/partials/profile.html loco:54d4936a14d725ee048b4593
 msgid "Humanitarian ID"
 msgstr "Humanitarian ID"
 
-#: src/partials/index.html loco:54a29d9114d725ad5b8b4584
+#: src/partials/index.html loco:54d4936a14d725ee048b4594
 msgid "Humanitarian.ID: Responders"
 msgstr "Humanitarian.ID : Responders"
 
 #: src/partials/list.html
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4585
+#: src/partials/profile.html loco:54d4936a14d725ee048b4595
 msgid "Key Contact"
 msgstr "Contact clé"
 
-#: src/partials/contact.html loco:54a29d9114d725ad5b8b45a5
+#: src/partials/contact.html loco:54d4936a14d725ee048b4596
 msgid "key contact"
 msgstr "Contact clé"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4586
+#: src/partials/profile.html loco:54d4936a14d725ee048b4597
 msgid "Local Administration"
 msgstr "Administration locale"
 
-#: src/partials/index.html loco:54a29d9114d725ad5b8b458a
+#: src/partials/index.html loco:54d4936a14d725ee048b4598
 msgid ""
 "Manage your details on global and emergency-level humanitarian contact lists. "
 "Find and be found by other responders when needed. Check-in. Connect. Respond."
@@ -239,40 +251,40 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b458b
+#: src/partials/dashboard.html loco:54d4936a14d725ee048b4599
 msgid "My checked-in lists"
 msgstr "Mes listes de check-in"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b458c
+#: src/partials/profile.html loco:54d4936a14d725ee048b459a
 msgid "No active operations found."
 msgstr "Aucune opération active n'a pu être trouvée. "
 
-#: src/partials/list.html loco:54a29d9114d725ad5b8b458d
+#: src/partials/list.html loco:54d4936a14d725ee048b459b
 msgid "No contacts found"
 msgstr ""
 "Aucun contact\n"
 " trouvée.\n"
 "\n"
 
-#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b458e
+#: src/partials/dashboard.html loco:54d4936a14d725ee048b459c
 msgid "No profiles found."
 msgstr ""
 "Aucun profil \n"
 "trouvé."
 
-#: src/partials/profile.html loco:54a3b77214d725cc518b4568
+#: src/partials/profile.html loco:54d4936a14d725ee048b459d
 msgid "No results found."
 msgstr "Aucun résultat trouvé."
 
-#: src/partials/404.html loco:54a29d9114d725ad5b8b458f
+#: src/partials/404.html loco:54d4936a14d725ee048b459e
 msgid "Not Found"
 msgstr "Aucun résultat"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4593
+#: src/partials/profile.html loco:54d4936a14d725ee048b459f
 msgid "Organizational Information"
 msgstr "Information sur l'organisation"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4594
+#: src/partials/profile.html loco:54d4936a14d725ee048b45a0
 msgid "Phone Numbers"
 msgstr ""
 "Numéros de t\n"
@@ -281,70 +293,74 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b45a7
+#: loco:54d4945714d725b70b8b4568
+msgid "Profile"
+msgstr "Profile"
+
+#: src/partials/profile.html loco:54d4936a14d725ee048b45a1
 msgid "{{profileName}} Profile"
 msgstr "{{profileName}} Profil"
 
-#: src/partials/list.html loco:54a3b77214d725cc518b4569
+#: src/partials/list.html loco:54d4936a14d725ee048b45a2
 msgid "Reset Filters"
 msgstr "Réinitialisez les filtres"
 
-#: src/partials/list.html loco:54a3b77214d725cc518b456a
+#: src/partials/list.html loco:54d4936a14d725ee048b45a3
 msgid "Search by name, title, or organization"
 msgstr "Recherchez des noms, titres ou organisations"
 
-#: src/partials/profile.html loco:54a3b77214d725cc518b456b
+#: src/partials/profile.html loco:54d4936a14d725ee048b45a4
 msgid "Search for countries"
 msgstr "Recherchez des pays"
 
-#: src/partials/profile.html loco:54a3b77214d725cc518b456c
+#: src/partials/profile.html loco:54d4936a14d725ee048b45a5
 msgid "Search for organizations"
 msgstr "Recherchez des organisations"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4597
+#: src/partials/profile.html loco:54d4936a14d725ee048b45a6
 msgid "Select a country"
 msgstr "Sélectionner un pays"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4598
+#: src/partials/profile.html loco:54d4936a14d725ee048b45a7
 msgid "Select an operation"
 msgstr ""
 "Sélectionner une \n"
 "opération"
 
 #: src/partials/contact.html
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b4599
+#: src/partials/profile.html loco:54d4936a14d725ee048b45a8
 msgid "State/Province/Region"
 msgstr "Pays/Département/Région"
 
-#: src/js/app.js loco:54a29d9114d725ad5b8b459d
+#: src/js/app.js loco:54d4936a14d725ee048b45a9
 msgid "Update Profile"
 msgstr "Modifier profil"
 
-#: src/partials/contact.html loco:54a29d9114d725ad5b8b45a6
+#: src/partials/contact.html loco:54d4936a14d725ee048b45aa
 msgid "verified"
 msgstr "vérifié\n"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b459f
+#: src/partials/profile.html loco:54d4936a14d725ee048b45ab
 msgid "Verified Responder"
 msgstr "Responder vérifié"
 
-#: src/partials/list.html loco:54a29d9114d725ad5b8b45a0
+#: src/partials/list.html loco:54d4936a14d725ee048b45ac
 msgid "Verified User"
 msgstr "Utilisateur vérifié"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b45a1
+#: src/partials/profile.html loco:54d4936a14d725ee048b45ad
 msgid ""
 "We are not currently taking note of administrative areas or localities in "
 "this country."
 msgstr "En ce moment, nous ne tenons pas compte des lieux administratifs de ce pays. "
 
-#: src/partials/contact.html loco:54a29d9114d725ad5b8b45a2
+#: src/partials/contact.html loco:54d4936a14d725ee048b45ae
 msgid "Website/Social Media"
 msgstr ""
 "Site web/\n"
 "Medias sociaux"
 
-#: src/partials/profile.html loco:54a29d9114d725ad5b8b45a3
+#: src/partials/profile.html loco:54d4936a14d725ee048b45af
 msgid "Websites &amp; Social Media"
 msgstr ""
 "Sites web et \n"

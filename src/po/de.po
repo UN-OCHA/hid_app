@@ -1,0 +1,350 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: H.ID Translation\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-30 12:32+0000\n"
+"PO-Revision-Date: 2015-02-05 16:21+0000\n"
+"Last-Translator: Andrej Verity\n"
+"Language-Team: andrejverity\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Loco https://localise.biz\n"
+"X-Loco-Source-Locale: en_GB\n"
+"X-Loco-Target-Locale: de_DE\n"
+"X-Loco-Project-Id: 4801\n"
+"X-Loco-Api-Version: 1.0.8"
+
+#: src/partials/header.html
+#: src/partials/index.html loco:54a29d9114d725ad5b8b4567
+msgid "About"
+msgstr "Über H.ID"
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b456a
+msgid "Back"
+msgstr "Zurück"
+
+#: src/js/app.js
+#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b456b
+msgid "Check-in"
+msgstr "Check-in"
+
+#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b456e
+msgid "Checkout"
+msgstr "Check-out"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4570
+msgid "City"
+msgstr "Stadt"
+
+#: src/partials/contact.html loco:54d09bcc14d72524198b4567
+msgid "Clusters"
+msgstr "Cluster"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4574
+msgid "Country"
+msgstr "Land"
+
+#: src/partials/header.html loco:54a29d9114d725ad5b8b4575
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4578
+msgid "Email"
+msgstr "E-Mail"
+
+#: src/js/app.js loco:54a29d9114d725ad5b8b457d
+msgid "Global"
+msgstr "Umfassend"
+
+#: src/partials/list.html
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4581
+msgid "Group"
+msgid_plural "Groups"
+msgstr[0] "Gruppe"
+msgstr[1] ""
+
+#: src/partials/header.html loco:54a29d9114d725ad5b8b4582
+msgid "Home"
+msgstr "Festnetz"
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4587
+msgid "Location"
+msgstr "Ort"
+
+#: src/partials/header.html
+#: src/partials/index.html loco:54a29d9114d725ad5b8b4588
+msgid "Login"
+msgstr "Anmelden"
+
+#: src/partials/dashboard.html
+#: src/partials/header.html loco:54a29d9114d725ad5b8b4589
+msgid "Logout"
+msgstr "Abmelden"
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4590
+msgid "Notes"
+msgstr "Notizen"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4591
+msgid "Number"
+msgstr "Nummer"
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4592
+msgid "Organization"
+msgstr "Organisation"
+
+#: src/partials/profile.html loco:54d09bcc14d72524198b456b
+msgid "Profile"
+msgstr "Profil"
+
+#: src/partials/index.html loco:54a29d9114d725ad5b8b4595
+msgid "Register"
+msgstr "Registrieren"
+
+#: src/partials/list.html loco:54a29d9114d725ad5b8b4596
+msgid "Search"
+msgstr "Suche"
+
+#: src/partials/profile.html loco:54a3b77214d725cc518b456d
+msgid "Searching..."
+msgstr "Suche..."
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b459a
+msgid "Title"
+msgstr "Berufsbezeichnung"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b459b
+msgid "Type"
+msgstr "Art"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b459c
+msgid "URL"
+msgstr "URL"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b459e
+msgid "VOIP"
+msgstr "VoIP"
+
+#: src/partials/header.html loco:54a29d9114d725ad5b8b45a4
+msgid "Welcome"
+msgstr "Willkommen"
+
+#: src/partials/about.html loco:54a29d9114d725ad5b8b4568
+msgid "About Humanitarian.ID"
+msgstr "Über Humanitarian.ID"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4569
+msgid "Admin Privileges"
+msgstr "Admin Rechte"
+
+#: src/partials/contact.html loco:54a29d9114d725ad5b8b456c
+msgid "Check-in User"
+msgstr "Nutzer einchecken"
+
+#: src/partials/contact.html loco:54a29d9114d725ad5b8b456d
+msgid "Check-out User"
+msgstr "Nutzer auschecken"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b456f
+msgid "Choose Type"
+msgstr "Wähle Art "
+
+#: src/partials/contact.html loco:54a29d9114d725ad5b8b4571
+msgid "Confirm User Checkout"
+msgstr "Bestätigen Sie  den Checkout eines Nutzers"
+
+#: src/partials/list.html loco:54a29d9114d725ad5b8b4572
+msgid "Contact List"
+msgstr "Kontaktliste"
+
+#: src/partials/list.html loco:54a29d9114d725ad5b8b4573
+msgid "Contact List Filters"
+msgstr "Filter für die Kontaktliste"
+
+#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b4577
+msgid "Edit Global Profile"
+msgstr "Bearbeite globales Profil"
+
+#: src/partials/contact.html loco:54d09bcc14d72524198b4568
+msgid "Edit Profile"
+msgstr "Profil bearbeiten"
+
+#: src/partials/contact.html loco:54a29d9114d725ad5b8b4576
+msgid ""
+"Edit\n"
+"        Profile"
+msgstr ""
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4579
+msgid "Email Addresses"
+msgstr "E-Mail Adresse"
+
+#: src/partials/header.html loco:54d09bcc14d72524198b4569
+msgid "External Links"
+msgstr "Externe Links"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b457a
+msgid "Family Name"
+msgstr "Nachname"
+
+#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b457b
+msgid "General List"
+msgstr "Allgemeine Liste"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b457c
+msgid "Given Name"
+msgstr "Vorname"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b457e
+msgid "Global Administration"
+msgstr "Allgemeine Verwaltung"
+
+#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b457f
+msgid "Global Contact List"
+msgstr "Umfassende Kontaktliste"
+
+#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b4580
+msgid "Global Profile"
+msgstr "Allgemeines Profil"
+
+#: loco:54a29b7c14d725254f8b4567
+msgid "H.ID Template"
+msgstr ""
+
+#: src/partials/dashboard.html
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4583
+msgid "Humanitarian ID"
+msgstr "Humanitarian ID"
+
+#: src/partials/index.html loco:54a29d9114d725ad5b8b4584
+msgid "Humanitarian.ID: Responders"
+msgstr "Humanitarian.ID: Responders"
+
+#: src/partials/contact.html loco:54d09bcc14d72524198b456a
+msgid "Job Title"
+msgstr "Berufsbezeichnung"
+
+#: src/partials/list.html
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4585
+msgid "Key Contact"
+msgstr "Wichtiger Kontakt"
+
+#: src/partials/contact.html loco:54a29d9114d725ad5b8b45a5
+msgid "key contact"
+msgstr "Wichtiger Kontakt"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4586
+msgid "Local Administration"
+msgstr "Dezentrale Verwaltung"
+
+#: src/partials/index.html loco:54a29d9114d725ad5b8b458a
+msgid ""
+"Manage your details on global and emergency-level humanitarian contact lists. "
+"Find and be found by other responders when needed. Check-in. Connect. Respond."
+msgstr ""
+"Verwalten Sie Ihre persönlichen Daten auf der allgemeinen und krisen-"
+"spezifischen humanitären Kontaktlisten."
+
+#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b458b
+msgid "My checked-in lists"
+msgstr "Meine Liste von Check-ins"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b458c
+msgid "No active operations found."
+msgstr "Es wurde kein aktiver Einsatz gefunden."
+
+#: src/partials/list.html loco:54a29d9114d725ad5b8b458d
+msgid "No contacts found"
+msgstr "Es wurden keine Kontakte gefunden."
+
+#: src/partials/dashboard.html loco:54a29d9114d725ad5b8b458e
+msgid "No profiles found."
+msgstr "Es wurde kein Profil gefunden."
+
+#: src/partials/profile.html loco:54a3b77214d725cc518b4568
+msgid "No results found."
+msgstr "Kein Ergebnis gefunden."
+
+#: src/partials/404.html loco:54a29d9114d725ad5b8b458f
+msgid "Not Found"
+msgstr "Nicht gefunden."
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4593
+msgid "Organizational Information"
+msgstr "Informationen über die Organisation "
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4594
+msgid "Phone Numbers"
+msgstr "Telefonnumer"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b45a7
+msgid "{{profileName}} Profile"
+msgstr ""
+
+#: src/partials/list.html loco:54a3b77214d725cc518b4569
+msgid "Reset Filters"
+msgstr "Filter zurücksetzen"
+
+#: src/partials/list.html loco:54a3b77214d725cc518b456a
+msgid "Search by name, title, or organization"
+msgstr "Suche nach Namen, Berufsbezeichnung oder Organisation"
+
+#: src/partials/profile.html loco:54a3b77214d725cc518b456b
+msgid "Search for countries"
+msgstr "Suche nach Ländern"
+
+#: src/partials/profile.html loco:54a3b77214d725cc518b456c
+msgid "Search for organizations"
+msgstr "Suche nach Organisationen"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4597
+msgid "Select a country"
+msgstr "Wähle ein Land"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4598
+msgid "Select an operation"
+msgstr "Wähle einen Einsatz"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b4599
+msgid "State/Province/Region"
+msgstr "Stadt/Bundesland/Region"
+
+#: src/js/app.js loco:54a29d9114d725ad5b8b459d
+msgid "Update Profile"
+msgstr "Profil bearbeiten"
+
+#: src/partials/contact.html loco:54a29d9114d725ad5b8b45a6
+msgid "verified"
+msgstr "Verifiziert"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b459f
+msgid "Verified Responder"
+msgstr "Verifizierter Helfer"
+
+#: src/partials/list.html loco:54a29d9114d725ad5b8b45a0
+msgid "Verified User"
+msgstr "Verifizierter Nutzer"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b45a1
+msgid ""
+"We are not currently taking note of administrative areas or localities in "
+"this country."
+msgstr ""
+"N.B. Administrative Regionen dieses Landes werden derzeit ohne Gewähr "
+"dargestellt."
+
+#: src/partials/contact.html loco:54a29d9114d725ad5b8b45a2
+msgid "Website/Social Media"
+msgstr "Website/Social Media"
+
+#: src/partials/profile.html loco:54a29d9114d725ad5b8b45a3
+msgid "Websites &amp; Social Media"
+msgstr "Website & Social Media"

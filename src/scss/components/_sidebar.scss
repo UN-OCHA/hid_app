@@ -62,6 +62,11 @@
 .show-options {
   overflow-y: hidden;
   height: 0px;
+
+  @media (min-width: 768px) {
+    overflow-y: auto;
+    height: initial;
+  }
   .sidebar-left {
     box-shadow: 0px -10px 10px 0px rgba(0,0,0,0.1);
     bottom:auto;
