@@ -46,7 +46,7 @@ app.directive('routeLoadingIndicator', function($rootScope) {
   };
 });
 
-app.run(function ($rootScope, $location, authService) {
+app.run(function ($rootScope, $location, $window, authService) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
       event.preventDefault();
@@ -54,6 +54,13 @@ app.run(function ($rootScope, $location, authService) {
       $location.path('/login');
     }
     $rootScope.isIndex = (nextRoute && nextRoute.controller === 'DefaultCtrl') ? 'index' : '';
+
+    // Google analytics page view tracking
+    if ($location.host() === "app.humanitarian.id") {
+      $rootScope.$on('$routeChangeSuccess', function() {
+        $window._gaq.push(['_trackPageView', $location.url()]);
+      });
+    }
   });
 });
 
