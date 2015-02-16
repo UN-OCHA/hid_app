@@ -758,8 +758,8 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
   };
 });
 
-app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, profileService, userData, placesOperations, gettextCatalog) {
-  var searchKeys = ['bundle','keyContact', 'organization.name','role','text','verified'];
+app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, profileService, userData, placesOperations, gettextCatalog, protectedRoles) {
+  var searchKeys = ['bundle','keyContact', 'organization.name', 'protectedRoles', 'role','text','verified'];
 
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
@@ -769,6 +769,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   $scope.contacts = [];
   $scope.bundles = [];
   $scope.organizations = [];
+  $scope.protectedRoles = [];
 
   $scope.contactsPromise;
   $scope.query = $location.search();
@@ -779,6 +780,8 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   $scope.listComplete = false;
   $scope.contactsCreated = false;
 
+
+  // Create bundles array.
   if ($scope.locationId !== 'global') {
     for (var place in $scope.placesOperations) {
       if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.locationId)) {
@@ -792,6 +795,10 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   else {
     $scope.location = gettextCatalog.getString('Global');
   }
+
+  // Create protected roles array.
+  $scope.protectedRoles = protectedRoles;
+  $scope.protectedRoles.unshift({action:'clear', name:"", id:"", alt:'Titles'});
 
   $scope.resetSearch = function () {
     for (var i in searchKeys) {
@@ -821,8 +828,11 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   $scope.refreshOrganization = function(select, lengthReq) {
     var clearOption = {action:'clear', name:"", alt:'Organizations'};
 
+    // Remove text in parentheses.
+    select.search = select.search.replace(/ *\([^)]*\) */g, "");
+
     if (select.search.length > (lengthReq || 0)) {
-      $http.get($scope.hrinfoBaseUrl + '/hid/organizations/autocomplete/' + select.search)
+      $http.get($scope.hrinfoBaseUrl + '/hid/organizations/autocomplete/' + encodeURIComponent(select.search))
         .then(function(response) {
           $scope.organizations = [];
           angular.forEach(response.data, function(value, key) {
@@ -845,6 +855,8 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
     if (item.action === "clear") {
       $scope.query[qProp] = undefined;
     }
+    // Search upon changing filter.
+    $scope.submitSearch();
   }
 
   $scope.loadMoreContacts = function(inview, inviewpart) {
@@ -1117,6 +1129,9 @@ app.config(function($routeProvider, $locationProvider) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
+      },
+      protectedRoles : function(profileService) {
+        return profileService.getProtectedRoles();
       }
     }
   }).
@@ -1291,7 +1306,6 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   // Get contacts that match specified parameters.
   function getContacts(terms) {
     terms.access_token = authService.getAccessToken();
-
     var request = $http({
       method: "get",
       url: contactsId.profilesBaseUrl + "/v0/contact/view",

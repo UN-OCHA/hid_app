@@ -10482,6 +10482,9 @@ h3 {
 .selectize-dropdown .create {
   color: rgba(51, 51, 51, 0.5);
 }
+.selectize-dropdown .ui-select-choices-row .default {
+  color: #c8e6ed;
+}
 
 .selectize-dropdown-content {
   max-height: 200px;
