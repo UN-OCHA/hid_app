@@ -876,7 +876,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
 
   createContactList();
   if ($scope.query['organization.name']) {
-    $scope.refreshOrganization({search:$scope.query['organization.name'].replace(/ *\([^)]*\) */g, "")})
+    $scope.refreshOrganization({search:$scope.query['organization.name']})
   }
 
   // Builds the list of contacts.
