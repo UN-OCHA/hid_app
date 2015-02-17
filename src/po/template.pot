@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-02-04T20:04:23.514Z\n"
+"Project-Id-Version: 2015-02-16T20:08:13.557Z\n"
 
 #: src/partials/header.html
 #: src/partials/index.html
@@ -60,6 +60,10 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "Contact List"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Contact List Filters"
 msgstr ""
 
 #: src/partials/profile.html
@@ -125,6 +129,10 @@ msgstr ""
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Group"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Groups"
 msgstr ""
 
 #: src/partials/header.html
@@ -215,6 +223,7 @@ msgid "Number"
 msgstr ""
 
 #: src/partials/contact.html
+#: src/partials/list.html
 #: src/partials/profile.html
 msgid "Organization"
 msgstr ""
@@ -233,6 +242,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Profile"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Protected Roles"
 msgstr ""
 
 #: src/partials/index.html
@@ -279,6 +292,7 @@ msgstr ""
 msgid "State/Province/Region"
 msgstr ""
 
+#: src/partials/list.html
 #: src/partials/profile.html
 msgid "Title"
 msgstr ""

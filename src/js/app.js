@@ -18,7 +18,7 @@ jso = new JSO({
 jso.callback(null, function (token) {});
 
 // Initialize ng
-app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'cgBusy', 'gettext', 'angucomplete-alt', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber']);
+app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'angucomplete-alt', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview']);
 
 app.value('cgBusyDefaults',{
   message:'Loading...',
@@ -46,7 +46,7 @@ app.directive('routeLoadingIndicator', function($rootScope) {
   };
 });
 
-app.run(function ($rootScope, $location, authService) {
+app.run(function ($rootScope, $location, $window, authService) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
       event.preventDefault();
@@ -54,6 +54,13 @@ app.run(function ($rootScope, $location, authService) {
       $location.path('/login');
     }
     $rootScope.isIndex = (nextRoute && nextRoute.controller === 'DefaultCtrl') ? 'index' : '';
+
+    // Google analytics page view tracking
+    if ($location.host() === "app.humanitarian.id") {
+      $rootScope.$on('$routeChangeSuccess', function() {
+        $window._gaq.push(['_trackPageView', $location.url()]);
+      });
+    }
   });
 });
 
@@ -150,12 +157,12 @@ app.controller("DefaultCtrl", function($scope, $rootScope, $location, authServic
   }
 });
 
-app.controller("LoginCtrl", function($scope, $location, authService) {
+app.controller("LoginCtrl", function($scope, $location, authService, profileService) {
   // Get the access token. If one in the browser cache is not found, then
   // redirect to the auth system for the user to login.
   authService.verify(function (err) {
     if (!err && authService.isAuthenticated()) {
-      $scope.$apply(function () {
+      profileService.getUserData().then(function(data) {
         $location.path(loginRedirect.length ? loginRedirect : '/dashboard');
         loginRedirect = '';
       });
@@ -202,13 +209,15 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, roles, gettextCatalog) {
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, roles, protectedRoles, gettextCatalog) {
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.invalidFields = {};
   $scope.adminRoleOptions = roles;
+  $scope.protectedRoles = protectedRoles;
+
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
   var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': []};
@@ -217,9 +226,27 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   checkinFlow = pathParams[1] === 'checkin',
   accountData = authService.getAccountData();
   $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
-  $scope.userIsAdmin = profileService.hasRole('admin');
+  $scope.selectedProtectedRoles = (profileData.contact && profileData.contact.protectedRoles && profileData.contact.protectedRoles.length) ? profileData.contact.protectedRoles : [];
+
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
   $scope.submitText = !checkinFlow ? gettextCatalog.getString('Update Profile') : gettextCatalog.getString('Check-in');
+
+  $scope.userCanViewAllFields = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
+  $scope.userCanEditProfile = profileService.hasRole('admin') || (profileData.contact && profileData.contact.type === 'local' && (profileService.hasRole('manager', profileData.contact.locationId) || profileService.hasRole('editor', profileData.contact.locationId))) || (checkinFlow && (profileService.hasRole('manager') || profileService.hasRole('editor')));
+  $scope.userCanEditRoles = $scope.userCanViewAllFields;
+  if ($scope.userCanEditRoles) {
+    if (profileService.hasRole('admin', null, profileData) && !profileService.hasRole('admin')) {
+      $scope.userCanEditRoles = false;
+    }
+    if (profileService.hasRole('manager', null, profileData) && !(profileService.hasRole('admin') || profileService.hasRole('manager'))) {
+      $scope.userCanEditRoles = false;
+    }
+    if (profileService.hasRole('editor', null, profileData) && !(profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor'))) {
+      $scope.userCanEditRoles = false;
+    }
+  }
+  $scope.userCanEditKeyContact = profileService.hasRole('admin') || (checkinFlow && profileService.hasRole('manager')) || (profileData.contact && profileData.contact.type === 'local' && profileService.hasRole('manager', profileData.contact.locationId));
+  $scope.userCanEditProtectedRoles = $scope.userCanEditKeyContact;
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.placesOperations = placesOperations;
@@ -340,7 +367,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
     });
   }
-
   $scope.setCountryCode = function() {
     var countryInfo = jQuery('input[name="phone[' + this.$index + '][number]"]').intlTelInput('getSelectedCountryData');
     if (countryInfo && countryInfo.hasOwnProperty('dialCode')) {
@@ -352,9 +378,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if (multiFields[field].length) {
       var valid = !!el;
       for (var reqField in multiFields[field]) {
-        if (!el[multiFields[field][reqField]] || !el[multiFields[field][reqField]].length) {
-          valid = false;
-          break;
+        if (multiFields[field].hasOwnProperty(reqField)) {
+          if (!el[multiFields[field][reqField]] || !el[multiFields[field][reqField]].length) {
+            valid = false;
+            break;
+          }
         }
       };
       return valid;
@@ -371,13 +399,15 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.checkMultiRequireFields = function (field, el) {
     var valid = undefined;
     for (var reqField in multiFields[field]) {
-      var subValid = (!el[multiFields[field][reqField]] || !el[multiFields[field][reqField]].length);
-      if (valid === undefined) {
-        valid = subValid;
-      }
-      else if (subValid != valid) {
-        // Field is incomplete.
-        return false;
+      if (multiFields[field].hasOwnProperty(reqField)) {
+        var subValid = (!el[multiFields[field][reqField]] || !el[multiFields[field][reqField]].length);
+        if (valid === undefined) {
+          valid = subValid;
+        }
+        else if (subValid != valid) {
+          // Field is incomplete.
+          return false;
+        }
       }
     }
     // Field is complete or empty.
@@ -391,10 +421,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       if (multiFields.hasOwnProperty(field) && multiFields[field].length > 1 && $scope.profile[field]) {
         $scope.invalidFields[field] = {};
         for (var index in $scope.profile[field]) {
-
-          if (!$scope.checkMultiRequireFields(field, $scope.profile[field][index])) {
-            $scope.invalidFields[field][index] =  true;
-            allValid = false;
+          if ($scope.profile[field].hasOwnProperty(index)) {
+            if (!$scope.checkMultiRequireFields(field, $scope.profile[field][index])) {
+              $scope.invalidFields[field][index] =  true;
+              allValid = false;
+            }
           }
         };
       }
@@ -448,7 +479,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   }
   $scope.changeFieldEntries = function(field, index, last){
     var validEntry = $scope.checkForValidEntry(field, index);
-
     if (last && validEntry) {
       // Add new field.
       $scope.profile[field].push("");
@@ -592,6 +622,15 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
+  $scope.back = function () {
+    if (history.length) {
+      history.back();
+    }
+    else {
+      $location.path('/dashboard');
+    }
+  };
+
   $scope.submitProfile = function () {
     // Checks for incomplete entries.
     if ($scope.checkAllMultiRequireFields()) {
@@ -617,14 +656,15 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         profile._contact = $scope.profileId;
       }
 
-      if ($scope.userIsAdmin) {
+      if ($scope.userCanEditRoles) {
         profile.adminRoles = $scope.adminRoles;
         profile.verified = $scope.verified;
+        profile.newProtectedRoles = $scope.selectedProtectedRoles;
       }
 
       profileService.saveContact(profile).then(function(data) {
         if (data && data.status && data.status === 'ok') {
-          $location.path('/dashboard');
+          $scope.back();
           profileService.clearData();
         }
         else {
@@ -646,6 +686,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       tmp[vLabel] = v;
       this.push(tmp);
     }, listArray);
+
     return listArray;
   }
 
@@ -669,10 +710,10 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         $scope.defaultPreferredCountryAbbr.push(countryMatch[i].iso2)
       };
       // Converts array to a string.
-      $scope.defaultPreferredCountryAbbr = $scope.defaultPreferredCountryAbbr.join(', ') || "us";
+      $scope.defaultPreferredCountryAbbr = $scope.defaultPreferredCountryAbbr.join(', ') || "ch";
     }
     else {
-      $scope.defaultPreferredCountryAbbr = "us";
+      $scope.defaultPreferredCountryAbbr = "ch";
     }
   }
 
@@ -694,7 +735,8 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
     $scope.contact.location = gettextCatalog.getString('Global');
   }
 
-  $scope.userIsAdmin = profileService.hasRole('admin');
+  $scope.userCanEdit = $scope.userCanCheckIn = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
+  $scope.userCanCheckOut = (contact.type === 'local') && (profileService.hasRole('admin') || profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId));
 
   $scope.back = function () {
     if (history.length) {
@@ -712,6 +754,9 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
       userid: $scope.contact._profile.userid,
       status: 0
     };
+    if (!$scope.userCanCheckOut) {
+      return;
+    }
     profileService.saveContact(contact).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         profileService.clearData();
@@ -724,19 +769,36 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
   };
 });
 
-app.controller("ListCtrl", function($scope, $route, $routeParams, profileService, userData, placesOperations, gettextCatalog) {
+app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, profileService, userData, placesOperations, gettextCatalog, protectedRoles) {
+  var searchKeys = ['bundle','keyContact', 'organization.name', 'protectedRoles', 'role','text','verified'];
+
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
-  $scope.contacts = [];
+  $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.placesOperations = placesOperations;
-  $scope.bundles = [];
-  $scope.contactsPromise;
 
+  $scope.contacts = [];
+  $scope.bundles = [];
+  $scope.organizations = [];
+  $scope.protectedRoles = [];
+
+  $scope.contactsPromise;
+  $scope.query = $location.search();
+  $scope.loadLimit = 30;
+  $scope.contactsCount = 0;
+
+  $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
+  $scope.listComplete = false;
+  $scope.contactsCreated = false;
+
+
+  // Create bundles array.
   if ($scope.locationId !== 'global') {
     for (var place in $scope.placesOperations) {
       if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.locationId)) {
         $scope.location = place;
         $scope.bundles = listObjectToArray($scope.placesOperations[place][$scope.locationId].bundles);
+        $scope.bundles.unshift({action:'clear', value:"", alt:'Groups'});
         break;
       }
     }
@@ -745,8 +807,91 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
     $scope.location = gettextCatalog.getString('Global');
   }
 
+  // Create protected roles array.
+  $scope.protectedRoles = protectedRoles;
+  $scope.protectedRoles.unshift({action:'clear', name:"", id:"", alt:'Title'});
 
-  $scope.submitSearch = function () {
+  $scope.resetSearch = function () {
+    for (var i in searchKeys) {
+      $scope.query[searchKeys[i]] = null;
+    }
+    // Submit search after clearing query to show all.
+    $scope.submitSearch();
+  };
+
+  // Sets sets url params thru $location.search().
+  $scope.submitSearch = function(){
+    var query = $scope.query,
+        sObj = {};
+
+    for (var i in searchKeys) {
+      if (query[searchKeys[i]]) {
+        sObj[searchKeys[i]] = query[searchKeys[i]]
+      }
+    }
+    // Close sidebar on mobile.
+    sidebarOptions = false;
+
+    $location.search(sObj);
+  }
+
+  // Autocomplete call for Orgs
+  $scope.refreshOrganization = function(select, lengthReq) {
+    var clearOption = {action:'clear', name:"", alt:'Organizations'};
+
+    // Remove text in parentheses.
+    select.search = select.search.replace(/ *\([^)]*\) */g, "");
+
+    if (select.search.length > (lengthReq || 0)) {
+      $http.get($scope.hrinfoBaseUrl + '/hid/organizations/autocomplete/' + encodeURIComponent(select.search))
+        .then(function(response) {
+          $scope.organizations = [];
+          angular.forEach(response.data, function(value, key) {
+            this.push({'name': value, 'remote_id': key});
+          }, $scope.organizations);
+          if ($scope.organizations.length) {
+            $scope.organizations.unshift(clearOption);
+          }
+        });
+    }
+    else {
+      $scope.organizations = [];
+      if (typeof $scope.query['organization.name'] !== 'undefined' && $scope.query['organization.name'].length) {
+        $scope.organizations.push(clearOption);
+      }
+    }
+  };
+
+  $scope.onSelect = function(item, qProp) {
+    if (item.action === "clear") {
+      $scope.query[qProp] = undefined;
+    }
+    // Search upon changing filter.
+    $scope.submitSearch();
+  }
+
+  $scope.loadMoreContacts = function(inview, inviewpart) {
+    // Don't do anything if elem not completely visible
+    if (!inview || inviewpart !== 'both') {
+      return;
+    }
+
+    if ($scope.contacts.length >= ($scope.contactsCount+$scope.loadLimit)) {
+      $scope.contactsCount = $scope.contacts.length;
+      createContactList();
+    }
+    else {
+      $scope.listComplete = true;
+    }
+  }
+
+  createContactList();
+  if ($scope.query['organization.name']) {
+    $scope.refreshOrganization({search:$scope.query['organization.name']})
+  }
+
+  // Builds the list of contacts.
+  function createContactList() {
     var query = $scope.query;
     if ($scope.locationId === 'global') {
       query.type = 'global';
@@ -758,35 +903,16 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
     query.verified = query.verified ? true : null;
     query.keyContact = query.keyContact ? true : null;
     query.status = 1;
+    query.limit = $scope.loadLimit;
+    query.skip = $scope.contactsCount;
+
     $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
       if (data && data.status && data.status === 'ok') {
-        $scope.contacts = data.contacts || [];
+        data.contacts = data.contacts || [];
+        $scope.contacts = $scope.contacts.concat(data.contacts);
+        $scope.contactsCreated = true;
       }
     });
-    sidebarOptions = false;
-  };
-
-  $scope.resetSearch = function () {
-    $scope.query = {
-      text: '',
-      bundle: '',
-      role: ''
-    };
-    // Submit search after clearing query to show all.
-    $scope.submitSearch();
-  };
-
-  $scope.$on('breakpointChange', function(event, breakpoint, oldClass) {
-    if ($scope.breakpoint.class !== 'smallscreen' && !$scope.contacts.length) {
-      $scope.submitSearch();
-    }
-  });
-
-  $scope.resetSearch();
-
-  // Fire off search if larger screen size.
-  if ($scope.breakpoint.class !== 'smallscreen') {
-    $scope.submitSearch();
   }
 
   // Converts object to a sortable array.
@@ -797,6 +923,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, profileService
     }, listArray);
     return listArray;
   }
+
 });
 
 app.config(function($routeProvider, $locationProvider) {
@@ -885,6 +1012,9 @@ app.config(function($routeProvider, $locationProvider) {
       },
       roles : function(profileService) {
         return profileService.getRoles();
+      },
+      protectedRoles : function(profileService) {
+        return profileService.getProtectedRoles();
       }
     }
   }).
@@ -975,6 +1105,9 @@ app.config(function($routeProvider, $locationProvider) {
       },
       roles : function(profileService) {
         return profileService.getRoles();
+      },
+      protectedRoles : function(profileService) {
+        return profileService.getProtectedRoles();
       }
     }
   }).
@@ -1007,6 +1140,9 @@ app.config(function($routeProvider, $locationProvider) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
+      },
+      protectedRoles : function(profileService) {
+        return profileService.getProtectedRoles();
       }
     }
   }).
@@ -1095,7 +1231,8 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     hasRole: hasRole,
     getCountries: getCountries,
     getAdminArea: getAdminArea,
-    getRoles: getRoles
+    getRoles: getRoles,
+    getProtectedRoles: getProtectedRoles
   });
 
   // Get app data.
@@ -1235,6 +1372,11 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   function getAdminArea(country_id) {
     var promise;
 
+    if (!country_id) {
+      promise = $q.defer();
+      promise.resolve(null);
+      return promise.promise;
+    }
     promise = $http({
       method: "get",
       url: contactsId.hrinfoBaseUrl + "/hid/locations/" + country_id
@@ -1275,10 +1417,28 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     return promise;
   }
 
+  function getProtectedRoles() {
+    var promise;
+
+    promise = $http({
+      method: "get",
+      url: contactsId.profilesBaseUrl + "/v0/app/data",
+      params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
+    })
+    .then(handleSuccess, handleError).then(function(data) {
+      return data.protectedRoles;
+    });
+
+    return promise;
+  }
+
   // Returns true/false for whether the user has/doesn't have the specified
   // role. Assumes the user profile data is loaded.
-  function hasRole(role) {
-    return (cacheUserData && cacheUserData.profile && cacheUserData.profile.roles && cacheUserData.profile.roles.length && cacheUserData.profile.roles.indexOf(role) !== -1);
+  function hasRole(role, subrole, profile) {
+    var matchString = (subrole && subrole.length) ? "^" + role + ":" + subrole + "$" : "^" + role;
+      match = new RegExp(matchString),
+      data = profile || cacheUserData;
+    return (data && data.profile && data.profile.roles && data.profile.roles.length && data.profile.roles.reIndexOf(match) !== -1);
   }
 
   function handleError(response) {
@@ -1294,11 +1454,30 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     return ($q.reject(response.data.message));
   }
 
-
   function handleSuccess(response) {
     return (response.data);
   }
 
 });
+
+/**
+ * Regular Expresion IndexOf for Arrays
+ * This little addition to the Array prototype will iterate over array
+ * and return the index of the first element which matches the provided
+ * regular expresion.
+ * Note: This will not match on objects.
+ * @param  {RegEx}   rx The regular expression to test with. E.g. /-ba/gim
+ * @return {Numeric} -1 means not found
+ */
+if (typeof Array.prototype.reIndexOf === 'undefined') {
+  Array.prototype.reIndexOf = function (rx) {
+    for (var i in this) {
+      if (this[i].toString().match(rx)) {
+        return i;
+      }
+    }
+    return -1;
+  };
+}
 
 }(jQuery, angular, window.contactsId));

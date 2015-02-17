@@ -5,7 +5,7 @@
 <div ng-show="!isRouteLoading">
   <div class="row">
     <div class="active-countries col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3" ng-hide="selectedPlace.length">
-      <div class="back-link"><a class="btn btn-warning btn-sm" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a></div>
+      <div class="back-link"><button class="btn btn-warning btn-sm" ng-click="back()"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></button></div>
       <h3 translate>Select a country</h3>
       <ul class="active-countries-container list-group">
         <li class="country-item list-group-item" ng-repeat="(pKey, place) in availPlacesOperations | orderBy: 'place'">
@@ -28,7 +28,8 @@
     </div>
   </div>
 
-  <form class="update-profile profile-form row" ng-show="selectedPlace.length && selectedOperation.length">
+
+  <form class="update-profile profile-form row" ng-show="selectedPlace.length && selectedOperation.length" ng-class="{'show-options': profileOptions}">
     <div class="form-content col-xs-12 col-sm-8 col-md-9 pull-right" >
       <h3>{{profileName}} <span translate>Profile</span></h3>
       <div class="row alert-wrapper">
@@ -245,40 +246,56 @@
         </div>
       </div>
 
+  <!-- Does "Notes" section within "Notes" section make sense? -->
+
       <div class="row">
         <div class="col-sm-12">
           <h4 translate>Notes</h4>
           <div class="form-group">
-            <label class="control-label" for="notes" translate>Notes</label>
             <textarea class="form-control" name="notes" ng-model="profile.notes" rows="2"></textarea>
           </div>
         </div>
       </div>
 
+
+
       <div class="row">
-        <div class="col-sm-12  col-md-6 operations" ng-show="userIsAdmin">
+        <div class="col-sm-12" ng-show="userCanEditProtectedRoles">
+          <h4 translate>Protected Roles</h4>
+          <div class="form-group">
+            <select class="form-control" name="selectedProtectedRoles" multiple ng-model="selectedProtectedRoles" ng-options="protectedRole.id as protectedRole.name for protectedRole in protectedRoles">
+              <option value=""></option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+<!-- Should we put a new section for all "Admin" privliges? -->
+
+      <div class="row">
+        <div class="col-sm-12 col-md-6 operations" ng-show="userCanEditKeyContact">
           <h4 translate>Local Administration</h4>
           <div class="checkbox">
-            <label for="keyContact" ng-click="profile.keyContact = !profile.keyContact"><input type="checkbox" name="keyContact" ng-model="profile.keyContact" /><span translate>Key Contact</span></label>
+            <label for="keyContact" ng-click="profile.keyContact = !profile.keyContact"><input type="checkbox" name="keyContact" ng-model="profile.keyContact" ng-click="profile.keyContact = !profile.keyContact"/><span translate>Key Contact</span></label>
           </div>
         </div>
 
-        <div class="col-sm-12  col-md-6 operations" ng-show="userIsAdmin">
+        <div class="col-sm-12 col-md-6 operations" ng-show="userCanViewAllFields">
           <h4 translate>Global Administration</h4>
           <div class="form-group">
             <label class="control-label" for="adminRoles" translate>Admin Privileges</label>
-            <select class="form-control" name="adminRoles" multiple ng-model="adminRoles" ng-options="role.id as role.name for role in adminRoleOptions">
+            <select class="form-control" name="adminRoles" multiple ng-model="adminRoles" ng-options="role.id as role.name for role in adminRoleOptions" ng-disabled="!userCanEditRoles">
               <option value=""></option>
             </select>
           </div>
           <div class="checkbox">
-            <label for="verified" ng-click="verified = !verified"><input type="checkbox" name="verified" ng-model="verified" /><span translate>Verified Responder</span></label>
+            <label for="verified" ng-click="verified = !verified"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="!userCanEditProfile" ng-readonly="!userCanEditProfile" ng-click="verified = !verified"/><span translate>Verified Responder</span></label>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="sidebar-left" ng-class="{'show-options': profileOptions}">
+    <div class="sidebar-left">
       <div ng-show="!isRouteLoading">
         <div class="visible-xs">
           <div class="bottom-fixed-btn" role="presentation">
@@ -289,7 +306,7 @@
       <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
         <div class="actions">
           <a class="btn btn-default btn-lg btn-block" href="{{logoutPath}}" translate>Logout</a>
-          <a class="btn btn-default btn-lg btn-block" href="#/dashboard"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a>
+          <button class="btn btn-default btn-lg btn-block" ng-click="back()"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></button>
           <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitProfile()" value="{{submitText}}" />
         </div>
       </div>
