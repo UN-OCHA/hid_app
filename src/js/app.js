@@ -770,7 +770,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
 
   $scope.generateVcard = function () {
     var vcard = "BEGIN:VCARD\n" +
-      "VERSION:4.0\n" +
+      "VERSION:3.0\n" +
       "N:" + contact.nameFamily + ";" + contact.nameGiven + ";;;\n" +
       "FN:" + contact.nameGiven + " " + contact.nameFamily + "\n";
     if (contact.organization[0] && contact.organization[0].name) {
@@ -781,7 +781,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
     }
     angular.forEach(contact.phone, function (item) {
       if (item.type && item.number) {
-        vcard += "TEL;TYPE=" + item.type + ";VALUE=uri:tel:" + item.number + "\n";
+        vcard += "TEL;TYPE=" + item.type + ",VOICE:" + item.number + "\n";
       }
     });
     angular.forEach(contact.email, function (item) {
