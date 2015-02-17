@@ -378,9 +378,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if (multiFields[field].length) {
       var valid = !!el;
       for (var reqField in multiFields[field]) {
-        if (!el[multiFields[field][reqField]] || !el[multiFields[field][reqField]].length) {
-          valid = false;
-          break;
+        if (multiFields[field].hasOwnProperty(reqField)) {
+          if (!el[multiFields[field][reqField]] || !el[multiFields[field][reqField]].length) {
+            valid = false;
+            break;
+          }
         }
       };
       return valid;
@@ -397,13 +399,15 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.checkMultiRequireFields = function (field, el) {
     var valid = undefined;
     for (var reqField in multiFields[field]) {
-      var subValid = (!el[multiFields[field][reqField]] || !el[multiFields[field][reqField]].length);
-      if (valid === undefined) {
-        valid = subValid;
-      }
-      else if (subValid != valid) {
-        // Field is incomplete.
-        return false;
+      if (multiFields[field].hasOwnProperty(reqField)) {
+        var subValid = (!el[multiFields[field][reqField]] || !el[multiFields[field][reqField]].length);
+        if (valid === undefined) {
+          valid = subValid;
+        }
+        else if (subValid != valid) {
+          // Field is incomplete.
+          return false;
+        }
       }
     }
     // Field is complete or empty.
@@ -417,10 +421,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       if (multiFields.hasOwnProperty(field) && multiFields[field].length > 1 && $scope.profile[field]) {
         $scope.invalidFields[field] = {};
         for (var index in $scope.profile[field]) {
-
-          if (!$scope.checkMultiRequireFields(field, $scope.profile[field][index])) {
-            $scope.invalidFields[field][index] =  true;
-            allValid = false;
+          if ($scope.profile[field].hasOwnProperty(index)) {
+            if (!$scope.checkMultiRequireFields(field, $scope.profile[field][index])) {
+              $scope.invalidFields[field][index] =  true;
+              allValid = false;
+            }
           }
         };
       }
@@ -474,7 +479,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   }
   $scope.changeFieldEntries = function(field, index, last){
     var validEntry = $scope.checkForValidEntry(field, index);
-
     if (last && validEntry) {
       // Add new field.
       $scope.profile[field].push("");
