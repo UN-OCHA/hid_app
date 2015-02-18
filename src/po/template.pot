@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-02-16T20:08:13.557Z\n"
+"Project-Id-Version: 2015-02-18T23:16:12.876Z\n"
 
 #: src/partials/header.html
 #: src/partials/index.html
@@ -78,6 +78,14 @@ msgstr ""
 msgid "Dashboard Options"
 msgstr ""
 
+#: src/partials/browser-alert.html
+msgid "Download Google Chrome"
+msgstr ""
+
+#: src/partials/browser-alert.html
+msgid "Download Mozilla Firefox"
+msgstr ""
+
 #: src/partials/dashboard.html
 msgid "Edit Global Profile"
 msgstr ""
@@ -104,6 +112,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Family Name"
+msgstr ""
+
+#: src/partials/browser-alert.html
+msgid "For security and performance, this is built to run in Internet Explorer 10 and above, Apple Safari, Google Chrome, or Mozilla Firefox."
 msgstr ""
 
 #: src/partials/dashboard.html
