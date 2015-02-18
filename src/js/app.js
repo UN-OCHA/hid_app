@@ -183,6 +183,8 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   $scope.globalProfileId = globalProfileId;
   $scope.userData = userData;
 
+  $scope.userCanCreateAccount = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
+
   $scope.checkout = function (cid) {
     var contact = {
       _id: cid,
@@ -202,21 +204,24 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("CreateAccountCtrl", function($scope, $route, $http, profileService, placesOperations, globalProfileId, userData) {
+app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, profileService, placesOperations, globalProfileId, userData) {
   $scope.logoutPath = '/#logout';
   $scope.globalProfileId = globalProfileId;
   $scope.userData = userData;
   $scope.organizations = [];
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
-  //$scope.query = $location.search();
-
+  $scope.orphanConfirm = false;
+  $scope.ghostConfirm = false;
+  $scope.confirmMessage = "";
+  $scope.account = {};
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.placesOperations = placesOperations;
   var availPlacesOperations = angular.copy(placesOperations);
-  //
   // Convert list into an array that can be sorted
   $scope.availPlacesOperations = listObjectToArray(availPlacesOperations, 'place', 'operations');
+
+  $scope.userCanViewAllFields = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
 
   $scope.checkout = function (cid) {
     var contact = {
@@ -244,6 +249,36 @@ app.controller("CreateAccountCtrl", function($scope, $route, $http, profileServi
       $location.path('/dashboard');
     }
   };
+
+
+  $scope.createAccount = function () {
+    //Check to see if the account already exists
+    $scope.submitted = false;
+
+    if ($scope.createAccountForm.$valid) {
+       //Submit as normal
+       var name = $scope.account.nameGiven + " " + $scope.account.nameFamily;
+
+       if ($scope.account.email){
+         $scope.confirmMessage = name + "will receive and email to claim their account."
+         $scope.orphanConfirm = true;
+       }
+       else{
+         $scope.ghostWarning = true;
+         
+        //
+        //  $scope.confirmMessage = name + "will be added to the contact list. They will not be able to claim their account."
+        //  $scope.ghostConfirm = true;
+       }
+     } else {
+        $scope.submitted = true;
+     }
+
+
+
+
+  };
+
 
   // Converts object to a sortable array.
   function listObjectToArray(obj, kLabel, vLabel) {
@@ -283,6 +318,14 @@ app.controller("CreateAccountCtrl", function($scope, $route, $http, profileServi
     if (item.action === "clear") {
       $scope.query[qProp] = undefined;
     }
+  }
+
+  $scope.resetAccount = function(){
+    $scope.account = {};
+    $scope.orphanConfirm = false;
+    $scope.ghostConfirm = false;
+    $location.path('/createaccount');
+
   }
 
 });

@@ -3,60 +3,120 @@
 </div>
 
 <div ng-show="!isRouteLoading">
+  <form name="createAccountForm" novalidate ng-submit="createAccount()" >
+    <div class="row">
+      <div class="account-create  col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3" ng-hide='orphanConfirm || ghostConfirm'  >
+
+        <div class="form-group">
+          <label class="control-label-light small" translate>* Required Field</label>
+          <label class="control-label-light small" translate>** Highly Encouraged Field</label>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="location" translate>* Crisis</label>
+          <select class="form-control" name="location" ng-model="profile.location" ng-options="item.place for item in availPlacesOperations | orderBy:'place'" ng-blur="focus=0" focus-field="focus" required ng-class="{invalid: submitted && createAccountForm.location.$invalid}">
+              <option value=""></option>
+          </select>
+          <div class="error" ng-show="createAccountForm.location.$error.required && submitted">
+            Crisis is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="nameGiven" translate>* Given Name</label>
+          <input class="form-control" type="text" name="nameGiven" ng-model="account.nameGiven" required  ng-class="{invalid: submitted && createAccountForm.nameGiven.$invalid }"/>
+
+          <div class="error" ng-show="createAccountForm.nameGiven.$error.required && submitted">
+            Given Name is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="nameFamily" translate>* Family Name</label>
+          <input class="form-control" type="text" name="nameFamily" ng-model="account.nameFamily" required  ng-class="{invalid: submitted && createAccountForm.nameFamily.$invalid }"/>
+          <div class="error" ng-show="createAccountForm.nameFamily.$error.required && submitted">
+            Family Name is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="jobtitle" translate>* Title</label>
+          <input class="form-control" type="text" name="jobtitle" ng-model="account.jobtitle" required  ng-class="{invalid: submitted && createAccountForm.jobtitle.$invalid }"/>
+          <div class="error" ng-show="createAccountForm.jobtitle.$error.required && submitted">
+            Title is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="organization" translate>* Organization</label>
+          <ui-select
+            required
+            class="form-controls selectize-light"
+            name="organization"
+            ng-model="query['account.organization.name']"
+            theme="selectize"
+            reset-search-input="true"
+            ng-class="{invalid: submitted && createAccountForm.organization.$invalid }"
+            on-select="onSelect($item, 'organization.name')">
+              <ui-select-match placeholder="{{'Search for organization'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices ng-class="{'not-empty': organizations.length}" repeat="org.name as org in organizations | orderBy:'name'" refresh="refreshOrganization($select, 2)" refresh-delay="200">
+                <div ng-bind-html="org.alt || (org.name | highlight: $select.search) "></div>
+              </ui-select-choices>
+          </ui-select>
+
+          <div class="error" ng-show="createAccountForm.organization.$error.required && submitted">
+            Organization is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="phone" translate>Phone</label>
+          <input class="form-control" type="text" name="phone" ng-model="account.phone" />
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="email" translate>** Email</label>
+          <input class="form-control" type="text" name="email" ng-model="account.email" />
+        </div>
+
+        <button class="btn btn-default btn-lg btn-block" type="submit">Create Account</button>
+      </div>
+  </div>
+  </form>
+
   <div class="row">
-    <div class="account-create  col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3" ng-show='ghostWarning' >
+      <div class="ghost-warning" >
+        <p class="control-label">{{warningMessage}}</p>
+        <!-- <a class="btn btn-primary btn-lg btn-block" href="#/profile/{{newProfileID}}" >
+          <i class="entypo chevron-thin-right"></i> <span translate>Edit New Account</span>
+        </a>
+        <a class="btn btn-default btn-lg btn-block" href="#/dashboard"  >
+          <i class="entypo chevron-thin-right"></i> <span translate>Create New Account</span>
+        </a>
+        <a class="btn btn-primary btn-lg btn-block"  ng-click="resetAccount()">
+          <i class="entypo chevron-thin-right"></i> <span translate></span>
+        </a> -->
 
-      <div class="form-group">
-        <label class="control-label-light" for="nameGiven" translate>Crisis</label>
-        <select class="form-control" name="location" ng-model="profile.location"    ng-options="item.place for item in availPlacesOperations | orderBy:'place'" ng-blur="focus=0" focus-field="focus">
-            <option value=""></option>
-        </select>
       </div>
-
-      <div class="form-group">
-        <label class="control-label-light" for="nameGiven" translate>Given Name</label>
-        <input class="form-control" type="text" name="nameGiven" ng-model="profile.nameGiven" />
-      </div>
-
-      <div class="form-group">
-        <label class="control-label-light" for="nameFamily" translate>Family Name</label>
-        <input class="form-control" type="text" name="nameFamily" ng-model="profile.nameFamily" />
-      </div>
-
-      <div class="form-group">
-        <label class="control-label-light" for="jobtitle" translate>Title</label>
-        <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" />
-      </div>
-
-      <div class="form-group">
-        <label class="control-label element-invisible" for="organization" translate>Organization</label>
-        <ui-select
-          class="form-control"
-          name="organization"
-          ng-model="query['organization.name']"
-          theme="selectize"
-          reset-search-input="true"
-          on-select="onSelect($item, 'organization.name')">
-            <ui-select-match placeholder="{{'Search for organization'|translate}}">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices ng-class="{'not-empty': organizations.length}" repeat="org.name as org in organizations | orderBy:'name'" refresh="refreshOrganization($select, 2)" refresh-delay="200">
-              <div ng-bind-html="org.alt || (org.name | highlight: $select.search) "></div>
-            </ui-select-choices>
-        </ui-select>
-      </div>
-
-      <div class="form-group">
-        <label class="control-label-light" for="jobtitle" translate>Phone</label>
-        <input class="form-control" type="text" name="jobtitle" ng-model="profile.phone" />
-      </div>
-
-      <div class="form-group">
-        <label class="control-label-light" for="jobtitle" translate>Email</label>
-        <input class="form-control" type="text" name="jobtitle" ng-model="profile.email" />
-      </div>
-
-      <a class="btn btn-default btn-lg btn-block" ng-click="back()">
-        <i class="entypo chevron-thin-right"></i> <span translate>Create Account</span>
-      </a>
     </div>
   </div>
+
+  <!-- <div class="row">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4" ng-show='orphanConfirm || ghostConfirm' >
+      <div class="orphan-confirm" >
+        <p class="control-label">{{confirmMessage}}</p>
+        <a class="btn btn-primary btn-lg btn-block" href="#/profile/{{newProfileID}}" >
+          <i class="entypo chevron-thin-right"></i> <span translate>Edit New Account</span>
+        </a>
+        <a class="btn btn-default btn-lg btn-block" href="#/dashboard"  >
+          <i class="entypo chevron-thin-right"></i> <span translate>Create New Account</span>
+        </a>
+        <a class="btn btn-primary btn-lg btn-block"  ng-click="resetAccount()">
+          <i class="entypo chevron-thin-right"></i> <span translate></span>
+        </a>
+
+      </div>
+    </div>
+  </div> -->
 </div>

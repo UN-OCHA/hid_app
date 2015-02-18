@@ -1,0 +1,38 @@
+#contactsid-app-view .account-create {
+  background: #54b1c8;
+  padding: 20px 40px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+}
+
+#contactsid-app-view .account-create  .back-link {
+  float: right;
+  margin-bottom:30px;
+}
+
+.container .control-label-light {
+  font-weight: normal;
+  color: #fff;
+  display: block;
+  text-align: left;
+}
+
+.container .control-label-red {
+  font-weight: bold;
+  color: red;
+  display: block;
+  text-align: left;
+}
+
+.container .control-label-light small{
+  font-size:8px;
+}
+
+.error{
+  color:red;
+}
+
+.invalid{
+  border: 1px solid red;
+}

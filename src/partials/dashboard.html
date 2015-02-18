@@ -75,7 +75,7 @@
         <a class="btn btn-primary btn-lg btn-block hidden-xs" href="#/checkin" ng-show="globalProfileId.length">
           <i class="entypo chevron-thin-right"></i> <span translate>Check-in</span>
         </a>
-        <a class="btn btn-primary btn-lg btn-block hidden-xs" href="#/createaccount" >
+        <a class="btn btn-primary btn-lg btn-block hidden-xs" href="#/createaccount"  ng-show="userCanCreateAccount" >
           <i class="entypo chevron-thin-right"></i> <span translate>Create New Account</span>
         </a>
         <a class="btn btn-primary btn-lg btn-block" ng-show="!globalProfileId.length" href="#/profile/{{globalProfileId}}">
