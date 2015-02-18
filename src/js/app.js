@@ -795,7 +795,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
   };
 });
 
-app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, profileService, userData, placesOperations, gettextCatalog, protectedRoles) {
+app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, authService, profileService, userData, placesOperations, gettextCatalog, protectedRoles) {
   var searchKeys = ['bundle','keyContact', 'organization.name', 'protectedRoles', 'role','text','verified'];
 
   $scope.location = '';
@@ -817,6 +817,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   $scope.listComplete = false;
   $scope.contactsCreated = false;
 
+  $scope.userCanExportContacts = profileService.hasRole('admin') || ($scope.locationId && (profileService.hasRole('manager', $scope.locationId) || profileService.hasRole('editor', $scope.locationId)));
 
   // Create bundles array.
   if ($scope.locationId !== 'global') {
@@ -859,6 +860,15 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
     sidebarOptions = false;
 
     $location.search(sObj);
+  }
+
+  $scope.exportSearch = function() {
+    var query = $scope.query;
+    query.access_token = authService.getAccessToken();
+    query.export = 'csv';
+    query.limit = 0;
+    query.skip = 0;
+    window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppCSV');
   }
 
   // Autocomplete call for Orgs
