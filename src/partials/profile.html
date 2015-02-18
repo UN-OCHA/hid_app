@@ -276,7 +276,7 @@
         <div class="col-sm-12 col-md-6 operations" ng-show="userCanEditKeyContact">
           <h4 translate>Local Administration</h4>
           <div class="checkbox">
-            <label for="keyContact" ng-click="profile.keyContact = !profile.keyContact"><input type="checkbox" name="keyContact" ng-model="profile.keyContact" /><span translate>Key Contact</span></label>
+            <label for="keyContact" ng-click="profile.keyContact = !profile.keyContact"><input type="checkbox" name="keyContact" ng-model="profile.keyContact" ng-click="profile.keyContact = !profile.keyContact"/><span translate>Key Contact</span></label>
           </div>
         </div>
 
@@ -289,7 +289,7 @@
             </select>
           </div>
           <div class="checkbox">
-            <label for="verified" ng-click="verified = !verified"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="!userCanEditProfile" ng-readonly="!userCanEditProfile" /><span translate>Verified Responder</span></label>
+            <label for="verified" ng-click="verified = !verified"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="!userCanEditProfile" ng-readonly="!userCanEditProfile" ng-click="verified = !verified"/><span translate>Verified Responder</span></label>
           </div>
         </div>
       </div>

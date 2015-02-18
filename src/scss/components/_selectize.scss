@@ -369,6 +369,7 @@
 }
 
 .selectize-input > input {
+  display: inline-block;
   max-width: 100% !important;
   max-height: none !important;
   min-height: 0 !important;
@@ -442,6 +443,10 @@
   }
   .create {
     color: rgba(51, 51, 51, 0.5);
+  }
+
+  .ui-select-choices-row .default {
+    color: lighten($primary-color-1, 30%);
   }
 }
 
