@@ -64,7 +64,6 @@ app.directive('browserAlert', function() {
       _browser.version = '';
 
       for (x in _browser) {
-        console.log('x = ', x)
         if (_browser[x]) {
           match = uagent.match(new RegExp("(" + x + ")( |/)([0-9]+)"));
           if (match) {
