@@ -9148,6 +9148,15 @@ label[for=keyContact] .fa {
   padding-bottom: 99999px;
 }
 
+.compatibility-alert {
+  margin-top: 50px;
+}
+@media (min-width: 1px) {
+  .compatibility-alert {
+    display: none;
+  }
+}
+
 .btn-lg, .btn-group-lg > .btn, .btn-md, .btn-sm, .btn-group-sm > .btn {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
