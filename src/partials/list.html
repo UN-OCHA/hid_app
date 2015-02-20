@@ -6,6 +6,8 @@
 
 <div class="main row page-list" ng-class="{'show-options': sidebarOptions}">
   <div class="active-contacts col-xs-12 col-sm-8 col-md-9 pull-right">
+    <browser-alert></browser-alert>
+
     <form class="search-form">
       <div class="form-group">
         <label class="control-label element-invisible" for="text" translate>Search</label>
@@ -106,6 +108,7 @@
 
         <div class="form-group">
           <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitSearch()" value="{{'Search'|translate}}"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" ng-show="userCanExportContacts" value="{{'Export Results'|translate}}"/>
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="resetSearch()" value="{{'Reset Filters'|translate}}"/>
         </div>
       </form>

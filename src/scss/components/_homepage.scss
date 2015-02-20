@@ -3,7 +3,15 @@
   #contactsid-app-view {
     margin: -20px auto 0;
     padding: 0;
-    width: 100%;;
+    width: 100%;
+    background: #55b1c8;
+    background: -moz-linear-gradient(top, #55b1c8 0%, #45a3bd 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#55b1c8), color-stop(100%,#45a3bd));
+    background: -webkit-linear-gradient(top, #55b1c8 0%,#45a3bd 100%);
+    background: -o-linear-gradient(top, #55b1c8 0%,#45a3bd 100%);
+    background: -ms-linear-gradient(top, #55b1c8 0%,#45a3bd 100%);
+    background: linear-gradient(to bottom, #55b1c8 0%,#45a3bd 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#55b1c8', endColorstr='#45a3bd',GradientType=0 );
   }
   .logo-bar {
     display: none;
@@ -15,59 +23,26 @@
 
 .homepage{
   height: 100vh;
-  background: #55b1c8;
-  background: -moz-linear-gradient(top, #55b1c8 0%, #45a3bd 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#55b1c8), color-stop(100%,#45a3bd));
-  background: -webkit-linear-gradient(top, #55b1c8 0%,#45a3bd 100%);
-  background: -o-linear-gradient(top, #55b1c8 0%,#45a3bd 100%);
-  background: -ms-linear-gradient(top, #55b1c8 0%,#45a3bd 100%);
-  background: linear-gradient(to bottom, #55b1c8 0%,#45a3bd 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#55b1c8', endColorstr='#45a3bd',GradientType=0 );
+
   color: #cbeef3;
   font-size: 13px;
   line-height: 1.5;
   .homepage-wrapper{
-    width: auto;
-    max-width: 555px;
-    margin: 0 auto 0;
-    padding-top: 100px;
+    padding-top: 150px;
+    @media (min-width: $screen-sm) {
+      padding-top: 100px;
+    }
     h2 {
       text-align: center;
-      margin: 0 0 12px;
+      margin: 0 0 20px;
     }
     .info {
-      float: left;
-      width: 48%;
       text-align: right;
-      margin-right: 10px;
-    }
-    .actions {
-      width: 50%;
-      float: none;
-      margin: 40px auto 0;
-      @media (min-width: 640px) {
-        float: right;
-      }
-
-    }
-
-    .info {
-      display: none;
     }
 
     .info:after {
       content: "";
       display: table;
-    }
-
-    @media (min-width: 640px) {
-      .info {
-        display: block;
-        float: left;
-        margin: 15px 13px 0 60px;
-        width: 259px;
-        text-align: right;
-      }
     }
     .btn {
       position: relative;
@@ -122,14 +97,6 @@
     .buttons:after {
       content: "";
       display: table;
-    }
-
-    @media (min-width: 640px) {
-      .buttons {
-        margin-top: 15px;
-        float: left;
-        width: 213px;
-      }
     }
   }
 }

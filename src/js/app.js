@@ -46,6 +46,54 @@ app.directive('routeLoadingIndicator', function($rootScope) {
   };
 });
 
+app.directive('browserAlert', function() {
+  return {
+    restrict: 'E',
+    templateUrl: contactsId.sourcePath + '/partials/browser-alert.html',
+    replace: true,
+    link: function(scope) {
+      var uagent = navigator.userAgent.toLowerCase(),
+      match = '',
+      _browser = {};
+
+      _browser.chrome  = /webkit/.test(uagent)  && /chrome/.test(uagent);
+      _browser.firefox = /mozilla/.test(uagent) && /firefox/.test(uagent);
+      _browser.msie    = /msie/.test(uagent)    || /trident/.test(uagent);
+      _browser.safari  = /safari/.test(uagent)  && /applewebkit/.test(uagent) && !/chrome/.test(uagent);
+      _browser.opr     = /mozilla/.test(uagent) && /applewebkit/.test(uagent) &&  /chrome/.test(uagent) && /safari/.test(uagent) && /opr/.test(uagent);
+      _browser.version = '';
+
+      for (x in _browser) {
+        if (_browser[x]) {
+          match = uagent.match(new RegExp("(" + x + ")( |/)([0-9]+)"));
+          if (match) {
+            _browser.version = match[3];
+          } else {
+            match = uagent.match(new RegExp("rv:([0-9]+)"));
+            if (match) {
+              _browser.version = match[1];
+            }
+          }
+          break;
+        }
+      }
+
+      _browser.opera = scope.opr;
+      delete _browser.opr;
+      scope.version = _browser.version;
+      if( _browser.chrome
+        || _browser.firefox
+        || _browser.safari
+        || (_browser.msie && parseFloat(_browser.version) && parseFloat(_browser.version) >= 10)) {
+        scope.supported = true;
+      }
+      else {
+        scope.supported = false;
+      }
+    }
+  };
+});
+
 app.run(function ($rootScope, $location, $window, authService) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
@@ -767,9 +815,35 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
       }
     });
   };
+
+  $scope.generateVcard = function () {
+    var vcard = "BEGIN:VCARD\n" +
+      "VERSION:3.0\n" +
+      "N:" + contact.nameFamily + ";" + contact.nameGiven + ";;;\n" +
+      "FN:" + contact.nameGiven + " " + contact.nameFamily + "\n";
+    if (contact.organization[0] && contact.organization[0].name) {
+      vcard += "ORG:" + contact.organization[0].name + "\n";
+    }
+    if (contact.jobtitle) {
+      vcard += "TITLE:" + contact.jobtitle + "\n";
+    }
+    angular.forEach(contact.phone, function (item) {
+      if (item.type && item.number) {
+        vcard += "TEL;TYPE=" + item.type + ",VOICE:" + item.number + "\n";
+      }
+    });
+    angular.forEach(contact.email, function (item) {
+      if (item.address) {
+        vcard += "EMAIL:" + item.address + "\n";
+      }
+    });
+    vcard += "REV:" + new Date().toISOString() + "\n" +
+      "END:VCARD\n";
+    window.location.href = 'data:text/vcard;charset=UTF-8,' + encodeURIComponent(vcard);
+  };
 });
 
-app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, profileService, userData, placesOperations, gettextCatalog, protectedRoles) {
+app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, authService, profileService, userData, placesOperations, gettextCatalog, protectedRoles) {
   var searchKeys = ['bundle','keyContact', 'organization.name', 'protectedRoles', 'role','text','verified'];
 
   $scope.location = '';
@@ -791,6 +865,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   $scope.listComplete = false;
   $scope.contactsCreated = false;
 
+  $scope.userCanExportContacts = profileService.hasRole('admin') || ($scope.locationId && (profileService.hasRole('manager', $scope.locationId) || profileService.hasRole('editor', $scope.locationId)));
 
   // Create bundles array.
   if ($scope.locationId !== 'global') {
@@ -833,6 +908,15 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
     sidebarOptions = false;
 
     $location.search(sObj);
+  }
+
+  $scope.exportSearch = function() {
+    var query = $scope.query;
+    query.access_token = authService.getAccessToken();
+    query.export = 'csv';
+    query.limit = 0;
+    query.skip = 0;
+    window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppCSV');
   }
 
   // Autocomplete call for Orgs

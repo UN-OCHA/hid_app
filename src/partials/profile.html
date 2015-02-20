@@ -33,6 +33,7 @@
     <div class="form-content col-xs-12 col-sm-8 col-md-9 pull-right" >
       <h3>{{profileName}} <span translate>Profile</span></h3>
       <div class="row alert-wrapper">
+        <browser-alert></browser-alert>
         <div ng-repeat="(type, fields) in invalidFields" >
           <div class="alert alert-danger col-xs-12" role="alert" ng-repeat="(index, value) in fields" ><span translate>Required value for</span> {{type}} <span translate>entry</span> {{ bumpIndex() }} <span translate>missing.</span></div>
         </div>
@@ -293,6 +294,14 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group bottom-submit">
+            <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitProfile()" value="{{submitText}}" />
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="sidebar-left">
@@ -305,7 +314,6 @@
       </div>
       <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
         <div class="actions">
-          <a class="btn btn-default btn-lg btn-block" href="{{logoutPath}}" translate>Logout</a>
           <button class="btn btn-default btn-lg btn-block" ng-click="back()"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></button>
           <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitProfile()" value="{{submitText}}" />
         </div>
