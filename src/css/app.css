@@ -10059,6 +10059,8 @@ h3 {
   float: left;
   padding: 0;
   margin: 0;
+  width: 80%;
+  margin-right: -200px;
 }
 .profile-item h4 a {
   display: block;
@@ -10068,11 +10070,12 @@ h3 {
   font-size: 12px;
   font-weight: bold;
   line-height: 24px;
-  padding: 15px 15px;
+  padding: 30px 15px;
+  margin: -15px 0;
 }
 @media (min-width: 768px) {
   .profile-item h4 a {
-    padding: 10px 15px;
+    padding: 25px 15px;
   }
 }
 .profile-item .btn-group {
