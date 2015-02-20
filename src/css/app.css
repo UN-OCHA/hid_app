@@ -10220,6 +10220,10 @@ h3 {
   padding-left: 3px;
 }
 
+.form-group.bottom-submit {
+  margin-top: 20px;
+}
+
 .selectize-control.plugin-drag_drop.multi > .selectize-input > div.ui-sortable-placeholder {
   border: 0 none !important;
   visibility: visible !important;
