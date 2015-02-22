@@ -216,11 +216,14 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
   $scope.globalProfileId = globalProfileId;
   $scope.userData = userData;
   $scope.organizations = [];
+  $scope.selectedOrganization = [];
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
-  $scope.orphanConfirm = false;
+  $scope.accountConfirm = false;
   $scope.ghostConfirm = false;
   $scope.confirmMessage = "";
-  $scope.account = {};
+  $scope.profile = {};
+
+  $scope.query = $location.search();
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.placesOperations = placesOperations;
@@ -230,23 +233,6 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
 
   $scope.userCanViewAllFields = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
 
-  $scope.checkout = function (cid) {
-    var contact = {
-      _id: cid,
-      _profile: $scope.userData.profile._id,
-      userid: $scope.userData.profile.userid,
-      status: 0
-    };
-    profileService.saveContact(contact).then(function(data) {
-      if (data && data.status && data.status === 'ok') {
-        profileService.clearData();
-        $route.reload();
-      }
-      else {
-        alert('error');
-      }
-    });
-  };
 
   $scope.back = function () {
     if (history.length) {
@@ -257,35 +243,73 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     }
   };
 
-
-  $scope.createAccount = function () {
-    //Check to see if the account already exists
+  $scope.validateAccount = function () {
     $scope.submitted = false;
 
     if ($scope.createAccountForm.$valid) {
        //Submit as normal
-       var name = $scope.account.nameGiven + " " + $scope.account.nameFamily;
-
-       if ($scope.account.email){
-         $scope.confirmMessage = name + "will receive and email to claim their account."
-         $scope.orphanConfirm = true;
+       //Check to see if the account already exists
+       if ($scope.profile.email){
+         $scope.createAccount();
        }
        else{
+         //Warn user of ghost account
          $scope.ghostWarning = true;
-         
-        //
-        //  $scope.confirmMessage = name + "will be added to the contact list. They will not be able to claim their account."
-        //  $scope.ghostConfirm = true;
        }
-     } else {
-        $scope.submitted = true;
-     }
-
-
-
-
+    }
+    else{
+      //Form validation error
+      $scope.submitted = true;
+    }
   };
 
+  $scope.createAccount = function () {
+    var authID = "";
+    var isGhost = false;
+    var profile = $scope.profile;
+    var name = profile.nameGiven + " " + profile.nameFamily;
+
+    if (profile.email){
+      //Create auth record
+    }
+    else{
+      isGhost = true;
+    }
+
+    profile.userid = '';
+    profile._profile = null;
+    profile.status = 1;
+    profile.type = 'local';
+
+    if ($scope.profile.location){
+      profile.locationId = Object.keys($scope.profile.location.operations)[0];
+      profile.location =  $scope.profile.location.place;
+    }
+
+    if ($scope.selectedOrganization){
+      profile.organization = $scope.selectedOrganization;
+
+    }
+
+    profileService.saveContact(profile).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        // $scope.back();
+        profileService.clearData();
+
+        if (isGhost){
+          $scope.confirmMessage = name + "will be added to the contact list.  They will not be able to claim their account."
+        }
+        else{
+          $scope.confirmMessage = name + "will receive an email to claim their account."
+        }
+        $scope.accountConfirm = true;
+        $scope.ghostWarning = false;
+      }
+      else {
+        alert('error');
+      }
+    });
+  };
 
   // Converts object to a sortable array.
   function listObjectToArray(obj, kLabel, vLabel) {
@@ -305,8 +329,11 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
   $scope.refreshOrganization = function(select, lengthReq) {
     var clearOption = {action:'clear', name:"", alt:'Organizations'};
 
+    // Remove text in parentheses.
+    select.search = select.search.replace(/ *\([^)]*\) */g, "");
+
     if (select.search.length > (lengthReq || 0)) {
-      $http.get($scope.hrinfoBaseUrl + '/hid/organizations/autocomplete/' + select.search)
+      $http.get($scope.hrinfoBaseUrl + '/hid/organizations/autocomplete/' + encodeURIComponent(select.search))
         .then(function(response) {
           $scope.organizations = [];
           angular.forEach(response.data, function(value, key) {
@@ -319,22 +346,29 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     }
     else {
       $scope.organizations = [];
+      if (typeof $scope.query['organization.name'] !== 'undefined' && $scope.query['organization.name'].length) {
+        $scope.organizations.push(clearOption);
+      }
     }
   };
+
   $scope.onSelect = function(item, qProp) {
     if (item.action === "clear") {
       $scope.query[qProp] = undefined;
     }
-  }
+
+    if (item.name && item.remote_id){
+      $scope.selectedOrganization.push({'name': item.name, 'remote_id': item.remote_id});
+    }
+  };
 
   $scope.resetAccount = function(){
     $scope.account = {};
-    $scope.orphanConfirm = false;
+    $scope.accountConfirm = false;
     $scope.ghostConfirm = false;
     $location.path('/createaccount');
 
   }
-
 });
 
 
