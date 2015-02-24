@@ -14,7 +14,7 @@
 
         <div class="form-group">
           <label class="control-label-light" for="location" translate>* Crisis</label>
-          <select class="form-control" name="location" ng-click="selectPlace()" ng-model="profile.location" ng-options="item.place for item in availPlacesOperations | orderBy:'place'" ng-blur="focus=0" focus-field="focus" required ng-class="{invalid: submitted && createAccountForm.location.$invalid}">
+          <select class="form-control" name="location" ng-click="selectPlace()" ng-model="profile.location.operations" ng-options="item.place for item in availPlacesOperations | orderBy:'place'" ng-blur="focus=0" focus-field="focus" required ng-class="{invalid: submitted && createAccountForm.location.$invalid}">
               <option value=""></option>
           </select>
           <div class="error" ng-show="createAccountForm.location.$error.required && submitted">
@@ -53,7 +53,7 @@
             required
             class="form-controls selectize-light"
             name="organization"
-            ng-model="profile.organization.name"
+            ng-model="profile.organization[0].name"
             theme="selectize"
             reset-search-input="true"
             on-select="onSelect($item, 'organization.name')">
@@ -88,7 +88,7 @@
       <div class="ghost-warning" >
         <h2 class="created-title">Please add an email address</h2>
         <p class="control-label-light">If a person does not have an email address associated with their information, they will not be able to claim their account</p>
-        <p class="control-label-light">Are you sure that you want to create an account for <b>{{profile.nameGiven}}</b> {{profile.nameFamily}} with no email address? </p>
+        <p class="control-label-light">Are you sure that you want to create an account for <b>{{profile.nameGiven}} {{profile.nameFamily}} </b> with no email address? </p>
 
         <div class="form-group">
           <input class="form-control" type="text" name="phone" placeholder="Email Address" ng-model="profile.email" />
@@ -106,9 +106,10 @@
       <div class="confirm" >
         <h2 class="created-title">{{confirmTitle}}</h2>
         <p class="confirm-message">{{confirmMessage}}</p>
-        <a class="btn btn-primary btn-lg btn-block" href="#/profile/{{newProfileID}}" >
-          <i class="entypo chevron-thin-right"></i> <span translate>Edit New Account</span>
-        </a>
+        <!-- TODO: This needs to be added when we get the profile service to return the new contact ID created      
+          <a class="btn btn-primary btn-lg btn-block" href="#/contact/{{newContactID}}" >
+            <i class="entypo chevron-thin-right"></i> <span translate>Edit New Account</span>
+          </a> -->
         <a class="btn btn-default btn-lg btn-block" href="#/dashboard"  >
           <i class="entypo chevron-thin-right"></i> <span translate>Dashboard</span>
         </a>

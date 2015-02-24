@@ -223,7 +223,6 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
   $scope.confirmMessage = "";
   $scope.profile = {};
   $scope.newProfileID;
-
   $scope.query = $location.search();
 
   // Setup scope variables from data injected by routeProvider resolve
@@ -233,7 +232,6 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
   $scope.availPlacesOperations = listObjectToArray(availPlacesOperations, 'place', 'operations');
 
   $scope.userCanViewAllFields = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
-
 
   $scope.back = function () {
     if (history.length) {
@@ -378,10 +376,6 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     $location.path('/createaccount');
   }
 });
-
-
-
-
 
 app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, roles, protectedRoles, gettextCatalog) {
   $scope.profileId = $routeParams.profileId || '';
@@ -548,7 +542,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
-  $scope.vaildFieldEntry = function(field, el) {
+  $scope.vaildFieldEntry= function(field, el) {
     if (multiFields[field].length) {
       var valid = !!el;
       for (var reqField in multiFields[field]) {
