@@ -84,10 +84,11 @@
   </form>
 
   <div class="row">
-    <div class= "account-create col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3" ng-show='ghostWarning' >
+    <div class= "account-create col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-7 col-md-offset-3" ng-show='ghostWarning' >
       <div class="ghost-warning" >
+        <h2 class="created-title">Please add an email address</h2>
         <p class="control-label-light">If a person does not have an email address associated with their information, they will not be able to claim their account</p>
-        <p class="control-label-light">Are you sure that you want to create an account for {{profile.nameGiven}} {{profile.nameFamily}} with no email address? </p>
+        <p class="control-label-light">Are you sure that you want to create an account for <b>{{profile.nameGiven}}</b> {{profile.nameFamily}} with no email address? </p>
 
         <div class="form-group">
           <input class="form-control" type="text" name="phone" placeholder="Email Address" ng-model="profile.email" />
@@ -103,7 +104,8 @@
   <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4" ng-show='accountConfirm || ghostConfirm' >
       <div class="confirm" >
-        <p class="control-label">{{confirmMessage}}</p>
+        <h2 class="created-title">{{confirmTitle}}</h2>
+        <p class="confirm-message">{{confirmMessage}}</p>
         <a class="btn btn-primary btn-lg btn-block" href="#/profile/{{newProfileID}}" >
           <i class="entypo chevron-thin-right"></i> <span translate>Edit New Account</span>
         </a>

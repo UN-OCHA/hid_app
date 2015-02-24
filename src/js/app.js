@@ -294,17 +294,24 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
         $scope.newProfileID = data.data._profile;
 
         if (isGhost){
+          $scope.confirmTitle = "Name added to the list";
           $scope.confirmMessage = name + "will be added to the contact list.  They will not be able to claim their account."
         }
         else{
+          $scope.confirmTitle = "Account Created!";
           $scope.confirmMessage = name + " will receive an email to claim their account."
         }
         $scope.accountConfirm = true;
         $scope.ghostWarning = false;
       }
       else {
-        if (data.error){
-          alert(data.error);
+      if (data && data.status && data.status === 'error') {
+          if (data.message){
+            alert(data.message);
+          }
+          else{
+              alert('error');
+          }
         }
         else{
           alert('error');
@@ -541,7 +548,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
-  $scope.vaildFieldEntry = function(field, el) {
+  $scope.vaildFieldEntry = function(field, el) {
     if (multiFields[field].length) {
       var valid = !!el;
       for (var reqField in multiFields[field]) {
