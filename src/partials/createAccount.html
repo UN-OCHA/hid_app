@@ -3,52 +3,44 @@
 </div>
 
 <div ng-show="!isRouteLoading">
-  <form name="createAccountForm" novalidate ng-submit="validateAccount()" >
+  <form name="createAccountForm" novalidate ng-submit="validateAccount()">
     <div class="row">
-      <div class="account-create  col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3" ng-hide='accountConfirm || ghostWarning'  >
+      <div class="account-create  col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3" ng-hide='accountConfirm || ghostWarning'>
 
         <div class="form-group">
-          <label class="control-label-light small" translate>* Required Field</label>
-          <label class="control-label-light small" translate>** Highly Encouraged Field</label>
+          <label class="control-label-light small">* <span translate>Required Field</span></label>
+          <label class="control-label-light small">** <span translate>Highly Encouraged Field</span></label>
         </div>
 
         <div class="form-group">
-          <label class="control-label-light" for="location" translate>* Crisis</label>
+          <label class="control-label-light" for="location">* <span translate>Crisis</span></label>
           <select class="form-control" name="location" ng-click="selectPlace()" ng-model="profile.location.operations" ng-options="item.place for item in availPlacesOperations | orderBy:'place'" ng-blur="focus=0" focus-field="focus" required ng-class="{invalid: submitted && createAccountForm.location.$invalid}">
               <option value=""></option>
           </select>
-          <div class="error" ng-show="createAccountForm.location.$error.required && submitted">
-            Crisis is required.
-          </div>
+          <div class="error" ng-show="createAccountForm.location.$error.required && submitted" translate>Crisis is required.</div>
         </div>
 
         <div class="form-group">
-          <label class="control-label-light" for="nameGiven" translate>* Given Name</label>
+          <label class="control-label-light" for="nameGiven">* <span translate>Given Name</span></label>
           <input class="form-control" type="text" name="nameGiven" ng-model="profile.nameGiven" required  ng-class="{invalid: submitted && createAccountForm.nameGiven.$invalid }"/>
 
-          <div class="error" ng-show="createAccountForm.nameGiven.$error.required && submitted">
-            Given Name is required.
-          </div>
+          <div class="error" ng-show="createAccountForm.nameGiven.$error.required && submitted" translate>Given Name is required.</div>
         </div>
 
         <div class="form-group">
-          <label class="control-label-light" for="nameFamily" translate>* Family Name</label>
+          <label class="control-label-light" for="nameFamily">* <span translate>Family Name</span></label>
           <input class="form-control" type="text" name="nameFamily" ng-model="profile.nameFamily" required  ng-class="{invalid: submitted && createAccountForm.nameFamily.$invalid }"/>
-          <div class="error" ng-show="createAccountForm.nameFamily.$error.required && submitted">
-            Family Name is required.
-          </div>
+          <div class="error" ng-show="createAccountForm.nameFamily.$error.required && submitted" translate>Family Name is required.</div>
         </div>
 
         <div class="form-group">
-          <label class="control-label-light" for="jobtitle" translate>* Title</label>
+          <label class="control-label-light" for="jobtitle">* <span translate>Title</span></label>
           <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" required  ng-class="{invalid: submitted && createAccountForm.jobtitle.$invalid }"/>
-          <div class="error" ng-show="createAccountForm.jobtitle.$error.required && submitted">
-            Title is required.
-          </div>
+          <div class="error" ng-show="createAccountForm.jobtitle.$error.required && submitted" translate>Title is required.</div>
         </div>
 
         <div class="form-group">
-          <label class="control-label-light" for="organization" translate>* Organization</label>
+          <label class="control-label-light" for="organization">* <span translate>Organization</span></label>
           <ui-select
             required
             class="form-controls selectize-light"
@@ -57,15 +49,13 @@
             theme="selectize"
             reset-search-input="true"
             on-select="onSelect($item, 'organization.name')">
-              <ui-select-match placeholder="{{'Search for organization'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-match placeholder="{{'Search for organizations'|translate}}">{{$select.selected.name}}</ui-select-match>
               <ui-select-choices ng-class="{'not-empty': organizations.length}" repeat="org.name as org in organizations | orderBy:'name'" refresh="refreshOrganization($select, 2)" refresh-delay="200">
                 <div ng-bind-html="org.alt || (org.name | highlight: $select.search) "></div>
               </ui-select-choices>
           </ui-select>
 
-          <div class="error" ng-show="createAccountForm.organization.$error.required && submitted">
-            Organization is required.
-          </div>
+          <div class="error" ng-show="createAccountForm.organization.$error.required && submitted" translate>Organization is required.</div>
         </div>
 
         <div class="form-group">
@@ -74,27 +64,27 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label-light" for="email" translate>** Email</label>
+          <label class="control-label-light" for="email">** <span translate>Email</span></label>
           <input class="form-control" type="text" name="email" ng-model="profile.email" />
         </div>
 
-        <button class="btn btn-default btn-lg btn-block" type="submit">Create Account</button>
+        <button class="btn btn-default btn-lg btn-block" type="submit" translate>Create Account</button>
       </div>
   </div>
   </form>
 
   <div class="row">
     <div class= "account-create col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-7 col-md-offset-3" ng-show='ghostWarning' >
-      <div class="ghost-warning" >
-        <h2 class="created-title">Please add an email address</h2>
-        <p class="control-label-light">If a person does not have an email address associated with their information, they will not be able to claim their account</p>
-        <p class="control-label-light">Are you sure that you want to create an account for <b>{{profile.nameGiven}} {{profile.nameFamily}} </b> with no email address? </p>
+      <div class="ghost-warning">
+        <h2 class="created-title" translate>Please add an email address</h2>
+        <p class="control-label-light" translate>If a person does not have an email address associated with their information, they will not be able to claim their account.</p>
+        <p class="control-label-light" translate>Are you sure that you want to create an account for <b>{{profile.nameGiven}} {{profile.nameFamily}}</b> with no email address?</p>
 
         <div class="form-group">
           <input class="form-control" type="text" name="phone" placeholder="Email Address" ng-model="profile.email" />
         </div>
 
-        <a class="btn btn-default btn-lg btn-block" ng-click="createAccount()"  >
+        <a class="btn btn-default btn-lg btn-block" ng-click="createAccount()">
           <i class="entypo chevron-thin-right"></i> <span translate>Create Account</span>
         </a>
       </div>
@@ -103,14 +93,14 @@
 
   <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4" ng-show='accountConfirm || ghostConfirm' >
-      <div class="confirm" >
+      <div class="confirm">
         <h2 class="created-title">{{confirmTitle}}</h2>
         <p class="confirm-message">{{confirmMessage}}</p>
         <!-- TODO: This needs to be added when we get the profile service to return the new contact ID created      
           <a class="btn btn-primary btn-lg btn-block" href="#/contact/{{newContactID}}" >
             <i class="entypo chevron-thin-right"></i> <span translate>Edit New Account</span>
           </a> -->
-        <a class="btn btn-default btn-lg btn-block" href="#/dashboard"  >
+        <a class="btn btn-default btn-lg btn-block" href="#/dashboard">
           <i class="entypo chevron-thin-right"></i> <span translate>Dashboard</span>
         </a>
         <a class="btn btn-primary btn-lg btn-block"  ng-click="resetAccount()">

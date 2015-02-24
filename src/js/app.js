@@ -211,7 +211,7 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, profileService, authService, placesOperations, globalProfileId, userData) {
+app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, profileService, authService, placesOperations, globalProfileId, userData, gettextCatalog) {
   $scope.logoutPath = '/#logout';
   $scope.globalProfileId = globalProfileId;
   $scope.userData = userData;
@@ -292,12 +292,12 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
         $scope.newProfileID = data.data._profile;
 
         if (isGhost){
-          $scope.confirmTitle = "Name added to the list";
-          $scope.confirmMessage = name + "will be added to the contact list.  They will not be able to claim their account."
+          $scope.confirmTitle = gettextCatalog.getString("Name added to the list");
+          $scope.confirmMessage = name + " " + gettextCatalog.getString("will be added to the contact list.  They will not be able to claim their account.");
         }
         else{
-          $scope.confirmTitle = "Account Created!";
-          $scope.confirmMessage = name + " will receive an email to claim their account."
+          $scope.confirmTitle = gettextCatalog.getString("Account Created!");
+          $scope.confirmMessage = name + " " + gettextCatalog.getString("will receive an email to claim their account.");
         }
         $scope.accountConfirm = true;
         $scope.ghostWarning = false;

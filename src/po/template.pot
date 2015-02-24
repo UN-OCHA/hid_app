@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-02-16T20:08:13.557Z\n"
+"Project-Id-Version: 2015-02-24T23:29:37.476Z\n"
 
 #: src/partials/header.html
 #: src/partials/index.html
@@ -12,8 +12,16 @@ msgstr ""
 msgid "About Humanitarian.ID"
 msgstr ""
 
+#: src/js/app.js
+msgid "Account Created!"
+msgstr ""
+
 #: src/partials/profile.html
 msgid "Admin Privileges"
+msgstr ""
+
+#: src/partials/createAccount.html
+msgid "Are you sure that you want to create an account for <b>{{profile.nameGiven}} {{profile.nameFamily}}</b> with no email address?"
 msgstr ""
 
 #: src/partials/contact.html
@@ -70,6 +78,24 @@ msgstr ""
 msgid "Country"
 msgstr ""
 
+#: src/partials/createAccount.html
+msgid "Create Account"
+msgstr ""
+
+#: src/partials/createAccount.html
+#: src/partials/dashboard.html
+msgid "Create New Account"
+msgstr ""
+
+#: src/partials/createAccount.html
+msgid "Crisis"
+msgstr ""
+
+#: src/partials/createAccount.html
+msgid "Crisis is required."
+msgstr ""
+
+#: src/partials/createAccount.html
 #: src/partials/header.html
 msgid "Dashboard"
 msgstr ""
@@ -86,6 +112,7 @@ msgstr ""
 msgid "Edit Profile"
 msgstr ""
 
+#: src/partials/createAccount.html
 #: src/partials/profile.html
 msgid "Email"
 msgstr ""
@@ -98,20 +125,34 @@ msgstr ""
 msgid "Export Contact Info"
 msgstr ""
 
+#: src/partials/list.html
+msgid "Export Results"
+msgstr ""
+
 #: src/partials/header.html
 msgid "External Links"
 msgstr ""
 
+#: src/partials/createAccount.html
 #: src/partials/profile.html
 msgid "Family Name"
+msgstr ""
+
+#: src/partials/createAccount.html
+msgid "Family Name is required."
 msgstr ""
 
 #: src/partials/dashboard.html
 msgid "General List"
 msgstr ""
 
+#: src/partials/createAccount.html
 #: src/partials/profile.html
 msgid "Given Name"
+msgstr ""
+
+#: src/partials/createAccount.html
+msgid "Given Name is required."
 msgstr ""
 
 #: src/js/app.js
@@ -139,6 +180,10 @@ msgstr ""
 msgid "Groups"
 msgstr ""
 
+#: src/partials/createAccount.html
+msgid "Highly Encouraged Field"
+msgstr ""
+
 #: src/partials/header.html
 msgid "Home"
 msgstr ""
@@ -150,6 +195,10 @@ msgstr ""
 
 #: src/partials/index.html
 msgid "Humanitarian.ID: Responders"
+msgstr ""
+
+#: src/partials/createAccount.html
+msgid "If a person does not have an email address associated with their information, they will not be able to claim their account."
 msgstr ""
 
 #: src/partials/profile.html
@@ -197,6 +246,10 @@ msgstr ""
 msgid "My checked-in lists"
 msgstr ""
 
+#: src/js/app.js
+msgid "Name added to the list"
+msgstr ""
+
 #: src/partials/profile.html
 msgid "No active operations found."
 msgstr ""
@@ -227,17 +280,30 @@ msgid "Number"
 msgstr ""
 
 #: src/partials/contact.html
+#: src/partials/createAccount.html
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Organization"
+msgstr ""
+
+#: src/partials/createAccount.html
+msgid "Organization is required."
 msgstr ""
 
 #: src/partials/profile.html
 msgid "Organizational Information"
 msgstr ""
 
+#: src/partials/createAccount.html
+msgid "Phone"
+msgstr ""
+
 #: src/partials/profile.html
 msgid "Phone Numbers"
+msgstr ""
+
+#: src/partials/createAccount.html
+msgid "Please add an email address"
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -254,6 +320,10 @@ msgstr ""
 
 #: src/partials/index.html
 msgid "Register"
+msgstr ""
+
+#: src/partials/createAccount.html
+msgid "Required Field"
 msgstr ""
 
 #: src/partials/profile.html
@@ -276,6 +346,7 @@ msgstr ""
 msgid "Search for countries"
 msgstr ""
 
+#: src/partials/createAccount.html
 #: src/partials/profile.html
 msgid "Search for organizations"
 msgstr ""
@@ -296,9 +367,14 @@ msgstr ""
 msgid "State/Province/Region"
 msgstr ""
 
+#: src/partials/createAccount.html
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Title"
+msgstr ""
+
+#: src/partials/createAccount.html
+msgid "Title is required."
 msgstr ""
 
 #: src/partials/profile.html
@@ -355,4 +431,12 @@ msgstr ""
 
 #: src/partials/contact.html
 msgid "verified"
+msgstr ""
+
+#: src/js/app.js
+msgid "will be added to the contact list.  They will not be able to claim their account."
+msgstr ""
+
+#: src/js/app.js
+msgid "will receive an email to claim their account."
 msgstr ""
