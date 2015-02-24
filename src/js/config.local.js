@@ -2,6 +2,7 @@ var contactsId = {
     "sourcePath": "",
     "authClientId": "hid-local",
     "appBaseUrl": "http://app.contactsid.vm",
+    "clientSecret": "Kk6a8bk@HZBs",
 // The following lines configure HID App to use the *dev* auth, profiles, and
 // HR.info instance.
     "authBaseUrl": "http://dev.auth.568elmp02.blackmesh.com",

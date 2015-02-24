@@ -211,7 +211,7 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, profileService, placesOperations, globalProfileId, userData) {
+app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, profileService, authService, placesOperations, globalProfileId, userData) {
   $scope.logoutPath = '/#logout';
   $scope.globalProfileId = globalProfileId;
   $scope.userData = userData;
@@ -222,6 +222,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
   $scope.ghostConfirm = false;
   $scope.confirmMessage = "";
   $scope.profile = {};
+  $scope.newProfileID;
 
   $scope.query = $location.search();
 
@@ -247,15 +248,15 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     $scope.submitted = false;
 
     if ($scope.createAccountForm.$valid) {
-       //Submit as normal
-       //Check to see if the account already exists
-       if ($scope.profile.email){
-         $scope.createAccount();
-       }
-       else{
-         //Warn user of ghost account
-         $scope.ghostWarning = true;
-       }
+      //Submit as normal
+      //Check to see if the account already exists
+      if ($scope.profile.email){
+       $scope.createAccount();
+      }
+      else{
+       //Warn user of ghost account
+       $scope.ghostWarning = true;
+      }
     }
     else{
       //Form validation error
@@ -269,10 +270,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     var profile = $scope.profile;
     var name = profile.nameGiven + " " + profile.nameFamily;
 
-    if (profile.email){
-      //Create auth record
-    }
-    else{
+    if (!profile.email){
       isGhost = true;
     }
 
@@ -280,6 +278,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     profile._profile = null;
     profile.status = 1;
     profile.type = 'local';
+    profile.isNewContact = true;
 
     if ($scope.profile.location){
       profile.locationId = Object.keys($scope.profile.location.operations)[0];
@@ -288,25 +287,28 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
 
     if ($scope.selectedOrganization){
       profile.organization = $scope.selectedOrganization;
-
     }
 
     profileService.saveContact(profile).then(function(data) {
       if (data && data.status && data.status === 'ok') {
-        // $scope.back();
-        profileService.clearData();
+        $scope.newProfileID = data.data._profile;
 
         if (isGhost){
           $scope.confirmMessage = name + "will be added to the contact list.  They will not be able to claim their account."
         }
         else{
-          $scope.confirmMessage = name + "will receive an email to claim their account."
+          $scope.confirmMessage = name + " will receive an email to claim their account."
         }
         $scope.accountConfirm = true;
         $scope.ghostWarning = false;
       }
       else {
-        alert('error');
+        if (data.error){
+          alert(data.error);
+        }
+        else{
+          alert('error');
+        }
       }
     });
   };
@@ -356,18 +358,17 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     if (item.action === "clear") {
       $scope.query[qProp] = undefined;
     }
-
     if (item.name && item.remote_id){
       $scope.selectedOrganization.push({'name': item.name, 'remote_id': item.remote_id});
     }
   };
 
   $scope.resetAccount = function(){
-    $scope.account = {};
+    $scope.profile = {};
+    profile = {};
     $scope.accountConfirm = false;
     $scope.ghostConfirm = false;
     $location.path('/createaccount');
-
   }
 });
 
@@ -1388,7 +1389,7 @@ app.config(function($routeProvider, $locationProvider) {
   });
 });
 
-app.service("authService", function($location, $rootScope) {
+app.service("authService", function($location, $http, $q, $rootScope) {
   var authService = {},
   oauthToken = false,
   accountData = false;
@@ -1441,6 +1442,23 @@ app.service("authService", function($location, $rootScope) {
       }
     }, {});
   };
+
+  function handleError(response) {
+    // The API response from the server should be returned in a
+    // nomralized format. However, if the request was not handled by the
+    // server (or what not handles properly - ex. server error), then we
+    // may have to normalize it on our end, as best we can.
+    if (!angular.isObject(response.data) || !response.data.message) {
+      return ($q.reject("An unknown error occurred."));
+    }
+
+    // Otherwise, use expected error message.
+    return ($q.reject(response.data.message));
+  }
+
+  function handleSuccess(response) {
+    return (response.data);
+  }
 
   return authService;
 });
