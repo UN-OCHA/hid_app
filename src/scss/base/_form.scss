@@ -103,3 +103,18 @@
 .angucomplete-dropdown {
   width: 100%;
 }
+
+.ui-select-multiple.ui-select-bootstrap {
+  .btn-default {
+    background-color: $secondary-color-3;
+    @include border-radius($border-radius-base);
+    color: $text-color;
+    padding: 5px;
+    border: 1px solid $neutral-color-3;
+    //-webkit-box-shadow: 1px 1px 5px rgba(0,0,0,.1);
+    //box-shadow: 1px 1px 5px rgba(0,0,0,.1);
+  }
+  .ui-select-match .close {
+    margin-top: 3px;
+  }
+}

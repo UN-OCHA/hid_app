@@ -257,13 +257,12 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, roles, protectedRoles, gettextCatalog) {
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, roles, protectedRoles, gettextCatalog, userData) {
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.invalidFields = {};
-  $scope.adminRoleOptions = roles;
   $scope.protectedRoles = protectedRoles;
 
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
@@ -279,22 +278,89 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
   $scope.submitText = !checkinFlow ? gettextCatalog.getString('Update Profile') : gettextCatalog.getString('Check-in');
 
-  $scope.userCanViewAllFields = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
-  $scope.userCanEditProfile = profileService.hasRole('admin') || (profileData.contact && profileData.contact.type === 'local' && (profileService.hasRole('manager', profileData.contact.locationId) || profileService.hasRole('editor', profileData.contact.locationId))) || (checkinFlow && (profileService.hasRole('manager') || profileService.hasRole('editor')));
-  $scope.userCanEditRoles = $scope.userCanViewAllFields;
+  var hasRoleAdmin = profileService.hasRole('admin'),
+      hasRoleManager = profileService.hasRole('manager'),
+      hasRoleEditor = profileService.hasRole('editor'),
+      isLocal = (profileData.contact && profileData.contact.type === 'local');
+
+  $scope.userCanViewAllFields = (hasRoleAdmin || hasRoleManager || hasRoleEditor);
+  $scope.userCanEditProfile = (
+            hasRoleAdmin
+        ||  (isLocal && (profileService.hasRole('manager', profileData.contact.locationId) || profileService.hasRole('editor', profileData.contact.locationId)))
+        ||  (checkinFlow && (hasRoleManager || hasRoleEditor))
+      );
+  $scope.userCanEditRoles = $scope.userCanViewAllFields /*&& profileData.profile._id !== userData.profile._id*/;
   if ($scope.userCanEditRoles) {
-    if (profileService.hasRole('admin', null, profileData) && !profileService.hasRole('admin')) {
+    if (profileService.hasRole('admin', null, profileData) && !hasRoleAdmin) {
       $scope.userCanEditRoles = false;
     }
-    if (profileService.hasRole('manager', null, profileData) && !(profileService.hasRole('admin') || profileService.hasRole('manager'))) {
+    if (profileService.hasRole('manager', null, profileData) && !(hasRoleAdmin || hasRoleManager)) {
       $scope.userCanEditRoles = false;
     }
-    if (profileService.hasRole('editor', null, profileData) && !(profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor'))) {
+    if (profileService.hasRole('editor', null, profileData) && !(hasRoleAdmin || hasRoleManager || hasRoleEditor)) {
       $scope.userCanEditRoles = false;
     }
   }
-  $scope.userCanEditKeyContact = profileService.hasRole('admin') || (checkinFlow && profileService.hasRole('manager')) || (profileData.contact && profileData.contact.type === 'local' && profileService.hasRole('manager', profileData.contact.locationId));
+  $scope.userCanEditKeyContact = (
+            hasRoleAdmin
+        ||  (checkinFlow && hasRoleManager)
+        ||  (isLocal && profileService.hasRole('manager', profileData.contact.locationId)));
+
   $scope.userCanEditProtectedRoles = $scope.userCanEditKeyContact;
+
+  console.log('userData', userData);
+  console.log('adminRoles', roles);
+  console.log('$scope.adminRoles', $scope.adminRoles);
+  // Determine what roles are available to assign to a user
+  if ($scope.userCanEditRoles && userData.profile.roles.indexOf('admin') > -1) {
+    // Your an admin and can assign any role
+    $scope.adminRoleOptions = roles;
+  }
+  else {
+    $scope.adminRoleOptions = [];
+    if ($scope.userCanEditRoles) {
+      for (var i in userData.profile.roles) {
+        if (userData.profile.roles.hasOwnProperty(i)) {
+          var role = userData.profile.roles[i],
+              roleData = roleInArray(role, roles),
+              roleParts = role.split(":");
+
+          if (roleData) {
+            $scope.adminRoleOptions.push(roleData);
+          }
+
+          if (roleParts[0] === 'manager') {
+            var tempData = roleInArray(('editor:' + roleParts[1] + ':'+ roleParts[2]), roles);
+            if (tempData) {
+              $scope.adminRoleOptions.push(tempData);
+            }
+          }
+        }
+      }
+    }
+
+    // Add Option user has already, if not added already.
+    //for (i in $scope.adminRoles) {
+    //  if ($scope.adminRoles.hasOwnProperty(i)) {
+    //    if (!roleInArray($scope.adminRoles[i], $scope.adminRoleOptions)) {
+    //      roleData = roleInArray($scope.adminRoles[i], roles);
+    //      if (roleData) {
+    //        roleData.lock = true;
+    //        $scope.adminRoleOptions.push(roleData);
+    //      }
+    //    }
+    //  }
+    //}
+  }
+
+  // Helper for fetching role data.
+  function roleInArray(roleId, roles) {
+    var rolesById = roles.map(function(e) { return e.id; })
+        index = rolesById.indexOf(roleId);
+    return (index > -1) ? roles[index] : false;
+  }
+
+  console.log('adminRoleOptions',$scope.adminRoleOptions);
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.placesOperations = placesOperations;
@@ -321,7 +387,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
     }
   }
-
   // Convert list into an array that can be sorted
   $scope.availPlacesOperations = listObjectToArray(availPlacesOperations, 'place', 'operations');
 
@@ -415,6 +480,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
     });
   }
+
   $scope.setCountryCode = function() {
     var countryInfo = jQuery('input[name="phone[' + this.$index + '][number]"]').intlTelInput('getSelectedCountryData');
     if (countryInfo && countryInfo.hasOwnProperty('dialCode')) {
@@ -438,9 +504,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     else {
       return el && el.length;
     }
-    // Prior validation
-    //return ((multiFields[field] === null && el && el.length)
-    //      || (multiFields[field] && el && el[multiFields[field]] && el[multiFields[field]].length))
   }
 
   // Check field with 2 or more requires inputs for incomplete entries.
@@ -678,6 +741,16 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       $location.path('/dashboard');
     }
   };
+
+  $scope.onChange = function(item, prop) {
+    var i = $scope[prop].indexOf(item.id);
+    if (i > -1) {
+      $scope[prop].splice(i, 1);
+    }
+    else {
+      $scope[prop].push(item.id);
+    }
+  }
 
   $scope.submitProfile = function () {
     // Checks for incomplete entries.
@@ -1099,6 +1172,14 @@ app.config(function($routeProvider, $locationProvider) {
       },
       protectedRoles : function(profileService) {
         return profileService.getProtectedRoles();
+      },
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
       }
     }
   }).
@@ -1192,6 +1273,14 @@ app.config(function($routeProvider, $locationProvider) {
       },
       protectedRoles : function(profileService) {
         return profileService.getProtectedRoles();
+      },
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
       }
     }
   }).
