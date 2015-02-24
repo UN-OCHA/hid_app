@@ -278,6 +278,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
   $scope.submitText = !checkinFlow ? gettextCatalog.getString('Update Profile') : gettextCatalog.getString('Check-in');
 
+  // Variable to help determine field visibility.
   var hasRoleAdmin = profileService.hasRole('admin'),
       hasRoleManager = profileService.hasRole('manager'),
       hasRoleEditor = profileService.hasRole('editor'),
@@ -289,7 +290,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         ||  (isLocal && (profileService.hasRole('manager', profileData.contact.locationId) || profileService.hasRole('editor', profileData.contact.locationId)))
         ||  (checkinFlow && (hasRoleManager || hasRoleEditor))
       );
-  $scope.userCanEditRoles = $scope.userCanViewAllFields /*&& profileData.profile._id !== userData.profile._id*/;
+
+  $scope.userCanEditRoles = $scope.userCanViewAllFields && profileData.profile._id !== userData.profile._id;
   if ($scope.userCanEditRoles) {
     if (profileService.hasRole('admin', null, profileData) && !hasRoleAdmin) {
       $scope.userCanEditRoles = false;
@@ -308,9 +310,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.userCanEditProtectedRoles = $scope.userCanEditKeyContact;
 
-  console.log('userData', userData);
-  console.log('adminRoles', roles);
-  console.log('$scope.adminRoles', $scope.adminRoles);
   // Determine what roles are available to assign to a user
   if ($scope.userCanEditRoles && userData.profile.roles.indexOf('admin') > -1) {
     // Your an admin and can assign any role
@@ -359,8 +358,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         index = rolesById.indexOf(roleId);
     return (index > -1) ? roles[index] : false;
   }
-
-  console.log('adminRoleOptions',$scope.adminRoleOptions);
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.placesOperations = placesOperations;
