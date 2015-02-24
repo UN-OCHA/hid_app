@@ -263,6 +263,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.invalidFields = {};
+  $scope.adminRoleOptions = [];
   $scope.protectedRoles = protectedRoles;
 
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
@@ -315,8 +316,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     // Your an admin and can assign any role
     $scope.adminRoleOptions = roles;
   }
-  else {
-    $scope.adminRoleOptions = [];
+  else if ($scope.userCanEditRoles) {
     if ($scope.userCanEditRoles) {
       for (var i in userData.profile.roles) {
         if (userData.profile.roles.hasOwnProperty(i)) {
@@ -337,19 +337,16 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         }
       }
     }
-
-    // Add Option user has already, if not added already.
-    //for (i in $scope.adminRoles) {
-    //  if ($scope.adminRoles.hasOwnProperty(i)) {
-    //    if (!roleInArray($scope.adminRoles[i], $scope.adminRoleOptions)) {
-    //      roleData = roleInArray($scope.adminRoles[i], roles);
-    //      if (roleData) {
-    //        roleData.lock = true;
-    //        $scope.adminRoleOptions.push(roleData);
-    //      }
-    //    }
-    //  }
-    //}
+  }
+  else {
+    for (var i in $scope.adminRoles) {
+      if ($scope.adminRoles.hasOwnProperty(i)) {
+        var roleData = roleInArray($scope.adminRoles[i], roles);
+        if (roleData) {
+          $scope.adminRoleOptions.push(roleData);
+        }
+      }
+    }
   }
 
   // Helper for fetching role data.
