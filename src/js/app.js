@@ -554,6 +554,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.profile.nameFamily = accountData.name_family || '';
   }
 
+  // Add email from the auth service as a default value.
+  if (!$scope.profile.email || !$scope.profile.email.length) {
+    $scope.profile.email = [{address: accountData.email}];
+  }
+
   // Now we have a profile, use the profile's country to fetch regions and cities
   if ($scope.profile.address) {
     if (!$scope.profile.address.length || !$scope.profile.address[0].hasOwnProperty('country')) {
