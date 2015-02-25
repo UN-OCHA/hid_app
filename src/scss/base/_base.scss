@@ -90,3 +90,11 @@ label[for=keyContact]{
     padding-bottom: 99999px;
   }
 }
+
+.compatibility-alert{
+  // Only for browsers that suport media queries
+  margin-top: 50px;
+  @media (min-width: 1px) {
+    display: none;
+  }
+}

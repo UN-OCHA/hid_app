@@ -238,6 +238,8 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   $scope.globalProfileId = globalProfileId;
   $scope.userData = userData;
 
+  $scope.userCanCreateAccount = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
+
   $scope.checkout = function (cid) {
     var contact = {
       _id: cid,
@@ -255,6 +257,172 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
       }
     });
   };
+});
+
+app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, profileService, authService, placesOperations, globalProfileId, userData, gettextCatalog) {
+  $scope.logoutPath = '/#logout';
+  $scope.globalProfileId = globalProfileId;
+  $scope.userData = userData;
+  $scope.organizations = [];
+  $scope.selectedOrganization = [];
+  $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
+  $scope.accountConfirm = false;
+  $scope.ghostConfirm = false;
+  $scope.confirmMessage = "";
+  $scope.profile = {};
+  $scope.newProfileID;
+  $scope.query = $location.search();
+
+  // Setup scope variables from data injected by routeProvider resolve
+  $scope.placesOperations = placesOperations;
+  var availPlacesOperations = angular.copy(placesOperations);
+  // Convert list into an array that can be sorted
+  $scope.availPlacesOperations = listObjectToArray(availPlacesOperations, 'place', 'operations');
+
+  $scope.userCanViewAllFields = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
+
+  $scope.back = function () {
+    if (history.length) {
+      history.back();
+    }
+    else {
+      $location.path('/dashboard');
+    }
+  };
+
+  $scope.validateAccount = function () {
+    $scope.submitted = false;
+
+    if ($scope.createAccountForm.$valid) {
+      //Submit as normal
+      //Check to see if the account already exists
+      if ($scope.profile.email){
+       $scope.createAccount();
+      }
+      else{
+       //Warn user of ghost account
+       $scope.ghostWarning = true;
+      }
+    }
+    else{
+      //Form validation error
+      $scope.submitted = true;
+    }
+  };
+
+  $scope.createAccount = function () {
+    var authID = "";
+    var isGhost = false;
+    var profile = $scope.profile;
+    var name = profile.nameGiven + " " + profile.nameFamily;
+
+    if (!profile.email){
+      isGhost = true;
+    }
+
+    profile.userid = '';
+    profile._profile = null;
+    profile.status = 1;
+    profile.type = 'local';
+    profile.isNewContact = true;
+
+    if ($scope.profile.location){
+      profile.locationId = Object.keys($scope.profile.location.operations)[0];
+      profile.location =  $scope.profile.location.place;
+    }
+
+    if ($scope.selectedOrganization){
+      profile.organization = $scope.selectedOrganization;
+    }
+
+    profileService.saveContact(profile).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        $scope.newProfileID = data.data._profile;
+
+        if (isGhost){
+          $scope.confirmTitle = gettextCatalog.getString("Name added to the list");
+          $scope.confirmMessage = name + " " + gettextCatalog.getString("will be added to the contact list.  They will not be able to claim their account.");
+        }
+        else{
+          $scope.confirmTitle = gettextCatalog.getString("Account Created!");
+          $scope.confirmMessage = name + " " + gettextCatalog.getString("will receive an email to claim their account.");
+        }
+        $scope.accountConfirm = true;
+        $scope.ghostWarning = false;
+      }
+      else {
+      if (data && data.status && data.status === 'error') {
+          if (data.message){
+            alert(data.message);
+          }
+          else{
+              alert('error');
+          }
+        }
+        else{
+          alert('error');
+        }
+      }
+    });
+  };
+
+  // Converts object to a sortable array.
+  function listObjectToArray(obj, kLabel, vLabel) {
+    var listArray = [];
+    // Having difficulty getting location to work when keys are generalized.
+    kLabel = kLabel || 'key';
+    vLabel = vLabel || 'value';
+    angular.forEach(obj, function(v, k) {
+      var tmp = {};
+      tmp[kLabel] = k;
+      tmp[vLabel] = v;
+      this.push(tmp);
+    }, listArray);
+    return listArray;
+  }
+
+  $scope.refreshOrganization = function(select, lengthReq) {
+    var clearOption = {action:'clear', name:"", alt:'Organizations'};
+
+    // Remove text in parentheses.
+    select.search = select.search.replace(/ *\([^)]*\) */g, "");
+
+    if (select.search.length > (lengthReq || 0)) {
+      $http.get($scope.hrinfoBaseUrl + '/hid/organizations/autocomplete/' + encodeURIComponent(select.search))
+        .then(function(response) {
+          $scope.organizations = [];
+          angular.forEach(response.data, function(value, key) {
+            this.push({'name': value, 'remote_id': key});
+          }, $scope.organizations);
+          if ($scope.organizations.length) {
+            $scope.organizations.unshift(clearOption);
+          }
+        });
+    }
+    else {
+      $scope.organizations = [];
+      if (typeof $scope.query['organization.name'] !== 'undefined' && $scope.query['organization.name'].length) {
+        $scope.organizations.push(clearOption);
+      }
+    }
+  };
+
+  $scope.onSelect = function(item, qProp) {
+    if (item.action === "clear") {
+      $scope.query[qProp] = undefined;
+    }
+    if (item.name && item.remote_id){
+      $scope.selectedOrganization.push({'name': item.name, 'remote_id': item.remote_id});
+    }
+  };
+
+  $scope.resetAccount = function(){
+    $scope.profile = {};
+    profile = {};
+    $scope.accountConfirm = false;
+    $scope.ghostConfirm = false;
+    $location.path('/createaccount');
+  }
 });
 
 app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, roles, protectedRoles, gettextCatalog, userData) {
@@ -482,7 +650,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
-  $scope.vaildFieldEntry = function(field, el) {
+  $scope.vaildFieldEntry= function(field, el) {
     if (multiFields[field].length) {
       var valid = !!el;
       for (var reqField in multiFields[field]) {
@@ -1313,6 +1481,36 @@ app.config(function($routeProvider, $locationProvider) {
       }
     }
   }).
+  when('/createaccount', {
+    templateUrl: contactsId.sourcePath + '/partials/createAccount.html',
+    controller: 'CreateAccountCtrl',
+    requireAuth: true,
+    resolve: {
+      placesOperations : function(profileService) {
+        return profileService.getOperationsData().then(function(data) {
+          return data;
+        });
+      },
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
+      },
+      globalProfileId : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          var num = data.contacts.length;
+          for (var idx = 0; idx < num; idx++) {
+            if (data.contacts[idx].type === 'global') {
+              return data.contacts[idx]._id;
+            }
+          }
+        });
+      }
+    }
+  }).
   when('/about', {
     templateUrl: contactsId.sourcePath + '/partials/about.html',
     controller: 'AboutCtrl'
@@ -1323,7 +1521,7 @@ app.config(function($routeProvider, $locationProvider) {
   });
 });
 
-app.service("authService", function($location, $rootScope) {
+app.service("authService", function($location, $http, $q, $rootScope) {
   var authService = {},
   oauthToken = false,
   accountData = false;
@@ -1376,6 +1574,23 @@ app.service("authService", function($location, $rootScope) {
       }
     }, {});
   };
+
+  function handleError(response) {
+    // The API response from the server should be returned in a
+    // nomralized format. However, if the request was not handled by the
+    // server (or what not handles properly - ex. server error), then we
+    // may have to normalize it on our end, as best we can.
+    if (!angular.isObject(response.data) || !response.data.message) {
+      return ($q.reject("An unknown error occurred."));
+    }
+
+    // Otherwise, use expected error message.
+    return ($q.reject(response.data.message));
+  }
+
+  function handleSuccess(response) {
+    return (response.data);
+  }
 
   return authService;
 });
