@@ -327,7 +327,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     profile.isNewContact = true;
 
     if ($scope.profile.location){
-      profile.locationId = Object.keys($scope.profile.location.operations)[0];
+      profile.locationId = Object.keys($scope.profile.location.operations);
       profile.location =  $scope.profile.location.place;
     }
 
