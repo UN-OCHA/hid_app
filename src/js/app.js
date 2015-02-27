@@ -102,11 +102,11 @@ app.run(function ($rootScope, $location, $window, authService) {
       $location.path('/login');
     }
     $rootScope.isIndex = (nextRoute && nextRoute.controller === 'DefaultCtrl') ? 'index' : '';
+  });
 
-    // Google analytics page view tracking
-    $rootScope.$on('$routeChangeSuccess', function() {
-      $window.ga('send', 'pageview', { page:$location.url() });
-    });
+  // Google analytics page view tracking
+  $rootScope.$on('$routeChangeSuccess', function() {
+    $window.ga('send', 'pageview', { page: $location.url() });
   });
 });
 
