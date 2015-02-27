@@ -104,11 +104,9 @@ app.run(function ($rootScope, $location, $window, authService) {
     $rootScope.isIndex = (nextRoute && nextRoute.controller === 'DefaultCtrl') ? 'index' : '';
 
     // Google analytics page view tracking
-    if ($location.host() === "app.humanitarian.id") {
-      $rootScope.$on('$routeChangeSuccess', function() {
-        $window._gaq.push(['_trackPageView', $location.url()]);
-      });
-    }
+    $rootScope.$on('$routeChangeSuccess', function() {
+      $window.ga('send', 'pageview', { page:$location.url() });
+    });
   });
 });
 
