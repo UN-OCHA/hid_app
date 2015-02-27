@@ -102,13 +102,11 @@ app.run(function ($rootScope, $location, $window, authService) {
       $location.path('/login');
     }
     $rootScope.isIndex = (nextRoute && nextRoute.controller === 'DefaultCtrl') ? 'index' : '';
+  });
 
-    // Google analytics page view tracking
-    if ($location.host() === "app.humanitarian.id") {
-      $rootScope.$on('$routeChangeSuccess', function() {
-        $window._gaq.push(['_trackPageView', $location.url()]);
-      });
-    }
+  // Google analytics page view tracking
+  $rootScope.$on('$routeChangeSuccess', function() {
+    $window.ga('send', 'pageview', { page: $location.url() });
   });
 });
 
@@ -238,6 +236,8 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   $scope.globalProfileId = globalProfileId;
   $scope.userData = userData;
 
+  $scope.userCanCreateAccount = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
+
   $scope.checkout = function (cid) {
     var contact = {
       _id: cid,
@@ -257,13 +257,179 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, roles, protectedRoles, gettextCatalog) {
+app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, profileService, authService, placesOperations, globalProfileId, userData, gettextCatalog) {
+  $scope.logoutPath = '/#logout';
+  $scope.globalProfileId = globalProfileId;
+  $scope.userData = userData;
+  $scope.organizations = [];
+  $scope.selectedOrganization = [];
+  $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
+  $scope.accountConfirm = false;
+  $scope.ghostConfirm = false;
+  $scope.confirmMessage = "";
+  $scope.profile = {};
+  $scope.newProfileID;
+  $scope.query = $location.search();
+
+  // Setup scope variables from data injected by routeProvider resolve
+  $scope.placesOperations = placesOperations;
+  var availPlacesOperations = angular.copy(placesOperations);
+  // Convert list into an array that can be sorted
+  $scope.availPlacesOperations = listObjectToArray(availPlacesOperations, 'place', 'operations');
+
+  $scope.userCanViewAllFields = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
+
+  $scope.back = function () {
+    if (history.length) {
+      history.back();
+    }
+    else {
+      $location.path('/dashboard');
+    }
+  };
+
+  $scope.validateAccount = function () {
+    $scope.submitted = false;
+
+    if ($scope.createAccountForm.$valid) {
+      //Submit as normal
+      //Check to see if the account already exists
+      if ($scope.profile.email){
+       $scope.createAccount();
+      }
+      else{
+       //Warn user of ghost account
+       $scope.ghostWarning = true;
+      }
+    }
+    else{
+      //Form validation error
+      $scope.submitted = true;
+    }
+  };
+
+  $scope.createAccount = function () {
+    var authID = "";
+    var isGhost = false;
+    var profile = $scope.profile;
+    var name = profile.nameGiven + " " + profile.nameFamily;
+
+    if (!profile.email){
+      isGhost = true;
+    }
+
+    profile.userid = '';
+    profile._profile = null;
+    profile.status = 1;
+    profile.type = 'local';
+    profile.isNewContact = true;
+
+    if ($scope.profile.location){
+      profile.locationId = Object.keys($scope.profile.location.operations);
+      profile.location =  $scope.profile.location.place;
+    }
+
+    if ($scope.selectedOrganization){
+      profile.organization = $scope.selectedOrganization;
+    }
+
+    profileService.saveContact(profile).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        $scope.newProfileID = data.data._profile;
+
+        if (isGhost){
+          $scope.confirmTitle = gettextCatalog.getString("Name added to the list");
+          $scope.confirmMessage = name + " " + gettextCatalog.getString("will be added to the contact list.  They will not be able to claim their account.");
+        }
+        else{
+          $scope.confirmTitle = gettextCatalog.getString("Account Created!");
+          $scope.confirmMessage = name + " " + gettextCatalog.getString("will receive an email to claim their account.");
+        }
+        $scope.accountConfirm = true;
+        $scope.ghostWarning = false;
+      }
+      else {
+      if (data && data.status && data.status === 'error') {
+          if (data.message){
+            alert(data.message);
+          }
+          else{
+              alert('error');
+          }
+        }
+        else{
+          alert('error');
+        }
+      }
+    });
+  };
+
+  // Converts object to a sortable array.
+  function listObjectToArray(obj, kLabel, vLabel) {
+    var listArray = [];
+    // Having difficulty getting location to work when keys are generalized.
+    kLabel = kLabel || 'key';
+    vLabel = vLabel || 'value';
+    angular.forEach(obj, function(v, k) {
+      var tmp = {};
+      tmp[kLabel] = k;
+      tmp[vLabel] = v;
+      this.push(tmp);
+    }, listArray);
+    return listArray;
+  }
+
+  $scope.refreshOrganization = function(select, lengthReq) {
+    var clearOption = {action:'clear', name:"", alt:'Organizations'};
+
+    // Remove text in parentheses.
+    select.search = select.search.replace(/ *\([^)]*\) */g, "");
+
+    if (select.search.length > (lengthReq || 0)) {
+      $http.get($scope.hrinfoBaseUrl + '/hid/organizations/autocomplete/' + encodeURIComponent(select.search))
+        .then(function(response) {
+          $scope.organizations = [];
+          angular.forEach(response.data, function(value, key) {
+            this.push({'name': value, 'remote_id': key});
+          }, $scope.organizations);
+          if ($scope.organizations.length) {
+            $scope.organizations.unshift(clearOption);
+          }
+        });
+    }
+    else {
+      $scope.organizations = [];
+      if (typeof $scope.query['organization.name'] !== 'undefined' && $scope.query['organization.name'].length) {
+        $scope.organizations.push(clearOption);
+      }
+    }
+  };
+
+  $scope.onSelect = function(item, qProp) {
+    if (item.action === "clear") {
+      $scope.query[qProp] = undefined;
+    }
+    if (item.name && item.remote_id){
+      $scope.selectedOrganization.push({'name': item.name, 'remote_id': item.remote_id});
+    }
+  };
+
+  $scope.resetAccount = function(){
+    $scope.profile = {};
+    profile = {};
+    $scope.accountConfirm = false;
+    $scope.ghostConfirm = false;
+    $location.path('/createaccount');
+  }
+});
+
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, roles, protectedRoles, gettextCatalog, userData) {
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.invalidFields = {};
-  $scope.adminRoleOptions = roles;
+  $scope.adminRoleOptions = [];
   $scope.protectedRoles = protectedRoles;
 
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
@@ -279,22 +445,82 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
   $scope.submitText = !checkinFlow ? gettextCatalog.getString('Update Profile') : gettextCatalog.getString('Check-in');
 
-  $scope.userCanViewAllFields = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
-  $scope.userCanEditProfile = profileService.hasRole('admin') || (profileData.contact && profileData.contact.type === 'local' && (profileService.hasRole('manager', profileData.contact.locationId) || profileService.hasRole('editor', profileData.contact.locationId))) || (checkinFlow && (profileService.hasRole('manager') || profileService.hasRole('editor')));
-  $scope.userCanEditRoles = $scope.userCanViewAllFields;
+  // Variable to help determine field visibility.
+  var hasRoleAdmin = profileService.hasRole('admin'),
+      hasRoleManager = profileService.hasRole('manager'),
+      hasRoleEditor = profileService.hasRole('editor'),
+      isLocal = (profileData.contact && profileData.contact.type === 'local');
+
+  $scope.userCanViewAllFields = (hasRoleAdmin || hasRoleManager || hasRoleEditor);
+  $scope.userCanEditProfile = (
+            hasRoleAdmin
+        ||  (isLocal && (profileService.hasRole('manager', profileData.contact.locationId) || profileService.hasRole('editor', profileData.contact.locationId)))
+        ||  (checkinFlow && (hasRoleManager || hasRoleEditor))
+      );
+
+  $scope.userCanEditRoles = $scope.userCanViewAllFields && profileData.profile._id !== userData.profile._id;
   if ($scope.userCanEditRoles) {
-    if (profileService.hasRole('admin', null, profileData) && !profileService.hasRole('admin')) {
+    if (profileService.hasRole('admin', null, profileData) && !hasRoleAdmin) {
       $scope.userCanEditRoles = false;
     }
-    if (profileService.hasRole('manager', null, profileData) && !(profileService.hasRole('admin') || profileService.hasRole('manager'))) {
+    if (profileService.hasRole('manager', null, profileData) && !(hasRoleAdmin || hasRoleManager)) {
       $scope.userCanEditRoles = false;
     }
-    if (profileService.hasRole('editor', null, profileData) && !(profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor'))) {
+    if (profileService.hasRole('editor', null, profileData) && !(hasRoleAdmin || hasRoleManager || hasRoleEditor)) {
       $scope.userCanEditRoles = false;
     }
   }
-  $scope.userCanEditKeyContact = profileService.hasRole('admin') || (checkinFlow && profileService.hasRole('manager')) || (profileData.contact && profileData.contact.type === 'local' && profileService.hasRole('manager', profileData.contact.locationId));
+  $scope.userCanEditKeyContact = (
+            hasRoleAdmin
+        ||  (checkinFlow && hasRoleManager)
+        ||  (isLocal && profileService.hasRole('manager', profileData.contact.locationId)));
+
   $scope.userCanEditProtectedRoles = $scope.userCanEditKeyContact;
+
+  // Determine what roles are available to assign to a user
+  if ($scope.userCanEditRoles && userData.profile.roles.indexOf('admin') > -1) {
+    // Your an admin and can assign any role
+    $scope.adminRoleOptions = roles;
+  }
+  else if ($scope.userCanEditRoles) {
+    if ($scope.userCanEditRoles) {
+      for (var i in userData.profile.roles) {
+        if (userData.profile.roles.hasOwnProperty(i)) {
+          var role = userData.profile.roles[i],
+              roleData = roleInArray(role, roles),
+              roleParts = role.split(":");
+
+          if (roleData) {
+            $scope.adminRoleOptions.push(roleData);
+          }
+
+          if (roleParts[0] === 'manager') {
+            var tempData = roleInArray(('editor:' + roleParts[1] + ':'+ roleParts[2]), roles);
+            if (tempData) {
+              $scope.adminRoleOptions.push(tempData);
+            }
+          }
+        }
+      }
+    }
+  }
+  else {
+    for (var i in $scope.adminRoles) {
+      if ($scope.adminRoles.hasOwnProperty(i)) {
+        var roleData = roleInArray($scope.adminRoles[i], roles);
+        if (roleData) {
+          $scope.adminRoleOptions.push(roleData);
+        }
+      }
+    }
+  }
+
+  // Helper for fetching role data.
+  function roleInArray(roleId, roles) {
+    var rolesById = roles.map(function(e) { return e.id; })
+        index = rolesById.indexOf(roleId);
+    return (index > -1) ? roles[index] : false;
+  }
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.placesOperations = placesOperations;
@@ -321,7 +547,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
     }
   }
-
   // Convert list into an array that can be sorted
   $scope.availPlacesOperations = listObjectToArray(availPlacesOperations, 'place', 'operations');
 
@@ -386,6 +611,12 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.profile.nameFamily = accountData.name_family || '';
   }
 
+  // Add email from the auth service as a default value.
+  // Only when editing the global profile for first time.
+  if ((!$scope.profile.email || !$scope.profile.email.length) && $scope.profileName === "Global" && !$scope.profileId) {
+    $scope.profile.email = [{address: accountData.email}];
+  }
+
   // Now we have a profile, use the profile's country to fetch regions and cities
   if ($scope.profile.address) {
     if (!$scope.profile.address.length || !$scope.profile.address[0].hasOwnProperty('country')) {
@@ -415,6 +646,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
     });
   }
+
   $scope.setCountryCode = function() {
     var countryInfo = jQuery('input[name="phone[' + this.$index + '][number]"]').intlTelInput('getSelectedCountryData');
     if (countryInfo && countryInfo.hasOwnProperty('dialCode')) {
@@ -422,7 +654,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
-  $scope.vaildFieldEntry = function(field, el) {
+  $scope.vaildFieldEntry= function(field, el) {
     if (multiFields[field].length) {
       var valid = !!el;
       for (var reqField in multiFields[field]) {
@@ -438,9 +670,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     else {
       return el && el.length;
     }
-    // Prior validation
-    //return ((multiFields[field] === null && el && el.length)
-    //      || (multiFields[field] && el && el[multiFields[field]] && el[multiFields[field]].length))
   }
 
   // Check field with 2 or more requires inputs for incomplete entries.
@@ -679,6 +908,16 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
+  $scope.onChange = function(item, prop) {
+    var i = $scope[prop].indexOf(item.id);
+    if (i > -1) {
+      $scope[prop].splice(i, 1);
+    }
+    else {
+      $scope[prop].push(item.id);
+    }
+  }
+
   $scope.submitProfile = function () {
     // Checks for incomplete entries.
     if ($scope.checkAllMultiRequireFields()) {
@@ -884,7 +1123,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
 
   // Create protected roles array.
   $scope.protectedRoles = protectedRoles;
-  $scope.protectedRoles.unshift({action:'clear', name:"", id:"", alt:'Title'});
+  $scope.protectedRoles.unshift({action:'clear', name:"", id:"", alt:'Role'});
 
   $scope.resetSearch = function () {
     for (var i in searchKeys) {
@@ -1099,6 +1338,14 @@ app.config(function($routeProvider, $locationProvider) {
       },
       protectedRoles : function(profileService) {
         return profileService.getProtectedRoles();
+      },
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
       }
     }
   }).
@@ -1192,6 +1439,14 @@ app.config(function($routeProvider, $locationProvider) {
       },
       protectedRoles : function(profileService) {
         return profileService.getProtectedRoles();
+      },
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
       }
     }
   }).
@@ -1230,6 +1485,36 @@ app.config(function($routeProvider, $locationProvider) {
       }
     }
   }).
+  when('/createaccount', {
+    templateUrl: contactsId.sourcePath + '/partials/createAccount.html',
+    controller: 'CreateAccountCtrl',
+    requireAuth: true,
+    resolve: {
+      placesOperations : function(profileService) {
+        return profileService.getOperationsData().then(function(data) {
+          return data;
+        });
+      },
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
+      },
+      globalProfileId : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          var num = data.contacts.length;
+          for (var idx = 0; idx < num; idx++) {
+            if (data.contacts[idx].type === 'global') {
+              return data.contacts[idx]._id;
+            }
+          }
+        });
+      }
+    }
+  }).
   when('/about', {
     templateUrl: contactsId.sourcePath + '/partials/about.html',
     controller: 'AboutCtrl'
@@ -1240,7 +1525,7 @@ app.config(function($routeProvider, $locationProvider) {
   });
 });
 
-app.service("authService", function($location, $rootScope) {
+app.service("authService", function($location, $http, $q, $rootScope) {
   var authService = {},
   oauthToken = false,
   accountData = false;
@@ -1293,6 +1578,23 @@ app.service("authService", function($location, $rootScope) {
       }
     }, {});
   };
+
+  function handleError(response) {
+    // The API response from the server should be returned in a
+    // nomralized format. However, if the request was not handled by the
+    // server (or what not handles properly - ex. server error), then we
+    // may have to normalize it on our end, as best we can.
+    if (!angular.isObject(response.data) || !response.data.message) {
+      return ($q.reject("An unknown error occurred."));
+    }
+
+    // Otherwise, use expected error message.
+    return ($q.reject(response.data.message));
+  }
+
+  function handleSuccess(response) {
+    return (response.data);
+  }
 
   return authService;
 });
