@@ -7,8 +7,8 @@
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url(../fonts/font-awesome/fontawesome-webfont.eot?1423842702);
-  src: url(../fonts/font-awesome/fontawesome-webfont.eot?&1423842702#iefix) format("embedded-opentype"), url(../fonts/font-awesome/fontawesome-webfont.woff?1423842703) format("woff"), url(../fonts/font-awesome/fontawesome-webfont.ttf?1423842703) format("truetype"), url(../fonts/font-awesome/fontawesome-webfont.svg?1423842703#fontawesomeregular) format("svg");
+  src: url(../fonts/font-awesome/fontawesome-webfont.eot?1424885649);
+  src: url(../fonts/font-awesome/fontawesome-webfont.eot?&1424885649#iefix) format("embedded-opentype"), url(../fonts/font-awesome/fontawesome-webfont.woff?1424885649) format("woff"), url(../fonts/font-awesome/fontawesome-webfont.ttf?1424885649) format("truetype"), url(../fonts/font-awesome/fontawesome-webfont.svg?1424885649#fontawesomeregular) format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -9582,7 +9582,7 @@ h3 {
 }
 
 .contact-search {
-  padding: 20px;
+  padding: 0 20px;
 }
 
 .contact-item__markers {
@@ -9746,6 +9746,10 @@ h3 {
 
 .invalid {
   border: 1px solid red;
+}
+
+.created-title, .confirm-message {
+  color: #2B5F82;
 }
 
 #contactsid-app-view {
