@@ -84,9 +84,9 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label element-invisible" for="protectedRole" translate>Title</label>
+          <label class="control-label element-invisible" for="protectedRole" translate>Role</label>
           <ui-select ng-model="query.protectedRoles" theme="selectize" class="form-control"  name="protectedRole" on-select="onSelect($item, 'protectedRoles')">
-            <ui-select-match placeholder="{{'Title'|translate}}">{{$select.selected.name}}</ui-select-match>
+            <ui-select-match placeholder="{{'Role'|translate}}">{{$select.selected.name}}</ui-select-match>
             <ui-select-choices ng-class="{'not-empty': protectedRoles.length}" repeat="protectedRole.id as protectedRole in protectedRoles | orderBy:'name' | filter: $select.search">
               <div ng-class="{default: !protectedRole.name.length}" ng-bind-html="protectedRole.alt || (protectedRole.name | highlight: $select.search)"></div>
             </ui-select-choices>
