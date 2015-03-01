@@ -102,13 +102,11 @@ app.run(function ($rootScope, $location, $window, authService) {
       $location.path('/login');
     }
     $rootScope.isIndex = (nextRoute && nextRoute.controller === 'DefaultCtrl') ? 'index' : '';
+  });
 
-    // Google analytics page view tracking
-    if ($location.host() === "app.humanitarian.id") {
-      $rootScope.$on('$routeChangeSuccess', function() {
-        $window._gaq.push(['_trackPageView', $location.url()]);
-      });
-    }
+  // Google analytics page view tracking
+  $rootScope.$on('$routeChangeSuccess', function() {
+    $window.ga('send', 'pageview', { page: $location.url() });
   });
 });
 
@@ -614,11 +612,9 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   }
 
   // Add email from the auth service as a default value.
-  if (!$scope.profile.email || !$scope.profile.email.length) {
-    // Get email from user id.
-    var userIdParts = profileData.profile.userid.split('_');
-    userIdParts.pop();
-    $scope.profile.email = [{address: userIdParts.join('_')}];
+  // Only when editing the global profile for first time.
+  if ((!$scope.profile.email || !$scope.profile.email.length) && $scope.profileName === "Global" && !$scope.profileId) {
+    $scope.profile.email = [{address: accountData.email}];
   }
 
   // Now we have a profile, use the profile's country to fetch regions and cities
@@ -1154,7 +1150,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
 
   // Create protected roles array.
   $scope.protectedRoles = protectedRoles;
-  $scope.protectedRoles.unshift({action:'clear', name:"", id:"", alt:'Title'});
+  $scope.protectedRoles.unshift({action:'clear', name:"", id:"", alt:'Role'});
 
   $scope.resetSearch = function () {
     for (var i in searchKeys) {
