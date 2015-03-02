@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-02-24T23:38:25.575Z\n"
+"Project-Id-Version: 2015-03-02T17:32:45.940Z\n"
 
 #: src/partials/header.html
 #: src/partials/index.html
@@ -221,6 +221,11 @@ msgstr ""
 msgid "Invalid entry. Both type and number are required."
 msgstr ""
 
+#: src/partials/createAccount.html
+#: src/partials/profile.html
+msgid "Is your organization missing? <a href=\"http://www.humanitarianresponse.info/help/webform/add-new-organization-form\" target=\"_blank\">Click here</a> to request that it be added to the list. Requests are processed in 2-3 business days."
+msgstr ""
+
 #: src/partials/contact.html
 msgid "Job Title"
 msgstr ""
@@ -345,6 +350,10 @@ msgid "Reset Filters"
 msgstr ""
 
 #: src/partials/list.html
+msgid "Role"
+msgstr ""
+
+#: src/partials/list.html
 msgid "Search"
 msgstr ""
 
@@ -378,7 +387,6 @@ msgid "State/Province/Region"
 msgstr ""
 
 #: src/partials/createAccount.html
-#: src/partials/list.html
 #: src/partials/profile.html
 msgid "Title"
 msgstr ""

@@ -13,7 +13,7 @@
 
 .container .control-label-light {
   font-weight: normal;
-  color: #fff;
+  color: $white;
   display: block;
   text-align: left;
 }
@@ -38,5 +38,13 @@
 }
 
 .created-title, .confirm-message{
-  color:#2B5F82; 
+  color:#2B5F82;
+}
+
+#contactsid-app-view .account-create .help-block {
+
+  color: lighten($primary-color-1, 30%);
+  a {
+    color: $white;
+  }
 }
