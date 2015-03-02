@@ -475,7 +475,10 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         ||  (checkinFlow && hasRoleManager)
         ||  (isLocal && profileService.hasRole('manager', profileData.contact.locationId)));
 
-  $scope.userCanEditProtectedRoles = $scope.userCanEditKeyContact;
+  $scope.userCanEditProtectedRoles = (
+            $scope.userCanEditKeyContact
+        ||  (checkinFlow && hasRoleEditor)
+        ||  (isLocal && profileService.hasRole('editor', profileData.contact.locationId)));
 
   // Determine what roles are available to assign to a user
   if ($scope.userCanEditRoles && userData.profile.roles.indexOf('admin') > -1) {
@@ -945,8 +948,14 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
       if ($scope.userCanEditRoles) {
         profile.adminRoles = $scope.adminRoles;
-        profile.verified = $scope.verified;
+      }
+
+      if ($scope.userCanEditProtectedRoles) {
         profile.newProtectedRoles = $scope.selectedProtectedRoles;
+      }
+
+      if ($scope.userCanEditProfile) {
+        profile.verified = $scope.verified;
       }
 
       profileService.saveContact(profile).then(function(data) {
