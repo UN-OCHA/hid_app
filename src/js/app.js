@@ -449,7 +449,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         ||  (checkinFlow && (hasRoleManager || hasRoleEditor))
       );
 
-  $scope.userCanEditRoles = $scope.userCanViewAllFields && profileData.profile._id !== userData.profile._id;
+  $scope.userCanEditRoles = (hasRoleAdmin || hasRoleManager) && profileData.profile._id !== userData.profile._id;
   if ($scope.userCanEditRoles) {
     if (profileService.hasRole('admin', null, profileData) && !hasRoleAdmin) {
       $scope.userCanEditRoles = false;
@@ -457,10 +457,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if (profileService.hasRole('manager', null, profileData) && !(hasRoleAdmin || hasRoleManager)) {
       $scope.userCanEditRoles = false;
     }
-    if (profileService.hasRole('editor', null, profileData) && !(hasRoleAdmin || hasRoleManager || hasRoleEditor)) {
-      $scope.userCanEditRoles = false;
-    }
   }
+
   $scope.userCanEditKeyContact = (
             hasRoleAdmin
         ||  (checkinFlow && hasRoleManager)
@@ -470,7 +468,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   // Determine what roles are available to assign to a user
   if ($scope.userCanEditRoles && userData.profile.roles.indexOf('admin') > -1) {
-    // Your an admin and can assign any role
+    // You're an admin and can assign any role
     $scope.adminRoleOptions = roles;
   }
   else if ($scope.userCanEditRoles) {
