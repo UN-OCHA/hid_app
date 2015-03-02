@@ -9752,6 +9752,13 @@ h3 {
   color: #2B5F82;
 }
 
+#contactsid-app-view .account-create .help-block {
+  color: #c8e6ed;
+}
+#contactsid-app-view .account-create .help-block a {
+  color: #fff;
+}
+
 #contactsid-app-view {
   padding-bottom: 40px;
 }
