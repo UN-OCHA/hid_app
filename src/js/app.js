@@ -944,7 +944,9 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
           //Set email fields
           var email = {
             type: 'notify_checkin',
-            to: profile.email[0].address,
+            recipientFirstName: profile.nameGiven,
+            recipientLastName: profile.nameFamily,
+            recipientEmail: profile.email[0].address,
             adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
             locationName: profile.location
           };
@@ -1064,7 +1066,9 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
       //Set email fields
       var email = {
         type: 'notify_checkout',
-        to: $scope.contact.email[0].address,
+        recipientFirstName: $scope.contact.nameGiven,
+        recipientLastName: $scope.contact.nameFamily,
+        recipientEmail: $scope.contact.email[0].address,
         adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
         locationName: $scope.contact.location
       };
