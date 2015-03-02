@@ -311,7 +311,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
   $scope.createAccount = function () {
     var authID = "";
     var isGhost = false;
-    var profile = $scope.profile;
+    var profile = $.extend(true, {}, $scope.profile);
     var name = profile.nameGiven + " " + profile.nameFamily;
 
     if (!profile.email){
@@ -324,9 +324,9 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     profile.type = 'local';
     profile.isNewContact = true;
 
-    if ($scope.profile.location){
+    if ($scope.profile.location) {
       profile.locationId = Object.keys($scope.profile.location.operations);
-      profile.location =  $scope.profile.location.place;
+      profile.location = $scope.profile.location.place;
     }
 
     if ($scope.selectedOrganization){
@@ -349,17 +349,8 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
         $scope.ghostWarning = false;
       }
       else {
-      if (data && data.status && data.status === 'error') {
-          if (data.message){
-            alert(data.message);
-          }
-          else{
-              alert('error');
-          }
-        }
-        else{
-          alert('error');
-        }
+        var msg = (data && data.message) ? 'Error: ' + data.message : 'An error occurred while attempting to save this profile. Please try again or contact an administrator.';
+        alert(msg);
       }
     });
   };
