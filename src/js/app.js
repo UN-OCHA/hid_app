@@ -1274,7 +1274,6 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
         data.contacts = data.contacts || [];
         $scope.contacts = $scope.contacts.concat(data.contacts);
         $scope.contactsCreated = true;
-        console.log('$scope.contacts', $scope);
       }
     });
   }
