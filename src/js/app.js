@@ -1160,6 +1160,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
 
   $scope.userCanEdit = $scope.userCanCheckIn = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
   $scope.userCanCheckOut = (contact.type === 'local') && (profileService.hasRole('admin') || profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId));
+  $scope.userCanSendClaimEmail = profileService.hasRole('admin') || (contact.type === 'local' && (profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId)));
 
   var roleFilter = $filter('filter');
   $scope.contact.protectedRolesByName = [];
@@ -1242,6 +1243,10 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
     vcard += "REV:" + new Date().toISOString() + "\n" +
       "END:VCARD\n";
     window.location.href = 'data:text/vcard;charset=UTF-8,' + encodeURIComponent(vcard);
+  };
+
+  $scope.sendClaimEmail = function () {
+    profileService.requestClaimEmail(contact);
   };
 });
 
@@ -1945,6 +1950,7 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     getContacts: getContacts,
     saveProfile: saveProfile,
     saveContact: saveContact,
+    requestClaimEmail: requestClaimEmail,
     hasRole: hasRole,
     getCountries: getCountries,
     getAdminArea: getAdminArea,
@@ -2060,6 +2066,18 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     request = $http({
       method: "post",
       url: contactsId.profilesBaseUrl + "/v0/contact/save",
+      params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
+      data: contact
+    });
+    return(request.then(handleSuccess, handleError));
+  }
+
+  // Request a claim account email.
+  function requestClaimEmail(contact) {
+    var request;
+    request = $http({
+      method: "post",
+      url: contactsId.profilesBaseUrl + "/v0/contact/resetpw",
       params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
       data: contact
     });
