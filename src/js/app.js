@@ -311,7 +311,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
   $scope.createAccount = function () {
     var authID = "";
     var isGhost = false;
-    var profile = $scope.profile;
+    var profile = $.extend(true, {}, $scope.profile);
     var name = profile.nameGiven + " " + profile.nameFamily;
 
     if (!profile.email){
@@ -324,9 +324,9 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     profile.type = 'local';
     profile.isNewContact = true;
 
-    if ($scope.profile.location){
+    if ($scope.profile.location) {
       profile.locationId = Object.keys($scope.profile.location.operations);
-      profile.location =  $scope.profile.location.place;
+      profile.location = $scope.profile.location.place;
     }
 
     if ($scope.selectedOrganization){
@@ -349,17 +349,8 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
         $scope.ghostWarning = false;
       }
       else {
-      if (data && data.status && data.status === 'error') {
-          if (data.message){
-            alert(data.message);
-          }
-          else{
-              alert('error');
-          }
-        }
-        else{
-          alert('error');
-        }
+        var msg = (data && data.message) ? 'Error: ' + data.message : 'An error occurred while attempting to save this profile. Please try again or contact an administrator.';
+        alert(msg);
       }
     });
   };
@@ -458,7 +449,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         ||  (checkinFlow && (hasRoleManager || hasRoleEditor))
       );
 
-  $scope.userCanEditRoles = $scope.userCanViewAllFields && profileData.profile._id !== userData.profile._id;
+  $scope.userCanEditRoles = (hasRoleAdmin || hasRoleManager) && profileData.profile._id !== userData.profile._id;
   if ($scope.userCanEditRoles) {
     if (profileService.hasRole('admin', null, profileData) && !hasRoleAdmin) {
       $scope.userCanEditRoles = false;
@@ -466,20 +457,21 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if (profileService.hasRole('manager', null, profileData) && !(hasRoleAdmin || hasRoleManager)) {
       $scope.userCanEditRoles = false;
     }
-    if (profileService.hasRole('editor', null, profileData) && !(hasRoleAdmin || hasRoleManager || hasRoleEditor)) {
-      $scope.userCanEditRoles = false;
-    }
   }
+
   $scope.userCanEditKeyContact = (
             hasRoleAdmin
         ||  (checkinFlow && hasRoleManager)
         ||  (isLocal && profileService.hasRole('manager', profileData.contact.locationId)));
 
-  $scope.userCanEditProtectedRoles = $scope.userCanEditKeyContact;
+  $scope.userCanEditProtectedRoles = (
+            $scope.userCanEditKeyContact
+        ||  (checkinFlow && hasRoleEditor)
+        ||  (isLocal && profileService.hasRole('editor', profileData.contact.locationId)));
 
   // Determine what roles are available to assign to a user
   if ($scope.userCanEditRoles && userData.profile.roles.indexOf('admin') > -1) {
-    // Your an admin and can assign any role
+    // You're an admin and can assign any role
     $scope.adminRoleOptions = roles;
   }
   else if ($scope.userCanEditRoles) {
@@ -960,8 +952,14 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
       if ($scope.userCanEditRoles) {
         profile.adminRoles = $scope.adminRoles;
-        profile.verified = $scope.verified;
+      }
+
+      if ($scope.userCanEditProtectedRoles) {
         profile.newProtectedRoles = $scope.selectedProtectedRoles;
+      }
+
+      if ($scope.userCanEditProfile) {
+        profile.verified = $scope.verified;
       }
 
       profileService.saveContact(profile).then(function(data) {
