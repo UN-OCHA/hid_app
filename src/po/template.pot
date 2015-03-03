@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-02T17:40:14.162Z\n"
+"Project-Id-Version: 2015-03-03T18:14:29.187Z\n"
 
 #: src/partials/header.html
 #: src/partials/index.html
@@ -77,6 +77,10 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "Contact List Filters"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Contacts"
 msgstr ""
 
 #: src/partials/profile.html

@@ -1197,8 +1197,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
       return;
     }
 
-    if ($scope.contacts.length >= ($scope.contactsCount+$scope.loadLimit)) {
-      $scope.contactsCount = $scope.contacts.length;
+    if ($scope.queryCount > $scope.contactsCount) {
       createContactList();
     }
     else {
@@ -1232,6 +1231,8 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
         data.contacts = data.contacts || [];
         $scope.contacts = $scope.contacts.concat(data.contacts);
         $scope.contactsCreated = true;
+        $scope.queryCount = data.count;
+        $scope.contactsCount = $scope.contacts.length;
       }
     });
   }
