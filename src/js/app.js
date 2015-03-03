@@ -1080,8 +1080,8 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
   };
 });
 
-app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, authService, profileService, userData, placesOperations, gettextCatalog, protectedRoles) {
-  var searchKeys = ['bundle','keyContact', 'organization.name', 'protectedRoles', 'role','text','verified'];
+app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, authService, profileService, userData, placesOperations, gettextCatalog, protectedRoles, countries) {
+  var searchKeys = ['address.administrative_area', 'address.country', 'address.locality', 'bundle','keyContact', 'organization.name', 'protectedRoles', 'role','text','verified'];
 
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
@@ -1092,6 +1092,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   $scope.bundles = [];
   $scope.organizations = [];
   $scope.protectedRoles = [];
+  $scope.countries = countries;
 
   $scope.contactsPromise;
   $scope.query = $location.search();
@@ -1104,15 +1105,51 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
 
   $scope.userCanExportContacts = profileService.hasRole('admin') || ($scope.locationId && (profileService.hasRole('manager', $scope.locationId) || profileService.hasRole('editor', $scope.locationId)));
 
-  // Create bundles array.
+  // Add default country entry.
+  $scope.countries.unshift({action:'clear', name:"", alt:'Country'});
+
   if ($scope.locationId !== 'global') {
+    // Create bundles array.
     for (var place in $scope.placesOperations) {
       if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.locationId)) {
         $scope.location = place;
         $scope.bundles = listObjectToArray($scope.placesOperations[place][$scope.locationId].bundles);
-        $scope.bundles.unshift({action:'clear', value:"", alt:'Groups'});
+        $scope.bundles.unshift({action:'clear', value:"", alt:'Group'});
         break;
       }
+    }
+
+    // Fetch regions and cities for filters.
+    if ($scope.location) {
+      var tmpRegion = $scope.query['address.administrative_area'],
+          tmpLocality = $scope.query['address.locality'],
+          len = $scope.countries.length,
+          remote_id = null;
+
+      $scope.regions = tmpRegion ? [{name: tmpRegion}] : [];
+      $scope.localities = tmpLocality ? [{name: tmpLocality}] :[];
+      profileService.getAdminArea(function() {
+        for (var i = 0; i < len; i++) {
+          if ($scope.countries[i].name === $scope.location) {
+            remote_id = $scope.countries[i].remote_id;
+            break;
+          }
+        }
+        return remote_id;
+      }()).then(function(data) {
+        $scope.regions = data;
+        $scope.regions.unshift({action:'clear', name:"", alt:'Region'});
+        // If we already have an administrative area set, we should also populate the cities for
+        // autocomplete
+        if ($scope.query.hasOwnProperty('address.administrative_area')) {
+          angular.forEach($scope.regions, function(value, key) {
+            if (value.name === $scope.query['address.administrative_area']) {
+              $scope.localities = value.cities;
+              $scope.localities.unshift({action:'clear', name:"", alt:'Locality'});
+            }
+          });
+        }
+      });
     }
   }
   else {
@@ -1186,6 +1223,9 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   $scope.onSelect = function(item, qProp) {
     if (item.action === "clear") {
       $scope.query[qProp] = undefined;
+    }
+    if (qProp === "address.administrative_area" && $scope.query.hasOwnProperty('address.locality')) {
+      delete $scope.query['address.locality'];
     }
     // Search upon changing filter.
     $scope.submitSearch();
@@ -1468,6 +1508,9 @@ app.config(function($routeProvider, $locationProvider) {
     controller: 'ListCtrl',
     requireAuth: true,
     resolve: {
+      countries : function(profileService) {
+        return profileService.getCountries();
+      },
       userData : function(profileService) {
         return profileService.getUserData().then(function(data) {
           return data;
