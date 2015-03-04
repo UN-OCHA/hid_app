@@ -273,7 +273,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
   $scope.accountConfirm = false;
   $scope.ghostConfirm = false;
   $scope.confirmMessage = "";
-  $scope.profile = {};
+  $scope.profile = {email:[{}], phone:[{}]};
   $scope.newProfileID;
   $scope.query = $location.search();
 
@@ -300,7 +300,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     if ($scope.createAccountForm.$valid) {
       //Submit as normal
       //Check to see if the account already exists
-      if ($scope.profile.email){
+      if ($scope.profile.email[0].address){
        $scope.createAccount();
       }
       else{
@@ -320,8 +320,12 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     var profile = $.extend(true, {}, $scope.profile);
     var name = profile.nameGiven + " " + profile.nameFamily;
 
-    if (!profile.email){
+    if (!profile.email[0].address){
       isGhost = true;
+    }
+
+    if (profile.phone[0].number) {
+      profile.phone[0].type = 'Mobile';
     }
 
     profile.userid = '';
@@ -936,7 +940,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         profile.locationId = $scope.selectedOperation;
         profile.location = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].name;
 
-        //Determine if user being checked in is the same as the logged in user 
+        //Determine if user being checked in is the same as the logged in user
         //If not, we need to add some properties to contact so profile service can send an email notifying the user
         if (userData.profile.userid != profile.userid  && profile.email[0]){
           //Set email fields
@@ -1064,7 +1068,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
       return;
     }
 
-    //Determine if user being checked out is the same as the logged in user 
+    //Determine if user being checked out is the same as the logged in user
     //If not, we need to add some properties to contact so profile service can send an email notifying the user
     if (userData.profile.userid != $scope.contact._profile.userid && $scope.contact.email[0]){
       //Set email fields
@@ -1429,7 +1433,7 @@ app.config(function($routeProvider, $locationProvider) {
           if (!data || !data.profile || !data.contacts) {
             throw new Error('Your user data cannot be retrieved. Please sign in again.');
           }
-          else{       
+          else{
             userdata.profile = data.profile;
             userdata.contacts = data.contacts;
             num = data.contacts.length;
@@ -1569,7 +1573,7 @@ app.config(function($routeProvider, $locationProvider) {
           if (!data || !data.profile || !data.contacts) {
             throw new Error('Your user data cannot be retrieved. Please sign in again.');
           }
-          else{       
+          else{
             userdata.profile = data.profile;
             userdata.contacts = data.contacts;
             num = data.contacts.length;
