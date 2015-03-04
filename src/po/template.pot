@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-04T16:39:06.709Z\n"
+"Project-Id-Version: 2015-03-04T16:55:08.332Z\n"
 
 #: src/partials/header.html
 #: src/partials/index.html
@@ -56,11 +56,6 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "City"
-msgstr ""
-
-#: src/partials/createAccount.html
-#: src/partials/profile.html
-msgid "Click here"
 msgstr ""
 
 #: src/partials/contact.html
@@ -227,11 +222,6 @@ msgstr ""
 msgid "Invalid entry. Both type and number are required."
 msgstr ""
 
-#: src/partials/createAccount.html
-#: src/partials/profile.html
-msgid "Is your organization missing?"
-msgstr ""
-
 #: src/partials/contact.html
 msgid "Job Title"
 msgstr ""
@@ -352,6 +342,11 @@ msgid "Register"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/profile.html
+msgid "Request to"
+msgstr ""
+
+#: src/partials/createAccount.html
 msgid "Required Field"
 msgstr ""
 
@@ -445,6 +440,11 @@ msgstr ""
 msgid "Welcome"
 msgstr ""
 
+#: src/partials/createAccount.html
+#: src/partials/profile.html
+msgid "add a missing organization"
+msgstr ""
+
 #: src/partials/dashboard.html
 msgid "before checking-in to a country/emergency."
 msgstr ""
@@ -459,11 +459,6 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "missing."
-msgstr ""
-
-#: src/partials/createAccount.html
-#: src/partials/profile.html
-msgid "to add it to the list."
 msgstr ""
 
 #: src/partials/contact.html
