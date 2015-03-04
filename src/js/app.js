@@ -929,6 +929,21 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       if (checkinFlow) {
         profile.locationId = $scope.selectedOperation;
         profile.location = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].name;
+
+        //Determine if user being checked in is the same as the logged in user 
+        //If not, we need to add some properties to contact so profile service can send an email notifying the user
+        if (userData.profile.userid != profile.userid  && profile.email[0]){
+          //Set email fields
+          var email = {
+            type: 'notify_checkin',
+            recipientFirstName: profile.nameGiven,
+            recipientLastName: profile.nameFamily,
+            recipientEmail: profile.email[0].address,
+            adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
+            locationName: profile.location
+          };
+          profile.notifyEmail = email;
+        }
       }
 
       if ($scope.profileId.length) {
@@ -1014,7 +1029,7 @@ app.directive('focusField', function() {
   };
 });
 
-app.controller("ContactCtrl", function($scope, $route, $routeParams, profileService, contact, gettextCatalog) {
+app.controller("ContactCtrl", function($scope, $route, $routeParams, profileService, contact, gettextCatalog, userData) {
   $scope.contact = contact;
   if (contact.type === 'global') {
     $scope.contact.location = gettextCatalog.getString('Global');
@@ -1042,6 +1057,22 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
     if (!$scope.userCanCheckOut) {
       return;
     }
+
+    //Determine if user being checked out is the same as the logged in user 
+    //If not, we need to add some properties to contact so profile service can send an email notifying the user
+    if (userData.profile.userid != $scope.contact._profile.userid && $scope.contact.email[0]){
+      //Set email fields
+      var email = {
+        type: 'notify_checkout',
+        recipientFirstName: $scope.contact.nameGiven,
+        recipientLastName: $scope.contact.nameFamily,
+        recipientEmail: $scope.contact.email[0].address,
+        adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
+        locationName: $scope.contact.location
+      };
+      contact.notifyEmail = email;
+    }
+
     profileService.saveContact(contact).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         profileService.clearData();
@@ -1362,10 +1393,11 @@ app.config(function($routeProvider, $locationProvider) {
             return profileData;
           };
 
-        // If we are not checking in the current user, then load that user's profile.
+        // If profileId is set, we are not checking in the current user. Load the new user's profile.
         if (profileId && profileId.length) {
           return profileService.getProfileById(profileId).then(processProfile);
         }
+        // Load data for current user
         return profileService.getUserData().then(processProfile);
       },
       countries : function(profileService) {
@@ -1378,11 +1410,27 @@ app.config(function($routeProvider, $locationProvider) {
         return profileService.getProtectedRoles();
       },
       userData : function(profileService) {
+        var userdata = {},
+            num,
+            i,
+            val;
         return profileService.getUserData().then(function(data) {
           if (!data || !data.profile || !data.contacts) {
             throw new Error('Your user data cannot be retrieved. Please sign in again.');
           }
-          return data;
+          else{       
+            userdata.profile = data.profile;
+            userdata.contacts = data.contacts;
+            num = data.contacts.length;
+            for (i = 0; i < num; i++) {
+              val = data.contacts[i];
+              // Find the user's global contact
+              if (val && val.type && val.type === 'global') {
+                userdata.global = val;
+              }
+            }
+            return userdata;
+          }
         });
       }
     }
@@ -1499,6 +1547,30 @@ app.config(function($routeProvider, $locationProvider) {
         };
         return profileService.getContacts(query).then(function(data) {
           return data.contacts[0] || {};
+        });
+      },
+      userData : function(profileService) {
+        var userdata = {},
+            num,
+            i,
+            val;
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          else{       
+            userdata.profile = data.profile;
+            userdata.contacts = data.contacts;
+            num = data.contacts.length;
+            for (i = 0; i < num; i++) {
+              val = data.contacts[i];
+              // Find the user's global contact
+              if (val && val.type && val.type === 'global') {
+                userdata.global = val;
+              }
+            }
+            return userdata;
+          }
         });
       }
     }
