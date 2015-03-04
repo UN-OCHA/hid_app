@@ -203,15 +203,21 @@ app.controller("DefaultCtrl", function($scope, $rootScope, $location, authServic
   }
 });
 
-app.controller("LoginCtrl", function($scope, $location, authService, profileService) {
+app.controller("LoginCtrl", function($scope, $location, $routeParams, authService, profileService) {
+  var redirectPath = $routeParams.redirectPath || loginRedirect || '';
+
   // Get the access token. If one in the browser cache is not found, then
   // redirect to the auth system for the user to login.
   authService.verify(function (err) {
     if (!err && authService.isAuthenticated()) {
       profileService.getUserData().then(function(data) {
-        $location.path(loginRedirect.length ? loginRedirect : '/dashboard');
+        $location.path(redirectPath.length ? redirectPath : '/dashboard');
         loginRedirect = '';
       });
+    }
+    else {
+      authService.logout(true);
+      window.location.href = contactsId.appBaseUrl + '/#/login' + loginRedirect;
     }
   });
 });
@@ -1328,6 +1334,10 @@ app.config(function($routeProvider, $locationProvider) {
     template: 'Redirecting to authentication system...',
     controller: 'LoginCtrl'
   }).
+  when('/login/:redirectPath*', {
+    template: 'Redirecting to authentication system...',
+    controller: 'LoginCtrl'
+  }).
   when('/logout', {
     template: 'Redirecting to authentication system...',
     controller: 'LogoutCtrl'
@@ -1655,7 +1665,7 @@ app.service("authService", function($location, $http, $q, $rootScope) {
     return oauthToken && accountData && accountData.user_id;
   };
 
-  authService.logout = function () {
+  authService.logout = function (skipRedirect) {
     oauthToken = false;
     accountData = false;
 
@@ -1663,7 +1673,9 @@ app.service("authService", function($location, $http, $q, $rootScope) {
     jso.wipeTokens();
 
     // Redirect to the logout page on the authentication system.
-    window.location.href = contactsId.authBaseUrl + "/logout?redirect=" + contactsId.appBaseUrl;
+    if (!skipRedirect) {
+      window.location.href = contactsId.authBaseUrl + "/logout?redirect=" + contactsId.appBaseUrl;
+    }
   };
 
   authService.verify = function (cb) {
