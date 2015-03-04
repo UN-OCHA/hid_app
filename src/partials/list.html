@@ -62,7 +62,7 @@
         <div class="form-group" ng-show="bundles.length">
           <label class="control-label element-invisible" for="bundle" translate>Group</label>
           <ui-select ng-model="query.bundle" theme="selectize" class="form-control"  name="bundle" on-select="onSelect($item, 'bundle')">
-            <ui-select-match placeholder="{{'Groups'|translate}}">{{$select.selected.value}}</ui-select-match>
+            <ui-select-match placeholder="{{'Group'|translate}}">{{$select.selected.value}}</ui-select-match>
             <ui-select-choices ng-class="{'not-empty': bundles.length}" repeat="bundle.value as bundle in bundles | orderBy:'value' | filter: $select.search">
               <div ng-class="{default: !bundle.value.length}" ng-bind-html="bundle.alt || (bundle.value | highlight: $select.search)"></div>
             </ui-select-choices>
@@ -93,6 +93,39 @@
               <div ng-class="{default: !protectedRole.name.length}" ng-bind-html="protectedRole.alt || (protectedRole.name | highlight: $select.search)"></div>
             </ui-select-choices>
           </ui-select>
+        </div>
+
+        <div class="location-filters">
+          <div class="form-group" ng-if="locationId === 'global'">
+            <label class="control-label element-invisible" for="country" translate>Country</label>
+            <ui-select ng-model="query['address.country']" theme="selectize" class="form-control"  name="country" on-select="onSelect($item, 'address.country')">
+              <ui-select-match placeholder="{{'Country'|translate}}">{{$select.selected.name || $select.selected.alt}}</ui-select-match>
+              <ui-select-choices ng-class="{'not-empty': countries.length}" repeat="country.name as country in countries | orderBy:'name' | filter: $select.search">
+                <div ng-class="{default: !country.name.length}" ng-bind-html="country.alt || (country.name | highlight: $select.search)"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+
+          <div class="form-group" ng-show="locationId !== 'global' && regions.length">
+            <label class="control-label element-invisible" for="region" translate>Region</label>
+            <ui-select ng-model="query['address.administrative_area']" theme="selectize" class="form-control"  name="region" on-select="onSelect($item, 'address.administrative_area')">
+              <ui-select-match placeholder="{{'Region'|translate}}">{{$select.selected.name || regions.selected.alt}}</ui-select-match>
+              <ui-select-choices ng-class="{'not-empty': regions.length}" repeat="region.name as region in regions | orderBy:'name' | filter: $select.search">
+                <div ng-class="{default: !region.name.length}" ng-bind-html="region.alt || (region.name | highlight: $select.search)"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+
+          <div class="form-group" ng-show="locationId !== 'global' && localities.length">
+            <label class="control-label element-invisible" for="locality" translate>Locality</label>
+            <ui-select ng-model="query['address.locality']" theme="selectize" class="form-control"  name="locality" on-select="onSelect($item, 'address.locality')">
+              <ui-select-match placeholder="{{'Locality'|translate}}">{{$select.selected.name || $select.selected.alt}}</ui-select-match>
+              <ui-select-choices ng-class="{'not-empty': locality.length}" repeat="locality.name as locality in localities | orderBy:'name' | filter: $select.search">
+                <div ng-class="{default: !locality.name.length}" ng-bind-html="locality.alt || (locality.name | highlight: $select.search)"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+
         </div>
 
         <div class="divider"></div>
