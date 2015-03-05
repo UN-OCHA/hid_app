@@ -70,10 +70,12 @@
               text-no-results="{{'No results found.'|translate}}"
               initial-value="{{profile.organization[0].name}}"
               input-class="form-control"></angucomplete-alt>
+
+            <div class="help-block"><span translate>Request to</span> <a href="http://www.humanitarianresponse.info/help/webform/add-new-organization-form" target="_blank" translate>add a missing organization</a>.</div>
           </div>
 
           <div class="form-group">
-            <label class="control-label" for="jobtitle" translate>Title</label>
+            <label class="control-label" for="jobtitle" translate>Job Title</label>
             <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" />
           </div>
           <div class="form-group">
@@ -289,9 +291,9 @@
           </div>
         </div>
 
-        <div class="col-sm-12 col-md-6 operations" ng-show="userCanViewAllFields">
+        <div class="col-sm-12 col-md-6 operations" ng-show="userCanEditRoles || userCanEditProfile">
           <h4 translate>Global Administration</h4>
-          <div class="form-group">
+          <div class="form-group" ng-show="userCanEditRoles">
             <label class="control-label" for="adminRoles" translate>Admin Privileges</label>
             <ui-select
               multiple
@@ -310,7 +312,7 @@
             </ui-select>
           </div>
 
-          <div class="checkbox">
+          <div class="checkbox" ng-show="userCanEditProfile">
             <label for="verified" ng-click="verified = !userCanEditProfile ? verified : !verified"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="!userCanEditProfile" ng-readonly="!userCanEditProfile" ng-click="verified = !verified"/><span translate>Verified Responder</span></label>
           </div>
         </div>

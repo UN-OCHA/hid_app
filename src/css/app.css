@@ -9378,6 +9378,11 @@ label[for=keyContact] .fa {
 .h1, h2, .h2, h3, .h3 {
   margin-bottom: 12px;
 }
+.h1 small, h2 small, .h2 small, h3 small, .h3 small {
+  color: #afafaf;
+  font-size: 14px;
+  text-transform: uppercase;
+}
 
 h3 {
   margin-top: 12px;
@@ -9709,6 +9714,12 @@ h3 {
   padding: 20px 10px;
 }
 
+.contact-count {
+  text-align: center;
+  margin-top: -30px;
+  color: #afafaf;
+}
+
 #contactsid-app-view .account-create {
   background: #54b1c8;
   padding: 20px 40px;
@@ -9750,6 +9761,13 @@ h3 {
 
 .created-title, .confirm-message {
   color: #2B5F82;
+}
+
+#contactsid-app-view .account-create .help-block {
+  color: #c8e6ed;
+}
+#contactsid-app-view .account-create .help-block a {
+  color: #fff;
 }
 
 #contactsid-app-view {

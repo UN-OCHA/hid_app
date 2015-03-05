@@ -34,7 +34,7 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label-light" for="jobtitle">* <span translate>Title</span></label>
+          <label class="control-label-light" for="jobtitle">* <span translate>Job Title</span></label>
           <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" required  ng-class="{invalid: submitted && createAccountForm.jobtitle.$invalid }"/>
           <div class="error" ng-show="createAccountForm.jobtitle.$error.required && submitted" translate>Title is required.</div>
         </div>
@@ -56,16 +56,18 @@
           </ui-select>
 
           <div class="error" ng-show="createAccountForm.organization.$error.required && submitted" translate>Organization is required.</div>
+
+          <div class="help-block"><span translate>Request to</span> <a href="http://www.humanitarianresponse.info/help/webform/add-new-organization-form" target="_blank" translate>add a missing organization</a>.</div>
         </div>
 
         <div class="form-group">
           <label class="control-label-light" for="phone" translate>Phone</label>
-          <input class="form-control" type="text" name="phone" ng-model="profile.phone" />
+          <input class="form-control" type="text" name="phone" ng-model="profile.phone[0].number" />
         </div>
 
         <div class="form-group">
           <label class="control-label-light" for="email">** <span translate>Email</span></label>
-          <input class="form-control" type="text" name="email" ng-model="profile.email" />
+          <input class="form-control" type="text" name="email" ng-model="profile.email[0].address" />
         </div>
 
         <button class="btn btn-default btn-lg btn-block" type="submit" translate>Create Account</button>
@@ -81,7 +83,7 @@
         <p class="control-label-light" translate>Are you sure that you want to create an account for <b>{{profile.nameGiven}} {{profile.nameFamily}}</b> with no email address?</p>
 
         <div class="form-group">
-          <input class="form-control" type="text" name="phone" placeholder="Email Address" ng-model="profile.email" />
+          <input class="form-control" type="text" name="Email" placeholder="Email Address" ng-model="profile.email[0].address" />
         </div>
 
         <a class="btn btn-default btn-lg btn-block" ng-click="createAccount()">
@@ -96,7 +98,7 @@
       <div class="confirm">
         <h2 class="created-title">{{confirmTitle}}</h2>
         <p class="confirm-message">{{confirmMessage}}</p>
-        <!-- TODO: This needs to be added when we get the profile service to return the new contact ID created      
+        <!-- TODO: This needs to be added when we get the profile service to return the new contact ID created
           <a class="btn btn-primary btn-lg btn-block" href="#/contact/{{newContactID}}" >
             <i class="entypo chevron-thin-right"></i> <span translate>Edit New Account</span>
           </a> -->

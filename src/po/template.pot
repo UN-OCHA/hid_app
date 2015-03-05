@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-02-24T23:38:25.575Z\n"
+"Project-Id-Version: 2015-03-04T16:55:08.332Z\n"
 
 #: src/partials/header.html
 #: src/partials/index.html
@@ -74,6 +74,11 @@ msgstr ""
 msgid "Contact List Filters"
 msgstr ""
 
+#: src/partials/list.html
+msgid "Contacts"
+msgstr ""
+
+#: src/partials/list.html
 #: src/partials/profile.html
 msgid "Country"
 msgstr ""
@@ -188,10 +193,6 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
-#: src/partials/list.html
-msgid "Groups"
-msgstr ""
-
 #: src/partials/createAccount.html
 msgid "Highly Encouraged Field"
 msgstr ""
@@ -232,6 +233,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Local Administration"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Locality"
 msgstr ""
 
 #: src/partials/contact.html
@@ -328,8 +333,17 @@ msgstr ""
 msgid "Protected Roles"
 msgstr ""
 
+#: src/partials/list.html
+msgid "Region"
+msgstr ""
+
 #: src/partials/index.html
 msgid "Register"
+msgstr ""
+
+#: src/partials/createAccount.html
+#: src/partials/profile.html
+msgid "Request to"
 msgstr ""
 
 #: src/partials/createAccount.html
@@ -342,6 +356,10 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "Reset Filters"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Role"
 msgstr ""
 
 #: src/partials/list.html
@@ -378,7 +396,6 @@ msgid "State/Province/Region"
 msgstr ""
 
 #: src/partials/createAccount.html
-#: src/partials/list.html
 #: src/partials/profile.html
 msgid "Title"
 msgstr ""
@@ -421,6 +438,11 @@ msgstr ""
 
 #: src/partials/header.html
 msgid "Welcome"
+msgstr ""
+
+#: src/partials/createAccount.html
+#: src/partials/profile.html
+msgid "add a missing organization"
 msgstr ""
 
 #: src/partials/dashboard.html
