@@ -300,7 +300,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     if ($scope.createAccountForm.$valid) {
       //Submit as normal
       //Check to see if the account already exists
-      if ($scope.profile.email[0].address){
+      if ($scope.profile.email && $scope.profile.email[0].address){
        $scope.createAccount();
       }
       else{
@@ -411,12 +411,13 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
       $scope.query[qProp] = undefined;
     }
     if (item.name && item.remote_id){
-      $scope.selectedOrganization.push({'name': item.name, 'remote_id': item.remote_id});
+      $scope.selectedOrganization = {'name': item.name, 'remote_id': item.remote_id};
     }
   };
 
   $scope.resetAccount = function(){
-    $scope.profile = {};
+    $scope.profile = {email:[{}], phone:[{}]};
+    $scope.selectedOrganization = {};
     profile = {};
     $scope.accountConfirm = false;
     $scope.ghostConfirm = false;
