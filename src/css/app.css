@@ -10053,6 +10053,14 @@ h3 {
   display: table;
 }
 
+.page-list.print .list-header {
+  color: #fff;
+  background-color: #54b1c8;
+  text-transform: uppercase;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .login-controls {
   padding: 6px 0 0;
   margin: 0;

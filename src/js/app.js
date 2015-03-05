@@ -96,12 +96,16 @@ app.directive('browserAlert', function() {
 
 app.run(function ($rootScope, $location, $window, authService) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+    $rootScope.bodyClasses = [];
+    $rootScope.forPrint = false;
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
       event.preventDefault();
       loginRedirect = $location.path();
       $location.path('/login');
     }
-    $rootScope.isIndex = (nextRoute && nextRoute.controller === 'DefaultCtrl') ? 'index' : '';
+    if (nextRoute && nextRoute.bodyClasses) {
+      $rootScope.bodyClasses = nextRoute.bodyClasses;
+    }
   });
 
   // Google analytics page view tracking
@@ -936,7 +940,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         profile.locationId = $scope.selectedOperation;
         profile.location = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].name;
 
-        //Determine if user being checked in is the same as the logged in user 
+        //Determine if user being checked in is the same as the logged in user
         //If not, we need to add some properties to contact so profile service can send an email notifying the user
         if (userData.profile.userid != profile.userid  && profile.email[0]){
           //Set email fields
@@ -1064,7 +1068,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
       return;
     }
 
-    //Determine if user being checked out is the same as the logged in user 
+    //Determine if user being checked out is the same as the logged in user
     //If not, we need to add some properties to contact so profile service can send an email notifying the user
     if (userData.profile.userid != $scope.contact._profile.userid && $scope.contact.email[0]){
       //Set email fields
@@ -1329,7 +1333,8 @@ app.config(function($routeProvider, $locationProvider) {
   $routeProvider.
   when('/', {
     templateUrl: contactsId.sourcePath + '/partials/index.html',
-    controller: 'DefaultCtrl'
+    controller: 'DefaultCtrl',
+    bodyClasses: ['index']
   }).
   when('/login', {
     template: 'Redirecting to authentication system...',
@@ -1429,7 +1434,7 @@ app.config(function($routeProvider, $locationProvider) {
           if (!data || !data.profile || !data.contacts) {
             throw new Error('Your user data cannot be retrieved. Please sign in again.');
           }
-          else{       
+          else{
             userdata.profile = data.profile;
             userdata.contacts = data.contacts;
             num = data.contacts.length;
@@ -1569,7 +1574,7 @@ app.config(function($routeProvider, $locationProvider) {
           if (!data || !data.profile || !data.contacts) {
             throw new Error('Your user data cannot be retrieved. Please sign in again.');
           }
-          else{       
+          else{
             userdata.profile = data.profile;
             userdata.contacts = data.contacts;
             num = data.contacts.length;
@@ -1589,6 +1594,30 @@ app.config(function($routeProvider, $locationProvider) {
   when('/list/:locationId', {
     templateUrl: contactsId.sourcePath + '/partials/list.html',
     controller: 'ListCtrl',
+    requireAuth: true,
+    resolve: {
+      countries : function(profileService) {
+        return profileService.getCountries();
+      },
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          return data;
+        });
+      },
+      placesOperations : function(profileService) {
+        return profileService.getOperationsData().then(function(data) {
+          return data;
+        });
+      },
+      protectedRoles : function(profileService) {
+        return profileService.getProtectedRoles();
+      }
+    }
+  }).
+  when('/list/print/:locationId', {
+    templateUrl: contactsId.sourcePath + '/partials/list-print.html',
+    controller: 'ListCtrl',
+    bodyClasses: ['print'],
     requireAuth: true,
     resolve: {
       countries : function(profileService) {

@@ -18,11 +18,11 @@
 <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
 <base href="/">
 </head>
-<body ng-app="contactsId" breakpoint="{0:'smallscreen', 768:'break768', 960:'break960'}" class="{{breakpoints}} {{isIndex}}">
+<body ng-app="contactsId" breakpoint="{0:'smallscreen', 768:'break768', 960:'break960'}" class="{{breakpoints}}" ng-class='bodyClasses'>
   <div id="contactsid-app-view-wrapper">
     <div id="contactsid-app" class="contactsid-app">
       <ng-include src="'partials/header.html'"></ng-include>
-      <div id="contactsid-app-view" class="container" ng-view>
+      <div id="contactsid-app-view" class="container-fluid" ng-view>
         <div class="col-xs-12 compatibility-alert">
           <div class="alert alert-danger" role="alert">
             <p>For security and performance, this is built to run in Internet Explorer 10 and above, Apple Safari, Google Chrome, or Mozilla Firefox.</p>
