@@ -936,7 +936,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         profile.locationId = $scope.selectedOperation;
         profile.location = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].name;
 
-        //Determine if user being checked in is the same as the logged in user 
+        //Determine if user being checked in is the same as the logged in user
         //If not, we need to add some properties to contact so profile service can send an email notifying the user
         if (userData.profile.userid != profile.userid  && profile.email[0]){
           //Set email fields
@@ -1035,7 +1035,7 @@ app.directive('focusField', function() {
   };
 });
 
-app.controller("ContactCtrl", function($scope, $route, $routeParams, profileService, contact, gettextCatalog, userData) {
+app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, profileService, contact, gettextCatalog, userData, protectedRoles) {
   $scope.contact = contact;
   if (contact.type === 'global') {
     $scope.contact.location = gettextCatalog.getString('Global');
@@ -1043,6 +1043,13 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
 
   $scope.userCanEdit = $scope.userCanCheckIn = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
   $scope.userCanCheckOut = (contact.type === 'local') && (profileService.hasRole('admin') || profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId));
+
+  var roleFilter = $filter('filter');
+  $scope.contact.protectedRolesByName = [];
+  angular.forEach($scope.contact.protectedRoles, function(value, key) {
+    var role = roleFilter(protectedRoles,function(d) { return d.id === value;})[0].name;
+    this.push(role);
+  }, $scope.contact.protectedRolesByName);
 
   $scope.back = function () {
     if (history.length) {
@@ -1064,7 +1071,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
       return;
     }
 
-    //Determine if user being checked out is the same as the logged in user 
+    //Determine if user being checked out is the same as the logged in user
     //If not, we need to add some properties to contact so profile service can send an email notifying the user
     if (userData.profile.userid != $scope.contact._profile.userid && $scope.contact.email[0]){
       //Set email fields
@@ -1429,7 +1436,7 @@ app.config(function($routeProvider, $locationProvider) {
           if (!data || !data.profile || !data.contacts) {
             throw new Error('Your user data cannot be retrieved. Please sign in again.');
           }
-          else{       
+          else{
             userdata.profile = data.profile;
             userdata.contacts = data.contacts;
             num = data.contacts.length;
@@ -1560,6 +1567,9 @@ app.config(function($routeProvider, $locationProvider) {
           return data.contacts[0] || {};
         });
       },
+      protectedRoles : function(profileService) {
+        return profileService.getProtectedRoles();
+      },
       userData : function(profileService) {
         var userdata = {},
             num,
@@ -1569,7 +1579,7 @@ app.config(function($routeProvider, $locationProvider) {
           if (!data || !data.profile || !data.contacts) {
             throw new Error('Your user data cannot be retrieved. Please sign in again.');
           }
-          else{       
+          else{
             userdata.profile = data.profile;
             userdata.contacts = data.contacts;
             num = data.contacts.length;
