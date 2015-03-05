@@ -50,7 +50,7 @@
                   <div class="profile-view__item">{{phone.type}}: <a href="tel:{{phone.number}}">{{phone.number}}</a></div>
                 </div>
                 <div class="email" ng-repeat="email in contact.email">
-                  <div class="profile-view__item">{{email.type}}: <a href="mailto:{{email.address}}">{{email.address}}</a></div>
+                  <div class="profile-view__item"><span ng-show="email.type">{{email.type}}: </span><a href="mailto:{{email.address}}">{{email.address}}</a></div>
                 </div>
                 <div class="voip" ng-repeat="voip in contact.voip">
                   <div class="profile-view__item">{{voip.type}}: {{voip.number}}</div>
@@ -85,7 +85,7 @@
               <strong>{{contact.jobtitle}}</strong>
             </div>
             <div class="right-sidebar-group">
-              <span class="group-label" translate>Clusters</span>
+              <span class="group-label" translate>Groups</span>
               <span class="title"><strong>{{contact.bundle.join(', ')}}</strong></span>
             </div>
           </div>
