@@ -1039,7 +1039,7 @@ app.directive('focusField', function() {
   };
 });
 
-app.controller("ContactCtrl", function($scope, $route, $routeParams, profileService, contact, gettextCatalog, userData) {
+app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, profileService, contact, gettextCatalog, userData, protectedRoles) {
   $scope.contact = contact;
   if (contact.type === 'global') {
     $scope.contact.location = gettextCatalog.getString('Global');
@@ -1047,6 +1047,13 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
 
   $scope.userCanEdit = $scope.userCanCheckIn = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
   $scope.userCanCheckOut = (contact.type === 'local') && (profileService.hasRole('admin') || profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId));
+
+  var roleFilter = $filter('filter');
+  $scope.contact.protectedRolesByName = [];
+  angular.forEach($scope.contact.protectedRoles, function(value, key) {
+    var role = roleFilter(protectedRoles,function(d) { return d.id === value;})[0].name;
+    this.push(role);
+  }, $scope.contact.protectedRolesByName);
 
   $scope.back = function () {
     if (history.length) {
@@ -1563,6 +1570,9 @@ app.config(function($routeProvider, $locationProvider) {
         return profileService.getContacts(query).then(function(data) {
           return data.contacts[0] || {};
         });
+      },
+      protectedRoles : function(profileService) {
+        return profileService.getProtectedRoles();
       },
       userData : function(profileService) {
         var userdata = {},
