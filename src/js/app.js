@@ -336,6 +336,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     profile.status = 1;
     profile.type = 'local';
     profile.isNewContact = true;
+    profile.adminName = userData.global.nameGiven + " " + userData.global.nameFamily;
 
     if ($scope.profile.location) {
       profile.locationId = Object.keys($scope.profile.location.operations);
@@ -1639,11 +1640,27 @@ app.config(function($routeProvider, $locationProvider) {
         });
       },
       userData : function(profileService) {
+        var userdata = {},
+            num,
+            i,
+            val;
         return profileService.getUserData().then(function(data) {
           if (!data || !data.profile || !data.contacts) {
             throw new Error('Your user data cannot be retrieved. Please sign in again.');
           }
-          return data;
+          else{
+            userdata.profile = data.profile;
+            userdata.contacts = data.contacts;
+            num = data.contacts.length;
+            for (i = 0; i < num; i++) {
+              val = data.contacts[i];
+              // Find the user's global contact
+              if (val && val.type && val.type === 'global') {
+                userdata.global = val;
+              }
+            }
+            return userdata;
+          }
         });
       },
       globalProfileId : function(profileService) {
