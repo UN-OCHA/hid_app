@@ -70,7 +70,7 @@
           <input class="form-control" type="text" name="email" ng-model="profile.email[0].address" />
         </div>
 
-        <button class="btn btn-default btn-lg btn-block" type="submit" translate>Create Account</button>
+        <button class="btn btn-default btn-lg btn-block" ng-disabled="createButtonDisabled" type="submit" translate>Create Account</button>
       </div>
   </div>
   </form>
@@ -86,9 +86,7 @@
           <input class="form-control" type="text" name="Email" placeholder="Email Address" ng-model="profile.email[0].address" />
         </div>
 
-        <a class="btn btn-default btn-lg btn-block" ng-click="createAccount()">
-          <i class="entypo chevron-thin-right"></i> <span translate>Create Account</span>
-        </a>
+        <button class="btn btn-default btn-lg btn-block wfwef" ng-disabled="createButtonDisabled" ng-click="createAccount()" translate>Create Account</button>
       </div>
     </div>
   </div>

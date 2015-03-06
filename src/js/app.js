@@ -320,6 +320,9 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     var profile = $.extend(true, {}, $scope.profile);
     var name = profile.nameGiven + " " + profile.nameFamily;
 
+    //Disable the create button until we are done saving the contact
+    $scope.createButtonDisabled = true;
+
     if (!profile.email[0].address){
       isGhost = true;
     }
@@ -362,6 +365,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
         var msg = (data && data.message) ? 'Error: ' + data.message : 'An error occurred while attempting to save this profile. Please try again or contact an administrator.';
         alert(msg);
       }
+      $scope.createButtonDisabled = false;
     });
   };
 
