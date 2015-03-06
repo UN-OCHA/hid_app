@@ -277,7 +277,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
   $scope.accountConfirm = false;
   $scope.ghostConfirm = false;
   $scope.confirmMessage = "";
-  $scope.profile = {};
+  $scope.profile = {email:[{}], phone:[{}]};
   $scope.newProfileID;
   $scope.query = $location.search();
 
@@ -304,7 +304,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     if ($scope.createAccountForm.$valid) {
       //Submit as normal
       //Check to see if the account already exists
-      if ($scope.profile.email){
+      if ($scope.profile.email && $scope.profile.email[0].address){
        $scope.createAccount();
       }
       else{
@@ -324,8 +324,12 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     var profile = $.extend(true, {}, $scope.profile);
     var name = profile.nameGiven + " " + profile.nameFamily;
 
-    if (!profile.email){
+    if (!profile.email[0].address){
       isGhost = true;
+    }
+
+    if (profile.phone[0].number) {
+      profile.phone[0].type = 'Mobile';
     }
 
     profile.userid = '';
@@ -411,12 +415,13 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
       $scope.query[qProp] = undefined;
     }
     if (item.name && item.remote_id){
-      $scope.selectedOrganization.push({'name': item.name, 'remote_id': item.remote_id});
+      $scope.selectedOrganization = {'name': item.name, 'remote_id': item.remote_id};
     }
   };
 
   $scope.resetAccount = function(){
-    $scope.profile = {};
+    $scope.profile = {email:[{}], phone:[{}]};
+    $scope.selectedOrganization = {};
     profile = {};
     $scope.accountConfirm = false;
     $scope.ghostConfirm = false;
@@ -1039,7 +1044,7 @@ app.directive('focusField', function() {
   };
 });
 
-app.controller("ContactCtrl", function($scope, $route, $routeParams, profileService, contact, gettextCatalog, userData) {
+app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, profileService, contact, gettextCatalog, userData, protectedRoles) {
   $scope.contact = contact;
   if (contact.type === 'global') {
     $scope.contact.location = gettextCatalog.getString('Global');
@@ -1047,6 +1052,13 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, profileServ
 
   $scope.userCanEdit = $scope.userCanCheckIn = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
   $scope.userCanCheckOut = (contact.type === 'local') && (profileService.hasRole('admin') || profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId));
+
+  var roleFilter = $filter('filter');
+  $scope.contact.protectedRolesByName = [];
+  angular.forEach($scope.contact.protectedRoles, function(value, key) {
+    var role = roleFilter(protectedRoles,function(d) { return d.id === value;})[0].name;
+    this.push(role);
+  }, $scope.contact.protectedRolesByName);
 
   $scope.back = function () {
     if (history.length) {
@@ -1564,6 +1576,9 @@ app.config(function($routeProvider, $locationProvider) {
         return profileService.getContacts(query).then(function(data) {
           return data.contacts[0] || {};
         });
+      },
+      protectedRoles : function(profileService) {
+        return profileService.getProtectedRoles();
       },
       userData : function(profileService) {
         var userdata = {},
