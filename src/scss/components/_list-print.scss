@@ -1,9 +1,95 @@
+
+
 .page-list.print {
-  .list-header {
-    color: $white;
-    background-color: $primary-color-1;
+  font-family: exo2, "arial black";
+
+  .heading-contact-list {
+    width: auto;
+    text-align: left;
+    display: inline-block;
     text-transform: uppercase;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    font-family: exo2, "arial black";
+    .location {
+      color: $secondary-color-4;
+    }
+  }
+  .title-cell .name-family {
+    text-transform: uppercase;
+  }
+  a {
+    text-decoration: underline;
+  }
+  .logo {
+    background-position: 0 -630px;
+    height: 70px;
+    margin-top: 20px;
+  }
+  .masthead {
+    margin-bottom: 75px;
+  }
+  .filters-param-list {
+    background-color: $secondary-color-4;
+    color: $white;
+    padding: 8px 20px;
+    margin-bottom: 35px;
+
+    .filters-param-label,
+    .filters-param {
+      padding: 8px;
+      display: inline-block;
+      margin-right: 12px;
+    }
+    .filters-param {
+      padding: 8px 16px;
+      display: inline-block;
+      background-color: $primary-color-1;
+      @include border-radius($border-radius-base);
+    }
+  }
+  table > thead > tr > th,
+  table > tbody > tr > th,
+  table > tbody > tr > td {
+    vertical-align: middle;
+  }
+  #print-footer {
+      position: absolute;
+      text-align: right;
+      bottom:0;
+      right:0;
+      background-color: $white !important;
+    }
+}
+
+
+@media only print {
+  .page-list.print {
+    .heading-contact-list {
+      span {
+        color: $primary-color-1 !important;
+      }
+      .location {
+        color: $secondary-color-4 !important;
+      }
+    }
+    .filters-param-list {
+      background-color: $secondary-color-4 !important;
+      .filters-param-label {
+        color: $white !important;
+      }
+      .filters-param {
+        background-color: $primary-color-1 !important;
+        color: $white !important;
+      }
+    }
+    .logo {
+        background: url(../images/hid-logo-print.png) no-repeat !important;
+        background-size: 420px auto !important;
+    }
+    a {
+      color: $primary-color-1 !important;
+      &:after {
+        content: "";
+      }
+    }
   }
 }

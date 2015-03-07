@@ -98,3 +98,18 @@ label[for=keyContact]{
     display: none;
   }
 }
+
+
+@media only print {
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+  @page {
+    size: landscape;
+  }
+  .print {
+    .header {
+      display: none;
+    }
+  }
+}

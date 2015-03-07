@@ -2,10 +2,19 @@
   <div class='row masthead'>
     <div class="col-xs-12">
       <browser-alert></browser-alert>
-      <h2 class="heading-contact-list"><span translate>Contact List</span> {{location}}</h2>
+      <h2 class="heading-contact-list"><span translate>Contact List</span> <span class="location">{{location}}</span></h2>
+
+      <div class="logo pull-right"></div>
     </div>
   </div>
+
   <div class="row main">
+    <div class="col-xs-12 filters-param-list-wrapper">
+      <div class="filters-param-list visible-print-blockx">
+        <div class="filters-param-label visible-print-inline-blockx">Filter Criteria</div>
+        <div class="filters-param visible-print-inline-blockx" ng-repeat="param in filtersParams">{{param}}</div>
+      </div>
+    </div>
     <div class="active-contacts col-xs-12">
       <table class="table table-striped">
         <thead>
@@ -21,51 +30,33 @@
         </thead>
         <tbody>
           <tr class="profile-item" ng-repeat="contact in contacts | orderBy: ['organization[0].name', 'nameGiven', 'nameFamily']">
-            <th scope="row">{{contact.nameGiven}}<br/>{{contact.nameFamily}}</th>
+            <td class="title-cell"><div class="avoid">{{contact.nameGiven}}<br/><span class="name-family">{{contact.nameFamily}}</span></div></td>
             <td ng-if="locationId !== 'global'">
-              <span ng-repeat="bundle in contact.bundle | orderBy">{{bundle}}{{ !$last ? ', ' : ''}}</span>
+              <div class="avoid"><span ng-repeat="bundle in contact.bundle | orderBy">{{bundle}}{{ !$last ? ', ' : ''}}</span></div>
             </td>
-            <td>{{contact.organization[0].name}}</td>
-            <td>{{contact.jobtitle}}</td>
+            <td><div class="avoid">{{contact.organization[0].name}}</div></td>
+            <td><div class="avoid">{{contact.jobtitle}}</div></td>
             <td>
-              <span ng-repeat="phone in contact.phone">{{phone.number}} {{phone.type? '('+phone.type.charAt(0)+')' : ''}}{{ !$last ? ', ' : ''}}</span>
+              <div class="avoid">
+                <span ng-repeat="phone in contact.phone">{{phone.number}} {{phone.type? '('+phone.type.charAt(0)+')' : ''}}{{ !$last ? ', ' : ''}}</span>
+              </div>
             </td>
             <td>
-              <span ng-repeat="email in contact.email">{{email.address}} {{email.type? '('+email.type.charAt(0)+')' : ''}}{{ !$last ? ', ' : ''}}</span>
+              <div class="avoid">
+                <span ng-repeat="email in contact.email"><a href="mailto:{{email.address}}">{{email.address}}</a> {{email.type? '('+email.type.charAt(0)+')' : ''}}{{ !$last ? ', ' : ''}}</span>
+              </div>
             </td>
             <td>
-              <span ng-if="locationId !== 'global' && contact.address[0].locality">{{contact.address[0].locality}}{{contact.address[0].administrative_area ? ', ' : ''}}</span>
-              <span ng-if="locationId !== 'global' && contact.address[0].administrative_area">{{contact.address[0].administrative_area}}</span>
-              <span ng-if="locationId === 'global' && contact.address[0].country">{{contact.address[0].country}}</span>
+              <div class="avoid">
+                <span ng-if="locationId !== 'global' && contact.address[0].locality">{{contact.address[0].locality}}{{contact.address[0].administrative_area ? ', ' : ''}}</span>
+                <span ng-if="locationId !== 'global' && contact.address[0].administrative_area">{{contact.address[0].administrative_area}}</span>
+                <span ng-if="locationId === 'global' && contact.address[0].country">{{contact.address[0].country}}</span>
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
-      <ul class="list-group" cg-busy="contactsPromise">
-        <li class="list-header">
-          <div class='col-xs-1' translate>Name</div>
-          <div class='col-xs-1' translate>Group*</div>
-          <div class='col-xs-1' translate>Organization</div>
-          <div class='col-xs-2' translate>Job Title</div>
-          <div class='col-xs-2' translate>Phone</div>
-          <div class='col-xs-3' translate>Email</div>
-          <div class='col-xs-2' translate>Location</div>
-        </li>
-        <li class="profile-item list-group-item" ng-repeat="contact in contacts | orderBy: ['nameGiven', 'nameFamily']">
-          <div class="row">
-            <div class="contact-item contact-item--name col-xs-12 col-md-3" >
-              <a href="#/contact/{{contact._id}}">{{contact.nameGiven}} {{contact.nameFamily}}</a>
-              <div class="contact-item__markers" ng-if="contact.keyContact || contact._profile.verified">
-                <div class="contact-item__key-contact" title="Key Contact" ng-if="contact.keyContact">*</div>
-                <span class="contact-item__verified" title="Verified" ng-if="contact._profile.verified"><i class="fa fa-check-circle"></i></span>
-              </div>
-            </div>
-            <div class="contact-item contact-item--jobtitle col-xs-7 col-md-3"><span title="{{contact.jobtitle}}">{{contact.jobtitle}}</span></div>
-            <div class="contact-item contact-item--organization col-xs-5" ng-class="(contact.bundle.length) ? 'col-md-3' : 'col-md-6'"><span title="{{contact.organization[0].name}}">{{contact.organization[0].name}}</span></div>
-            <div class="contact-item contact-item--bundle col-md-3" ng-hide="!contact.bundle.length"><span title="{{contact.bundle.join(', ')}}">{{contact.bundle.join(', ')}}</span></div>
-          </div>
-        </li>
-      </ul>
+
 
       <div class="panel panel-danger" ng-if="contacts.length == 0 && contactsCreated">
         <div class="panel-heading"><em translate>No contacts found</em></div>
@@ -73,6 +64,6 @@
     </div>
   </div>
   <div id="print-footer">
-    <div class="message">Powered by Humanitarian Id - to update your information, check in to http://humanitarian.id</div>
+    <div class="message">Powered by Humanitarian Id - to update your information, check in to <a href="http://humanitarian.id">http://humanitarian.id</a></div>
   </div>
 </div>

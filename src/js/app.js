@@ -1133,7 +1133,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
   };
 });
 
-app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, authService, profileService, userData, placesOperations, gettextCatalog, protectedRoles, countries) {
+app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, placesOperations, gettextCatalog, protectedRoles, countries) {
   var searchKeys = ['address.administrative_area', 'address.country', 'address.locality', 'bundle','keyContact', 'organization.name', 'protectedRoles', 'role','text','verified'];
 
   $scope.location = '';
@@ -1157,6 +1157,35 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   $scope.contactsCreated = false;
 
   $scope.userCanExportContacts = profileService.hasRole('admin') || ($scope.locationId && (profileService.hasRole('manager', $scope.locationId) || profileService.hasRole('editor', $scope.locationId)));
+
+
+  var pathParams = $location.path().split('/'),
+      filter = $filter('filter');
+
+  if (pathParams[2] === 'print') {
+    $scope.loadLimit = 0;
+    $scope.filtersParams = [];
+
+    angular.forEach(searchKeys, function(paramKey){
+
+      if ($scope.query.hasOwnProperty(paramKey)) {
+        switch (paramKey) {
+          case 'keyContact':
+            this.push('Key Contact');
+            break;
+          case 'protectedRoles':
+            this.push(filter(protectedRoles,function(d) { return d.id === $scope.query[paramKey];})[0].name);
+            break;
+          case 'verified':
+            this.push('Verified User');
+            break;
+          default:
+            this.push($scope.query[paramKey])
+        }
+      }
+    }, $scope.filtersParams);
+
+  }
 
   // Add default country entry.
   $scope.countries.unshift({action:'clear', name:"", alt:'Country'});

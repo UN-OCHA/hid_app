@@ -1,0 +1,55 @@
+table {
+  &.table > thead > tr > th {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  &.table-striped {
+    & > thead > tr > th {
+      border-bottom: none;
+    }
+    & > tbody > tr > th,
+    & > tbody > tr > td {
+      border-top: none;
+    }
+  }
+  thead {
+    background-color: $primary-color-1;
+    color: $white;
+    text-transform: uppercase;
+  }
+  tr {
+    th:first-child,
+    td:first-child {
+      padding-left: 20px;
+    }
+    th:last-child,
+    td:last-child {
+      padding-right: 20px;
+    }
+  }
+}
+
+@media only print {
+  table.table,
+  table {
+    background-color: $secondary-color-3 !important;
+    td, th, span {
+      background-color: $secondary-color-3 !important;
+    }
+    thead th,
+    thead span {
+      background-color: $primary-color-1 !important;
+      color: $white !important;
+    }
+    &.table-striped > tbody > tr:nth-child(odd) {
+      background-color: $table-bg-accent !important;
+      td, th, span {
+        background-color: $table-bg-accent !important;
+      }
+    }
+  }
+
+  .avoid {
+    page-break-inside: avoid !important;
+  }
+}
