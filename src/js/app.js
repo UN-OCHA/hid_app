@@ -97,7 +97,6 @@ app.directive('browserAlert', function() {
 app.run(function ($rootScope, $location, $window, authService) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     $rootScope.bodyClasses = [];
-    $rootScope.forPrint = false;
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
       event.preventDefault();
       loginRedirect = $location.path();
