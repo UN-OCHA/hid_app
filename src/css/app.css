@@ -10226,7 +10226,8 @@ table tr td:last-child {
   }
   .page-list.print .logo {
     background: url(../images/hid-logo-print.png) no-repeat !important;
-    background-size: 420px auto !important;
+    background-size: 420px 66px !important;
+    width: 420px;
   }
   .page-list.print a {
     color: #54b1c8 !important;
