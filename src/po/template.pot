@@ -1,7 +1,11 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-04T16:55:08.332Z\n"
+"Project-Id-Version: 2015-03-08T22:49:53.578Z\n"
+
+#: src/partials/list-print.html
+msgid "*the term GROUP equals clusters, sectors, working groups are any other thematic"
+msgstr ""
 
 #: src/partials/header.html
 #: src/partials/index.html
@@ -59,13 +63,10 @@ msgid "City"
 msgstr ""
 
 #: src/partials/contact.html
-msgid "Clusters"
-msgstr ""
-
-#: src/partials/contact.html
 msgid "Confirm User Checkout"
 msgstr ""
 
+#: src/partials/list-print.html
 #: src/partials/list.html
 msgid "Contact List"
 msgstr ""
@@ -126,6 +127,7 @@ msgid "Edit Profile"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/list-print.html
 #: src/partials/profile.html
 msgid "Email"
 msgstr ""
@@ -193,6 +195,14 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
+#: src/partials/list-print.html
+msgid "Group*"
+msgstr ""
+
+#: src/partials/contact.html
+msgid "Groups"
+msgstr ""
+
 #: src/partials/createAccount.html
 msgid "Highly Encouraged Field"
 msgstr ""
@@ -223,6 +233,9 @@ msgid "Invalid entry. Both type and number are required."
 msgstr ""
 
 #: src/partials/contact.html
+#: src/partials/createAccount.html
+#: src/partials/list-print.html
+#: src/partials/profile.html
 msgid "Job Title"
 msgstr ""
 
@@ -240,6 +253,7 @@ msgid "Locality"
 msgstr ""
 
 #: src/partials/contact.html
+#: src/partials/list-print.html
 #: src/partials/profile.html
 msgid "Location"
 msgstr ""
@@ -261,6 +275,10 @@ msgstr ""
 msgid "My checked-in lists"
 msgstr ""
 
+#: src/partials/list-print.html
+msgid "Name"
+msgstr ""
+
 #: src/js/app.js
 msgid "Name added to the list"
 msgstr ""
@@ -269,6 +287,7 @@ msgstr ""
 msgid "No active operations found."
 msgstr ""
 
+#: src/partials/list-print.html
 #: src/partials/list.html
 msgid "No contacts found"
 msgstr ""
@@ -296,6 +315,7 @@ msgstr ""
 
 #: src/partials/contact.html
 #: src/partials/createAccount.html
+#: src/partials/list-print.html
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Organization"
@@ -310,6 +330,7 @@ msgid "Organizational Information"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/list-print.html
 msgid "Phone"
 msgstr ""
 
@@ -323,6 +344,12 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "Please create a"
+msgstr ""
+
+#: src/partials/list-print.html
+msgid ""
+"Powered by <span class=\"title-humanitarian\">Humanitarian</span> <span class=\"title-id\">Id</span> - <span translate=\"\">to update your information, check in to</span> <a href=\"http://humanitarian.id\">http://humanitarian.id</a><br>\n"
+"    <span ng-if=\"locationId !== 'global'\" translate=\"\">*the term GROUP equals clusters, sectors, working groups are any other thematic</span>"
 msgstr ""
 
 #: src/partials/profile.html
@@ -358,6 +385,7 @@ msgstr ""
 msgid "Reset Filters"
 msgstr ""
 
+#: src/partials/contact.html
 #: src/partials/list.html
 msgid "Role"
 msgstr ""
@@ -396,11 +424,6 @@ msgid "State/Province/Region"
 msgstr ""
 
 #: src/partials/createAccount.html
-#: src/partials/profile.html
-msgid "Title"
-msgstr ""
-
-#: src/partials/createAccount.html
 msgid "Title is required."
 msgstr ""
 
@@ -418,6 +441,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "VOIP"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Veiw Printable"
 msgstr ""
 
 #: src/partials/profile.html
@@ -459,6 +486,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "missing."
+msgstr ""
+
+#: src/partials/list-print.html
+msgid "to update your information, check in to"
 msgstr ""
 
 #: src/partials/contact.html

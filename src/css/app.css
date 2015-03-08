@@ -9480,6 +9480,13 @@ table tr td:last-child {
   table.table-striped > tbody > tr:nth-child(odd) span {
     background-color: #fafafa !important;
   }
+  table.table tbody th, table.table tbody td, table.table tbody span, table.table tbody div,
+  table tbody th,
+  table tbody td,
+  table tbody span,
+  table tbody div {
+    color: #767676 !important;
+  }
 
   .avoid {
     page-break-inside: avoid !important;
@@ -10133,6 +10140,12 @@ table tr td:last-child {
   display: inline-block;
   text-transform: uppercase;
   font-family: exo2, "arial black";
+  line-height: 1;
+}
+.page-list.print .heading-contact-list small {
+  font-weight: normal;
+  text-transform: none;
+  font-size: 20px;
 }
 .page-list.print .heading-contact-list .location {
   color: #2a5d81;
@@ -10177,11 +10190,18 @@ table tr td:last-child {
   vertical-align: middle;
 }
 .page-list.print #print-footer {
-  position: absolute;
+  float: right;
   text-align: right;
-  bottom: 0;
-  right: 0;
-  background-color: #fff !important;
+}
+
+.title-humanitarian {
+  color: #2a5d81;
+  text-transform: uppercase;
+}
+
+.title-id {
+  color: #54b1c8;
+  text-transform: uppercase;
 }
 
 @media only print {
@@ -10190,6 +10210,9 @@ table tr td:last-child {
   }
   .page-list.print .heading-contact-list .location {
     color: #2a5d81 !important;
+  }
+  .page-list.print .heading-contact-list small {
+    color: #767676 !important;
   }
   .page-list.print .filters-param-list {
     background-color: #2a5d81 !important;
@@ -10210,6 +10233,28 @@ table tr td:last-child {
   }
   .page-list.print a:after {
     content: "";
+  }
+
+  #print-footer {
+    background-color: #fff !important;
+  }
+  #print-footer span, #print-footer div {
+    background-color: #fff !important;
+    color: #767676 !important;
+  }
+  #print-footer span.title-humanitarian {
+    color: #2a5d81 !important;
+  }
+  #print-footer span.title-id {
+    color: #54b1c8 !important;
+  }
+
+  .title-humanitarian {
+    color: #2a5d81 !important;
+  }
+
+  .title-id {
+    color: #54b1c8 !important;
   }
 }
 .login-controls {

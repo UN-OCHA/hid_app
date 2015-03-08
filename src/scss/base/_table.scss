@@ -47,6 +47,11 @@ table {
         background-color: $table-bg-accent !important;
       }
     }
+    tbody {
+      th, td, span, div {
+        color: $text-color !important;
+      }
+    }
   }
 
   .avoid {

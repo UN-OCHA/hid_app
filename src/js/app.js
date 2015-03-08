@@ -1159,15 +1159,15 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   $scope.userCanExportContacts = profileService.hasRole('admin') || ($scope.locationId && (profileService.hasRole('manager', $scope.locationId) || profileService.hasRole('editor', $scope.locationId)));
 
 
-  var pathParams = $location.path().split('/'),
+  var pathParams = $location.url().split('/'),
       filter = $filter('filter');
 
   if (pathParams[2] === 'print') {
+    $scope.date = moment().format('MMM Do YYYY');
     $scope.loadLimit = 0;
     $scope.filtersParams = [];
 
     angular.forEach(searchKeys, function(paramKey){
-
       if ($scope.query.hasOwnProperty(paramKey)) {
         switch (paramKey) {
           case 'keyContact':
@@ -1184,7 +1184,10 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
         }
       }
     }, $scope.filtersParams);
-
+  }
+  else {
+    pathParams.splice(2, 0, "print")
+    $scope.printUrl = '#' + pathParams.join('/');
   }
 
   // Add default country entry.

@@ -9,6 +9,12 @@
     display: inline-block;
     text-transform: uppercase;
     font-family: exo2, "arial black";
+    line-height: 1;
+    small {
+      font-weight: normal;
+      text-transform: none;
+      font-size: 20px;
+    }
     .location {
       color: $secondary-color-4;
     }
@@ -52,14 +58,20 @@
     vertical-align: middle;
   }
   #print-footer {
-      position: absolute;
-      text-align: right;
-      bottom:0;
-      right:0;
-      background-color: $white !important;
-    }
+    float: right;
+    text-align: right;
+  }
 }
 
+.title-humanitarian {
+  color: $secondary-color-4;
+  text-transform: uppercase;
+}
+
+.title-id {
+  color: $primary-color-1;
+  text-transform: uppercase;
+}
 
 @media only print {
   .page-list.print {
@@ -69,6 +81,9 @@
       }
       .location {
         color: $secondary-color-4 !important;
+      }
+      small {
+        color: $text-color !important;
       }
     }
     .filters-param-list {
@@ -91,5 +106,26 @@
         content: "";
       }
     }
+  }
+
+  #print-footer {
+    background-color: $white !important;
+    span, div {
+      background-color: $white !important;
+      color: $text-color !important;
+    }
+    span.title-humanitarian {
+      color: $secondary-color-4 !important;
+    }
+    span.title-id {
+      color: $primary-color-1 !important;
+    }
+  }
+  .title-humanitarian {
+    color: $secondary-color-4 !important;
+  }
+
+  .title-id {
+    color: $primary-color-1 !important;
   }
 }
