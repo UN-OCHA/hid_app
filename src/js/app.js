@@ -827,6 +827,14 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
+  // Handle the input-changed event on the Organization angucomplete to support
+  // clearing the field.
+  $scope.changeOrganization = function (str) {
+    if (!str || !str.length) {
+      $scope.profile.organization = [];
+    }
+  };
+
   /**
    * AJAX autocomplete response formatter to massage data into format for the widget.
    */
@@ -869,6 +877,14 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
+  // Handle the input-changed event on the Country angucomplete to support
+  // clearing the field.
+  $scope.changeCountry = function (str) {
+    if (!str || !str.length) {
+      $scope.profile.address = [];
+    }
+  };
+
   /**
    * Callback for country angucomplete selection.
    */
@@ -893,6 +909,14 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
+  // Handle the input-changed event on the State/Province/Region angucomplete
+  // to support clearing the field.
+  $scope.changeAdminArea = function (str) {
+    if (!str || !str.length) {
+      $scope.profile.address[0].administrative_area = '';
+    }
+  };
+
   /**
    * Callback for country angucomplete selection.
    */
@@ -907,6 +931,14 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         'locality': selectedLocality.originalObject.name
       };
       $scope.profile.address[0] = angular.extend({}, $scope.profile.address[0], address);
+    }
+  };
+
+  // Handle the input-changed event on the City angucomplete to support
+  // clearing the field.
+  $scope.changeLocality = function (str) {
+    if (!str || !str.length) {
+      $scope.profile.address[0].locality = '';
     }
   };
 
