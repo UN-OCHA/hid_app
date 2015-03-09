@@ -18,6 +18,12 @@
   }
   .utility {
     display: block !important;
+    height: 130px;
+    bottom: -130px;
+    @media(min-width: 768px) {
+      height: 59px;
+      bottom: auto;
+    }
   }
 }
 
