@@ -110,6 +110,10 @@
         display: inline-block;
       }
     }
+    .form-group {
+      padding: 0 15px 2px;
+      margin-bottom: 0;
+    }
     a {
       text-transform: uppercase;
       color: lighten($primary-color-3, 8);

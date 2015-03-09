@@ -10006,6 +10006,10 @@ table tr td:last-child {
     display: inline-block;
   }
 }
+.header .primary-nav .form-group {
+  padding: 0 15px 2px;
+  margin-bottom: 0;
+}
 .header .primary-nav a {
   text-transform: uppercase;
   color: #b9e6ee;
@@ -10053,6 +10057,14 @@ table tr td:last-child {
 }
 .index .utility {
   display: block !important;
+  height: 130px;
+  bottom: -130px;
+}
+@media (min-width: 768px) {
+  .index .utility {
+    height: 59px;
+    bottom: auto;
+  }
 }
 
 .homepage {
@@ -10260,12 +10272,12 @@ table tr td:last-child {
 }
 .login-controls {
   padding: 6px 0 0;
-  margin: 0;
-  display: none;
+  margin: 44px 0 0;
 }
 @media (min-width: 768px) {
   .login-controls {
-    display: block;
+    float: right;
+    margin: 0;
   }
 }
 .login-controls .btn-login-controls {

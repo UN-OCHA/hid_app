@@ -6,10 +6,10 @@
       <div class="affiliate-logo-wrapper"><a href="https://data.hdx.rwlabs.org" target="_blank"><div class="affiliate-logo hdx"></div></a></div>
     </div>
 
-    <div class="navbar-form login-controls pull-right">
+    <div class="navbar-form login-controls">
       <div class="form-group">
         <div class="login-controls-name" ng-if="isAuthenticated"><span translate>Welcome</span>, <span ng-bind="nameGiven"></span> <span ng-bind="nameFamily"></span></div>
-        <a class="btn-login-controls btn" ng-if="!isAuthenticated" href="#/login"><span translate>Login</span> <span class="text-highlight">H</span>ID</a>
+        <a class="btn-login-controls btn hidden-xs" ng-if="!isAuthenticated" href="#/login"><span translate>Login</span> <span class="text-highlight">H</span>ID</a>
         <a class="btn-login-controls btn" ng-if="isAuthenticated" href="#/logout"><span translate>Logout</span> <span class="text-highlight">H</span>ID</a>
         <select name="language" ng-change="switchLanguage()" ng-model="language" class="form-control input-sm">
           <option value="en">English</option>
@@ -31,6 +31,16 @@
           <div class="primary-nav">
             <span ng-click="menuToggle()" class="touch-button"><i class="fa fa-bars"></i></span>
             <ul ng-show="(mainMenu && !externalLinks) || breakpoint.class !== 'smallscreen'">
+              <li class="visible-xs">
+                <div class="form-group">
+                  <select name="language" ng-change="switchLanguage()" ng-model="language" class="form-control input-sm">
+                    <option value="en">English</option>
+                    <option value="de">Deutsch</option>
+                    <option value="fr">Français</option>
+                    <option value="tl">Tagalog</option>
+                  </select>
+                </div>
+              </li>
               <li ng-if="!isAuthenticated"><a active-link="active" href="#/"><span translate>Home</span></a></li>
               <li ng-if="isAuthenticated" ><a active-link="active" href="#/dashboard"><span translate>Dashboard</span></a></li>
               <li><a active-link="active" href="#/about"><span translate>About</a></li>
