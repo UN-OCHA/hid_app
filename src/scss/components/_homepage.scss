@@ -59,12 +59,12 @@
     .btn:active,
     #aboutBtn:hover,
     #aboutBtn:active {
-      background-color: #2a5d81;
+      background-color: $secondary-color-4;
     }
 
     .btn-arrow:hover .fa {
       background-color: white;
-      color: #2a5d81;
+      color: $secondary-color-4;
     }
 
     .btn-arrow .fa {

@@ -144,6 +144,7 @@
         <div class="form-group">
           <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitSearch()" value="{{'Search'|translate}}"/>
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" ng-show="userCanExportContacts" value="{{'Export Results'|translate}}"/>
+          <a class="btn btn-warning btn-lg btn-block" type="button" target="_blank" ng-href="{{printUrl}}" ng-show="userCanExportContacts" translate>Veiw Printable</a>
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="resetSearch()" value="{{'Reset Filters'|translate}}"/>
         </div>
       </form>

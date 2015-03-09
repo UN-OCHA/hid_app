@@ -1,0 +1,132 @@
+
+
+.page-list.print {
+  font-family: exo2, "arial black";
+
+  .heading-contact-list {
+    width: auto;
+    text-align: left;
+    display: inline-block;
+    text-transform: uppercase;
+    font-family: exo2, "arial black";
+    line-height: 1;
+    small {
+      font-weight: normal;
+      text-transform: none;
+      font-size: 20px;
+    }
+    .location {
+      color: $secondary-color-4;
+    }
+  }
+  .title-cell .name-family {
+    text-transform: uppercase;
+  }
+  a {
+    text-decoration: underline;
+  }
+  .logo {
+    background-position: 0 -630px;
+    height: 70px;
+    margin-top: 20px;
+  }
+  .masthead {
+    margin-bottom: 75px;
+  }
+  .filters-param-list {
+    background-color: $secondary-color-4;
+    color: $white;
+    padding: 8px 20px;
+    margin-bottom: 35px;
+
+    .filters-param-label,
+    .filters-param {
+      padding: 8px;
+      display: inline-block;
+      margin-right: 12px;
+    }
+    .filters-param {
+      padding: 8px 16px;
+      display: inline-block;
+      background-color: $primary-color-1;
+      @include border-radius($border-radius-base);
+    }
+  }
+  table > thead > tr > th,
+  table > tbody > tr > th,
+  table > tbody > tr > td {
+    vertical-align: middle;
+  }
+  #print-footer {
+    float: right;
+    text-align: right;
+  }
+}
+
+.title-humanitarian {
+  color: $secondary-color-4;
+  text-transform: uppercase;
+}
+
+.title-id {
+  color: $primary-color-1;
+  text-transform: uppercase;
+}
+
+@media only print {
+  .page-list.print {
+    .heading-contact-list {
+      span {
+        color: $primary-color-1 !important;
+      }
+      .location {
+        color: $secondary-color-4 !important;
+      }
+      small {
+        color: $text-color !important;
+      }
+    }
+    .filters-param-list {
+      background-color: $secondary-color-4 !important;
+      .filters-param-label {
+        color: $white !important;
+      }
+      .filters-param {
+        background-color: $primary-color-1 !important;
+        color: $white !important;
+      }
+    }
+    .logo {
+        background: url(../images/hid-logo-print.png) no-repeat !important;
+        background-size: 420px 66px !important;
+        width: 420px;
+    }
+    a {
+      color: $primary-color-1 !important;
+      &:after {
+        content: "";
+      }
+    }
+  }
+
+  #print-footer {
+    background-color: $white !important;
+    span, div {
+      background-color: $white !important;
+      color: $text-color !important;
+    }
+    span.title-humanitarian {
+      color: $secondary-color-4 !important;
+    }
+    span.title-id {
+      color: $primary-color-1 !important;
+    }
+  }
+  .title-humanitarian {
+    color: $secondary-color-4 !important;
+  }
+
+  .title-id {
+    color: $primary-color-1 !important;
+  }
+}

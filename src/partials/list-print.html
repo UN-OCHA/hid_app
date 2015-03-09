@@ -1,0 +1,71 @@
+<div class="page-list print">
+  <div class='row masthead'>
+    <div class="col-xs-12">
+      <browser-alert></browser-alert>
+      <h2 class="heading-contact-list"><span translate>Contact List</span> <span class="location">{{location}}</span>
+      <br/><small>{{date}}</small></h2>
+
+      <div class="logo pull-right"></div>
+    </div>
+  </div>
+
+  <div class="row main">
+    <div class="col-xs-12 filters-param-list-wrapper">
+      <div class="filters-param-list">
+        <div class="filters-param-label">Filter Criteria</div>
+        <div class="filters-param" ng-repeat="param in filtersParams">{{param}}</div>
+      </div>
+    </div>
+    <div class="active-contacts col-xs-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th translate>Name</th>
+            <th ng-if="locationId !== 'global'" translate>Group*</th>
+            <th translate>Organization</th>
+            <th translate>Job Title</th>
+            <th translate>Phone</th>
+            <th translate>Email</th>
+            <th translate>Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="profile-item" ng-repeat="contact in contacts | orderBy: ['organization[0].name', 'nameGiven', 'nameFamily']">
+            <td class="title-cell"><div class="avoid">{{contact.nameGiven}}<br/><span class="name-family">{{contact.nameFamily}}</span></div></td>
+            <td ng-if="locationId !== 'global'">
+              <div class="avoid"><span ng-repeat="bundle in contact.bundle | orderBy">{{bundle}}{{ !$last ? ', ' : ''}}</span></div>
+            </td>
+            <td><div class="avoid">{{contact.organization[0].name}}</div></td>
+            <td><div class="avoid">{{contact.jobtitle}}</div></td>
+            <td>
+              <div class="avoid">
+                <span ng-repeat="phone in contact.phone">{{phone.number}} {{phone.type? '('+phone.type.charAt(0)+')' : ''}}{{ !$last ? ', ' : ''}}</span>
+              </div>
+            </td>
+            <td>
+              <div class="avoid">
+                <span ng-repeat="email in contact.email"><a href="mailto:{{email.address}}">{{email.address}}</a> {{email.type? '('+email.type.charAt(0)+')' : ''}}{{ !$last ? ', ' : ''}}</span>
+              </div>
+            </td>
+            <td>
+              <div class="avoid">
+                <span ng-if="locationId !== 'global' && contact.address[0].locality">{{contact.address[0].locality}}{{contact.address[0].administrative_area ? ', ' : ''}}</span>
+                <span ng-if="locationId !== 'global' && contact.address[0].administrative_area">{{contact.address[0].administrative_area}}</span>
+                <span ng-if="locationId === 'global' && contact.address[0].country">{{contact.address[0].country}}</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <div class="panel panel-danger" ng-if="contacts.length == 0 && contactsCreated">
+        <div class="panel-heading"><em translate>No contacts found</em></div>
+      </div>
+    </div>
+  </div>
+  <div id="print-footer">
+    <div class="message"><span translate>Powered by <span class="title-humanitarian">Humanitarian</span> <span class="title-id">Id</span> - <span translate>to update your information, check in to</span> <a href="http://humanitarian.id">http://humanitarian.id</a><br/>
+    <span ng-if="locationId !== 'global'" translate>*the term GROUP equals clusters, sectors, working groups are any other thematic</span></div>
+  </div>
+</div>

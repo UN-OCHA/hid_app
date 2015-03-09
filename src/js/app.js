@@ -96,12 +96,15 @@ app.directive('browserAlert', function() {
 
 app.run(function ($rootScope, $location, $window, authService) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+    $rootScope.bodyClasses = [];
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
       event.preventDefault();
       loginRedirect = $location.path();
       $location.path('/login');
     }
-    $rootScope.isIndex = (nextRoute && nextRoute.controller === 'DefaultCtrl') ? 'index' : '';
+    if (nextRoute && nextRoute.bodyClasses) {
+      $rootScope.bodyClasses = nextRoute.bodyClasses;
+    }
   });
 
   // Google analytics page view tracking
@@ -1134,7 +1137,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
   };
 });
 
-app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, authService, profileService, userData, placesOperations, gettextCatalog, protectedRoles, countries) {
+app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, placesOperations, gettextCatalog, protectedRoles, countries) {
   var searchKeys = ['address.administrative_area', 'address.country', 'address.locality', 'bundle','keyContact', 'organization.name', 'protectedRoles', 'role','text','verified'];
 
   $scope.location = '';
@@ -1158,6 +1161,38 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   $scope.contactsCreated = false;
 
   $scope.userCanExportContacts = profileService.hasRole('admin') || ($scope.locationId && (profileService.hasRole('manager', $scope.locationId) || profileService.hasRole('editor', $scope.locationId)));
+
+
+  var pathParams = $location.url().split('/'),
+      filter = $filter('filter');
+
+  if (pathParams[2] === 'print') {
+    $scope.date = moment().format('MMM Do YYYY');
+    $scope.loadLimit = 0;
+    $scope.filtersParams = [];
+
+    angular.forEach(searchKeys, function(paramKey){
+      if ($scope.query.hasOwnProperty(paramKey)) {
+        switch (paramKey) {
+          case 'keyContact':
+            this.push('Key Contact');
+            break;
+          case 'protectedRoles':
+            this.push(filter(protectedRoles,function(d) { return d.id === $scope.query[paramKey];})[0].name);
+            break;
+          case 'verified':
+            this.push('Verified User');
+            break;
+          default:
+            this.push($scope.query[paramKey])
+        }
+      }
+    }, $scope.filtersParams);
+  }
+  else {
+    pathParams.splice(2, 0, "print")
+    $scope.printUrl = '#' + pathParams.join('/');
+  }
 
   // Add default country entry.
   $scope.countries.unshift({action:'clear', name:"", alt:'Country'});
@@ -1346,7 +1381,8 @@ app.config(function($routeProvider, $locationProvider) {
   $routeProvider.
   when('/', {
     templateUrl: contactsId.sourcePath + '/partials/index.html',
-    controller: 'DefaultCtrl'
+    controller: 'DefaultCtrl',
+    bodyClasses: ['index']
   }).
   when('/login', {
     template: 'Redirecting to authentication system...',
@@ -1609,6 +1645,30 @@ app.config(function($routeProvider, $locationProvider) {
   when('/list/:locationId', {
     templateUrl: contactsId.sourcePath + '/partials/list.html',
     controller: 'ListCtrl',
+    requireAuth: true,
+    resolve: {
+      countries : function(profileService) {
+        return profileService.getCountries();
+      },
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          return data;
+        });
+      },
+      placesOperations : function(profileService) {
+        return profileService.getOperationsData().then(function(data) {
+          return data;
+        });
+      },
+      protectedRoles : function(profileService) {
+        return profileService.getProtectedRoles();
+      }
+    }
+  }).
+  when('/list/print/:locationId', {
+    templateUrl: contactsId.sourcePath + '/partials/list-print.html',
+    controller: 'ListCtrl',
+    bodyClasses: ['print'],
     requireAuth: true,
     resolve: {
       countries : function(profileService) {

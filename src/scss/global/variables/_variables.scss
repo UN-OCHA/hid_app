@@ -8,7 +8,8 @@ $primary-color-3: #98dae6; /* Lighter blue color used in menu and sort grips */
 
 $secondary-color-1: #B8303E; /*Red color used for cancel options*/
 $secondary-color-2: #D4E9EE; /*lighter aqua color*/
-$secondary-color-3: #F0F0F0; /*lighter grey color*/
+$secondary-color-3: #F1F1F1; /*lighter grey color*/
+$secondary-color-4: #2a5d81; /*Darker blue color*/
 
 $neutral-color-1: #ababab; /* Used for grey tabs */
 $neutral-color-2: #b9b9b9; /* Used for primary nav active state */
@@ -152,9 +153,9 @@ $table-cell-padding:            8px !default;
 $table-condensed-cell-padding:  5px !default;
 
 //** Default background color used for all tables.
-$table-bg:                      transparent !default;
+$table-bg:                      $secondary-color-3;
 //** Background color used for `.table-striped`.
-$table-bg-accent:               #f9f9f9 !default;
+$table-bg-accent:               $background-light;
 //** Background color used for `.table-hover`.
 $table-bg-hover:                #f5f5f5 !default;
 $table-bg-active:               $table-bg-hover !default;
