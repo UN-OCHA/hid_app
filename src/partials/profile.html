@@ -60,6 +60,7 @@
               id="organization"
               placeholder="{{'Search for organizations'|translate}}"
               pause="100"
+              input-changed="changeOrganization"
               selected-object="setOrganization"
               remote-url-response-formatter="formatOrganizations"
               remote-url="{{hrinfoBaseUrl}}/hid/organizations/autocomplete/"
@@ -101,6 +102,7 @@
               id="country"
               placeholder="{{'Search for countries'|translate}}"
               pause="100"
+              input-changed="changeCountry"
               selected-object="setCountry"
               local-data="countries"
               search-fields="name"
@@ -122,6 +124,7 @@
               <angucomplete-alt
                 id="admin_area"
                 pause="0"
+                input-changed="changeAdminArea"
                 selected-object="setAdminArea"
                 local-data="regions"
                 search-fields="name"
@@ -139,6 +142,7 @@
             <angucomplete-alt
               id="locality"
               pause="0"
+              input-changed="changeLocality"
               selected-object="setLocality"
               local-data="localities"
               search-fields="name"
