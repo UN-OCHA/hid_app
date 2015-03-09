@@ -821,9 +821,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     // input so we should check to see that there is an actual object for
     // originalObject before attempting to modify profile information.
     if (selectedOrganization && selectedOrganization.hasOwnProperty('originalObject') && selectedOrganization.originalObject.hasOwnProperty('name')) {
-      $scope.profile.organization = $scope.profile.organization || [];
-      $scope.profile.organization[0] = $scope.profile.organization[0] || {};
-      $scope.profile.organization[0] = angular.extend({}, $scope.profile.organization[0], selectedOrganization.originalObject);
+      $scope.profile.organization = [angular.extend({}, $scope.profile.organization[0] || {}, selectedOrganization.originalObject)];
     }
   };
 
