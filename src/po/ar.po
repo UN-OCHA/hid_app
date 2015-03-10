@@ -1,0 +1,334 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Arabic\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-09 13:19+0000\n"
+"PO-Revision-Date: 2015-03-09 15:47+0000\n"
+"Last-Translator: yaelle link\n"
+"Language-Team: yaelle link\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100 >= 3 && "
+"n%100<=10 ? 3 : n%100 >= 11 && n%100<=99 ? 4 : 5;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Loco https://localise.biz\n"
+"X-Loco-Source-Locale: en_GB\n"
+"X-Loco-Target-Locale: ar_AE\n"
+"X-Loco-Project-Id: 6046\n"
+"X-Loco-Api-Version: 1.0.8"
+
+#: src/partials/header.html
+#: src/partials/index.html loco:54fd9df314d725505c8b4567
+msgid "About"
+msgstr "بخصوص"
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:54fd9df314d725505c8b4568
+msgid "Back"
+msgstr "رجوع "
+
+#: src/js/app.js
+#: src/partials/dashboard.html loco:54fd9df314d725505c8b4569
+msgid "Check-in"
+msgstr "ادخل "
+
+#: src/partials/dashboard.html loco:54fd9df314d725505c8b456a
+msgid "Checkout"
+msgstr "اخرج "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b456b
+msgid "City"
+msgstr "مدينة "
+
+#: src/partials/contact.html loco:54fd9df314d725505c8b456c
+msgid "Clusters"
+msgstr "مجموعات "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b456d
+msgid "Country"
+msgstr "بلد "
+
+#: src/partials/header.html loco:54fd9df314d725505c8b456e
+msgid "Dashboard"
+msgstr "لوح الاعدادات "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b456f
+msgid "Email"
+msgstr "بريد الكتروني "
+
+#: src/js/app.js loco:54fd9df314d725505c8b4570
+msgid "Global"
+msgstr "عالمي "
+
+#: src/partials/list.html
+#: src/partials/profile.html loco:54fd9df314d725505c8b4571
+msgid "Group"
+msgstr "مجموعة"
+
+#: src/partials/header.html loco:54fd9df314d725505c8b4572
+msgid "Home"
+msgstr "منزل-بيت "
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:54fd9df314d725505c8b4573
+msgid "Location"
+msgstr "موقع "
+
+#: src/partials/header.html
+#: src/partials/index.html loco:54fd9df314d725505c8b4574
+msgid "Login"
+msgstr "تسجيل الدخول "
+
+#: src/partials/dashboard.html
+#: src/partials/header.html loco:54fd9df314d725505c8b4575
+msgid "Logout"
+msgstr "تسجيل الخروج "
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:54fd9df314d725505c8b4576
+msgid "Notes"
+msgstr "ملاحظات "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b4577
+msgid "Number"
+msgstr "رقم "
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:54fd9df314d725505c8b4578
+msgid "Organization"
+msgstr "منظمة"
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b4579
+msgid "Profile"
+msgstr "ملف التعريف "
+
+#: src/partials/index.html loco:54fd9df314d725505c8b457a
+msgid "Register"
+msgstr "تسجيل "
+
+#: src/partials/list.html loco:54fd9df314d725505c8b457b
+msgid "Search"
+msgstr "بحث "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b457c
+msgid "Searching..."
+msgstr "جاري البحث "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b457d
+msgid "Title"
+msgstr "لقب "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b457e
+msgid "Type"
+msgstr "نوع "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b457f
+msgid "URL"
+msgstr "رابط "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b4580
+msgid "VOIP"
+msgstr "الصوت عبر بروتوكول الانترنت "
+
+#: src/partials/header.html loco:54fd9df314d725505c8b4581
+msgid "Welcome"
+msgstr "اهلا و سهلا "
+
+#: src/partials/about.html loco:54fd9df314d725505c8b4582
+msgid "About Humanitarian.ID"
+msgstr "حول-بخصوص المساعدات الانسانية "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b4583
+msgid "Admin Privileges"
+msgstr "امتيازات المسؤول "
+
+#: src/partials/contact.html loco:54fd9df314d725505c8b4584
+msgid "Check-in User"
+msgstr "تحقق في المستعمل "
+
+#: src/partials/contact.html loco:54fd9df314d725505c8b4585
+msgid "Check-out User"
+msgstr "انهاء اجراءات المستخدم "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b4586
+msgid "Choose Type"
+msgstr "اختيار نوع "
+
+#: src/partials/contact.html loco:54fd9df314d725505c8b4587
+msgid "Confirm User Checkout"
+msgstr "تاكيد انهاء اجراءات المستخدم "
+
+#: src/partials/list.html loco:54fd9df314d725505c8b4588
+msgid "Contact List"
+msgstr "قائمة الاتصال "
+
+#: src/partials/list.html loco:54fd9df314d725505c8b4589
+msgid "Contact List Filters"
+msgstr "قائمة اتصال المرشحات "
+
+#: src/partials/dashboard.html loco:54fd9df314d725505c8b458a
+msgid "Edit Global Profile"
+msgstr "تعديل ملف التعريف العالمي "
+
+#: src/partials/contact.html loco:54fd9df314d725505c8b458b
+msgid "Edit Profile"
+msgstr "تحرير ملف التعريف "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b458c
+msgid "Email Addresses"
+msgstr "عنوان البريد الالكتروني "
+
+#: src/partials/header.html loco:54fd9df314d725505c8b458d
+msgid "External Links"
+msgstr "الروابط الخارجية "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b458e
+msgid "Family Name"
+msgstr "اسم العائلة "
+
+#: src/partials/dashboard.html loco:54fd9df314d725505c8b458f
+msgid "General List"
+msgstr "القائمة العامة "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b4590
+msgid "Given Name"
+msgstr "الاسم المعطى "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b4591
+msgid "Global Administration"
+msgstr "الادارة العالمية "
+
+#: src/partials/dashboard.html loco:54fd9df314d725505c8b4592
+msgid "Global Contact List"
+msgstr "قائمة الاتصالات العالمية "
+
+#: src/partials/dashboard.html loco:54fd9df314d725505c8b4593
+msgid "Global Profile"
+msgstr "الملف الشخصي العالمي "
+
+#: src/partials/dashboard.html
+#: src/partials/profile.html loco:54fd9df314d725505c8b4594
+msgid "Humanitarian ID"
+msgstr "المساعدات الانسانية "
+
+#: src/partials/index.html loco:54fd9df314d725505c8b4595
+msgid "Humanitarian.ID: Responders"
+msgstr "المساعدات الانسانية :المستجيبين "
+
+#: src/partials/contact.html loco:54fd9df314d725505c8b4596
+msgid "Job Title"
+msgstr "مسمى العمل-لقب العمل "
+
+#: src/partials/list.html
+#: src/partials/profile.html loco:54fd9df314d725505c8b4597
+msgid "Key Contact"
+msgstr "مفتاح الاتصال "
+
+#: src/partials/contact.html loco:54fd9df314d725505c8b4598
+msgid "key contact"
+msgstr "مفتاح الاتصال "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b4599
+msgid "Local Administration"
+msgstr "الادارة المحلية "
+
+#: src/partials/index.html loco:54fd9df314d725505c8b459a
+msgid ""
+"Manage your details on global and emergency-level humanitarian contact lists. "
+"Find and be found by other responders when needed. Check-in. Connect. Respond."
+msgstr ""
+"إدارة التفاصيل الخاصة بك على قوائم الاتصال الإنساني على الصعيدين العالمي و "
+"الطوارئ. البحث عن قوائم الاتصال و يمكن العثور عليها من قبل المستجيبين الاخرين "
+"عند الحاجة. تحقق في. الاتصال. رد"
+
+#: src/partials/dashboard.html loco:54fd9df314d725505c8b459b
+msgid "My checked-in lists"
+msgstr "ايداع قائمتي "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b459c
+msgid "No active operations found."
+msgstr "لم يتم العثور على العمليات النشطة "
+
+#: src/partials/list.html loco:54fd9df314d725505c8b459d
+msgid "No contacts found"
+msgstr "لا يوجد اتصالات "
+
+#: src/partials/dashboard.html loco:54fd9df314d725505c8b459e
+msgid "No profiles found."
+msgstr "لا يوجد ملف شخصي "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b459f
+msgid "No results found."
+msgstr "لا توجد نتائج "
+
+#: src/partials/404.html loco:54fd9df314d725505c8b45a0
+msgid "Not Found"
+msgstr "ليست موجودة "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b45a1
+msgid "Organizational Information"
+msgstr "معلومات تنظيمية "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b45a2
+msgid "Phone Numbers"
+msgstr "رقم الهاتف-التلفون"
+
+#: src/partials/list.html loco:54fd9df314d725505c8b45a3
+msgid "Reset Filters"
+msgstr "اعادة تعيين المرشحات "
+
+#: src/partials/list.html loco:54fd9df314d725505c8b45a4
+msgid "Search by name, title, or organization"
+msgstr "البحث عن اسم,لقب,منظمة"
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b45a5
+msgid "Search for countries"
+msgstr "البحث عن الدول "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b45a6
+msgid "Search for organizations"
+msgstr "البحث عن منظمات "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b45a7
+msgid "Select a country"
+msgstr "اختر الدولة "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b45a8
+msgid "Select an operation"
+msgstr "حدد العملية "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b45a9
+msgid "State/Province/Region"
+msgstr "دولة\\اقليم\\منطقة "
+
+#: src/js/app.js loco:54fd9df314d725505c8b45aa
+msgid "Update Profile"
+msgstr "تحديث الملف الشخصي "
+
+#: src/partials/contact.html loco:54fd9df314d725505c8b45ab
+msgid "verified"
+msgstr "التحقق"
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b45ac
+msgid "Verified Responder"
+msgstr "التحقق من المستجيب-التحقق من الاجابه "
+
+#: src/partials/list.html loco:54fd9df314d725505c8b45ad
+msgid "Verified User"
+msgstr "التحقق من المستخدم "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b45ae
+msgid ""
+"We are not currently taking note of administrative areas or localities in "
+"this country."
+msgstr "نحن حاليا لا ناخذ الملاحظات من المجالات الادارية او المحلية في هذا البلد "
+
+#: src/partials/contact.html loco:54fd9df314d725505c8b45af
+msgid "Website/Social Media"
+msgstr "الموقع\\وسائل الاعلام الاجتماعية "
+
+#: src/partials/profile.html loco:54fd9df314d725505c8b45b0
+msgid "Websites &amp; Social Media"
+msgstr "الموقع ووسائل الاعلام الاجتماعية "
