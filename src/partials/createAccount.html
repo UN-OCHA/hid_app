@@ -67,13 +67,13 @@
 
         <div class="form-group">
           <label class="control-label-light" for="email">** <span translate>Email</span></label>
-          <input class="form-control" type="text" name="email" ng-model="profile.email[0].address" />
+          <input class="form-control" type="text" name="email" ng-pattern='/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/' ng-model="profile.email[0].address" />
+          <div class="error" ng-show="createAccountForm.email.$error.pattern && submitted" translate>Valid email is required.</div>
         </div>
 
         <button class="btn btn-default btn-lg btn-block" ng-disabled="createButtonDisabled" type="submit" translate>Create Account</button>
       </div>
   </div>
-  </form>
 
   <div class="row">
     <div class= "account-create col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-7 col-md-offset-3" ng-show='ghostWarning' >
@@ -83,13 +83,15 @@
         <p class="control-label-light" translate>Are you sure that you want to create an account for <b>{{profile.nameGiven}} {{profile.nameFamily}}</b> with no email address?</p>
 
         <div class="form-group">
-          <input class="form-control" type="text" name="Email" placeholder="Email Address" ng-model="profile.email[0].address" />
+          <input class="form-control" type="text" name="email2" placeholder="Email Address" ng-pattern='/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/' ng-model="profile.email[0].address" />
+          <div class="error" ng-show="createAccountForm.email2.$error.pattern && submitted" translate>Valid email is required.</div>
         </div>
 
-        <button class="btn btn-default btn-lg btn-block wfwef" ng-disabled="createButtonDisabled" ng-click="createAccount()" translate>Create Account</button>
+        <button class="btn btn-default btn-lg btn-block wfwef" ng-disabled="createButtonDisabled" type="submit" ng-clickx="createAccount()" translate>Create Account</button>
       </div>
     </div>
   </div>
+  </form>
 
   <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4" ng-show='accountConfirm || ghostConfirm' >
