@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-10T19:23:06.674Z\n"
+"Project-Id-Version: 2015-03-10T19:43:42.439Z\n"
 
 #: src/partials/list-print.html
 msgid "*the term GROUP equals clusters, sectors, working groups are any other thematic"
@@ -232,6 +232,14 @@ msgstr ""
 msgid "Invalid entry. Both type and number are required."
 msgstr ""
 
+#: src/partials/profile.html
+msgid "Invalid entry. Valid email address required."
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Invalid value for"
+msgstr ""
+
 #: src/partials/contact.html
 #: src/partials/createAccount.html
 #: src/partials/list-print.html
@@ -377,10 +385,6 @@ msgstr ""
 msgid "Required Field"
 msgstr ""
 
-#: src/partials/profile.html
-msgid "Required value for"
-msgstr ""
-
 #: src/partials/list.html
 msgid "Reset Filters"
 msgstr ""
@@ -443,6 +447,10 @@ msgstr ""
 msgid "VOIP"
 msgstr ""
 
+#: src/partials/createAccount.html
+msgid "Valid email is required."
+msgstr ""
+
 #: src/partials/list.html
 msgid "Veiw Printable"
 msgstr ""
@@ -482,10 +490,6 @@ msgstr ""
 
 #: src/partials/contact.html
 msgid "key contact"
-msgstr ""
-
-#: src/partials/profile.html
-msgid "missing."
 msgstr ""
 
 #: src/partials/list-print.html
