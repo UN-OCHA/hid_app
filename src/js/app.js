@@ -356,8 +356,6 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
 
     profileService.saveContact(profile).then(function(data) {
       if (data && data.status && data.status === 'ok') {
-        $scope.newProfileID = data.data._profile;
-
         if (isGhost){
           $scope.confirmTitle = gettextCatalog.getString("Name added to the list");
           $scope.confirmMessage = name + " " + gettextCatalog.getString("will be added to the contact list.  They will not be able to claim their account.");
@@ -366,12 +364,26 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
           $scope.confirmTitle = gettextCatalog.getString("Account Created!");
           $scope.confirmMessage = name + " " + gettextCatalog.getString("will receive an email to claim their account.");
         }
+        $scope.editButtonText = 'Edit New Account';
+        $scope.editPath = '#/contact/' + data._id;
         $scope.accountConfirm = true;
         $scope.ghostWarning = false;
       }
       else {
-        var msg = (data && data.message) ? 'Error: ' + data.message : 'An error occurred while attempting to save this profile. Please try again or contact an administrator.';
-        alert(msg);
+        //If contact already exists and it was successfully returned, give the user the option to edit the contact
+        if (data.contactExists && data.origContact){
+          $scope.editContactId = data.origContact._profile;
+          $scope.confirmTitle = gettextCatalog.getString("Contact already exists");
+          $scope.confirmMessage = gettextCatalog.getString("There is already an account associated with ") + profile.email[0].address + "\n\n" + gettextCatalog.getString("Would you like to check them in?");
+          $scope.editButtonText = 'Check-In';
+          $scope.editPath = '#/checkin/' + data.origContact._profile;
+          $scope.accountConfirm = true;
+          $scope.ghostWarning = false;
+        }
+        else{
+          var msg = (data && data.message) ? 'Error: ' + data.message : 'An error occurred while attempting to save this profile. Please try again or contact an administrator.';
+          alert(msg);         
+        }
       }
       $scope.createButtonDisabled = false;
     });
