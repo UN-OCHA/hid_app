@@ -35,7 +35,7 @@
       <div class="row alert-wrapper">
         <browser-alert></browser-alert>
         <div ng-repeat="(type, fields) in invalidFields" >
-          <div class="alert alert-danger col-xs-12" role="alert" ng-repeat="(index, value) in fields" ><span translate>Required value for</span> {{type}} <span translate>entry</span> {{ bumpIndex() }} <span translate>missing.</span></div>
+          <div class="alert alert-danger col-xs-12" role="alert" ng-repeat="(index, value) in fields" ><span translate>Invalid value for</span> {{type}} <span translate>entry</span> {{ bumpIndex() }}.</div>
         </div>
       </div>
       <div class="row">
@@ -228,12 +228,13 @@
                   </select>
                 </div>
                 <div class="col-xs-7">
-                  <input class="form-control" placeholder="Address" type="text"  name="email[{{$index}}][address]" ng-model="profile.email[$index].address" ng-blur="focus=0" focus-field="focus"/>
+                  <input class="form-control" placeholder="Address" type="text"  name="email[{{$index}}][address]" ng-model="profile.email[$index].address" ng-blur="focus=0; removeFieldError('email')" focus-field="focus"/>
 
                   <button ng-click="changeFieldEntries('email', $index, $last)" ng-class="{'add' : $last && checkForValidEntry('email', $index)}">
                     <i class="fa" ng-class="styleFieldEntries('email', $index, $last)"></i>
                   </button>
                 </div>
+                <span class="help-block col-xs-12" ng-show="invalidFields.email[$index]" translate>Invalid entry. Valid email address required.</span>
               </div>
             </div>
           </div>

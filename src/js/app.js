@@ -304,11 +304,15 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
       //Submit as normal
       //Check to see if the account already exists
       if ($scope.profile.email && $scope.profile.email[0].address){
-       $scope.createAccount();
+        $scope.createAccount();
       }
-      else{
-       //Warn user of ghost account
-       $scope.ghostWarning = true;
+      else if ($scope.ghostWarning) {
+        // Have already seen ghost warning and want to cont.
+        $scope.createAccount();
+      }
+      else {
+        //Warn user of ghost account
+        $scope.ghostWarning = true;
       }
     }
     else{
@@ -444,7 +448,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
-  var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': []};
+  var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': []},
+      fieldValueValidation = {'email':{'address': emailValidation}};
 
   var pathParams = $location.path().split('/'),
   checkinFlow = pathParams[1] === 'checkin',
@@ -665,8 +670,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
-  $scope.vaildFieldEntry= function(field, el) {
-    if (multiFields[field].length) {
+  $scope.vaildFieldEntry = function(field, el) {
+    if (multiFields.hasOwnProperty(field) && multiFields[field].length) {
       var valid = !!el;
       for (var reqField in multiFields[field]) {
         if (multiFields[field].hasOwnProperty(reqField)) {
@@ -702,31 +707,62 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     return true;
   }
 
-  // Checks ALL multi field with 2 or more requires inputs for incomplete entries.
-  $scope.checkAllMultiRequireFields = function () {
+  $scope.checkFieldValueValid = function(field, value) {
+    if (fieldValueValidation.hasOwnProperty(field)) {
+      for (var subField in fieldValueValidation[field]) {
+        if (fieldValueValidation[field].hasOwnProperty(subField) && value.hasOwnProperty(subField)) {
+          // Run value thru custom validation function.
+          if (!fieldValueValidation[field][subField](value[subField])) {
+            // Fails validation.
+            return false;
+          }
+        }
+      }
+    }
+    // Passes validation or field has not been modified so no need to validate.
+    return true;
+  }
+
+  // Checks to see if all fields are valid
+  $scope.checkAllFieldsValid = function () {
     var allValid = true;
+    // Checks ALL multi field with 2 or more requires inputs for incomplete entries.
     for (var field in multiFields) {
       if (multiFields.hasOwnProperty(field) && multiFields[field].length > 1 && $scope.profile[field]) {
-        $scope.invalidFields[field] = {};
-        for (var index in $scope.profile[field]) {
-          if ($scope.profile[field].hasOwnProperty(index)) {
-            if (!$scope.checkMultiRequireFields(field, $scope.profile[field][index])) {
-              $scope.invalidFields[field][index] =  true;
-              allValid = false;
-            }
-          }
-        };
+        validateItem(field, $scope.checkMultiRequireFields, true);
       }
       else if (typeof $scope.invalidFields[field] !== 'undefined') {
         delete $scope.invalidFields[field];
       }
     }
+
+    // Check if fields with custom validation are valid.
+    for (field in fieldValueValidation) {
+      if (fieldValueValidation.hasOwnProperty(field) && $scope.profile[field]) {
+        validateItem(field, $scope.checkFieldValueValid);
+      }
+    }
     return allValid;
+
+    function validateItem(field, validFn, resetInvalid) {
+      $scope.invalidFields[field] = (resetInvalid || typeof $scope.invalidFields[field] === 'undefined') ? {} : $scope.invalidFields[field];
+      for (var index in $scope.profile[field]) {
+        if ($scope.profile[field].hasOwnProperty(index)) {
+          if(!validFn(field, $scope.profile[field][index])) {
+            $scope.invalidFields[field][index] =  true;
+            allValid = false;
+          }
+        }
+      }
+    }
   }
 
   // Remove error styling when corrected.
   $scope.removeFieldError = function(field) {
-    if ($scope.invalidFields[field] && $scope.invalidFields[field][this.$index] && $scope.checkMultiRequireFields(field, this[field])) {
+    if ( $scope.invalidFields[field]
+      && $scope.invalidFields[field][this.$index]
+      && $scope.checkMultiRequireFields(field, this[field])
+      && $scope.checkFieldValueValid(field, this[field])) {
       delete $scope.invalidFields[field][this.$index]
     }
   }
@@ -759,12 +795,14 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.checkMultiFields();
   }
 
+  // Prevents adding of field if when invalid entry.
   $scope.checkForValidEntry = function(field, index){
-    return (multiFields.hasOwnProperty(field)
-          && $scope.profile[field]
+    return ( $scope.profile[field]
           && $scope.profile[field][index]
-          && $scope.vaildFieldEntry(field, $scope.profile[field][index]));
+          && $scope.vaildFieldEntry(field, $scope.profile[field][index])
+          && $scope.checkFieldValueValid(field, $scope.profile[field][index]));
   }
+
   $scope.changeFieldEntries = function(field, index, last){
     var validEntry = $scope.checkForValidEntry(field, index);
     if (last && validEntry) {
@@ -961,7 +999,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.submitProfile = function () {
     // Checks for incomplete entries.
-    if ($scope.checkAllMultiRequireFields()) {
+    if ($scope.checkAllFieldsValid()) {
       // Removes empty entries.
       $scope.checkMultiFields(true);
       var profile = $scope.profile;
@@ -1022,6 +1060,12 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       });
     }
   };
+
+  // Function to validate email values
+  function emailValidation(value) {
+    var emailRegEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return !value.length || emailRegEx.test(value);
+  }
 
   // Converts object to a sortable array.
   function listObjectToArray(obj, kLabel, vLabel) {
