@@ -563,7 +563,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
     }
   }
-
   // Convert list into an array that can be sorted
   $scope.availPlacesOperations = listObjectToArray(availPlacesOperations, 'place', 'operations');
 
@@ -589,7 +588,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   // Creates an array to be used as options for group select
   $scope.$watch("selectedOperation", function(newValue, oldValue) {
-    console.log('selectedOperation',newValue, oldValue)
     if (newValue !== oldValue && $scope.selectedPlace.length && $scope.selectedOperation.length) {
       setBundles();
       $scope.profileName = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].name;
