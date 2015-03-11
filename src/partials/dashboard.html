@@ -5,7 +5,7 @@
 <div ng-show='!isRouteLoading' class="main row page-dashboard" ng-class="{'show-options': sidebarOptions}">
   <div class="active-profiles main-content col-xs-12 col-sm-8 col-md-9 pull-right" cg-busy="dashboardDataTracker">
     <div class="alert-wrapper">
-      <div class="alert alert-warning" role="alert" ng-show="!globalProfileId.length"><span translate>Please create a</span> <a href="#/profile">Global Profile</a> <span translate>before checking-in to a country/emergency.</span></div>
+      <div class="alert alert-warning" role="alert" ng-show="!globalProfileId.length"><span translate>Please create a</span> <a href="#/profile" translate>Global Profile</a> <span translate>before checking-in to a country/emergency.</span></div>
       <browser-alert></browser-alert>
     </div>
     <div class="active-profiles-wrapper" ng-show="userData.contacts.length">
@@ -34,8 +34,8 @@
             </a>
           </h4>
           <div class="btn-group">
-            <a class="btn btn-sm" href="#/profile/{{profile._id}}" title="Edit my {{profile.location}} profile"><i class="fa fa-pencil"></i></a>
-            <a class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="Check-out from {{profile.location}}"><i class="fa fa-times"></i></a>
+            <a class="btn btn-sm" href="#/profile/{{profile._id}}" title="{{'Edit my' | translate}} {{profile.location}} {{'profile' | translate}}"><i class="fa fa-pencil"></i></a>
+            <a class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="{{'Check-out from' | translate}} {{profile.location}}"><i class="fa fa-times"></i></a>
           </div>
         </li>
         <li class="disaster-item" ng-if="profilesActive.length == 0">
@@ -49,12 +49,12 @@
       </div>
     </div>
     <div class="empty-profiles" ng-hide="userData.contacts.length">
-      <p>Thank you for registering on Humanitarian.ID. With your help, we will ensure that humanitarian contact lists are always up-to-date. As you will notice, you do not have access to any lists just yet.</p>
-      <p>First, you will need to <em>create your Global profile</em>. In this profile, you will provide your usual details or information of where you are usually located.  After you have completed this step, you will see and have access to the Global contact list.</p>
-      <p>Second, if you are in a country/emergency, you should <em>"Check-in" for that country/emergency</em>.  When you perform the check-in, you will see a copy of your profile that you can edit for that country/emergency.  Once checked-in, you will then have access to the contact list specific to the country/emergency.  And, other responders will be able to easily find you.</p>
-      <p>When you leave a country/emergency, remember that <em>you need to check-out</em>. By doing so, you will remove your details from the contact list.</p>
-      <p>Again, thanks for helping to make humanitarian contact lists accurate.</p>
-      <p><em>The Humanitarian.ID team</em></p>
+      <p translate>Thank you for registering on Humanitarian.ID. With your help, we will ensure that humanitarian contact lists are always up-to-date. As you will notice, you do not have access to any lists just yet.</p>
+      <p translate>First, you will need to <em>create your Global profile</em>. In this profile, you will provide your usual details or information of where you are usually located.  After you have completed this step, you will see and have access to the Global contact list.</p>
+      <p translate>Second, if you are in a country/emergency, you should <em>"Check-in" for that country/emergency</em>.  When you perform the check-in, you will see a copy of your profile that you can edit for that country/emergency.  Once checked-in, you will then have access to the contact list specific to the country/emergency.  And, other responders will be able to easily find you.</p>
+      <p translate>When you leave a country/emergency, remember that <em>you need to check-out</em>. By doing so, you will remove your details from the contact list.</p>
+      <p translate>Again, thanks for helping to make humanitarian contact lists accurate.</p>
+      <p><em translate>The Humanitarian ID team</em></p>
     </div>
   </div>
 

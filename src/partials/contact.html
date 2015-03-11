@@ -9,7 +9,7 @@
       <div ng-show="!isRouteLoading">
         <div class="visible-xs">
           <div class="bottom-fixed-btn" role="presentation">
-            <a href ng-click="sidebarOptions = !sidebarOptions"><div class="bottom-fixed-btn__arrow"></div>Contact Options</a>
+            <a href ng-click="sidebarOptions = !sidebarOptions"><div class="bottom-fixed-btn__arrow"></div><span translate>Contact Options</span></a>
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@
         <div class="col-xs-12 col-sm-8 profile-view col-fill">
             <div class="col-fill-inner">
               <div class="profile-view__name-area">
-                <h1 class="profile-view__name">{{contact.nameGiven}} {{contact.nameFamily}} ({{contact.location}})</h1>
+                <h1 class="profile-view__name">{{contact.nameGiven}} {{contact.nameFamily}} ({{locationText()}})</h1>
 
                 <div class="profile-view__markers">
                   <div class="contact-item__key-contact key-contact-profile-use" ng-if="contact.keyContact">*</div>
@@ -47,10 +47,10 @@
 
               <div class="profile-view__items same-height-col">
                 <div class="phone" ng-repeat="phone in contact.phone">
-                  <div class="profile-view__item">{{phone.type}}: <a href="tel:{{phone.number}}">{{phone.number}}</a></div>
+                  <div class="profile-view__item">{{phone.type | translate}}: <a href="tel:{{phone.number}}">{{phone.number}}</a></div>
                 </div>
                 <div class="email" ng-repeat="email in contact.email">
-                  <div class="profile-view__item"><span ng-show="email.type">{{email.type}}: </span><a href="mailto:{{email.address}}">{{email.address}}</a></div>
+                  <div class="profile-view__item"><span ng-show="email.type">{{email.type | translate}}: </span><a href="mailto:{{email.address}}">{{email.address}}</a></div>
                 </div>
                 <div class="voip" ng-repeat="voip in contact.voip">
                   <div class="profile-view__item">{{voip.type}}: {{voip.number}}</div>

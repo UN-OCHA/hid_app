@@ -1,6 +1,6 @@
 <div class="masthead row">
   <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 pull-right">
-    <h2 class="heading-contact-list">{{location}} <span translate>Contact List</span> <small>(<span translate>Contacts</span> {{queryCount}})</small></h2>
+    <h2 class="heading-contact-list">{{locationText()}} <span translate>Contact List</span> <small>(<span translate>Contacts</span> {{queryCount}})</small></h2>
   </div>
 </div>
 
@@ -144,7 +144,7 @@
         <div class="form-group">
           <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitSearch()" value="{{'Search'|translate}}"/>
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" ng-show="userCanExportContacts" value="{{'Export Results'|translate}}"/>
-          <a class="btn btn-warning btn-lg btn-block" type="button" target="_blank" ng-href="{{printUrl}}" ng-show="userCanExportContacts" translate>Veiw Printable</a>
+          <a class="btn btn-warning btn-lg btn-block" type="button" target="_blank" href="{{printUrl}}" ng-show="userCanExportContacts" ><span translate>View Printable</span></a>
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="resetSearch()" value="{{'Reset Filters'|translate}}"/>
         </div>
       </form>
