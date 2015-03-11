@@ -590,7 +590,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.$watch("selectedOperation", function(newValue, oldValue) {
     if (newValue !== oldValue && $scope.selectedPlace.length && $scope.selectedOperation.length) {
       setBundles();
-
       $scope.profileName = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].name;
       setPreferedCountries();
       // Need timeout to fix dropdown width issues.
@@ -832,6 +831,9 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   }
 
+  $scope.selectOperation = function() {
+    $scope.selectedOperation = this.opid;
+  }
   $scope.selectPlace = function () {
     var opkeys = [],
         key;
