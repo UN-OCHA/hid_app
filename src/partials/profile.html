@@ -79,7 +79,7 @@
             <label class="control-label" for="jobtitle" translate>Job Title</label>
             <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" />
           </div>
-          <div class="form-group">
+          <div class="form-group" ng-show="bundles.length">
             <label class="control-label" for="bundle[{{profile.bundle.length - 1}}]" translate>Group</label>
 
             <div class="reveal btn-reveal" ng-repeat="bundle in profile.bundle track by $index" ng-if="profile.type === 'local'">
