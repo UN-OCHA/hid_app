@@ -827,6 +827,9 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   }
 
+  $scope.selectOperation = function() {
+    $scope.selectedOperation = this.opid;
+  }
   $scope.selectPlace = function () {
     var opkeys = [],
         key;

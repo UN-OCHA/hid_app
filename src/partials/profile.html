@@ -17,12 +17,12 @@
       </ul>
     </div>
 
-    <div class="active-operations" ng-show="selectedPlace.length && !selectedOperation.length">
+    <div class="active-operations col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3" ng-show="selectedPlace.length && !selectedOperation.length">
       <div class="back-link"><a class="btn btn-warning btn-sm" href="" ng-click="selectedPlace = ''"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a></div>
       <h3 translate>Select an operation</h3>
-      <ul class="active-operations-container list-group" ng-repeat="(pKey, place) in availPlacesOperations" ng-show="selectedPlace = '{{place.place}}'" data-place="{{place.place}}">
+      <ul class="active-operations-container list-group" ng-repeat="(pKey, place) in availPlacesOperations" ng-show="selectedPlace == place.place" data-place="{{place.place}}">
         <li class="operation-item list-group-item" ng-repeat="(opid, operation) in place.operations">
-          <a href="" ng-click="selectedOperation = '{{opid}}'">{{operation.name}}</a>
+          <a href="" ng-click="selectOperation()">{{operation.name}}</a>
         </li>
       </ul>
     </div>
@@ -79,7 +79,7 @@
             <label class="control-label" for="jobtitle" translate>Job Title</label>
             <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" />
           </div>
-          <div class="form-group">
+          <div class="form-group" ng-show="bundles.length">
             <label class="control-label" for="bundle[{{profile.bundle.length - 1}}]" translate>Group</label>
 
             <div class="reveal btn-reveal" ng-repeat="bundle in profile.bundle track by $index" ng-if="profile.type === 'local'">
@@ -115,10 +115,6 @@
           </div>
 
           <div cg-busy="regionsPromise">
-            <div class="form-group reveal" ng-show="regions.length == 0">
-
-              <p class="help-block" translate>We are not currently taking note of administrative areas or localities in this country.</p>
-            </div>
             <div class="form-group reveal" ng-show="profile.address[0].country && regions.length">
               <label class="control-label" for="address[0][administrative_area]" translate>State/Province/Region</label>
               <angucomplete-alt
