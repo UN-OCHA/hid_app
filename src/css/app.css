@@ -9857,6 +9857,7 @@ table tr td:last-child {
     padding-bottom: inherit;
   }
 }
+#contactsid-app-view .active-operations,
 #contactsid-app-view .active-countries {
   background: #54b1c8;
   padding: 20px 40px;
@@ -9864,25 +9865,31 @@ table tr td:last-child {
   -webkit-border-radius: 8px;
   border-radius: 8px;
 }
+#contactsid-app-view .active-operations .back-link,
 #contactsid-app-view .active-countries .back-link {
   float: right;
 }
+#contactsid-app-view .active-operations h3,
 #contactsid-app-view .active-countries h3 {
   color: #fff;
   text-align: center;
   display: inline-block;
 }
+#contactsid-app-view .active-operations li.list-group-item,
 #contactsid-app-view .active-countries li.list-group-item {
   background: #D4E9EE;
   border: none;
   border-top: 4px solid #54b1c8;
 }
+#contactsid-app-view .active-operations li.list-group-item:hover,
 #contactsid-app-view .active-countries li.list-group-item:hover {
   background: #fff;
 }
+#contactsid-app-view .active-operations li.list-group-item:hover a,
 #contactsid-app-view .active-countries li.list-group-item:hover a {
   color: #000;
 }
+#contactsid-app-view .active-operations li.list-group-item a,
 #contactsid-app-view .active-countries li.list-group-item a {
   text-decoration: none;
   text-transform: uppercase;
