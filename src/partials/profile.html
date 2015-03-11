@@ -31,7 +31,7 @@
 
   <form class="update-profile profile-form row" ng-show="selectedPlace.length && selectedOperation.length" ng-class="{'show-options': profileOptions}">
     <div class="form-content col-xs-12 col-sm-8 col-md-9 pull-right" >
-      <h3>{{profileName}} <span translate>Profile</span></h3>
+      <h3>{{profileName()}} <span translate>Profile</span></h3>
       <div class="row alert-wrapper">
         <browser-alert></browser-alert>
         <div ng-repeat="(type, fields) in invalidFields" >
@@ -163,8 +163,8 @@
             <div class="reveal btn-reveal" ng-repeat="phone in profile.phone track by $index">
               <div class="row form-elements-phone" ng-class="{'has-error': invalidFields.phone[$index]}">
                 <div class="col-xs-5">
-                  <select class="form-control" ng-options="type for type in phoneTypes" name="phone[{{$index}}][type]" ng-blur="removeFieldError('phone')" ng-model="profile.phone[$index].type" ng-class="{'disabled': !profile.phone[$index].type}">
-                    <option value=""><span translate>Choose Type *</span></option>
+                  <select class="form-control" ng-options="type as translate(type) for type in phoneTypes" name="phone[{{$index}}][type]" ng-blur="removeFieldError('phone')" ng-model="profile.phone[$index].type" ng-class="{'disabled': !profile.phone[$index].type}">
+                    <option value="">{{'Choose Type' | translate}} *</span></option>
                   </select>
                 </div>
 
@@ -193,10 +193,10 @@
             <div class="reveal btn-reveal" ng-repeat="voip in profile.voip track by $index">
               <div class="row form-elements-voip" ng-class="{'has-error': invalidFields.voip[$index]}">
                 <div class="col-xs-5">
-                  <input class="form-control" placeholder="Type *" type="text" name="voip[{{$index}}][type]" ng-model="profile.voip[$index].type" ng-blur="removeFieldError('voip')"/>
+                  <input class="form-control" placeholder="{{'Type' |translate}} *" type="text" name="voip[{{$index}}][type]" ng-model="profile.voip[$index].type" ng-blur="removeFieldError('voip')"/>
                 </div>
                 <div class="col-xs-7">
-                  <input class="form-control" placeholder="VOIP" type="text" name="voip[{{$index}}][number]" ng-model="profile.voip[$index].number" ng-blur="focus=0; removeFieldError('voip')" focus-field="focus"/>
+                  <input class="form-control" placeholder="{{'VOIP' |translate}}" type="text" name="voip[{{$index}}][number]" ng-model="profile.voip[$index].number" ng-blur="focus=0; removeFieldError('voip')" focus-field="focus"/>
                   <button ng-click="changeFieldEntries('voip', $index, $last)" ng-class="{'add' : $last && checkForValidEntry('voip', $index)}" >
                     <i class="fa" ng-class="styleFieldEntries('voip', $index, $last)"></i>
                   </button>
@@ -219,12 +219,12 @@
             <div class="reveal btn-reveal" ng-repeat="email in profile.email track by $index">
               <div class="row form-elements-email" ng-class="{'has-error': invalidFields.email[$index]}">
                 <div class="col-xs-5">
-                  <select class="form-control" ng-options="type for type in emailTypes" name="email[{{$index}}][type]" ng-model="profile.email[$index].type" ng-class="{'disabled': !profile.phone[$index].type}">
-                    <option value=""><span translate>Choose Type</span></option>
+                  <select class="form-control" ng-options="type as translate(type) for type in emailTypes" name="email[{{$index}}][type]" ng-model="profile.email[$index].type" ng-class="{'disabled': !profile.phone[$index].type}">
+                    <option value="">{{'Choose Type' | translate}}</option>
                   </select>
                 </div>
                 <div class="col-xs-7">
-                  <input class="form-control" placeholder="Address" type="text"  name="email[{{$index}}][address]" ng-model="profile.email[$index].address" ng-blur="focus=0; removeFieldError('email')" focus-field="focus"/>
+                  <input class="form-control" placeholder="{{'Address' | translate}}" type="text"  name="email[{{$index}}][address]" ng-model="profile.email[$index].address" ng-blur="focus=0; removeFieldError('email')" focus-field="focus"/>
 
                   <button ng-click="changeFieldEntries('email', $index, $last)" ng-class="{'add' : $last && checkForValidEntry('email', $index)}">
                     <i class="fa" ng-class="styleFieldEntries('email', $index, $last)"></i>
@@ -279,7 +279,7 @@
               theme="bootstrap"
               on-select="onChange($item, 'selectedProtectedRoles')"
               on-remove="onChange($item, 'selectedProtectedRoles')">
-              <ui-select-match placeholder="Protected Roles">{{$item.name}}</ui-select-match>
+              <ui-select-match placeholder="{{'Protected Roles' |translate}}">{{$item.name}}</ui-select-match>
               <ui-select-choices repeat="protectedRole.id as protectedRole in protectedRoles | orderBy:'name' | filter: $select.search">
                 <div ng-bind-html="protectedRole.name | highlight: $select.search"></div>
               </ui-select-choices>
@@ -306,7 +306,7 @@
               theme="bootstrap"
               on-select="onChange($item, 'adminRoles')"
               on-remove="onChange($item, 'adminRoles')">
-              <ui-select-match placeholder="Admin Privileges">{{$item.name}}</ui-select-match>
+              <ui-select-match placeholder="{{'Admin Privileges' |translate}}">{{$item.name}}</ui-select-match>
               <ui-select-choices repeat="role.id as role in adminRoleOptions | orderBy:'name' | filter: $select.search">
                 <div ng-bind-html="role.name | highlight: $select.search"></div>
               </ui-select-choices>
@@ -323,7 +323,7 @@
       <div class="row">
         <div class="col-sm-12 col-md-6">
           <div class="form-group bottom-submit">
-            <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitProfile()" value="{{submitText}}" />
+            <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitProfile()" ng-value="submitText()" />
           </div>
         </div>
       </div>
@@ -333,14 +333,14 @@
       <div ng-show="!isRouteLoading">
         <div class="visible-xs">
           <div class="bottom-fixed-btn" role="presentation">
-            <a href ng-click="profileOptions = !profileOptions"><div class="bottom-fixed-btn__arrow"></div>Profile Options</a>
+            <a href ng-click="profileOptions = !profileOptions"><div class="bottom-fixed-btn__arrow"></div><span translate>Profile Options</span></a>
           </div>
         </div>
       </div>
       <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
         <div class="actions">
           <button class="btn btn-default btn-lg btn-block" ng-click="back()"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></button>
-          <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitProfile()" value="{{submitText}}" />
+          <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitProfile()" ng-value="submitText()" />
         </div>
       </div>
     </div>

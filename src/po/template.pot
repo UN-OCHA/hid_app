@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-10T19:43:42.439Z\n"
+"Project-Id-Version: 2015-03-11T18:39:46.826Z\n"
 
 #: src/partials/list-print.html
 msgid "*the term GROUP equals clusters, sectors, working groups are any other thematic"
@@ -13,7 +13,7 @@ msgid "About"
 msgstr ""
 
 #: src/partials/about.html
-msgid "About Humanitarian.ID"
+msgid "About Humanitarian ID"
 msgstr ""
 
 #: src/js/app.js
@@ -21,7 +21,15 @@ msgid "Account Created!"
 msgstr ""
 
 #: src/partials/profile.html
+msgid "Address"
+msgstr ""
+
+#: src/partials/profile.html
 msgid "Admin Privileges"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Again, thanks for helping to make humanitarian contact lists accurate."
 msgstr ""
 
 #: src/partials/createAccount.html
@@ -47,15 +55,15 @@ msgid "Check-out User"
 msgstr ""
 
 #: src/partials/dashboard.html
+msgid "Check-out from"
+msgstr ""
+
+#: src/partials/dashboard.html
 msgid "Checkout"
 msgstr ""
 
 #: src/partials/profile.html
 msgid "Choose Type"
-msgstr ""
-
-#: src/partials/profile.html
-msgid "Choose Type *"
 msgstr ""
 
 #: src/partials/profile.html
@@ -73,6 +81,10 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "Contact List Filters"
+msgstr ""
+
+#: src/partials/contact.html
+msgid "Contact Options"
 msgstr ""
 
 #: src/partials/list.html
@@ -126,10 +138,18 @@ msgstr ""
 msgid "Edit Profile"
 msgstr ""
 
+#: src/partials/dashboard.html
+msgid "Edit my"
+msgstr ""
+
 #: src/partials/createAccount.html
 #: src/partials/list-print.html
 #: src/partials/profile.html
 msgid "Email"
+msgstr ""
+
+#: src/partials/createAccount.html
+msgid "Email Address"
 msgstr ""
 
 #: src/partials/profile.html
@@ -155,6 +175,14 @@ msgstr ""
 
 #: src/partials/createAccount.html
 msgid "Family Name is required."
+msgstr ""
+
+#: src/partials/list-print.html
+msgid "Filter Criteria"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "First, you will need to <em>create your Global profile</em>. In this profile, you will provide your usual details or information of where you are usually located.  After you have completed this step, you will see and have access to the Global contact list."
 msgstr ""
 
 #: src/partials/browser-alert.html
@@ -217,11 +245,15 @@ msgid "Humanitarian ID"
 msgstr ""
 
 #: src/partials/index.html
-msgid "Humanitarian.ID: Responders"
+msgid "Humanitarian ID: Responders"
 msgstr ""
 
 #: src/partials/createAccount.html
 msgid "If a person does not have an email address associated with their information, they will not be able to claim their account."
+msgstr ""
+
+#: src/partials/about.html
+msgid "If you would like to find out more about the project, understand the objectives and benefits, join our mailing list, or simply contact us, visit"
 msgstr ""
 
 #: src/partials/profile.html
@@ -250,6 +282,10 @@ msgstr ""
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Key Contact"
+msgstr ""
+
+#: src/partials/loading.html
+msgid "Loading..."
 msgstr ""
 
 #: src/partials/profile.html
@@ -365,6 +401,10 @@ msgid "Profile"
 msgstr ""
 
 #: src/partials/profile.html
+msgid "Profile Options"
+msgstr ""
+
+#: src/partials/profile.html
 msgid "Protected Roles"
 msgstr ""
 
@@ -415,6 +455,10 @@ msgstr ""
 msgid "Searching..."
 msgstr ""
 
+#: src/partials/dashboard.html
+msgid "Second, if you are in a country/emergency, you should <em>\"Check-in\" for that country/emergency</em>.  When you perform the check-in, you will see a copy of your profile that you can edit for that country/emergency.  Once checked-in, you will then have access to the contact list specific to the country/emergency.  And, other responders will be able to easily find you."
+msgstr ""
+
 #: src/partials/profile.html
 msgid "Select a country"
 msgstr ""
@@ -425,6 +469,18 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "State/Province/Region"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Thank you for registering on Humanitarian.ID. With your help, we will ensure that humanitarian contact lists are always up-to-date. As you will notice, you do not have access to any lists just yet."
+msgstr ""
+
+#: src/partials/about.html
+msgid "The Humanitarian ID contact management solution, currently in alpha, is aimed at building accurate contact lists, enabling rapid connections during emergencies and discovering your appropriate network of responders."
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "The Humanitarian ID team"
 msgstr ""
 
 #: src/partials/createAccount.html
@@ -451,16 +507,20 @@ msgstr ""
 msgid "Valid email is required."
 msgstr ""
 
-#: src/partials/list.html
-msgid "Veiw Printable"
-msgstr ""
-
 #: src/partials/profile.html
 msgid "Verified Responder"
 msgstr ""
 
 #: src/partials/list.html
 msgid "Verified User"
+msgstr ""
+
+#: src/partials/list.html
+msgid "View Printable"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "We are not currently taking note of administrative areas or localities in this country."
 msgstr ""
 
 #: src/partials/contact.html
@@ -475,21 +535,45 @@ msgstr ""
 msgid "Welcome"
 msgstr ""
 
+#: src/partials/dashboard.html
+msgid "When you leave a country/emergency, remember that <em>you need to check-out</em>. By doing so, you will remove your details from the contact list."
+msgstr ""
+
+#: src/partials/about.html
+msgid "You are welcome to register and test the application on our"
+msgstr ""
+
 #: src/partials/createAccount.html
 #: src/partials/profile.html
 msgid "add a missing organization"
+msgstr ""
+
+#: src/partials/about.html
+msgid "and"
 msgstr ""
 
 #: src/partials/dashboard.html
 msgid "before checking-in to a country/emergency."
 msgstr ""
 
+#: src/partials/about.html
+msgid "development server"
+msgstr ""
+
 #: src/partials/profile.html
 msgid "entry"
 msgstr ""
 
+#: src/partials/about.html
+msgid "follow us on Twitter"
+msgstr ""
+
 #: src/partials/contact.html
 msgid "key contact"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "profile"
 msgstr ""
 
 #: src/partials/list-print.html

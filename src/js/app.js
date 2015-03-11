@@ -458,7 +458,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.selectedProtectedRoles = (profileData.contact && profileData.contact.protectedRoles && profileData.contact.protectedRoles.length) ? profileData.contact.protectedRoles : [];
 
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
-  $scope.submitText = !checkinFlow ? gettextCatalog.getString('Update Profile') : gettextCatalog.getString('Check-in');
 
   // Variable to help determine field visibility.
   var hasRoleAdmin = profileService.hasRole('admin'),
@@ -590,7 +589,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.$watch("selectedOperation", function(newValue, oldValue) {
     if (newValue !== oldValue && $scope.selectedPlace.length && $scope.selectedOperation.length) {
       setBundles();
-      $scope.profileName = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].name;
       setPreferedCountries();
       // Need timeout to fix dropdown width issues.
       $timeout($scope.checkMultiFields, 100);
@@ -612,12 +610,10 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         }
       }
     }
-    $scope.profileName = $scope.profile.type === 'global' ? gettextCatalog.getString('Global') : $scope.profile.location;
   }
   else if (!checkinFlow) {
     // If editing the global profile for the first time, add messaging.
     $scope.profile.type = 'global';
-    $scope.profileName = $scope.profile.type === 'global' ? gettextCatalog.getString('Global') : $scope.profile.location;
   }
 
   // Add the given and family name from the auth service as a default value.
@@ -628,7 +624,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   // Add email from the auth service as a default value.
   // Only when editing the global profile for first time.
-  if ((!$scope.profile.email || !$scope.profile.email.length) && $scope.profileName === "Global" && !$scope.profileId) {
+  if ((!$scope.profile.email || !$scope.profile.email.length) && $scope.profile.type === 'global' && !$scope.profileId) {
     $scope.profile.email = [{address: accountData.email}];
   }
 
@@ -980,6 +976,29 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
+  // Update submit text when changing language.
+  $scope.submitText = function() {
+    return !checkinFlow ? gettextCatalog.getString('Update Profile') : gettextCatalog.getString('Check-in');
+  }
+
+  // Update profile name text when changing language.
+  $scope.profileName = function() {
+    if ($scope.profile.type === 'global') {
+      return gettextCatalog.getString('Global');
+    }
+    else if (!$scope.profile.location && $scope.selectedPlace && $scope.selectedOperation) {
+      return $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].name
+    }
+    else {
+      return $scope.profile.location;
+    }
+  }
+  // Used in translating select options.
+  $scope.translate = function(str) {
+    return gettextCatalog.getString(str);
+  };
+
+
   $scope.back = function () {
     if (history.length) {
       history.back();
@@ -1126,9 +1145,6 @@ app.directive('focusField', function() {
 
 app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, profileService, contact, gettextCatalog, userData, protectedRoles) {
   $scope.contact = contact;
-  if (contact.type === 'global') {
-    $scope.contact.location = gettextCatalog.getString('Global');
-  }
 
   $scope.userCanEdit = $scope.userCanCheckIn = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
   $scope.userCanCheckOut = (contact.type === 'local') && (profileService.hasRole('admin') || profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId));
@@ -1139,6 +1155,10 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
     var role = roleFilter(protectedRoles,function(d) { return d.id === value;})[0].name;
     this.push(role);
   }, $scope.contact.protectedRolesByName);
+
+  $scope.locationText = function() {
+    return $scope.contact.location || gettextCatalog.getString('Global');
+  }
 
   $scope.back = function () {
     if (history.length) {
@@ -1170,7 +1190,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
         recipientLastName: $scope.contact.nameFamily,
         recipientEmail: $scope.contact.email[0].address,
         adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-        locationName: $scope.contact.location
+        locationName: $scope.locationText()
       };
       contact.notifyEmail = email;
     }
@@ -1317,9 +1337,6 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
       });
     }
   }
-  else {
-    $scope.location = gettextCatalog.getString('Global');
-  }
 
   // Create protected roles array.
   $scope.protectedRoles = protectedRoles;
@@ -1413,6 +1430,10 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   createContactList();
   if ($scope.query['organization.name']) {
     $scope.refreshOrganization({search:$scope.query['organization.name']})
+  }
+
+  $scope.locationText = function() {
+    return $scope.location || gettextCatalog.getString('Global');
   }
 
   // Builds the list of contacts.
@@ -2035,7 +2056,6 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
 
   function getCountries() {
     var promise;
-
     promise = $http({
       method: "get",
       url: contactsId.hrinfoBaseUrl + "/hid/locations/countries"

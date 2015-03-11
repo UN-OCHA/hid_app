@@ -2,7 +2,7 @@
   <div class='row masthead'>
     <div class="col-xs-12">
       <browser-alert></browser-alert>
-      <h2 class="heading-contact-list"><span translate>Contact List</span> <span class="location">{{location}}</span>
+      <h2 class="heading-contact-list"><span translate>Contact List</span> <span class="location">{{locationText()}}</span>
       <br/><small>{{date}}</small></h2>
 
       <div class="logo pull-right"></div>
@@ -12,7 +12,7 @@
   <div class="row main">
     <div class="col-xs-12 filters-param-list-wrapper">
       <div class="filters-param-list">
-        <div class="filters-param-label">Filter Criteria</div>
+        <div class="filters-param-label" translate>Filter Criteria</div>
         <div class="filters-param" ng-repeat="param in filtersParams">{{param}}</div>
       </div>
     </div>
