@@ -115,10 +115,6 @@
           </div>
 
           <div cg-busy="regionsPromise">
-            <div class="form-group reveal" ng-show="regions.length == 0">
-
-              <p class="help-block">We are not currently taking note of administrative areas or localities in this country.</p>
-            </div>
             <div class="form-group reveal" ng-show="profile.address[0].country && regions.length">
               <label class="control-label" for="address[0][administrative_area]" translate>State/Province/Region</label>
               <angucomplete-alt
