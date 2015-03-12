@@ -1246,7 +1246,19 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
   };
 
   $scope.sendClaimEmail = function () {
-    profileService.requestClaimEmail(contact);
+    if (contact.email && contact.email[0] && contact.email[0].address && String(contact.email[0].address).length) {
+      $scope.sendingClaimEmail = true;
+      profileService.requestClaimEmail(contact.email[0].address).then(function(data) {
+        $scope.sendingClaimEmail = false;
+        $scope.confirmSendEmail = false;
+        if (data.status === 'ok') {
+          alert('Account claim email sent successfully.');
+        }
+        else {
+          alert('An error occurred while attempting to send the account claim email. Please try again or contact an administrator.');
+        }
+      });
+    }
   };
 });
 
@@ -2073,13 +2085,17 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   }
 
   // Request a claim account email.
-  function requestClaimEmail(contact) {
-    var request;
+  function requestClaimEmail(email) {
+    var request,
+      data = {
+        email: email,
+        emailFlag: "claim"
+      };
     request = $http({
       method: "post",
       url: contactsId.profilesBaseUrl + "/v0/contact/resetpw",
       params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
-      data: contact
+      data: data
     });
     return(request.then(handleSuccess, handleError));
   }

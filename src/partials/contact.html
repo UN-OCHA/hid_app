@@ -23,8 +23,8 @@
           <a class="btn btn-primary btn-lg btn-checkout btn-block" ng-if="contact.type === 'local'" ng-show="userCanCheckOut" ng-click="contact.confirmDelete = !contact.confirmDelete" translate>Check-out User</a>
           <a ng-show="contact.confirmDelete" class="slide btn btn-warning btn-lg btn-block" ng-click="checkout(contact._id)" translate>Confirm User Checkout</a>
           <a class="btn btn-primary btn-lg btn-block" ng-click="generateVcard()" translate>Export Contact Info</a>
-          <a class="btn btn-primary btn-lg btn-block" ng-show="userCanSendClaimEmail" ng-click="contact.confirmSendEmail = !contact.confirmSendEmail" translate>Send Claim Email</a>
-          <a ng-show="contact.confirmSendEmail" class="slide btn btn-warning btn-lg btn-block" ng-click="sendClaimEmail()" translate>Confirm Send Claim Email</a>
+          <a class="btn btn-primary btn-lg btn-block" ng-show="userCanSendClaimEmail" ng-click="confirmSendEmail = !confirmSendEmail" translate>Send Claim Email</a>
+          <a ng-show="confirmSendEmail" ng-disabled="sendingClaimEmail" class="slide btn btn-warning btn-lg btn-block" ng-click="sendClaimEmail()" translate>Confirm Send Claim Email</a>
         </div>
       </div>
     </div>
