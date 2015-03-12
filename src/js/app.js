@@ -2,8 +2,7 @@
 (function($, angular, contactsId) {
 
 var jso,
-  app,
-  loginRedirect = '';
+  app;
 
 // Initialize JSO
 jso = new JSO({
@@ -99,7 +98,7 @@ app.run(function ($rootScope, $location, $window, authService) {
     $rootScope.bodyClasses = [];
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
       event.preventDefault();
-      loginRedirect = $location.path();
+      $location.search('redirectPath', $location.path());
       $location.path('/login');
     }
     if (nextRoute && nextRoute.bodyClasses) {
@@ -207,20 +206,21 @@ app.controller("DefaultCtrl", function($scope, $rootScope, $location, authServic
 });
 
 app.controller("LoginCtrl", function($scope, $location, $routeParams, authService, profileService) {
-  var redirectPath = $routeParams.redirectPath || loginRedirect || '';
+  var redirectPath = $routeParams.redirectPath || '';
 
   // Get the access token. If one in the browser cache is not found, then
   // redirect to the auth system for the user to login.
   authService.verify(function (err) {
+    console.log('verify', err);
     if (!err && authService.isAuthenticated()) {
       profileService.getUserData().then(function(data) {
         $location.path(redirectPath.length ? redirectPath : '/dashboard');
-        loginRedirect = '';
+        $location.search('redirectPath', null);
       });
     }
     else {
       authService.logout(true);
-      window.location.href = contactsId.appBaseUrl + '/#/login' + loginRedirect;
+      window.location.href = contactsId.appBaseUrl + '/#/login' + redirectPath;
     }
   });
 });
@@ -382,7 +382,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
         }
         else{
           var msg = (data && data.message) ? 'Error: ' + data.message : 'An error occurred while attempting to save this profile. Please try again or contact an administrator.';
-          alert(msg);         
+          alert(msg);
         }
       }
       $scope.createButtonDisabled = false;
