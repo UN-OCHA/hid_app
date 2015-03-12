@@ -1160,7 +1160,14 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
 
   $scope.userCanEdit = $scope.userCanCheckIn = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
   $scope.userCanCheckOut = (contact.type === 'local') && (profileService.hasRole('admin') || profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId));
-  $scope.userCanSendClaimEmail = profileService.hasRole('admin') || (contact.type === 'local' && (profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId)));
+
+  // Allow sending an orphan user claim email if the user has not made an edit
+  // on HID, the contact has an email address (is not a ghost), and the actor
+  // is an admin or a manager/editor in the location of this contact.
+  $scope.userCanSendClaimEmail =
+       (!contact._profile || !contact._profile.firstUpdate)
+    && (contact.email && contact.email[0] && contact.email[0].address && contact.email[0].address.length)
+    && (profileService.hasRole('admin') || (contact.type === 'local' && (profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId))));
 
   var roleFilter = $filter('filter');
   $scope.contact.protectedRolesByName = [];
