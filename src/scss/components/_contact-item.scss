@@ -53,6 +53,15 @@
 .contact-search {
   padding: 0 20px;
 }
+
+.contact-search-submit {
+  position: absolute;
+  top: 2px;
+  right: 17px;
+  opacity: 0;
+  width: 40px;
+}
+
 .contact-item__markers {
   width: 20px;
   display: inline-block;
