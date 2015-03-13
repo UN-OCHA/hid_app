@@ -211,7 +211,6 @@ app.controller("LoginCtrl", function($scope, $location, $routeParams, authServic
   // Get the access token. If one in the browser cache is not found, then
   // redirect to the auth system for the user to login.
   authService.verify(function (err) {
-    console.log('verify', err);
     if (!err && authService.isAuthenticated()) {
       profileService.getUserData().then(function(data) {
         $location.path(redirectPath.length ? redirectPath : '/dashboard');
@@ -1409,6 +1408,10 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
     query.limit = 0;
     query.skip = 0;
     window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppCSV');
+  }
+
+  $scope.openPrint = function() {
+    window.open($scope.printUrl, $location.path(), 'menubar=no');
   }
 
   // Autocomplete call for Orgs

@@ -10,14 +10,14 @@
   </div>
 
   <div class="row main">
-    <div class="col-xs-12 filters-param-list-wrapper">
+    <div class="col-xs-12 filters-param-list-wrapper" ng-show="filtersParams.length">
       <div class="filters-param-list">
         <div class="filters-param-label" translate>Filter Criteria</div>
         <div class="filters-param" ng-repeat="param in filtersParams">{{param}}</div>
       </div>
     </div>
     <div class="active-contacts col-xs-12">
-      <table class="table table-striped">
+      <table class="table table-striped" cg-busy="contactsPromise">
         <thead>
           <tr>
             <th translate>Name</th>
@@ -29,7 +29,7 @@
             <th translate>Location</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody >
           <tr class="profile-item" ng-repeat="contact in contacts | orderBy: ['organization[0].name', 'nameGiven', 'nameFamily']">
             <td class="title-cell"><div class="avoid">{{contact.nameGiven}}<br/><span class="name-family">{{contact.nameFamily}}</span></div></td>
             <td ng-if="locationId !== 'global'">
