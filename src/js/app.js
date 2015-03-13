@@ -1161,6 +1161,14 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
   $scope.userCanEdit = $scope.userCanCheckIn = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
   $scope.userCanCheckOut = (contact.type === 'local') && (profileService.hasRole('admin') || profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId));
 
+  // Allow sending an orphan user claim email if the user has not made an edit
+  // on HID, the contact has an email address (is not a ghost), and the actor
+  // is an admin or a manager/editor in the location of this contact.
+  $scope.userCanSendClaimEmail =
+       (!contact._profile || !contact._profile.firstUpdate)
+    && (contact.email && contact.email[0] && contact.email[0].address && contact.email[0].address.length)
+    && (profileService.hasRole('admin') || (contact.type === 'local' && (profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId))));
+
   var roleFilter = $filter('filter');
   $scope.contact.protectedRolesByName = [];
   angular.forEach($scope.contact.protectedRoles, function(value, key) {
@@ -1242,6 +1250,22 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
     vcard += "REV:" + new Date().toISOString() + "\n" +
       "END:VCARD\n";
     window.location.href = 'data:text/vcard;charset=UTF-8,' + encodeURIComponent(vcard);
+  };
+
+  $scope.sendClaimEmail = function () {
+    if (contact.email && contact.email[0] && contact.email[0].address && String(contact.email[0].address).length) {
+      $scope.sendingClaimEmail = true;
+      profileService.requestClaimEmail(contact.email[0].address).then(function(data) {
+        $scope.sendingClaimEmail = false;
+        $scope.confirmSendEmail = false;
+        if (data.status === 'ok') {
+          alert('Account claim email sent successfully.');
+        }
+        else {
+          alert('An error occurred while attempting to send the account claim email. Please try again or contact an administrator.');
+        }
+      });
+    }
   };
 });
 
@@ -1945,6 +1969,7 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     getContacts: getContacts,
     saveProfile: saveProfile,
     saveContact: saveContact,
+    requestClaimEmail: requestClaimEmail,
     hasRole: hasRole,
     getCountries: getCountries,
     getAdminArea: getAdminArea,
@@ -2062,6 +2087,22 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
       url: contactsId.profilesBaseUrl + "/v0/contact/save",
       params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
       data: contact
+    });
+    return(request.then(handleSuccess, handleError));
+  }
+
+  // Request a claim account email.
+  function requestClaimEmail(email) {
+    var request,
+      data = {
+        email: email,
+        emailFlag: "claim"
+      };
+    request = $http({
+      method: "post",
+      url: contactsId.profilesBaseUrl + "/v0/contact/resetpw",
+      params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
+      data: data
     });
     return(request.then(handleSuccess, handleError));
   }
