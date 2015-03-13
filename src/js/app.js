@@ -603,7 +603,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       setBundles();
       setPreferedCountries();
       // Scoll to top of form.
-      window.scrollTo(0,0)
+      window.scrollTo(0,0);
       // Need timeout to fix dropdown width issues.
       $timeout($scope.checkMultiFields, 100);
     }
