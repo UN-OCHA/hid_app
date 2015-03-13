@@ -382,7 +382,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
         }
         else{
           var msg = (data && data.message) ? 'Error: ' + data.message : 'An error occurred while attempting to save this profile. Please try again or contact an administrator.';
-          alert(msg);         
+          alert(msg);
         }
       }
       $scope.createButtonDisabled = false;
@@ -602,6 +602,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if (newValue !== oldValue && $scope.selectedPlace.length && $scope.selectedOperation.length) {
       setBundles();
       setPreferedCountries();
+      // Scoll to top of form.
+      window.scrollTo(0,0)
       // Need timeout to fix dropdown width issues.
       $timeout($scope.checkMultiFields, 100);
     }
