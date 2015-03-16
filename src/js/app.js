@@ -602,6 +602,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if (newValue !== oldValue && $scope.selectedPlace.length && $scope.selectedOperation.length) {
       setBundles();
       setPreferedCountries();
+      // Scoll to top of form.
+      window.scrollTo(0,0);
       // Need timeout to fix dropdown width issues.
       $timeout($scope.checkMultiFields, 100);
     }
