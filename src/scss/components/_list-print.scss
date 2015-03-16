@@ -1,4 +1,8 @@
-
+.print {
+  .header {
+    display: none;
+  }
+}
 
 .page-list.print {
   font-family: exo2, "arial black";
@@ -93,6 +97,9 @@
       }
       .filters-param {
         background-color: $primary-color-1 !important;
+        color: $white !important;
+      }
+      span {
         color: $white !important;
       }
     }
