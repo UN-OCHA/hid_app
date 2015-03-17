@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-11T18:39:46.826Z\n"
+"Project-Id-Version: 2015-03-17T00:55:09.877Z\n"
 
 #: src/partials/list-print.html
 msgid "*the term GROUP equals clusters, sectors, working groups are any other thematic"
@@ -91,6 +91,10 @@ msgstr ""
 msgid "Contact Options"
 msgstr ""
 
+#: src/js/app.js
+msgid "Contact already exists"
+msgstr ""
+
 #: src/partials/list.html
 msgid "Contacts"
 msgstr ""
@@ -136,6 +140,10 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "Edit Global Profile"
+msgstr ""
+
+#: src/js/app.js
+msgid "Edit New Account"
 msgstr ""
 
 #: src/partials/contact.html
@@ -491,6 +499,10 @@ msgstr ""
 msgid "The Humanitarian ID team"
 msgstr ""
 
+#: src/js/app.js
+msgid "There is already an account associated with"
+msgstr ""
+
 #: src/partials/createAccount.html
 msgid "Title is required."
 msgstr ""
@@ -527,10 +539,6 @@ msgstr ""
 msgid "View Printable"
 msgstr ""
 
-#: src/partials/profile.html
-msgid "We are not currently taking note of administrative areas or localities in this country."
-msgstr ""
-
 #: src/partials/contact.html
 msgid "Website/Social Media"
 msgstr ""
@@ -545,6 +553,10 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "When you leave a country/emergency, remember that <em>you need to check-out</em>. By doing so, you will remove your details from the contact list."
+msgstr ""
+
+#: src/js/app.js
+msgid "Would you like to check them in?"
 msgstr ""
 
 #: src/partials/about.html

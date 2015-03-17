@@ -363,7 +363,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
           $scope.confirmTitle = gettextCatalog.getString("Account Created!");
           $scope.confirmMessage = name + " " + gettextCatalog.getString("will receive an email to claim their account.");
         }
-        $scope.editButtonText = 'Edit New Account';
+        $scope.editButtonText = gettextCatalog.getString('Edit New Account');
         $scope.editPath = '#/contact/' + data._id;
         $scope.accountConfirm = true;
         $scope.ghostWarning = false;
@@ -374,7 +374,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
           $scope.editContactId = data.origContact._profile;
           $scope.confirmTitle = gettextCatalog.getString("Contact already exists");
           $scope.confirmMessage = gettextCatalog.getString("There is already an account associated with ") + profile.email[0].address + "\n\n" + gettextCatalog.getString("Would you like to check them in?");
-          $scope.editButtonText = 'Check-In';
+          $scope.editButtonText = gettextCatalog.getString('Check-in');
           $scope.editPath = '#/checkin/' + data.origContact._profile;
           $scope.accountConfirm = true;
           $scope.ghostWarning = false;
