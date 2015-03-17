@@ -363,7 +363,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
           $scope.confirmTitle = gettextCatalog.getString("Account Created!");
           $scope.confirmMessage = name + " " + gettextCatalog.getString("will receive an email to claim their account.");
         }
-        $scope.editButtonText = 'Edit New Account';
+        $scope.editButtonText = gettextCatalog.getString('Edit New Account');
         $scope.editPath = '#/contact/' + data._id;
         $scope.accountConfirm = true;
         $scope.ghostWarning = false;
@@ -374,7 +374,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
           $scope.editContactId = data.origContact._profile;
           $scope.confirmTitle = gettextCatalog.getString("Contact already exists");
           $scope.confirmMessage = gettextCatalog.getString("There is already an account associated with ") + profile.email[0].address + "\n\n" + gettextCatalog.getString("Would you like to check them in?");
-          $scope.editButtonText = 'Check-In';
+          $scope.editButtonText = gettextCatalog.getString('Check-in');
           $scope.editPath = '#/checkin/' + data.origContact._profile;
           $scope.accountConfirm = true;
           $scope.ghostWarning = false;
@@ -1256,7 +1256,8 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
   $scope.sendClaimEmail = function () {
     if (contact.email && contact.email[0] && contact.email[0].address && String(contact.email[0].address).length) {
       $scope.sendingClaimEmail = true;
-      profileService.requestClaimEmail(contact.email[0].address).then(function(data) {
+      var adminName = userData.global.nameGiven + " " + userData.global.nameFamily;
+      profileService.requestClaimEmail(contact.email[0].address, adminName).then(function(data) {
         $scope.sendingClaimEmail = false;
         $scope.confirmSendEmail = false;
         if (data.status === 'ok') {
@@ -2097,11 +2098,12 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   }
 
   // Request a claim account email.
-  function requestClaimEmail(email) {
+  function requestClaimEmail(email, adminName) {
     var request,
       data = {
         email: email,
-        emailFlag: "claim"
+        emailFlag: "claim",
+        adminName: adminName
       };
     request = $http({
       method: "post",
