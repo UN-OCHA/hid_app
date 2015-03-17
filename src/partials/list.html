@@ -20,7 +20,7 @@
     </form>
 
     <ul class="list-group" cg-busy="contactsPromise">
-      <li class="profile-item list-group-item" ng-repeat="contact in contacts | orderBy: ['nameGiven', 'nameFamily']">
+      <li class="profile-item list-group-item" ng-class="{'has-quick-link': userCanEditProfile}" ng-repeat="contact in contacts | orderBy: ['nameGiven', 'nameFamily']">
         <div class="row">
           <div class="contact-item contact-item--name col-xs-12 col-md-3" >
             <a href="#/contact/{{contact._id}}">{{contact.nameGiven}} {{contact.nameFamily}}</a>
@@ -32,6 +32,14 @@
           <div class="contact-item contact-item--jobtitle col-xs-7 col-md-3"><span title="{{contact.jobtitle}}">{{contact.jobtitle}}</span></div>
           <div class="contact-item contact-item--organization col-xs-5" ng-class="(contact.bundle.length) ? 'col-md-3' : 'col-md-6'"><span title="{{contact.organization[0].name}}">{{contact.organization[0].name}}</span></div>
           <div class="contact-item contact-item--bundle col-md-3" ng-hide="!contact.bundle.length"><span title="{{contact.bundle.join(', ')}}">{{contact.bundle.join(', ')}}</span></div>
+        </div>
+        <div class="quick-link" ng-if="userCanEditProfile">
+          <div class="dropdown">
+            <button class="dropdown-toggle" data-toggle="dropdown" type="button"><span class="quick-link-dots"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+              <li role="presentation" ng-if="userCanEditProfile"><a role="menuitem" tabindex="-1" href="#/profile/{{contact._id}}">Edit</a></li>
+            </ul>
+          </div>
         </div>
       </li>
     </ul>
@@ -141,8 +149,8 @@
 
         <div class="form-group">
           <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitSearch()" value="{{'Search'|translate}}"/>
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" ng-show="userCanExportContacts" value="{{'Export Results'|translate}}"/>
-          <a class="btn btn-warning btn-lg btn-block" type="button" target="_blank" href="{{printUrl}}" ng-show="userCanExportContacts" ><span translate>View Printable</span></a>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" value="{{'Export Results'|translate}}"/>
+          <a class="btn btn-warning btn-lg btn-block" type="button" target="_blank" href="{{printUrl}}" ><span translate>View Printable</span></a>
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="resetSearch()" value="{{'Reset Filters'|translate}}"/>
         </div>
       </form>

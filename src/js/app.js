@@ -211,7 +211,6 @@ app.controller("LoginCtrl", function($scope, $location, $routeParams, authServic
   // Get the access token. If one in the browser cache is not found, then
   // redirect to the auth system for the user to login.
   authService.verify(function (err) {
-    console.log('verify', err);
     if (!err && authService.isAuthenticated()) {
       profileService.getUserData().then(function(data) {
         $location.path(redirectPath.length ? redirectPath : '/dashboard');
@@ -245,7 +244,7 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   $scope.globalProfileId = globalProfileId;
   $scope.userData = userData;
 
-  $scope.userCanCreateAccount = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
+  $scope.userCanCreateAccount = profileService.canCreateAccount();
 
   $scope.checkout = function (cid) {
     var contact = {
@@ -285,8 +284,6 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
   var availPlacesOperations = angular.copy(placesOperations);
   // Convert list into an array that can be sorted
   $scope.availPlacesOperations = listObjectToArray(availPlacesOperations, 'place', 'operations');
-
-  $scope.userCanViewAllFields = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
 
   $scope.back = function () {
     if (history.length) {
@@ -471,84 +468,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
 
-  // Variable to help determine field visibility.
-  var hasRoleAdmin = profileService.hasRole('admin'),
-      hasRoleManager = profileService.hasRole('manager'),
-      hasRoleEditor = profileService.hasRole('editor'),
-      isLocal = (profileData.contact && profileData.contact.type === 'local');
-
-  $scope.userCanViewAllFields = (hasRoleAdmin || hasRoleManager || hasRoleEditor);
-  $scope.userCanEditProfile = (
-            hasRoleAdmin
-        ||  (isLocal && (profileService.hasRole('manager', profileData.contact.locationId) || profileService.hasRole('editor', profileData.contact.locationId)))
-        ||  (checkinFlow && (hasRoleManager || hasRoleEditor))
-      );
-
-  $scope.userCanEditRoles = (hasRoleAdmin || hasRoleManager) && profileData.profile._id !== userData.profile._id;
-  if ($scope.userCanEditRoles) {
-    if (profileService.hasRole('admin', null, profileData) && !hasRoleAdmin) {
-      $scope.userCanEditRoles = false;
-    }
-    if (profileService.hasRole('manager', null, profileData) && !(hasRoleAdmin || hasRoleManager)) {
-      $scope.userCanEditRoles = false;
-    }
-  }
-
-  $scope.userCanEditKeyContact = (
-            hasRoleAdmin
-        ||  (checkinFlow && hasRoleManager)
-        ||  (isLocal && profileService.hasRole('manager', profileData.contact.locationId)));
-
-  $scope.userCanEditProtectedRoles = (
-            $scope.userCanEditKeyContact
-        ||  (checkinFlow && hasRoleEditor)
-        ||  (isLocal && profileService.hasRole('editor', profileData.contact.locationId)));
-
-  // Determine what roles are available to assign to a user
-  if ($scope.userCanEditRoles && userData.profile.roles.indexOf('admin') > -1) {
-    // You're an admin and can assign any role
-    $scope.adminRoleOptions = roles;
-  }
-  else if ($scope.userCanEditRoles) {
-    if ($scope.userCanEditRoles) {
-      for (var i in userData.profile.roles) {
-        if (userData.profile.roles.hasOwnProperty(i)) {
-          var role = userData.profile.roles[i],
-              roleData = roleInArray(role, roles),
-              roleParts = role.split(":");
-
-          if (roleData) {
-            $scope.adminRoleOptions.push(roleData);
-          }
-
-          if (roleParts[0] === 'manager') {
-            var tempData = roleInArray(('editor:' + roleParts[1] + ':'+ roleParts[2]), roles);
-            if (tempData) {
-              $scope.adminRoleOptions.push(tempData);
-            }
-          }
-        }
-      }
-    }
-  }
-  else {
-    for (var i in $scope.adminRoles) {
-      if ($scope.adminRoles.hasOwnProperty(i)) {
-        var roleData = roleInArray($scope.adminRoles[i], roles);
-        if (roleData) {
-          $scope.adminRoleOptions.push(roleData);
-        }
-      }
-    }
-  }
-
-  // Helper for fetching role data.
-  function roleInArray(roleId, roles) {
-    var rolesById = roles.map(function(e) { return e.id; })
-        index = rolesById.indexOf(roleId);
-    return (index > -1) ? roles[index] : false;
-  }
-
   // Setup scope variables from data injected by routeProvider resolve
   $scope.placesOperations = placesOperations;
   var availPlacesOperations = angular.copy(placesOperations);
@@ -602,6 +521,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if (newValue !== oldValue && $scope.selectedPlace.length && $scope.selectedOperation.length) {
       setBundles();
       setPreferedCountries();
+      setPermissions();
       // Need timeout to fix dropdown width issues.
       $timeout($scope.checkMultiFields, 100);
     }
@@ -610,7 +530,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   // If loading an existing contact profile by ID, find it in the user's data.
   if (!checkinFlow && $scope.profileId.length) {
     $scope.profile = profileData.contact || {};
-
     if ($scope.profile.locationId) {
       for (var place in $scope.placesOperations) {
         if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.profile.locationId)) {
@@ -622,10 +541,13 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         }
       }
     }
+    setPermissions();
   }
   else if (!checkinFlow) {
     // If editing the global profile for the first time, add messaging.
     $scope.profile.type = 'global';
+    // Set permissions at same time.
+    setPermissions();
   }
 
   // Add the given and family name from the auth service as a default value.
@@ -1078,7 +1000,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         profile.newProtectedRoles = $scope.selectedProtectedRoles;
       }
 
-      if ($scope.userCanEditProfile) {
+      if ($scope.userCanEditVerified) {
         profile.verified = $scope.verified;
       }
 
@@ -1143,6 +1065,59 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   }
 
+  function setPermissions() {
+    var hasRoleAdmin = profileService.hasRole('admin');
+
+    $scope.userCanEditRoles = profileService.canEditRoles(profileData) && profileData.profile._id !== userData.profile._id;
+    $scope.userCanEditKeyContact = profileService.canEditKeyContact($scope.selectedOperation);
+    $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.selectedOperation);
+    $scope.userCanEditVerified = profileService.canEditVerified($scope.selectedOperation);
+
+    // Determine what roles are available to assign to a user
+    if ($scope.userCanEditRoles && hasRoleAdmin) {
+      // You're an admin and can assign any role
+      $scope.adminRoleOptions = roles;
+    }
+    else if ($scope.userCanEditRoles) {
+      for (var i in userData.profile.roles) {
+        if (userData.profile.roles.hasOwnProperty(i)) {
+          var role = userData.profile.roles[i],
+              roleData = roleInArray(role, roles),
+              roleParts = role.split(":");
+
+          if (roleData) {
+            $scope.adminRoleOptions.push(roleData);
+          }
+
+          if (roleParts[0] === 'manager') {
+            var tempData = roleInArray(('editor:' + roleParts[1] + ':'+ roleParts[2]), roles);
+            if (tempData) {
+              $scope.adminRoleOptions.push(tempData);
+            }
+          }
+        }
+      }
+    }
+    else {
+      // For users who only have editor roles.
+      for (var i in $scope.adminRoles) {
+        if ($scope.adminRoles.hasOwnProperty(i)) {
+          var roleData = roleInArray($scope.adminRoles[i], roles);
+          if (roleData) {
+            $scope.adminRoleOptions.push(roleData);
+          }
+        }
+      }
+    }
+  }
+
+  // Helper for fetching role data.
+  function roleInArray(roleId, roles) {
+    var rolesById = roles.map(function(e) { return e.id; })
+        index = rolesById.indexOf(roleId);
+    return (index > -1) ? roles[index] : false;
+  }
+
 });
 
 // Trigger focus on field.
@@ -1158,16 +1133,16 @@ app.directive('focusField', function() {
 app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, profileService, contact, gettextCatalog, userData, protectedRoles) {
   $scope.contact = contact;
 
-  $scope.userCanEdit = $scope.userCanCheckIn = profileService.hasRole('admin') || profileService.hasRole('manager') || profileService.hasRole('editor');
-  $scope.userCanCheckOut = (contact.type === 'local') && (profileService.hasRole('admin') || profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId));
-
+  // Permissions
+  var isOwnProfile = userData.profile.userid === contact._profile._userid;
+  $scope.userCanEditProfile = !isOwnProfile || profileService.canEditProfile(contact.locationId);
+  $scope.userCanCheckIn = profileService.canCheckIn(contact);
+  $scope.userCanCheckOut = profileService.canCheckOut(contact);
   // Allow sending an orphan user claim email if the user has not made an edit
   // on HID, the contact has an email address (is not a ghost), and the actor
   // is an admin or a manager/editor in the location of this contact.
-  $scope.userCanSendClaimEmail =
-       (!contact._profile || !contact._profile.firstUpdate)
-    && (contact.email && contact.email[0] && contact.email[0].address && contact.email[0].address.length)
-    && (profileService.hasRole('admin') || (contact.type === 'local' && (profileService.hasRole('manager', contact.locationId) || profileService.hasRole('editor', contact.locationId))));
+  $scope.userCanSendClaimEmail = profileService.canSendClaimEmail(contact);
+
 
   var roleFilter = $filter('filter');
   $scope.contact.protectedRolesByName = [];
@@ -1292,8 +1267,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   $scope.listComplete = false;
   $scope.contactsCreated = false;
 
-  $scope.userCanExportContacts = profileService.hasRole('admin') || ($scope.locationId && (profileService.hasRole('manager', $scope.locationId) || profileService.hasRole('editor', $scope.locationId)));
-
+  $scope.userCanEditProfile = profileService.canEditProfile($scope.locationId);
 
   var pathParams = $location.url().split('/'),
       filter = $filter('filter');
@@ -1956,7 +1930,9 @@ app.service("authService", function($location, $http, $q, $rootScope) {
 
 app.service("profileService", function(authService, $http, $q, $rootScope) {
   var cacheUserData = false,
-  cacheOperationsData = false;
+      cacheOperationsData = false,
+      cacheRolesData = false,
+      cacheProtectedRolesData = false;
 
   // Return public API.
   return({
@@ -1974,7 +1950,16 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     getCountries: getCountries,
     getAdminArea: getAdminArea,
     getRoles: getRoles,
-    getProtectedRoles: getProtectedRoles
+    getProtectedRoles: getProtectedRoles,
+    canEditProfile: canEditProfile,
+    canEditRoles: canEditRoles,
+    canEditProtectedRoles: canEditProtectedRoles,
+    canEditKeyContact: canEditKeyContact,
+    canEditVerified: canEditVerified,
+    canCreateAccount: canCreateAccount,
+    canCheckIn: canCheckIn,
+    canCheckOut: canCheckOut,
+    canSendClaimEmail: canSendClaimEmail
   });
 
   // Get app data.
@@ -2034,6 +2019,8 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   function clearData() {
     cacheUserData = false;
     cacheOperationsData = false;
+    cacheRolesData = false;
+    cacheProtectedRolesData = false;
   }
 
   // Get a profile by ID.
@@ -2162,31 +2149,51 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   function getRoles() {
     var promise;
 
-    promise = $http({
-      method: "get",
-      url: contactsId.profilesBaseUrl + "/v0/app/data",
-      params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
-    })
-    .then(handleSuccess, handleError).then(function(data) {
-      return data.roles;
-    });
+    if (cacheRolesData) {
+      promise = $q.defer();
+      promise.resolve(cacheRolesData);
+      return promise.promise;
+    }
+    else {
+      promise = $http({
+        method: "get",
+        url: contactsId.profilesBaseUrl + "/v0/app/data",
+        params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
+      })
+      .then(handleSuccess, handleError).then(function(data) {
+        if (data && data.roles) {
+          cacheRolesData = data.roles;
+        }
+        return cacheRolesData;
+      });
 
-    return promise;
+      return promise;
+    }
   }
 
   function getProtectedRoles() {
     var promise;
 
-    promise = $http({
-      method: "get",
-      url: contactsId.profilesBaseUrl + "/v0/app/data",
-      params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
-    })
-    .then(handleSuccess, handleError).then(function(data) {
-      return data.protectedRoles;
-    });
+    if (cacheProtectedRolesData) {
+      promise = $q.defer();
+      promise.resolve(cacheProtectedRolesData);
+      return promise.promise;
+    }
+    else {
+      promise = $http({
+        method: "get",
+        url: contactsId.profilesBaseUrl + "/v0/app/data",
+        params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
+      })
+      .then(handleSuccess, handleError).then(function(data) {
+        if (data && data.protectedRoles) {
+          cacheProtectedRolesData = data.protectedRoles;
+        }
+        return cacheProtectedRolesData;
+      });
 
-    return promise;
+      return promise;
+    }
   }
 
   // Returns true/false for whether the user has/doesn't have the specified
@@ -2196,6 +2203,71 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
       match = new RegExp(matchString),
       data = profile || cacheUserData;
     return (data && data.profile && data.profile.roles && data.profile.roles.length && data.profile.roles.reIndexOf(match) !== -1);
+  }
+
+  // Can edit other user's profile.
+  function canEditProfile(locationId) {
+    return hasRole('admin') || (locationId && (hasRole('manager', locationId) || hasRole('editor', locationId)));
+  }
+
+  // Can edit other user's roles.
+  function canEditRoles(profileData) {
+    var hasRoleAdmin = hasRole('admin'),
+        hasRoleManager =  hasRole('manager');
+
+    if (!hasRoleAdmin && !hasRoleManager) {
+      // Need to be an Admin or Manager to edit roles.
+      return false;
+    }
+    else if (hasRole('admin', null, profileData) && !hasRoleAdmin) {
+      // Can not change roles of Admin if you are only a Manager.
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+  // Can edit other user's protected roles.
+  function canEditProtectedRoles(locationId) {
+    return hasRole('admin') || (locationId && (hasRole('manager', locationId) || hasRole('editor', locationId)));
+  }
+  // Can edit other user's key contact.
+  function canEditKeyContact(locationId) {
+    return hasRole('admin') || (locationId && (hasRole('manager', locationId)));
+  }
+  // Can verify other user.
+  function canEditVerified(locationId) {
+    return hasRole('admin') || (locationId && (hasRole('manager', locationId) || hasRole('editor', locationId)));
+  }
+  // Can check-in other user.
+  function canCheckIn(profile) {
+    var isOwnProfile = (profile._profile._id === cacheUserData.profile._id),
+        hasRightRole = (hasRole('admin') || (profile.locationId && (hasRole('manager', profile.locationId) || hasRole('editor', profile.locationId))));
+
+    return (isOwnProfile || hasRightRole);
+  }
+  // Can check-out profile.
+  function canCheckOut(profile) {
+    var isLocal = profile.type === 'local',
+        isOwnProfile = profile._profile._id === cacheUserData.profile._id,
+        hasRightRole = (hasRole('admin') || (profile.locationId && (hasRole('manager', profile.locationId) || hasRole('editor', profile.locationId))));
+
+    return (isLocal && (isOwnProfile || hasRightRole));
+  }
+  // Can create a ghost or orphan account.
+  function canCreateAccount() {
+    return (hasRole('admin') || hasRole('manager') || hasRole('editor'))
+  }
+  // Can send claim email to orphan user.
+  function canSendClaimEmail(profile) {
+    // Allow sending an orphan user claim email if the user has not made an edit
+    // on HID, the contact has an email address (is not a ghost), and the actor
+    // is an admin or a manager/editor in the location of this contact.
+    var neverUpdated = (!profile._profile || !profile._profile.firstUpdate),
+        hasEmail = (profile.email && profile.email[0] && profile.email[0].address && profile.email[0].address.length),
+        hasRightRole = (hasRole('admin') || (profile.locationId && (hasRole('manager', profile.locationId) || hasRole('editor', profile.locationId))));
+
+    return (neverUpdated && hasEmail && hasRightRole);
   }
 
   function handleError(response) {

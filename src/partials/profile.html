@@ -292,7 +292,7 @@
           </div>
         </div>
 
-        <div class="col-sm-12 col-md-6 operations" ng-show="userCanEditRoles || userCanEditProfile">
+        <div class="col-sm-12 col-md-6 operations" ng-show="userCanEditRoles || userCanEditVerified">
           <h4 translate>Global Administration</h4>
           <div class="form-group" ng-show="userCanEditRoles">
             <label class="control-label" for="adminRoles" translate>Admin Privileges</label>
@@ -313,8 +313,8 @@
             </ui-select>
           </div>
 
-          <div class="checkbox" ng-show="userCanEditProfile">
-            <label for="verified" ng-click="verified = !userCanEditProfile ? verified : !verified"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="!userCanEditProfile" ng-readonly="!userCanEditProfile" ng-click="verified = !verified"/><span translate>Verified Responder</span></label>
+          <div class="checkbox" ng-show="userCanEditVerified">
+            <label for="verified" ng-click="verified = !userCanEditVerified ? verified : !verified"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="!userCanEditVerified" ng-readonly="!userCanEditVerified" ng-click="verified = !verified"/><span translate>Verified Responder</span></label>
           </div>
         </div>
 

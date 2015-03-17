@@ -9611,6 +9611,19 @@ table tr td:last-child {
   display: none;
 }
 
+.page-list .profile-item {
+  overflow: visible;
+}
+.page-list .profile-item.has-quick-link {
+  padding-right: 20px;
+  min-height: 70px;
+}
+@media (min-width: 992px) {
+  .page-list .profile-item.has-quick-link {
+    min-height: 65px;
+  }
+}
+
 .contact-item {
   position: relative;
   font-size: 14px;
@@ -9804,6 +9817,58 @@ table tr td:last-child {
   text-align: center;
   margin-top: -30px;
   color: #afafaf;
+}
+
+.quick-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+}
+.quick-link .dropdown:hover > .dropdown-menu {
+  display: block;
+  margin-top: -10px;
+}
+.quick-link .dropdown:hover > .dropdown-menu .quick-link-dots {
+  opacity: 1;
+}
+.quick-link button {
+  padding: 0 5px;
+  height: 70px;
+  border: none;
+  background: none;
+}
+@media (min-width: 992px) {
+  .quick-link button {
+    height: 65px;
+  }
+}
+.quick-link .quick-link-dots {
+  width: 10px;
+  height: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background-color: #54b1c8;
+  display: block;
+  opacity: 0.5;
+}
+.quick-link .quick-link-dots:before, .quick-link .quick-link-dots:after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background-color: #54b1c8;
+  left: 5px;
+}
+.quick-link .quick-link-dots:before {
+  margin-top: -15px;
+}
+.quick-link .quick-link-dots:after {
+  margin-top: 15px;
 }
 
 #contactsid-app-view .account-create {
