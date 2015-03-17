@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="empty-profiles" ng-hide="userData.contacts.length">
-      <p translate>Thank you for registering on Humanitarian.ID. With your help, we will ensure that humanitarian contact lists are always up-to-date. As you will notice, you do not have access to any lists just yet.</p>
+      <p translate>Thank you for registering on Humanitarian ID. With your help, we will ensure that humanitarian contact lists are always up-to-date. As you will notice, you do not have access to any lists just yet.</p>
       <p translate>First, you will need to <em>create your Global profile</em>. In this profile, you will provide your usual details or information of where you are usually located.  After you have completed this step, you will see and have access to the Global contact list.</p>
       <p translate>Second, if you are in a country/emergency, you should <em>"Check-in" for that country/emergency</em>.  When you perform the check-in, you will see a copy of your profile that you can edit for that country/emergency.  Once checked-in, you will then have access to the contact list specific to the country/emergency.  And, other responders will be able to easily find you.</p>
       <p translate>When you leave a country/emergency, remember that <em>you need to check-out</em>. By doing so, you will remove your details from the contact list.</p>
@@ -76,7 +76,7 @@
         <a class="btn btn-primary btn-lg btn-block" href="#/checkin" ng-show="globalProfileId.length">
           <i class="entypo chevron-thin-right"></i> <span translate>Check-in</span>
         </a>
-        <a class="btn btn-primary btn-lg btn-block hidden-xs" href="#/createaccount"  ng-show="userCanCreateAccount" >
+        <a class="btn btn-primary btn-lg btn-block hidden-xs" href="#/createaccount" ng-show="userCanCreateAccount">
           <i class="entypo chevron-thin-right"></i> <span translate>Create New Account</span>
         </a>
         <a class="btn btn-primary btn-lg btn-block" ng-show="!globalProfileId.length" href="#/profile/{{globalProfileId}}">
