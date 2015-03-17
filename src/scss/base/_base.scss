@@ -104,12 +104,10 @@ label[for=keyContact]{
   * {
     -webkit-print-color-adjust: exact;
   }
+  .container {
+    width: auto;
+  }
   @page {
     size: landscape;
-  }
-  .print {
-    .header {
-      display: none;
-    }
   }
 }

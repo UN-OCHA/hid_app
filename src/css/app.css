@@ -9164,11 +9164,12 @@ label[for=keyContact] .fa {
     -webkit-print-color-adjust: exact;
   }
 
+  .container {
+    width: auto;
+  }
+
   @page {
     size: landscape;
-  }
-  .print .header {
-    display: none;
   }
 }
 .btn-lg, .btn-group-lg > .btn, .btn-md, .btn-sm, .btn-group-sm > .btn {
@@ -10224,6 +10225,10 @@ table tr td:last-child {
   display: table;
 }
 
+.print .header {
+  display: none;
+}
+
 .page-list.print {
   font-family: exo2, "arial black";
 }
@@ -10315,6 +10320,9 @@ table tr td:last-child {
   }
   .page-list.print .filters-param-list .filters-param {
     background-color: #54b1c8 !important;
+    color: #fff !important;
+  }
+  .page-list.print .filters-param-list span {
     color: #fff !important;
   }
   .page-list.print .logo {
