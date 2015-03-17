@@ -71,6 +71,10 @@ msgid "City"
 msgstr ""
 
 #: src/partials/contact.html
+msgid "Confirm Send Claim Email"
+msgstr ""
+
+#: src/partials/contact.html
 msgid "Confirm User Checkout"
 msgstr ""
 
@@ -465,6 +469,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Select an operation"
+msgstr ""
+
+#: src/partials/contact.html
+msgid "Send Claim Email"
 msgstr ""
 
 #: src/partials/profile.html

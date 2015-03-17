@@ -1256,7 +1256,8 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
   $scope.sendClaimEmail = function () {
     if (contact.email && contact.email[0] && contact.email[0].address && String(contact.email[0].address).length) {
       $scope.sendingClaimEmail = true;
-      profileService.requestClaimEmail(contact.email[0].address).then(function(data) {
+      var adminName = userData.global.nameGiven + " " + userData.global.nameFamily;
+      profileService.requestClaimEmail(contact.email[0].address, adminName).then(function(data) {
         $scope.sendingClaimEmail = false;
         $scope.confirmSendEmail = false;
         if (data.status === 'ok') {
@@ -2097,11 +2098,12 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   }
 
   // Request a claim account email.
-  function requestClaimEmail(email) {
+  function requestClaimEmail(email, adminName) {
     var request,
       data = {
         email: email,
-        emailFlag: "claim"
+        emailFlag: "claim",
+        adminName: adminName
       };
     request = $http({
       method: "post",
