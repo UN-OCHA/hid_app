@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-17T00:55:09.877Z\n"
+"Project-Id-Version: 2015-03-17T20:07:37.199Z\n"
 
 #: src/partials/list-print.html
 msgid "*the term GROUP equals clusters, sectors, working groups are any other thematic"
@@ -403,9 +403,7 @@ msgid "Please create a"
 msgstr ""
 
 #: src/partials/list-print.html
-msgid ""
-"Powered by <span class=\"title-humanitarian\">Humanitarian</span> <span class=\"title-id\">Id</span> - <span translate=\"\">to update your information, check in to</span> <a href=\"http://humanitarian.id\">http://humanitarian.id</a><br>\n"
-"    <span ng-if=\"locationId !== 'global'\" translate=\"\">*the term GROUP equals clusters, sectors, working groups are any other thematic</span>"
+msgid "Powered by"
 msgstr ""
 
 #: src/partials/profile.html
@@ -488,7 +486,7 @@ msgid "State/Province/Region"
 msgstr ""
 
 #: src/partials/dashboard.html
-msgid "Thank you for registering on Humanitarian.ID. With your help, we will ensure that humanitarian contact lists are always up-to-date. As you will notice, you do not have access to any lists just yet."
+msgid "Thank you for registering on Humanitarian ID. With your help, we will ensure that humanitarian contact lists are always up-to-date. As you will notice, you do not have access to any lists just yet."
 msgstr ""
 
 #: src/partials/about.html
