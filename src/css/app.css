@@ -10302,6 +10302,10 @@ table tr td:last-child {
   text-transform: uppercase;
 }
 
+.print-actions {
+  margin-bottom: -50px;
+}
+
 @media only print {
   .page-list.print .heading-contact-list span {
     color: #54b1c8 !important;

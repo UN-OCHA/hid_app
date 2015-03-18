@@ -1402,7 +1402,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   }
 
   $scope.openPrint = function() {
-    window.open($scope.printUrl, $location.path(), 'menubar=no');
+    window.open($scope.printUrl, $location.path(), 'width=1000, height=600, menubar=1, resizable=1, scrollbars=1, status=1, toolbar=1');
   }
 
   // Autocomplete call for Orgs
