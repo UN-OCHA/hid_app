@@ -106,6 +106,19 @@ app.run(function ($rootScope, $location, $window, authService) {
     }
   });
 
+  $rootScope.$on("$routeChangeSuccess", function(event, nextRoute, currentRoute) {
+    // Check if route has access control.
+    if (nextRoute.locals.hasOwnProperty('routeAccess')) {
+      // If access check requires resovle to complete a function is passed.
+      // Otherwise boolean is passed.
+      var access = (typeof nextRoute.locals.routeAccess !== 'function') ? nextRoute.locals.routeAccess : nextRoute.locals.routeAccess(nextRoute.locals);
+
+      if (!access) {
+        $location.path('/dashboard').replace();
+      };
+    }
+  });
+
   // Google analytics page view tracking
   $rootScope.$on('$routeChangeSuccess', function() {
     $window.ga('send', 'pageview', { page: $location.url() });
@@ -213,7 +226,7 @@ app.controller("LoginCtrl", function($scope, $location, $routeParams, authServic
   authService.verify(function (err) {
     if (!err && authService.isAuthenticated()) {
       profileService.getUserData().then(function(data) {
-        $location.path(redirectPath.length ? redirectPath : '/dashboard');
+        $location.path(redirectPath.length ? redirectPath : '/dashboard').replace();
         $location.search('redirectPath', null);
       });
     }
@@ -1137,8 +1150,8 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
 
   // Permissions
   var isOwnProfile = userData.profile.userid === contact._profile._userid;
-  $scope.userCanEditProfile = !isOwnProfile || profileService.canEditProfile(contact.locationId);
-  $scope.userCanCheckIn = profileService.canCheckIn(contact);
+  $scope.userCanEditProfile = isOwnProfile || profileService.canEditProfile(contact.locationId);
+  $scope.userCanCheckIn = profileService.canCheckIn(contact._profile);
   $scope.userCanCheckOut = profileService.canCheckOut(contact);
   // Allow sending an orphan user claim email if the user has not made an edit
   // on HID, the contact has an email address (is not a ghost), and the actor
@@ -1610,6 +1623,11 @@ app.config(function($routeProvider, $locationProvider) {
             return userdata;
           }
         });
+      },
+      routeAccess : function(profileService) {
+        return function(locals) {
+          return profileService.canCheckIn(locals.profileData.profile);
+        };
       }
     }
   }).
@@ -1711,6 +1729,15 @@ app.config(function($routeProvider, $locationProvider) {
           }
           return data;
         });
+      },
+      routeAccess : function(profileService) {
+        return function(locals) {
+          var profile = locals.profileData.contact,
+              hasRole = profileService.canEditProfile(profile.locationId),
+              isOwnProfile = profile._profile === locals.userData.profile._id;
+
+          return (hasRole || isOwnProfile);
+        };
       }
     }
   }).
@@ -1846,6 +1873,9 @@ app.config(function($routeProvider, $locationProvider) {
             }
           }
         });
+      },
+      routeAccess : function(profileService) {
+        return profileService.canCreateAccount();
       }
     }
   }).
@@ -2249,8 +2279,8 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   }
   // Can check-in other user.
   function canCheckIn(profile) {
-    var isOwnProfile = (profile._profile._id === cacheUserData.profile._id),
-        hasRightRole = (hasRole('admin') || (profile.locationId && (hasRole('manager', profile.locationId) || hasRole('editor', profile.locationId))));
+    var isOwnProfile = (profile._id === cacheUserData.profile._id),
+        hasRightRole = hasRole('admin') || hasRole('manager') || hasRole('editor');
 
     return (isOwnProfile || hasRightRole);
   }
