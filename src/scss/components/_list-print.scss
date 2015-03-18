@@ -77,6 +77,10 @@
   text-transform: uppercase;
 }
 
+.print-actions {
+  margin-bottom: -50px;
+}
+
 @media only print {
   .page-list.print {
     .heading-contact-list {

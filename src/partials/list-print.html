@@ -7,6 +7,10 @@
 
       <div class="logo pull-right"></div>
     </div>
+    <div class="col-sm-3 col-sm-offset-9 print-actions">
+      <button class="btn btn-block btn-primary btn-lg hidden-print" onclick="window.print()" translate>Print</button>
+      <button class="btn btn-block btn-primary btn-lg hidden-print" onclick="window.close()" translate>Close</button>
+    </div>
   </div>
 
   <div class="row main">
@@ -30,7 +34,7 @@
           </tr>
         </thead>
         <tbody >
-          <tr class="profile-item" ng-repeat="contact in contacts | orderBy: ['organization[0].name', 'nameGiven', 'nameFamily']">
+          <tr class="profile-item" ng-repeat="contact in contacts | orderBy: ['nameGiven', 'nameFamily']">
             <td class="title-cell"><div class="avoid">{{contact.nameGiven}}<br/><span class="name-family">{{contact.nameFamily}}</span></div></td>
             <td ng-if="locationId !== 'global'">
               <div class="avoid"><span ng-repeat="bundle in contact.bundle | orderBy">{{bundle}}{{ !$last ? ', ' : ''}}</span></div>
@@ -66,6 +70,6 @@
   </div>
   <div id="print-footer">
     <div class="message"><span translate>Powered by</span> <span class="title-humanitarian">Humanitarian</span> <span class="title-id">Id</span> - <span translate>to update your information, check in to</span> <a href="http://humanitarian.id">http://humanitarian.id</a><br/>
-    <span ng-if="locationId !== 'global'" translate>*the term GROUP equals clusters, sectors, working groups are any other thematic</span></div>
+    <span ng-if="locationId !== 'global'" translate>*the term GROUP equals clusters, sectors, working group or other thematic groups</span></div>
   </div>
 </div>
