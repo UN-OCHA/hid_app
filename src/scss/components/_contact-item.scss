@@ -1,3 +1,13 @@
+.page-list .profile-item {
+  overflow: visible;
+  &.has-quick-link {
+    padding-right: 20px;
+    min-height: 70px;
+    @media(min-width: $screen-md) {
+      min-height: 65px;
+    }
+  }
+}
 .contact-item {
   position: relative;
   font-size: 14px;
@@ -183,4 +193,53 @@
   text-align: center;
   margin-top: -30px;
   color: $text-light;
+}
+
+.quick-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+
+  .dropdown:hover > .dropdown-menu {
+    display: block;
+    margin-top: -10px;
+
+    .quick-link-dots{
+      opacity: 1;
+    }
+  }
+  button {
+    padding:0 5px;
+    height: 70px;
+    border: none;
+    background: none;
+    @media(min-width: $screen-md) {
+      height: 65px;
+    }
+  }
+  .quick-link-dots{
+    width: 10px;
+    height: 10px;
+    @include border-radius(10px);
+    background-color: $primary-color-1;
+    display: block;
+    opacity: 0.5;
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      @include border-radius(10px);
+      background-color:  $primary-color-1;
+      left: 5px;
+    }
+    &:before {
+      margin-top: -15px;
+    }
+    &:after {
+      margin-top: 15px;
+    }
+  }
 }

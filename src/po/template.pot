@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-17T20:07:37.199Z\n"
+"Project-Id-Version: 2015-03-17T22:13:29.224Z\n"
 
 #: src/partials/list-print.html
 msgid "*the term GROUP equals clusters, sectors, working groups are any other thematic"
@@ -136,6 +136,10 @@ msgstr ""
 
 #: src/partials/browser-alert.html
 msgid "Download Mozilla Firefox"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Edit"
 msgstr ""
 
 #: src/partials/dashboard.html
