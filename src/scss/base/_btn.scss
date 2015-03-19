@@ -58,3 +58,10 @@
     }
   }
 }
+
+.btn-danger{
+  background-color: $brand-danger;
+  &:hover {
+    background-color: darken($brand-danger, 5);
+  }
+}

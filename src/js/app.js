@@ -1031,6 +1031,19 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
+  $scope.deleteAccount = function () {
+    profileService.deleteProfile(profileData.profile._userid).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        profileService.clearData();
+        //This returns the user to the contact list they were on
+        history.go(-2);
+      }
+      else {
+        alert('error');
+      }
+    });
+  }; 
+
   // Function to validate email values
   function emailValidation(value) {
     var emailRegEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -1087,6 +1100,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.userCanEditKeyContact = profileService.canEditKeyContact($scope.selectedOperation);
     $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.selectedOperation);
     $scope.userCanEditVerified = profileService.canEditVerified($scope.selectedOperation);
+    $scope.userCanDeleteAccount = profileService.canDeleteAccount(profileData.profile);
 
     // Determine what roles are available to assign to a user
     if ($scope.userCanEditRoles && hasRoleAdmin) {
@@ -1981,6 +1995,7 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     getProfiles: getProfiles,
     getContacts: getContacts,
     saveProfile: saveProfile,
+    deleteProfile: deleteProfile,
     saveContact: saveContact,
     requestClaimEmail: requestClaimEmail,
     hasRole: hasRole,
@@ -1996,7 +2011,8 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     canCreateAccount: canCreateAccount,
     canCheckIn: canCheckIn,
     canCheckOut: canCheckOut,
-    canSendClaimEmail: canSendClaimEmail
+    canSendClaimEmail: canSendClaimEmail,
+    canDeleteAccount: canDeleteAccount
   });
 
   // Get app data.
@@ -2099,6 +2115,21 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
       url: contactsId.profilesBaseUrl + "/v0/profile/save",
       params: {access_token: authService.getAccessToken()},
       data: profile
+    });
+    return(request.then(handleSuccess, handleError));
+  }
+
+  // Delete (disable) a profile 
+  function deleteProfile(userId) {
+    var request,
+      data = {
+        userId: userId,
+      };
+    request = $http({
+      method: "post",
+      url: contactsId.profilesBaseUrl + "/v0/profile/delete",
+      params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
+      data: data
     });
     return(request.then(handleSuccess, handleError));
   }
@@ -2306,6 +2337,15 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
         hasRightRole = (hasRole('admin') || (profile.locationId && (hasRole('manager', profile.locationId) || hasRole('editor', profile.locationId))));
 
     return (neverUpdated && hasEmail && hasRightRole);
+  }
+
+  // Can delete (disable) account
+  //Only admins not on their own profile
+  function canDeleteAccount(profile) {
+    var isOwnProfile = (profile._id === cacheUserData.profile._id),
+    hasRightRole = hasRole('admin');
+
+    return (!isOwnProfile && hasRightRole);
   }
 
   function handleError(response) {
