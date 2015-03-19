@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-17T22:13:29.224Z\n"
+"Project-Id-Version: 2015-03-19T22:18:33.123Z\n"
 
 #: src/partials/list-print.html
 msgid "*the term GROUP equals clusters, sectors, working groups are any other thematic"
@@ -36,6 +36,14 @@ msgstr ""
 msgid "Are you sure that you want to create an account for <b>{{profile.nameGiven}} {{profile.nameFamily}}</b> with no email address?"
 msgstr ""
 
+#: src/js/app.js
+msgid "Are you sure?"
+msgstr ""
+
+#: src/js/app.js
+msgid "Assign key contact"
+msgstr ""
+
 #: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Back"
@@ -43,11 +51,16 @@ msgstr ""
 
 #: src/js/app.js
 #: src/partials/dashboard.html
+#: src/partials/list.html
 msgid "Check-in"
 msgstr ""
 
 #: src/partials/contact.html
 msgid "Check-in User"
+msgstr ""
+
+#: src/js/app.js
+msgid "Check-out"
 msgstr ""
 
 #: src/partials/contact.html
@@ -56,6 +69,10 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "Check-out from"
+msgstr ""
+
+#: src/js/app.js
+msgid "Checking-out..."
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -430,6 +447,14 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
+#: src/js/app.js
+msgid "Remind Orphan"
+msgstr ""
+
+#: src/js/app.js
+msgid "Reminder sent"
+msgstr ""
+
 #: src/partials/createAccount.html
 #: src/partials/profile.html
 msgid "Request to"
@@ -446,6 +471,10 @@ msgstr ""
 #: src/partials/contact.html
 #: src/partials/list.html
 msgid "Role"
+msgstr ""
+
+#: src/js/app.js
+msgid "Saving..."
 msgstr ""
 
 #: src/partials/list.html
@@ -485,6 +514,10 @@ msgstr ""
 msgid "Send Claim Email"
 msgstr ""
 
+#: src/js/app.js
+msgid "Sending..."
+msgstr ""
+
 #: src/partials/profile.html
 msgid "State/Province/Region"
 msgstr ""
@@ -518,6 +551,14 @@ msgid "URL"
 msgstr ""
 
 #: src/js/app.js
+msgid "Unassign key contact"
+msgstr ""
+
+#: src/js/app.js
+msgid "Unverify user"
+msgstr ""
+
+#: src/js/app.js
 msgid "Update Profile"
 msgstr ""
 
@@ -535,6 +576,10 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "Verified User"
+msgstr ""
+
+#: src/js/app.js
+msgid "Verify user"
 msgstr ""
 
 #: src/partials/list.html

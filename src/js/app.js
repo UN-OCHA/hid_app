@@ -1283,8 +1283,6 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   $scope.listComplete = false;
   $scope.contactsCreated = false;
 
-  $scope.userCanEditProfile = profileService.canEditProfile($scope.locationId);
-
   var pathParams = $location.url().split('/'),
       filter = $filter('filter');
 
@@ -1367,6 +1365,122 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   // Create protected roles array.
   $scope.protectedRoles = protectedRoles;
   $scope.protectedRoles.unshift({action:'clear', name:"", id:"", alt:'Role'});
+
+
+  $scope.contactInit = function() {
+    var isOwn = userData.profile._id === this.contact._profile._id;
+    // Create an obj for quicklink vars.
+    this.contact.ql = {
+      isOwn:                  isOwn,
+      keyContact:             this.contact.keyContact,
+      verified:               this.contact._profile.verified,
+      userCanEditProfile:     isOwn || profileService.canEditProfile($scope.locationId),
+      userCanCheckIn:         profileService.canCheckIn(this.contact._profile, userData),
+      userCanCheckOut:        profileService.canCheckOut(this.contact, userData),
+      userCanSendClaimEmail:  profileService.canSendClaimEmail(this.contact),
+      userCanEditKeyContact:  profileService.canEditKeyContact($scope.locationId),
+      userCanEditVerified:    profileService.canEditVerified($scope.locationId)
+    }
+
+  }
+
+  $scope.showQuickLinks = function(contact) {
+    return contact.ql.userCanEditProfile || contact.ql.userCanCheckIn || contact.ql.userCanCheckOut || contact.ql.userCanSendClaimEmail;
+  }
+  $scope.checkOut = function (contact) {
+    if(!contact.ql.userCanCheckOut) {
+      return;
+    }
+    else if (contact.ql.checkOutState === "confirm") {
+      var cont = {
+        _id: contact._id,
+        _profile: contact._profile._id,
+        userid: contact._profile.userid,
+        status: 0
+      };
+
+      //Determine if user being checked out is the same as the logged in user
+      //If not, we need to add some properties to contact so profile service can send an email notifying the user
+      if (!contact.ql.isOwn && contact.email[0]){
+        //Set email fields
+        var userGlobal = filter(userData.contacts, function(d) {return d.type === 'global'}),
+            email = {
+              type: 'notify_checkout',
+              recipientFirstName: contact.nameGiven,
+              recipientLastName: contact.nameFamily,
+              recipientEmail: contact.email[0].address,
+              adminName: userGlobal[0].nameGiven + " " + userGlobal[0].nameFamily,
+              locationName: $scope.locationText()
+            };
+
+        cont.notifyEmail = email;
+      }
+      contact.ql.checkOutState = 'inProgress';
+      profileService.saveContact(cont).then(function(data) {
+        if (data && data.status && data.status === 'ok') {
+          profileService.clearData();
+          $route.reload();
+        }
+        else {
+          alert('error');
+        }
+      });
+
+    }
+    else if (typeof contact.ql.checkOutState === "undefined") {
+      contact.ql.checkOutState = "confirm";
+    }
+  };
+
+  $scope.updateProfile = function (contact, field) {
+    var access = field === 'verified' ?  contact.ql.userCanEditVerified : contact.ql.userCanEditKeyContact,
+        stateKey = field + 'State';
+    if (access) {
+      if (contact.ql[stateKey] === 'confirm') {
+        contact.userid = contact._profile._userid;
+        contact._profile = contact._profile._id;
+
+        contact[field] = contact.ql[field];
+        contact.ql[stateKey] = 'inProgress';
+        profileService.saveContact(contact).then(function(data) {
+          if (data && data.status && data.status === 'ok') {
+            profileService.clearData();
+            $route.reload();
+          }
+          else {
+            alert('error');
+          }
+        });
+      }
+      else if (typeof contact.ql[stateKey] === 'undefined') {
+        contact.ql[stateKey] = 'confirm';
+        contact.ql[field] = !contact.ql[field];
+      }
+    }
+  }
+
+  $scope.sendClaimEmail = function (contact) {
+    if (contact.email && contact.email[0] && contact.email[0].address && String(contact.email[0].address).length) {
+      if (contact.ql.orphanState === 'confirm') {
+        var userGlobal = filter(userData.contacts, function(d) {return d.type === 'global'}),
+            adminName = userGlobal[0].nameGiven + " " + userGlobal[0].nameFamily;
+
+        contact.ql.orphanState = 'inProgress';
+        profileService.requestClaimEmail(contact.email[0].address, adminName).then(function(data) {
+          if (data.status === 'ok') {
+            contact.ql.orphanState = 'complete';
+            console.info('Account claim email sent successfully.');
+          }
+          else {
+            alert('An error occurred while attempting to send the account claim email. Please try again or contact an administrator.');
+          }
+        });
+      }
+      else if (typeof contact.ql.orphanState === 'undefined'){
+        contact.ql.orphanState = 'confirm';
+      }
+    }
+  };
 
   $scope.resetSearch = function () {
     for (var i in searchKeys) {
@@ -1464,6 +1578,52 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
 
   $scope.locationText = function() {
     return $scope.location || gettextCatalog.getString('Global');
+  }
+
+  $scope.orphanText = function(contact) {
+    switch (contact.ql.orphanState) {
+      case "confirm":
+        return gettextCatalog.getString("Are you sure?");
+      case "inProgress":
+        return gettextCatalog.getString("Sending...");
+      case "complete":
+        return gettextCatalog.getString("Reminder sent");
+      default:
+        return  gettextCatalog.getString("Remind Orphan");
+    }
+  }
+
+  $scope.checkOutText = function(contact) {
+    switch (contact.ql.checkOutState) {
+      case "confirm":
+        return gettextCatalog.getString("Are you sure?");
+      case "inProgress":
+        return gettextCatalog.getString("Checking-out...");
+      default:
+        return gettextCatalog.getString("Check-out");
+    }
+  }
+
+  $scope.keyContactText = function(contact) {
+    switch (contact.ql.keyContactState) {
+      case "confirm":
+        return gettextCatalog.getString("Are you sure?");
+      case "inProgress":
+        return gettextCatalog.getString("Saving...");
+      default:
+        return contact.ql.keyContact ? gettextCatalog.getString("Unassign key contact") : gettextCatalog.getString("Assign key contact");
+    }
+  }
+
+  $scope.verifiedText = function(contact) {
+    switch (contact.ql.verifiedState) {
+      case "confirm":
+        return gettextCatalog.getString("Are you sure?");
+      case "inProgress":
+        return gettextCatalog.getString("Saving...");
+      default:
+        return contact.ql.verified ? gettextCatalog.getString("Unverify user") : gettextCatalog.getString("Verify user");
+    }
   }
 
   // Builds the list of contacts.
@@ -2278,16 +2438,22 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     return hasRole('admin') || (locationId && (hasRole('manager', locationId) || hasRole('editor', locationId)));
   }
   // Can check-in other user.
-  function canCheckIn(profile) {
-    var isOwnProfile = (profile._id === cacheUserData.profile._id),
+  function canCheckIn(profile, user) {
+    // Optionally pass user to check.
+    user = typeof user !== 'undefined' ? user : cacheUserData;
+
+    var isOwnProfile = (profile._id === user.profile._id),
         hasRightRole = hasRole('admin') || hasRole('manager') || hasRole('editor');
 
     return (isOwnProfile || hasRightRole);
   }
   // Can check-out profile.
-  function canCheckOut(profile) {
+  function canCheckOut(profile, user) {
+    // Optionally pass user to check.
+    user = typeof user !== 'undefined' ? user : cacheUserData;
+
     var isLocal = profile.type === 'local',
-        isOwnProfile = profile._profile._id === cacheUserData.profile._id,
+        isOwnProfile = profile._profile._id === user.profile._id,
         hasRightRole = (hasRole('admin') || (profile.locationId && (hasRole('manager', profile.locationId) || hasRole('editor', profile.locationId))));
 
     return (isLocal && (isOwnProfile || hasRightRole));
