@@ -2339,8 +2339,8 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     return (neverUpdated && hasEmail && hasRightRole);
   }
 
+  // Only admins not on their own profile
   // Can delete (disable) account
-  //Only admins not on their own profile
   function canDeleteAccount(profile) {
     var isOwnProfile = (profile._id === cacheUserData.profile._id),
     hasRightRole = hasRole('admin');
