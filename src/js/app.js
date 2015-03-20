@@ -1555,6 +1555,15 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
     window.open($scope.printUrl, $location.path(), 'width=1000, height=600, menubar=1, resizable=1, scrollbars=1, status=1, toolbar=1');
   }
 
+  $scope.openPDF = function() {
+    var query = $scope.query;
+    query.access_token = authService.getAccessToken();
+    query.export = 'pdf';
+    query.limit = 0;
+    query.skip = 0;
+    window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppPDF');
+  }
+
   // Autocomplete call for Orgs
   $scope.refreshOrganization = function(select, lengthReq) {
     var clearOption = {action:'clear', name:"", alt:'Organizations'};
