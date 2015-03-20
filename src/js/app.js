@@ -1042,7 +1042,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         alert('error');
       }
     });
-  }; 
+  };
 
   // Function to validate email values
   function emailValidation(value) {
@@ -1393,13 +1393,19 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
       userCanCheckOut:        profileService.canCheckOut(this.contact, userData),
       userCanSendClaimEmail:  profileService.canSendClaimEmail(this.contact),
       userCanEditKeyContact:  profileService.canEditKeyContact($scope.locationId),
-      userCanEditVerified:    profileService.canEditVerified($scope.locationId)
+      userCanEditVerified:    profileService.canEditVerified($scope.locationId),
+      userCanDeleteAccount:   profileService.canDeleteAccount(this.contact._profile)
     }
   }
 
   $scope.showQuickLinks = function(contact) {
-    return contact.ql.userCanEditProfile || contact.ql.userCanCheckIn || contact.ql.userCanCheckOut || contact.ql.userCanSendClaimEmail;
+    return contact.ql.userCanEditProfile || contact.ql.userCanCheckIn || contact.ql.userCanCheckOut || contact.ql.userCanSendClaimEmail || contact.ql.userCanDeleteAccount;
   }
+  // On moblie quicklinks toggle on click, not hover.
+  $scope.qlClick = function() {
+    $scope.qlOpen = $scope.qlOpen === this.$index ? -1 : this.$index;
+  }
+
   $scope.checkOut = function (contact) {
     if(!contact.ql.userCanCheckOut) {
       return;
@@ -1455,15 +1461,15 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
 
         contact[field] = contact.ql[field];
         contact.ql[stateKey] = 'inProgress';
-        //profileService.saveContact(contact).then(function(data) {
-        //  if (data && data.status && data.status === 'ok') {
-        //    profileService.clearData();
-        //    $route.reload();
-        //  }
-        //  else {
-        //    alert('error');
-        //  }
-        //});
+        profileService.saveContact(contact).then(function(data) {
+          if (data && data.status && data.status === 'ok') {
+            profileService.clearData();
+            $route.reload();
+          }
+          else {
+            alert('error');
+          }
+        });
       }
       else if (typeof contact.ql[stateKey] === 'undefined') {
         contact.ql[stateKey] = 'confirm';
@@ -1471,6 +1477,23 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
       }
     }
   }
+  $scope.deleteAccount = function (contact) {
+    if (contact.ql.deleteState === "confirm") {
+      contact.ql.deleteState = "inProgress";
+      profileService.deleteProfile(contact._profile._userid).then(function(data) {
+        if (data && data.status && data.status === 'ok') {
+          profileService.clearData();
+          $route.reload();
+        }
+        else {
+          alert('error');
+        }
+      });
+    }
+    else if (typeof contact.ql.deleteState === "undefined") {
+      contact.ql.deleteState = "confirm";
+    }
+  };
 
   $scope.sendClaimEmail = function (contact) {
     if (contact.email && contact.email[0] && contact.email[0].address && String(contact.email[0].address).length) {
@@ -1635,7 +1658,18 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
       case "inProgress":
         return gettextCatalog.getString("Saving...");
       default:
-        return contact.ql.verified ? gettextCatalog.getString("Unverify user") : gettextCatalog.getString("Verify user");
+        return contact.ql.verified ? gettextCatalog.getString("Unverify account") : gettextCatalog.getString("Verify account");
+    }
+  }
+
+  $scope.deleteText = function(contact) {
+    switch (contact.ql.deleteState) {
+      case "confirm":
+        return gettextCatalog.getString("Are you sure?");
+      case "inProgress":
+        return gettextCatalog.getString("Deleting...");
+      default:
+        return gettextCatalog.getString("Delete account");
     }
   }
 
@@ -2278,7 +2312,7 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     return(request.then(handleSuccess, handleError));
   }
 
-  // Delete (disable) a profile 
+  // Delete (disable) a profile
   function deleteProfile(userId) {
     var request,
       data = {

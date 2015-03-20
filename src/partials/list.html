@@ -34,8 +34,8 @@
           <div class="contact-item contact-item--bundle col-md-3" ng-hide="!contact.bundle.length"><span title="{{contact.bundle.join(', ')}}">{{contact.bundle.join(', ')}}</span></div>
         </div>
         <div class="quick-link" ng-if="showQuickLinks(contact)">
-          <div class="dropdown">
-            <button class="dropdown-toggle" data-toggle="dropdown" type="button"><span class="quick-link-dots"></span></button>
+          <div class="dropdown" ng-class="{'ql-open': qlOpen === $index}">
+            <button class="dropdown-toggle" data-toggle="dropdown" type="button" ng-click="qlClick()"><span class="quick-link-dots"></span></button>
             <ul class="dropdown-menu dropdown-menu-right" role="menu">
               <li ng-if="contact.ql.userCanEditProfile">
                 <a role="menuitem" tabindex="-1" href="#/profile/{{contact._id}}" translate>Edit</a>
@@ -48,6 +48,9 @@
               </li>
               <li ng-if="contact.ql.userCanSendClaimEmail" ng-class="{'disabled':contact.ql.orphanState === 'complete' || contact.ql.orphanState === 'inProgress'}">
                 <button role="menuitem" tabindex="-1" class="btn btn-link" ng-class="{'btn-warning': contact.ql.orphanState === 'confirm'}" ng-click="sendClaimEmail(contact)" ng-bind="orphanText(contact)"></button>
+              </li>
+              <li ng-if="contact.ql.userCanDeleteAccount" ng-class="{'disabled':contact.ql.deleteState === 'inProgress'}">
+                <button role="menuitem" tabindex="-1" class="btn btn-link" ng-class="{'btn-warning': contact.ql.deleteState === 'confirm'}" ng-click="deleteAccount(contact)" ng-bind="deleteText(contact)"></button>
               </li>
               <li ng-if="contact.ql.userCanEditKeyContact || contact.ql.userCanEditVerified" class="divider"></li>
               <li ng-if="contact.ql.userCanEditKeyContact" ng-class="{'disabled': contact.ql.keyContactState === 'inProgress'}">

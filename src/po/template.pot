@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-19T22:18:33.123Z\n"
+"Project-Id-Version: 2015-03-20T18:20:27.995Z\n"
 
 #: src/partials/list-print.html
-msgid "*the term GROUP equals clusters, sectors, working groups are any other thematic"
+msgid "*the term GROUP equals clusters, sectors, working group or other thematic groups"
 msgstr ""
 
 #: src/partials/header.html
@@ -87,6 +87,14 @@ msgstr ""
 msgid "City"
 msgstr ""
 
+#: src/partials/list-print.html
+msgid "Close"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Confirm Delete Account"
+msgstr ""
+
 #: src/partials/contact.html
 msgid "Confirm Send Claim Email"
 msgstr ""
@@ -145,6 +153,18 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "Dashboard Options"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Delete Account"
+msgstr ""
+
+#: src/js/app.js
+msgid "Delete account"
+msgstr ""
+
+#: src/js/app.js
+msgid "Deleting..."
 msgstr ""
 
 #: src/partials/browser-alert.html
@@ -427,6 +447,10 @@ msgstr ""
 msgid "Powered by"
 msgstr ""
 
+#: src/partials/list-print.html
+msgid "Print"
+msgstr ""
+
 #: src/partials/profile.html
 msgid "Profile"
 msgstr ""
@@ -555,7 +579,7 @@ msgid "Unassign key contact"
 msgstr ""
 
 #: src/js/app.js
-msgid "Unverify user"
+msgid "Unverify account"
 msgstr ""
 
 #: src/js/app.js
@@ -579,7 +603,7 @@ msgid "Verified User"
 msgstr ""
 
 #: src/js/app.js
-msgid "Verify user"
+msgid "Verify account"
 msgstr ""
 
 #: src/partials/list.html
