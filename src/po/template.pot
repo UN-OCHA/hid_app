@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-17T22:13:29.224Z\n"
+"Project-Id-Version: 2015-03-20T18:20:27.995Z\n"
 
 #: src/partials/list-print.html
-msgid "*the term GROUP equals clusters, sectors, working groups are any other thematic"
+msgid "*the term GROUP equals clusters, sectors, working group or other thematic groups"
 msgstr ""
 
 #: src/partials/header.html
@@ -36,6 +36,14 @@ msgstr ""
 msgid "Are you sure that you want to create an account for <b>{{profile.nameGiven}} {{profile.nameFamily}}</b> with no email address?"
 msgstr ""
 
+#: src/js/app.js
+msgid "Are you sure?"
+msgstr ""
+
+#: src/js/app.js
+msgid "Assign key contact"
+msgstr ""
+
 #: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Back"
@@ -43,11 +51,16 @@ msgstr ""
 
 #: src/js/app.js
 #: src/partials/dashboard.html
+#: src/partials/list.html
 msgid "Check-in"
 msgstr ""
 
 #: src/partials/contact.html
 msgid "Check-in User"
+msgstr ""
+
+#: src/js/app.js
+msgid "Check-out"
 msgstr ""
 
 #: src/partials/contact.html
@@ -56,6 +69,10 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "Check-out from"
+msgstr ""
+
+#: src/js/app.js
+msgid "Checking-out..."
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -68,6 +85,14 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "City"
+msgstr ""
+
+#: src/partials/list-print.html
+msgid "Close"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Confirm Delete Account"
 msgstr ""
 
 #: src/partials/contact.html
@@ -128,6 +153,18 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "Dashboard Options"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Delete Account"
+msgstr ""
+
+#: src/js/app.js
+msgid "Delete account"
+msgstr ""
+
+#: src/js/app.js
+msgid "Deleting..."
 msgstr ""
 
 #: src/partials/browser-alert.html
@@ -410,6 +447,10 @@ msgstr ""
 msgid "Powered by"
 msgstr ""
 
+#: src/partials/list-print.html
+msgid "Print"
+msgstr ""
+
 #: src/partials/profile.html
 msgid "Profile"
 msgstr ""
@@ -430,6 +471,14 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
+#: src/js/app.js
+msgid "Remind Orphan"
+msgstr ""
+
+#: src/js/app.js
+msgid "Reminder sent"
+msgstr ""
+
 #: src/partials/createAccount.html
 #: src/partials/profile.html
 msgid "Request to"
@@ -446,6 +495,10 @@ msgstr ""
 #: src/partials/contact.html
 #: src/partials/list.html
 msgid "Role"
+msgstr ""
+
+#: src/js/app.js
+msgid "Saving..."
 msgstr ""
 
 #: src/partials/list.html
@@ -485,6 +538,10 @@ msgstr ""
 msgid "Send Claim Email"
 msgstr ""
 
+#: src/js/app.js
+msgid "Sending..."
+msgstr ""
+
 #: src/partials/profile.html
 msgid "State/Province/Region"
 msgstr ""
@@ -518,6 +575,14 @@ msgid "URL"
 msgstr ""
 
 #: src/js/app.js
+msgid "Unassign key contact"
+msgstr ""
+
+#: src/js/app.js
+msgid "Unverify account"
+msgstr ""
+
+#: src/js/app.js
 msgid "Update Profile"
 msgstr ""
 
@@ -535,6 +600,10 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "Verified User"
+msgstr ""
+
+#: src/js/app.js
+msgid "Verify account"
 msgstr ""
 
 #: src/partials/list.html

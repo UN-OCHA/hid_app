@@ -20,7 +20,7 @@
     </form>
 
     <ul class="list-group" cg-busy="contactsPromise">
-      <li class="profile-item list-group-item" ng-class="{'has-quick-link': userCanEditProfile}" ng-repeat="contact in contacts | orderBy: ['nameGiven', 'nameFamily']">
+      <li class="profile-item list-group-item" ng-repeat="contact in contacts | orderBy: ['nameGiven', 'nameFamily']" ng-init="contactInit()" ng-class="{'has-quick-link': contact.ql.userCanEditProfile}">
         <div class="row">
           <div class="contact-item contact-item--name col-xs-12 col-md-3" >
             <a href="#/contact/{{contact._id}}">{{contact.nameGiven}} {{contact.nameFamily}}</a>
@@ -33,11 +33,32 @@
           <div class="contact-item contact-item--organization col-xs-5" ng-class="(contact.bundle.length) ? 'col-md-3' : 'col-md-6'"><span title="{{contact.organization[0].name}}">{{contact.organization[0].name}}</span></div>
           <div class="contact-item contact-item--bundle col-md-3" ng-hide="!contact.bundle.length"><span title="{{contact.bundle.join(', ')}}">{{contact.bundle.join(', ')}}</span></div>
         </div>
-        <div class="quick-link" ng-if="userCanEditProfile">
-          <div class="dropdown">
-            <button class="dropdown-toggle" data-toggle="dropdown" type="button"><span class="quick-link-dots"></span></button>
+        <div class="quick-link" ng-if="showQuickLinks(contact)">
+          <div class="dropdown" ng-class="{'ql-open': qlOpen === $index}">
+            <button class="dropdown-toggle" data-toggle="dropdown" type="button" ng-click="qlClick()"><span class="quick-link-dots"></span></button>
             <ul class="dropdown-menu dropdown-menu-right" role="menu">
-              <li role="presentation" ng-if="userCanEditProfile"><a role="menuitem" tabindex="-1" href="#/profile/{{contact._id}}" translate>Edit</a></li>
+              <li ng-if="contact.ql.userCanEditProfile">
+                <a role="menuitem" tabindex="-1" href="#/profile/{{contact._id}}" translate>Edit</a>
+              </li>
+              <li ng-if="contact.ql.userCanCheckIn">
+                <a role="menuitem" tabindex="-1" href="#/checkin{{contact.ql.isOwn ? '' : '/' + contact._id}}" translate>Check-in</a>
+              </li>
+              <li ng-if="contact.ql.userCanCheckOut" ng-class="{'disabled':contact.ql.checkOutState === 'inProgress'}">
+                <button role="menuitem" tabindex="-1" class="btn btn-link" ng-class="{'btn-warning': contact.ql.checkOutState === 'confirm'}" ng-click="checkOut(contact)" ng-bind="checkOutText(contact)"></button>
+              </li>
+              <li ng-if="contact.ql.userCanSendClaimEmail" ng-class="{'disabled':contact.ql.orphanState === 'complete' || contact.ql.orphanState === 'inProgress'}">
+                <button role="menuitem" tabindex="-1" class="btn btn-link" ng-class="{'btn-warning': contact.ql.orphanState === 'confirm'}" ng-click="sendClaimEmail(contact)" ng-bind="orphanText(contact)"></button>
+              </li>
+              <li ng-if="contact.ql.userCanDeleteAccount" ng-class="{'disabled':contact.ql.deleteState === 'inProgress'}">
+                <button role="menuitem" tabindex="-1" class="btn btn-link" ng-class="{'btn-warning': contact.ql.deleteState === 'confirm'}" ng-click="deleteAccount(contact)" ng-bind="deleteText(contact)"></button>
+              </li>
+              <li ng-if="contact.ql.userCanEditKeyContact || contact.ql.userCanEditVerified" class="divider"></li>
+              <li ng-if="contact.ql.userCanEditKeyContact" ng-class="{'disabled': contact.ql.keyContactState === 'inProgress'}">
+                <button role="menuitem" tabindex="-1" class="btn btn-link" ng-class="{'btn-warning': contact.ql.keyContactState === 'confirm'}" ng-click="updateProfile(contact,'keyContact')" ng-bind="keyContactText(contact)"></button>
+              </li>
+              <li ng-if="contact.ql.userCanEditVerified" ng-class="{'disabled': contact.ql.verifiedState === 'inProgress'}">
+                <button role="menuitem" tabindex="-1" class="btn btn-link" ng-class="{'btn-warning': contact.ql.verifiedState === 'confirm'}" ng-click="updateProfile(contact,'verified')" ng-bind="verifiedText(contact)"></button>
+              </li>
             </ul>
           </div>
         </div>
