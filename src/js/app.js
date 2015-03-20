@@ -1381,7 +1381,6 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
       userCanEditKeyContact:  profileService.canEditKeyContact($scope.locationId),
       userCanEditVerified:    profileService.canEditVerified($scope.locationId)
     }
-
   }
 
   $scope.showQuickLinks = function(contact) {
@@ -1442,15 +1441,15 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
 
         contact[field] = contact.ql[field];
         contact.ql[stateKey] = 'inProgress';
-        profileService.saveContact(contact).then(function(data) {
-          if (data && data.status && data.status === 'ok') {
-            profileService.clearData();
-            $route.reload();
-          }
-          else {
-            alert('error');
-          }
-        });
+        //profileService.saveContact(contact).then(function(data) {
+        //  if (data && data.status && data.status === 'ok') {
+        //    profileService.clearData();
+        //    $route.reload();
+        //  }
+        //  else {
+        //    alert('error');
+        //  }
+        //});
       }
       else if (typeof contact.ql[stateKey] === 'undefined') {
         contact.ql[stateKey] = 'confirm';

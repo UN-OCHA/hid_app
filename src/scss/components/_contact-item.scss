@@ -201,13 +201,33 @@
   right: 0;
   width: 20px;
 
-  .dropdown:hover > .dropdown-menu {
-    display: block;
-    margin-top: -10px;
+  .dropdown:hover {
+    & > .dropdown-menu {
+      display: block;
+      margin-top: -10px;
+      &:before {
+        content: "";
+        position: absolute;
+        top:-30px;
+        right:0;
+        width: 60%;
+        height: 30px;
+        cursor: pointer;
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        top:-50px;
+        right:0;
+        width: 35%;
+        height: 50px;
+      }
+    }
 
     .quick-link-dots{
       opacity: 1;
     }
+
   }
   & > .dropdown > button {
     padding:0 5px;
@@ -261,6 +281,7 @@
     background-color: $primary-color-1;
     display: block;
     opacity: 0.5;
+    transition: opacity linear 200ms;
     &:before,
     &:after {
       content: "";

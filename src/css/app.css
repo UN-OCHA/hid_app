@@ -5903,13 +5903,13 @@ tbody.collapse.in {
   clear: both;
   font-weight: normal;
   line-height: 1.428571429;
-  color: #ababab;
+  color: #767676;
   white-space: nowrap;
 }
 
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
   text-decoration: none;
-  color: #9e9e9e;
+  color: dimgray;
   background-color: #f5f5f5;
 }
 
@@ -5921,7 +5921,7 @@ tbody.collapse.in {
 }
 
 .dropdown-menu > .disabled > a, .dropdown-menu > .disabled > a:hover, .dropdown-menu > .disabled > a:focus {
-  color: #d7d7d7;
+  color: #ababab;
 }
 .dropdown-menu > .disabled > a:hover, .dropdown-menu > .disabled > a:focus {
   text-decoration: none;
@@ -9830,7 +9830,24 @@ table tr td:last-child {
   display: block;
   margin-top: -10px;
 }
-.quick-link .dropdown:hover > .dropdown-menu .quick-link-dots {
+.quick-link .dropdown:hover > .dropdown-menu:before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  right: 0;
+  width: 60%;
+  height: 30px;
+  cursor: pointer;
+}
+.quick-link .dropdown:hover > .dropdown-menu:after {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: 0;
+  width: 35%;
+  height: 50px;
+}
+.quick-link .dropdown:hover .quick-link-dots {
   opacity: 1;
 }
 .quick-link > .dropdown > button {
@@ -9849,7 +9866,7 @@ table tr td:last-child {
   clear: both;
   font-weight: normal;
   white-space: nowrap;
-  color: #ababab;
+  color: #767676;
   width: 100%;
   text-align: left;
   transition: color .2s, background-color .2s;
@@ -9857,7 +9874,7 @@ table tr td:last-child {
 .quick-link .dropdown-menu > li > button:hover, .quick-link .dropdown-menu > li > button:focus {
   outline: none;
   text-decoration: none;
-  color: #9e9e9e;
+  color: dimgray;
   background-color: #f5f5f5;
 }
 .quick-link .dropdown-menu > li > button.btn-warning {
@@ -9866,11 +9883,11 @@ table tr td:last-child {
   border: 1px solid #B8303E;
 }
 .quick-link .dropdown-menu > .disabled > button {
-  color: #d7d7d7;
+  color: #ababab;
   outline: none;
 }
 .quick-link .dropdown-menu > .disabled > button:focus, .quick-link .dropdown-menu > .disabled > button:hover {
-  color: #d7d7d7;
+  color: #ababab;
   text-decoration: none;
   cursor: not-allowed;
   background-color: transparent;
@@ -9886,6 +9903,7 @@ table tr td:last-child {
   background-color: #54b1c8;
   display: block;
   opacity: 0.5;
+  transition: opacity linear 200ms;
 }
 .quick-link .quick-link-dots:before, .quick-link .quick-link-dots:after {
   content: "";
