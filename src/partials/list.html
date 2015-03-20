@@ -41,7 +41,7 @@
                 <a role="menuitem" tabindex="-1" href="#/profile/{{contact._id}}" translate>Edit</a>
               </li>
               <li ng-if="contact.ql.userCanCheckIn">
-                <a role="menuitem" tabindex="-1" href="#/checkin/{{contact._id}}" translate>Check-in</a>
+                <a role="menuitem" tabindex="-1" href="#/checkin{{contact.ql.isOwn ? '' : '/' + contact._id}}" translate>Check-in</a>
               </li>
               <li ng-if="contact.ql.userCanCheckOut" ng-class="{'disabled':contact.ql.checkOutState === 'inProgress'}">
                 <button role="menuitem" tabindex="-1" class="btn btn-link" ng-class="{'btn-warning': contact.ql.checkOutState === 'confirm'}" ng-click="checkOut(contact)" ng-bind="checkOutText(contact)"></button>
