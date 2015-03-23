@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-20T18:20:27.995Z\n"
+"Project-Id-Version: 2015-03-23T17:49:15.980Z\n"
 
 #: src/partials/list-print.html
 msgid "*the term GROUP equals clusters, sectors, working group or other thematic groups"
@@ -337,7 +337,7 @@ msgstr ""
 msgid "Key Contact"
 msgstr ""
 
-#: src/partials/loading.html
+#: src/js/app.js
 msgid "Loading..."
 msgstr ""
 
@@ -461,6 +461,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Protected Roles"
+msgstr ""
+
+#: src/js/app.js
+msgid "Redirecting to authentication system..."
 msgstr ""
 
 #: src/partials/list.html
@@ -604,6 +608,10 @@ msgstr ""
 
 #: src/js/app.js
 msgid "Verify account"
+msgstr ""
+
+#: src/partials/list.html
+msgid "View PDF"
 msgstr ""
 
 #: src/partials/list.html
