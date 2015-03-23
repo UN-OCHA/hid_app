@@ -27,16 +27,22 @@ app.value('cgBusyDefaults',{
   minDuration: 300
 });
 
-app.directive('routeLoadingIndicator', function($rootScope) {
+app.directive('routeLoadingIndicator', function($rootScope, gettextCatalog) {
   return {
     restrict: 'E',
     templateUrl: contactsId.sourcePath + '/partials/loading.html',
     replace: true,
     link: function(scope, elem, attrs) {
       scope.isRouteLoading = false;
-
-      $rootScope.$on('$routeChangeStart', function() {
-        scope.isRouteLoading = true;
+      scope.loadingMessage = gettextCatalog.getString('Loading...');
+      $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
+        var nextPath = nextRoute.$$route.originalPath;
+        if(nextPath !== currentRoute.$$route.originalPath) {
+          if (nextPath === '/login' || nextPath === '/login/:redirectPath*' || nextPath === '/logout' || nextPath === '/register') {
+            scope.loadingMessage = gettextCatalog.getString('Redirecting to authentication system...');
+          }
+          scope.isRouteLoading = true;
+        }
       });
       $rootScope.$on('$routeChangeSuccess', function() {
         scope.isRouteLoading = false;
@@ -107,6 +113,9 @@ app.run(function ($rootScope, $location, $window, authService) {
   });
 
   $rootScope.$on("$routeChangeSuccess", function(event, nextRoute, currentRoute) {
+    // Ensure your on the top of the page.
+    window.scrollTo(0,0);
+
     // Check if route has access control.
     if (nextRoute.locals.hasOwnProperty('routeAccess')) {
       // If access check requires resovle to complete a function is passed.
@@ -1728,19 +1737,19 @@ app.config(function($routeProvider, $locationProvider) {
     bodyClasses: ['index']
   }).
   when('/login', {
-    template: 'Redirecting to authentication system...',
+    template: '',
     controller: 'LoginCtrl'
   }).
   when('/login/:redirectPath*', {
-    template: 'Redirecting to authentication system...',
+    template: '',
     controller: 'LoginCtrl'
   }).
   when('/logout', {
-    template: 'Redirecting to authentication system...',
+    template: '',
     controller: 'LogoutCtrl'
   }).
   when('/register', {
-    template: 'Redirecting to authentication system...',
+    template: '',
     controller: 'RegisterCtrl'
   }).
   when('/dashboard', {
