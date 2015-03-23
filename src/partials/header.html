@@ -12,9 +12,9 @@
         <a class="btn-login-controls btn hidden-xs" ng-if="!isAuthenticated" href="#/login"><span translate>Login</span> <span class="text-highlight">H</span>ID</a>
         <a class="btn-login-controls btn hidden-xs" ng-if="isAuthenticated" href="#/logout"><span translate>Logout</span> <span class="text-highlight">H</span>ID</a>
         <select name="language" ng-change="switchLanguage()" ng-model="language" ng-show="breakpoint.class !== 'smallscreen' || !isAuthenticated" class="form-control input-sm">
-          <option value="en">English</option>
           <option value="ar">العربية</option>
           <option value="de">Deutsch</option>
+          <option value="en">English</option>
           <option value="fr">Français</option>
           <option value="ru">русский</option>
           <option value="tl">Tagalog</option>
@@ -39,6 +39,7 @@
                     <option value="en">English</option>
                     <option value="ar">العربية</option>
                     <option value="de">Deutsch</option>
+                    <option value="en">English</option>
                     <option value="fr">Français</option>
                     <option value="ru">русский</option>
                     <option value="tl">Tagalog</option>
