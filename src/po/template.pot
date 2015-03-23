@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-20T18:20:27.995Z\n"
+"Project-Id-Version: 2015-03-23T15:15:15.896Z\n"
 
 #: src/partials/list-print.html
 msgid "*the term GROUP equals clusters, sectors, working group or other thematic groups"
@@ -604,6 +604,10 @@ msgstr ""
 
 #: src/js/app.js
 msgid "Verify account"
+msgstr ""
+
+#: src/partials/list.html
+msgid "View PDF"
 msgstr ""
 
 #: src/partials/list.html

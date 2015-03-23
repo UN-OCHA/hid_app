@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Arabic\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-09 13:19+0000\n"
-"PO-Revision-Date: 2015-03-09 15:47+0000\n"
+"PO-Revision-Date: 2015-03-20 16:08+0000\n"
 "Last-Translator: yaelle link\n"
 "Language-Team: yaelle link\n"
 "Language: ar\n"
@@ -17,12 +17,12 @@ msgstr ""
 "X-Loco-Source-Locale: en_GB\n"
 "X-Loco-Target-Locale: ar_AE\n"
 "X-Loco-Project-Id: 6046\n"
-"X-Loco-Api-Version: 1.0.8"
+"X-Loco-Api-Version: 1.0.9"
 
 #: src/partials/header.html
 #: src/partials/index.html loco:54fd9df314d725505c8b4567
 msgid "About"
-msgstr "بخصوص"
+msgstr "من نحن"
 
 #: src/partials/contact.html
 #: src/partials/profile.html loco:54fd9df314d725505c8b4568
@@ -32,7 +32,7 @@ msgstr "رجوع "
 #: src/js/app.js
 #: src/partials/dashboard.html loco:54fd9df314d725505c8b4569
 msgid "Check-in"
-msgstr "ادخل "
+msgstr "الدخول"
 
 #: src/partials/dashboard.html loco:54fd9df314d725505c8b456a
 msgid "Checkout"
@@ -40,27 +40,27 @@ msgstr "اخرج "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b456b
 msgid "City"
-msgstr "مدينة "
+msgstr "المدينة "
 
 #: src/partials/contact.html loco:54fd9df314d725505c8b456c
 msgid "Clusters"
-msgstr "مجموعات "
+msgstr "مجموعات العمل "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b456d
 msgid "Country"
-msgstr "بلد "
+msgstr "البلد "
 
 #: src/partials/header.html loco:54fd9df314d725505c8b456e
 msgid "Dashboard"
-msgstr "لوح الاعدادات "
+msgstr "لوحة الاعدادات "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b456f
 msgid "Email"
-msgstr "بريد الكتروني "
+msgstr "البريد الكتروني "
 
 #: src/js/app.js loco:54fd9df314d725505c8b4570
 msgid "Global"
-msgstr "عالمي "
+msgstr "قائمة الاتصال الدولية "
 
 #: src/partials/list.html
 #: src/partials/profile.html loco:54fd9df314d725505c8b4571
@@ -69,12 +69,12 @@ msgstr "مجموعة"
 
 #: src/partials/header.html loco:54fd9df314d725505c8b4572
 msgid "Home"
-msgstr "منزل-بيت "
+msgstr "المنزل"
 
 #: src/partials/contact.html
 #: src/partials/profile.html loco:54fd9df314d725505c8b4573
 msgid "Location"
-msgstr "موقع "
+msgstr "الموقع "
 
 #: src/partials/header.html
 #: src/partials/index.html loco:54fd9df314d725505c8b4574
@@ -98,7 +98,7 @@ msgstr "رقم "
 #: src/partials/contact.html
 #: src/partials/profile.html loco:54fd9df314d725505c8b4578
 msgid "Organization"
-msgstr "منظمة"
+msgstr "المنظمة"
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b4579
 msgid "Profile"
@@ -106,11 +106,11 @@ msgstr "ملف التعريف "
 
 #: src/partials/index.html loco:54fd9df314d725505c8b457a
 msgid "Register"
-msgstr "تسجيل "
+msgstr "التسجيل "
 
 #: src/partials/list.html loco:54fd9df314d725505c8b457b
 msgid "Search"
-msgstr "بحث "
+msgstr "البحث "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b457c
 msgid "Searching..."
@@ -118,27 +118,27 @@ msgstr "جاري البحث "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b457d
 msgid "Title"
-msgstr "لقب "
+msgstr "الوظيفة"
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b457e
 msgid "Type"
-msgstr "نوع "
+msgstr "النوع "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b457f
 msgid "URL"
-msgstr "رابط "
+msgstr "الرابط "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b4580
 msgid "VOIP"
-msgstr "الصوت عبر بروتوكول الانترنت "
+msgstr "الاتصال عبر الانترنت "
 
 #: src/partials/header.html loco:54fd9df314d725505c8b4581
 msgid "Welcome"
-msgstr "اهلا و سهلا "
+msgstr "اهلا وسهلا "
 
 #: src/partials/about.html loco:54fd9df314d725505c8b4582
 msgid "About Humanitarian.ID"
-msgstr "حول-بخصوص المساعدات الانسانية "
+msgstr "عن \"هيومانيتيرين آي.دي\""
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b4583
 msgid "Admin Privileges"
@@ -146,19 +146,19 @@ msgstr "امتيازات المسؤول "
 
 #: src/partials/contact.html loco:54fd9df314d725505c8b4584
 msgid "Check-in User"
-msgstr "تحقق في المستعمل "
+msgstr "تسجيل المستخدم"
 
 #: src/partials/contact.html loco:54fd9df314d725505c8b4585
 msgid "Check-out User"
-msgstr "انهاء اجراءات المستخدم "
+msgstr "خروج المستخدم "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b4586
 msgid "Choose Type"
-msgstr "اختيار نوع "
+msgstr "اختيار النوع "
 
 #: src/partials/contact.html loco:54fd9df314d725505c8b4587
 msgid "Confirm User Checkout"
-msgstr "تاكيد انهاء اجراءات المستخدم "
+msgstr "تأكيد خروج المستخدم "
 
 #: src/partials/list.html loco:54fd9df314d725505c8b4588
 msgid "Contact List"
@@ -166,11 +166,11 @@ msgstr "قائمة الاتصال "
 
 #: src/partials/list.html loco:54fd9df314d725505c8b4589
 msgid "Contact List Filters"
-msgstr "قائمة اتصال المرشحات "
+msgstr "خيارات قائمة اتصال "
 
 #: src/partials/dashboard.html loco:54fd9df314d725505c8b458a
 msgid "Edit Global Profile"
-msgstr "تعديل ملف التعريف العالمي "
+msgstr "تحرير الملف الشخصي العالمي "
 
 #: src/partials/contact.html loco:54fd9df314d725505c8b458b
 msgid "Edit Profile"
@@ -194,41 +194,41 @@ msgstr "القائمة العامة "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b4590
 msgid "Given Name"
-msgstr "الاسم المعطى "
+msgstr "الاسم "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b4591
 msgid "Global Administration"
-msgstr "الادارة العالمية "
+msgstr "الادارة الدولية"
 
 #: src/partials/dashboard.html loco:54fd9df314d725505c8b4592
 msgid "Global Contact List"
-msgstr "قائمة الاتصالات العالمية "
+msgstr "قائمة الاتصالات الدولية"
 
 #: src/partials/dashboard.html loco:54fd9df314d725505c8b4593
 msgid "Global Profile"
-msgstr "الملف الشخصي العالمي "
+msgstr "الملف الشخصي الدولي"
 
 #: src/partials/dashboard.html
 #: src/partials/profile.html loco:54fd9df314d725505c8b4594
 msgid "Humanitarian ID"
-msgstr "المساعدات الانسانية "
+msgstr "\"هيومانيتيرين آي.دي\""
 
 #: src/partials/index.html loco:54fd9df314d725505c8b4595
 msgid "Humanitarian.ID: Responders"
-msgstr "المساعدات الانسانية :المستجيبين "
+msgstr "\"هيومانيتيرين آي.دي\": العاملين في المجال الإنساني"
 
 #: src/partials/contact.html loco:54fd9df314d725505c8b4596
 msgid "Job Title"
-msgstr "مسمى العمل-لقب العمل "
+msgstr "الوظيفة "
 
 #: src/partials/list.html
 #: src/partials/profile.html loco:54fd9df314d725505c8b4597
 msgid "Key Contact"
-msgstr "مفتاح الاتصال "
+msgstr "جهات الاتصال المفضلة"
 
 #: src/partials/contact.html loco:54fd9df314d725505c8b4598
 msgid "key contact"
-msgstr "مفتاح الاتصال "
+msgstr "جهات الاتصال المفضلة"
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b4599
 msgid "Local Administration"
@@ -239,21 +239,21 @@ msgid ""
 "Manage your details on global and emergency-level humanitarian contact lists. "
 "Find and be found by other responders when needed. Check-in. Connect. Respond."
 msgstr ""
-"إدارة التفاصيل الخاصة بك على قوائم الاتصال الإنساني على الصعيدين العالمي و "
-"الطوارئ. البحث عن قوائم الاتصال و يمكن العثور عليها من قبل المستجيبين الاخرين "
-"عند الحاجة. تحقق في. الاتصال. رد"
+"إدارة التفاصيل الخاصة بك على قوائم الاتصال الإنساني على الصعيد الدولي وفي "
+"حالة الطوارئ. العثور على العاملين في المجال الإنساني وتمكينهم من العثور عليك "
+"عندما يتطلب الأمر ذلك. ادخل واتصل وبادر. "
 
 #: src/partials/dashboard.html loco:54fd9df314d725505c8b459b
 msgid "My checked-in lists"
-msgstr "ايداع قائمتي "
+msgstr "قوائم الاتصال الحالية "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b459c
 msgid "No active operations found."
-msgstr "لم يتم العثور على العمليات النشطة "
+msgstr "لم يتم العثور على عمليات على الأرض"
 
 #: src/partials/list.html loco:54fd9df314d725505c8b459d
 msgid "No contacts found"
-msgstr "لا يوجد اتصالات "
+msgstr "لم يتم العثور على اتصالات "
 
 #: src/partials/dashboard.html loco:54fd9df314d725505c8b459e
 msgid "No profiles found."
@@ -261,27 +261,27 @@ msgstr "لا يوجد ملف شخصي "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b459f
 msgid "No results found."
-msgstr "لا توجد نتائج "
+msgstr "لم يتم العثور على نتائج "
 
 #: src/partials/404.html loco:54fd9df314d725505c8b45a0
 msgid "Not Found"
-msgstr "ليست موجودة "
+msgstr "غير موجود"
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b45a1
 msgid "Organizational Information"
-msgstr "معلومات تنظيمية "
+msgstr "المعلومات عن المنظمات"
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b45a2
 msgid "Phone Numbers"
-msgstr "رقم الهاتف-التلفون"
+msgstr "أرقام الهاتف"
 
 #: src/partials/list.html loco:54fd9df314d725505c8b45a3
 msgid "Reset Filters"
-msgstr "اعادة تعيين المرشحات "
+msgstr "إلغاء خيارات البحث"
 
 #: src/partials/list.html loco:54fd9df314d725505c8b45a4
 msgid "Search by name, title, or organization"
-msgstr "البحث عن اسم,لقب,منظمة"
+msgstr "البحث بواسطة  الاسم أو اللقب أو المنظمة"
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b45a5
 msgid "Search for countries"
@@ -289,19 +289,19 @@ msgstr "البحث عن الدول "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b45a6
 msgid "Search for organizations"
-msgstr "البحث عن منظمات "
+msgstr "البحث عن المنظمات "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b45a7
 msgid "Select a country"
-msgstr "اختر الدولة "
+msgstr "اختر دولة "
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b45a8
 msgid "Select an operation"
-msgstr "حدد العملية "
+msgstr "اختيار عملية"
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b45a9
 msgid "State/Province/Region"
-msgstr "دولة\\اقليم\\منطقة "
+msgstr "الدولة\\الأقليم\\المنطقة "
 
 #: src/js/app.js loco:54fd9df314d725505c8b45aa
 msgid "Update Profile"
@@ -309,7 +309,7 @@ msgstr "تحديث الملف الشخصي "
 
 #: src/partials/contact.html loco:54fd9df314d725505c8b45ab
 msgid "verified"
-msgstr "التحقق"
+msgstr "مثبت"
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b45ac
 msgid "Verified Responder"
@@ -317,18 +317,18 @@ msgstr "التحقق من المستجيب-التحقق من الاجابه "
 
 #: src/partials/list.html loco:54fd9df314d725505c8b45ad
 msgid "Verified User"
-msgstr "التحقق من المستخدم "
+msgstr "مستخدم مثبت"
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b45ae
 msgid ""
 "We are not currently taking note of administrative areas or localities in "
 "this country."
-msgstr "نحن حاليا لا ناخذ الملاحظات من المجالات الادارية او المحلية في هذا البلد "
+msgstr "نحن حاليا لا نغطي المناطق الادارية او المحلية في هذا البلد. "
 
 #: src/partials/contact.html loco:54fd9df314d725505c8b45af
 msgid "Website/Social Media"
-msgstr "الموقع\\وسائل الاعلام الاجتماعية "
+msgstr "الموقع\\وسائل التواصل الاجتماعية"
 
 #: src/partials/profile.html loco:54fd9df314d725505c8b45b0
 msgid "Websites &amp; Social Media"
-msgstr "الموقع ووسائل الاعلام الاجتماعية "
+msgstr "الموقع ووسائل التواصل الاجتماعية"
