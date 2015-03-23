@@ -320,10 +320,15 @@
 
       </div>
 
-      <div class="row">
+      <div class="row bottom-submit">
         <div class="col-sm-12 col-md-6">
-          <div class="form-group bottom-submit">
+          <div class="form-group">
             <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitProfile()" ng-value="submitText()" />
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group">
+            <button class="btn btn-default btn-lg btn-block" ng-click="back()" ng-bind="cancelText()"></button>
           </div>
         </div>
       </div>
@@ -339,10 +344,11 @@
       </div>
       <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
         <div class="actions">
-          <button class="btn btn-default btn-lg btn-block" ng-click="back()"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></button>
+          <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitProfile()" ng-value="submitText()"/>
+          <button class="btn btn-default btn-lg btn-block" ng-click="back()" ng-bind="cancelText()"></button>
+          <a class="btn btn-default btn-lg btn-block" ng-show="userCanRequestDelete" href="http://humanitarian.id/removal_request/" translate>Delete My Account</a>
           <a class="btn btn-lg btn-primary btn-block btn-danger" ng-show="userCanDeleteAccount" ng-click="profile.confirmDelete = !profile.confirmDelete" translate>Delete Account</a>
           <a ng-show="profile.confirmDelete" class="slide btn btn-warning btn-lg btn-block" ng-click="deleteAccount()" translate>Confirm Delete Account</a>
-          <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitProfile()" ng-value="submitText()" />
         </div>
       </div>
     </div>
