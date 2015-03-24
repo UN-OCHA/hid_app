@@ -8,3 +8,31 @@
     margin-left: -109px;
   }
 }
+
+#contactsid-app-view {
+  transition: opacity 0.5s linear;
+  opacity:1;
+  &.ng-enter {
+    opacity: 0;
+  }
+  &.ng-leave.ng-leave-active {
+    opacity: 0;
+  }
+}
+.masthead,
+.main {
+  opacity: 1;
+  transition: opacity 0.2s ease-in;
+  &.ng-hide.ng-hide-add {
+    opacity: 0;
+  }
+}
+
+.loading-indicator {
+  opacity: 1;
+  transition: opacity 0.2s ease-in 0.2s;
+  &.ng-hide {
+    opacity: 0;
+  }
+}
+

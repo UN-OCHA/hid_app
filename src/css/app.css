@@ -9575,6 +9575,35 @@ table tr td:last-child {
   margin-left: -109px;
 }
 
+#contactsid-app-view {
+  transition: opacity 0.5s linear;
+  opacity: 1;
+}
+#contactsid-app-view.ng-enter {
+  opacity: 0;
+}
+#contactsid-app-view.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+
+.masthead,
+.main {
+  opacity: 1;
+  transition: opacity 0.2s ease-in;
+}
+.masthead.ng-hide.ng-hide-add,
+.main.ng-hide.ng-hide-add {
+  opacity: 0;
+}
+
+.loading-indicator {
+  opacity: 1;
+  transition: opacity 0.2s ease-in 0.2s;
+}
+.loading-indicator.ng-hide {
+  opacity: 0;
+}
+
 .sidebar-left.show-options .bottom-fixed-btn .bottom-fixed-btn__arrow {
   display: none;
 }
@@ -10309,6 +10338,14 @@ table tr td:last-child {
     color: #54b1c8 !important;
   }
 }
+.loading-indicator {
+  width: 100%;
+  position: absolute;
+}
+.loading-indicator h3.loading-title {
+  text-align: center;
+}
+
 .login-controls {
   padding: 6px 0 0;
   margin: 44px 0 0;

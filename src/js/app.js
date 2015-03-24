@@ -27,16 +27,22 @@ app.value('cgBusyDefaults',{
   minDuration: 300
 });
 
-app.directive('routeLoadingIndicator', function($rootScope) {
+app.directive('routeLoadingIndicator', function($rootScope, gettextCatalog) {
   return {
     restrict: 'E',
     templateUrl: contactsId.sourcePath + '/partials/loading.html',
     replace: true,
     link: function(scope, elem, attrs) {
       scope.isRouteLoading = false;
-
-      $rootScope.$on('$routeChangeStart', function() {
-        scope.isRouteLoading = true;
+      scope.loadingMessage = gettextCatalog.getString('Loading...');
+      $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
+        var nextPath = nextRoute.$$route.originalPath;
+        if(nextPath !== currentRoute.$$route.originalPath) {
+          if (nextPath === '/login' || nextPath === '/login/:redirectPath*' || nextPath === '/logout' || nextPath === '/register') {
+            scope.loadingMessage = gettextCatalog.getString('Redirecting to authentication system...');
+          }
+          scope.isRouteLoading = true;
+        }
       });
       $rootScope.$on('$routeChangeSuccess', function() {
         scope.isRouteLoading = false;
@@ -107,14 +113,19 @@ app.run(function ($rootScope, $location, $window, authService) {
   });
 
   $rootScope.$on("$routeChangeSuccess", function(event, nextRoute, currentRoute) {
+    // Ensure your on the top of the page.
+    window.scrollTo(0,0);
+
     // Check if route has access control.
     if (nextRoute.locals.hasOwnProperty('routeAccess')) {
       // If access check requires resovle to complete a function is passed.
       // Otherwise boolean is passed.
-      var access = (typeof nextRoute.locals.routeAccess !== 'function') ? nextRoute.locals.routeAccess : nextRoute.locals.routeAccess(nextRoute.locals);
+      var access = (typeof nextRoute.locals.routeAccess !== 'function') ? nextRoute.locals.routeAccess : nextRoute.locals.routeAccess(nextRoute.locals),
+          // Allow routeAccess to send a redirect if needed.
+          redirect = (typeof access !== 'boolean') ? access : '/dashboard';
 
-      if (!access) {
-        $location.path('/dashboard').replace();
+      if (!access || typeof access !== 'boolean') {
+        $location.path(redirect).replace();
       };
     }
   });
@@ -1053,14 +1064,15 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   };
 
   $scope.deleteAccount = function () {
-    profileService.deleteProfile(profileData.profile._userid).then(function(data) {
+    var userid = profileData.profile.userid || profileData.profile._userid;
+    profileService.deleteProfile(userid).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         profileService.clearData();
-        //This returns the user to the contact list they were on
-        history.go(-2);
+        // Unreliable to know where user was so try to send them back.
+        $scope.back();
       }
       else {
-        alert('error');
+        alert(data.message || 'error');
       }
     });
   };
@@ -1116,7 +1128,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   function setPermissions() {
     var hasRoleAdmin = profileService.hasRole('admin');
-
     $scope.userCanEditRoles = profileService.canEditRoles(profileData) && profileData.profile._id !== userData.profile._id;
     $scope.userCanEditKeyContact = profileService.canEditKeyContact($scope.selectedOperation);
     $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.selectedOperation);
@@ -1499,10 +1510,12 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
       }
     }
   }
+
   $scope.deleteAccount = function (contact) {
     if (contact.ql.deleteState === "confirm") {
+      var userid = contact._profile.userid || contact._profile._userid;
       contact.ql.deleteState = "inProgress";
-      profileService.deleteProfile(contact._profile._userid).then(function(data) {
+      profileService.deleteProfile(userid).then(function(data) {
         if (data && data.status && data.status === 'ok') {
           profileService.clearData();
           $route.reload();
@@ -1750,19 +1763,19 @@ app.config(function($routeProvider, $locationProvider) {
     bodyClasses: ['index']
   }).
   when('/login', {
-    template: 'Redirecting to authentication system...',
+    template: '',
     controller: 'LoginCtrl'
   }).
   when('/login/:redirectPath*', {
-    template: 'Redirecting to authentication system...',
+    template: '',
     controller: 'LoginCtrl'
   }).
   when('/logout', {
-    template: 'Redirecting to authentication system...',
+    template: '',
     controller: 'LogoutCtrl'
   }).
   when('/register', {
-    template: 'Redirecting to authentication system...',
+    template: '',
     controller: 'RegisterCtrl'
   }).
   when('/dashboard', {
@@ -1968,10 +1981,19 @@ app.config(function($routeProvider, $locationProvider) {
           return data;
         });
       },
-      routeAccess : function(profileService) {
+      routeAccess : function(profileService, $routeParams) {
         return function(locals) {
+          if (typeof $routeParams.profileId === 'undefined') {
+            var redirect = null;
+            angular.forEach(locals.userData.contacts, function(contact) {
+              if (contact.type === 'global') {
+                redirect = "/profile/" + contact._id;
+              }
+            });
+            return redirect || true;
+          }
           var profile = locals.profileData.contact,
-              hasRole = profileService.canEditProfile(profile.locationId),
+              hasRole = profileService.canEditProfile((profile ? profile.locationId : null)),
               isOwnProfile = profile._profile === locals.userData.profile._id;
 
           return (hasRole || isOwnProfile);
@@ -2572,7 +2594,7 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   // Only admins not on their own profile
   // Can delete (disable) account
   function canDeleteAccount(profile) {
-    var isOwnProfile = (profile._id === cacheUserData.profile._id),
+    var isOwnProfile = (typeof profile !== 'undefined') ? (profile._id === cacheUserData.profile._id) : false,
     hasRightRole = hasRole('admin');
 
     return (!isOwnProfile && hasRightRole);
