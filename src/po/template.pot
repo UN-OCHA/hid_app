@@ -1,7 +1,11 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
+<<<<<<< HEAD
 "Project-Id-Version: 2015-03-24T15:25:33.640Z\n"
+=======
+"Project-Id-Version: 2015-03-24T15:23:26.718Z\n"
+>>>>>>> develop
 
 #: src/partials/list-print.html
 msgid "*the term GROUP equals clusters, sectors, working group or other thematic groups"
@@ -47,6 +51,18 @@ msgstr ""
 #: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Back"
+msgstr ""
+
+#: src/js/app.js
+msgid "Cancel Check-in"
+msgstr ""
+
+#: src/js/app.js
+msgid "Cancel Check-in Update"
+msgstr ""
+
+#: src/js/app.js
+msgid "Cancel Profile Update"
 msgstr ""
 
 #: src/js/app.js
@@ -157,6 +173,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Delete Account"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Delete My Account"
 msgstr ""
 
 #: src/js/app.js
@@ -584,6 +604,10 @@ msgstr ""
 
 #: src/js/app.js
 msgid "Unverify account"
+msgstr ""
+
+#: src/js/app.js
+msgid "Update Check-in"
 msgstr ""
 
 #: src/js/app.js

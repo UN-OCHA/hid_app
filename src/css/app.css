@@ -10569,7 +10569,7 @@ table tr td:last-child {
   padding-left: 3px;
 }
 
-.form-group.bottom-submit {
+.row.bottom-submit {
   margin-top: 20px;
 }
 
