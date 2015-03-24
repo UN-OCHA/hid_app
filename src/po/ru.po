@@ -1,0 +1,337 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Russian\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-18 15:10+0000\n"
+"PO-Revision-Date: 2015-03-18 15:51+0000\n"
+"Last-Translator: yaelle link\n"
+"Language-Team: yaelle link\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && n%"
+"10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Loco https://localise.biz\n"
+"X-Loco-Source-Locale: en_GB\n"
+"X-Loco-Target-Locale: ru_RU\n"
+"X-Loco-Project-Id: 6248\n"
+"X-Loco-Tagged: Import batch 1 (hid_translations_2015-03-09-ar.po)\n"
+"X-Loco-Api-Version: 1.0.9"
+
+#: src/partials/header.html
+#: src/partials/index.html loco:5509959914d725436b8b4567
+msgid "About"
+msgstr "О"
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:5509959914d725436b8b4568
+msgid "Back"
+msgstr "Назад"
+
+#: src/js/app.js
+#: src/partials/dashboard.html loco:5509959914d725436b8b4569
+msgid "Check-in"
+msgstr "Зарегистрироваться"
+
+#: src/partials/dashboard.html loco:5509959914d725436b8b456a
+msgid "Checkout"
+msgstr "Отменить регистрацию"
+
+#: src/partials/profile.html loco:5509959914d725436b8b456b
+msgid "City"
+msgstr "Город"
+
+#: src/partials/contact.html loco:5509959914d725436b8b456c
+msgid "Clusters"
+msgstr "Группы"
+
+#: src/partials/profile.html loco:5509959914d725436b8b456d
+msgid "Country"
+msgstr "Страна"
+
+#: src/partials/header.html loco:5509959914d725436b8b456e
+msgid "Dashboard"
+msgstr "Панель управления"
+
+#: src/partials/profile.html loco:5509959914d725436b8b456f
+msgid "Email"
+msgstr "Email"
+
+#: src/js/app.js loco:5509959914d725436b8b4570
+msgid "Global"
+msgstr "Общее"
+
+#: src/partials/list.html
+#: src/partials/profile.html loco:5509959914d725436b8b4571
+msgid "Group"
+msgstr "Группа"
+
+#: src/partials/header.html loco:5509959914d725436b8b4572
+msgid "Home"
+msgstr "Главная"
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:5509959914d725436b8b4573
+msgid "Location"
+msgstr "Местоположение"
+
+#: src/partials/header.html
+#: src/partials/index.html loco:5509959914d725436b8b4574
+msgid "Login"
+msgstr "Войти"
+
+#: src/partials/dashboard.html
+#: src/partials/header.html loco:5509959914d725436b8b4575
+msgid "Logout"
+msgstr "Выйти"
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:5509959914d725436b8b4576
+msgid "Notes"
+msgstr "Заметки"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4577
+msgid "Number"
+msgstr "Номер"
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:5509959914d725436b8b4578
+msgid "Organization"
+msgstr "Организация"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4579
+msgid "Profile"
+msgstr "Профиль"
+
+#: src/partials/index.html loco:5509959914d725436b8b457a
+msgid "Register"
+msgstr "Реестр"
+
+#: src/partials/list.html loco:5509959914d725436b8b457b
+msgid "Search"
+msgstr "Поиск"
+
+#: src/partials/profile.html loco:5509959914d725436b8b457c
+msgid "Searching..."
+msgstr "Идёт поиск..."
+
+#: src/partials/profile.html loco:5509959914d725436b8b457d
+msgid "Title"
+msgstr "Заголовок"
+
+#: src/partials/profile.html loco:5509959914d725436b8b457e
+msgid "Type"
+msgstr "Тип"
+
+#: src/partials/profile.html loco:5509959914d725436b8b457f
+msgid "URL"
+msgstr "Ссылка"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4580
+msgid "VOIP"
+msgstr "Голосовая связь"
+
+#: src/partials/header.html loco:5509959914d725436b8b4581
+msgid "Welcome"
+msgstr "Добро пожаловать"
+
+#: src/partials/about.html loco:5509959914d725436b8b4582
+msgid "About Humanitarian.ID"
+msgstr "О Humanitarian.ID"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4583
+msgid "Admin Privileges"
+msgstr "Права администратора"
+
+#: src/partials/contact.html loco:5509959914d725436b8b4584
+msgid "Check-in User"
+msgstr "Зарегистрированный пользователь"
+
+#: src/partials/contact.html loco:5509959914d725436b8b4585
+msgid "Check-out User"
+msgstr "Незарегистрированный пользователь"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4586
+msgid "Choose Type"
+msgstr "Выбрать тип"
+
+#: src/partials/contact.html loco:5509959914d725436b8b4587
+msgid "Confirm User Checkout"
+msgstr "Подтвердить выход из системы"
+
+#: src/partials/list.html loco:5509959914d725436b8b4588
+msgid "Contact List"
+msgstr "Список контактов"
+
+#: src/partials/list.html loco:5509959914d725436b8b4589
+msgid "Contact List Filters"
+msgstr "Фильтр списка контактов"
+
+#: src/partials/dashboard.html loco:5509959914d725436b8b458a
+msgid "Edit Global Profile"
+msgstr "Редактировать основной профиль"
+
+#: src/partials/contact.html loco:5509959914d725436b8b458b
+msgid "Edit Profile"
+msgstr "Редактировать профиль"
+
+#: src/partials/profile.html loco:5509959914d725436b8b458c
+msgid "Email Addresses"
+msgstr "Электронные адреса"
+
+#: src/partials/header.html loco:5509959914d725436b8b458d
+msgid "External Links"
+msgstr "Внешние ссылки"
+
+#: src/partials/profile.html loco:5509959914d725436b8b458e
+msgid "Family Name"
+msgstr "Фамилия"
+
+#: src/partials/dashboard.html loco:5509959914d725436b8b458f
+msgid "General List"
+msgstr "Основной список"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4590
+msgid "Given Name"
+msgstr "Имя"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4591
+msgid "Global Administration"
+msgstr "Основное управление"
+
+#: src/partials/dashboard.html loco:5509959914d725436b8b4592
+msgid "Global Contact List"
+msgstr "Основной список контактов"
+
+#: src/partials/dashboard.html loco:5509959914d725436b8b4593
+msgid "Global Profile"
+msgstr "Основной профиль"
+
+#: src/partials/dashboard.html
+#: src/partials/profile.html loco:5509959914d725436b8b4594
+msgid "Humanitarian ID"
+msgstr "Humanitarian ID"
+
+#: src/partials/index.html loco:5509959914d725436b8b4595
+msgid "Humanitarian.ID: Responders"
+msgstr "Humanitarian.ID: Контактные лица"
+
+#: src/partials/contact.html loco:5509959914d725436b8b4596
+msgid "Job Title"
+msgstr "должность"
+
+#: src/partials/list.html
+#: src/partials/profile.html loco:5509959914d725436b8b4597
+msgid "Key Contact"
+msgstr "Основной контакт"
+
+#: src/partials/contact.html loco:5509959914d725436b8b4598
+msgid "key contact"
+msgstr "Основной контакт"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4599
+msgid "Local Administration"
+msgstr "Местное управление"
+
+#: src/partials/index.html loco:5509959914d725436b8b459a
+msgid ""
+"Manage your details on global and emergency-level humanitarian contact lists. "
+"Find and be found by other responders when needed. Check-in. Connect. Respond."
+msgstr ""
+"Управляйте своей информацией в списке гуманитарных контактов на глобальном "
+"уровне и уровне экстренной помощи. Ищите и помогите другим найти вас при "
+"необходимости. Регистрируйтесь. Подключайтесь. Поддерживайте"
+
+#: src/partials/dashboard.html loco:5509959914d725436b8b459b
+msgid "My checked-in lists"
+msgstr "Мои зарегистрированные списки"
+
+#: src/partials/profile.html loco:5509959914d725436b8b459c
+msgid "No active operations found."
+msgstr "Не найдено активных операций"
+
+#: src/partials/list.html loco:5509959914d725436b8b459d
+msgid "No contacts found"
+msgstr "Контакты не найдены"
+
+#: src/partials/dashboard.html loco:5509959914d725436b8b459e
+msgid "No profiles found."
+msgstr "Профили не найдены"
+
+#: src/partials/profile.html loco:5509959914d725436b8b459f
+msgid "No results found."
+msgstr "Нет результатов поиска."
+
+#: src/partials/404.html loco:5509959914d725436b8b45a0
+msgid "Not Found"
+msgstr "Не найдено"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45a1
+msgid "Organizational Information"
+msgstr "Организационная информация"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45a2
+msgid "Phone Numbers"
+msgstr "Телефонный номер"
+
+#: src/partials/list.html loco:5509959914d725436b8b45a3
+msgid "Reset Filters"
+msgstr "Сбросить фильтры"
+
+#: src/partials/list.html loco:5509959914d725436b8b45a4
+msgid "Search by name, title, or organization"
+msgstr "Поиск по имени, заголовку или организации"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45a5
+msgid "Search for countries"
+msgstr "Поиск стран"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45a6
+msgid "Search for organizations"
+msgstr "Поиск организаций"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45a7
+msgid "Select a country"
+msgstr "Выбрать страну"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45a8
+msgid "Select an operation"
+msgstr "Выбрать операцию"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45a9
+msgid "State/Province/Region"
+msgstr "Государство/регион/область"
+
+#: src/js/app.js loco:5509959914d725436b8b45aa
+msgid "Update Profile"
+msgstr "Обновить профиль"
+
+#: src/partials/contact.html loco:5509959914d725436b8b45ab
+msgid "verified"
+msgstr "авторизовано"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45ac
+msgid "Verified Responder"
+msgstr "Авторизованное контактное лицо"
+
+#: src/partials/list.html loco:5509959914d725436b8b45ad
+msgid "Verified User"
+msgstr "Авторизованный пользователь"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45ae
+msgid ""
+"We are not currently taking note of administrative areas or localities in "
+"this country."
+msgstr ""
+"Мы временно не учитываем административные районы и населённые пункты в этой "
+"стране."
+
+#: src/partials/contact.html loco:5509959914d725436b8b45af
+msgid "Website/Social Media"
+msgstr "Сайты, блоги и социальные сети"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45b0
+msgid "Websites &amp; Social Media"
+msgstr "Сайты, блоги и социальные сети"

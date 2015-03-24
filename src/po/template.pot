@@ -1,7 +1,11 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
+<<<<<<< HEAD
+"Project-Id-Version: 2015-03-24T15:25:33.640Z\n"
+=======
 "Project-Id-Version: 2015-03-24T15:23:26.718Z\n"
+>>>>>>> develop
 
 #: src/partials/list-print.html
 msgid "*the term GROUP equals clusters, sectors, working group or other thematic groups"
