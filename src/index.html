@@ -22,6 +22,7 @@
   <div id="contactsid-app-view-wrapper">
     <div id="contactsid-app" class="contactsid-app">
       <ng-include src="'partials/header.html'"></ng-include>
+      <route-loading-indicator></route-loading-indicator>
       <div id="contactsid-app-view" class="container" ng-view>
         <div class="col-xs-12 compatibility-alert">
           <div class="alert alert-danger" role="alert">
@@ -34,9 +35,6 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="">
-        <route-loading-indicator></route-loading-indicator>
       </div>
     </div>
   </div>
