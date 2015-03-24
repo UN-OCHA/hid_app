@@ -938,7 +938,28 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   // Update submit text when changing language.
   $scope.submitText = function() {
-    return !checkinFlow ? gettextCatalog.getString('Update Profile') : gettextCatalog.getString('Check-in');
+    if ($scope.profile.type === 'global') {
+      return gettextCatalog.getString('Update Profile');
+    }
+    else if (!checkinFlow) {
+      return gettextCatalog.getString('Update Check-in')
+    }
+    else {
+      return gettextCatalog.getString('Check-in')
+    }
+  }
+
+  // Update submit text when changing language.
+  $scope.cancelText = function() {
+    if ($scope.profile.type === 'global') {
+      return gettextCatalog.getString('Cancel Profile Update');
+    }
+    else if (!checkinFlow) {
+      return gettextCatalog.getString('Cancel Check-in Update')
+    }
+    else {
+      return gettextCatalog.getString('Cancel Check-in')
+    }
   }
 
   // Update profile name text when changing language.
@@ -1112,6 +1133,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.selectedOperation);
     $scope.userCanEditVerified = profileService.canEditVerified($scope.selectedOperation);
     $scope.userCanDeleteAccount = profileService.canDeleteAccount(profileData.profile);
+    $scope.userCanRequestDelete = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
 
     // Determine what roles are available to assign to a user
     if ($scope.userCanEditRoles && hasRoleAdmin) {
