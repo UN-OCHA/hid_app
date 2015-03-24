@@ -3,10 +3,18 @@
 body {
   background: url(../images/bg.png);
   margin-bottom: 25px;
+
+  &.pdf {
+    background: none;
+    margin-bottom: 0px;
+  }
 }
 
 body.pdf {
-  background: none;
+  .logo {
+    background: none;
+    margin-right: 150px;
+  }
 }
 
 .contactsid-app {

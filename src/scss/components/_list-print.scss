@@ -37,6 +37,9 @@
   .masthead {
     margin-bottom: 75px;
   }
+  &.pdf .masthead {
+    margin-bottom: 35px;
+  }
   .filters-param-list {
     background-color: $secondary-color-4;
     color: $white;
@@ -60,6 +63,12 @@
   table > tbody > tr > th,
   table > tbody > tr > td {
     vertical-align: middle;
+  }
+  table {
+    overflow: visible;
+  }
+  tr {
+    page-break-inside: avoid;
   }
   #print-footer {
     float: right;
