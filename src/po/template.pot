@@ -1,11 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-<<<<<<< HEAD
-"Project-Id-Version: 2015-03-24T15:25:33.640Z\n"
-=======
-"Project-Id-Version: 2015-03-24T15:23:26.718Z\n"
->>>>>>> develop
+"Project-Id-Version: 2015-03-25T20:36:31.515Z\n"
 
 #: src/partials/list-print.html
 msgid "*the term GROUP equals clusters, sectors, working group or other thematic groups"
@@ -51,6 +47,10 @@ msgstr ""
 #: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Back"
+msgstr ""
+
+#: src/js/app.js
+msgid "Both type and number are required."
 msgstr ""
 
 #: src/js/app.js
@@ -225,6 +225,10 @@ msgstr ""
 msgid "Email Address"
 msgstr ""
 
+#: src/js/app.js
+msgid "Email Address entry"
+msgstr ""
+
 #: src/partials/profile.html
 msgid "Email Addresses"
 msgstr ""
@@ -241,13 +245,21 @@ msgstr ""
 msgid "External Links"
 msgstr ""
 
+#: src/js/app.js
 #: src/partials/createAccount.html
-#: src/partials/profile.html
 msgid "Family Name"
 msgstr ""
 
 #: src/partials/createAccount.html
 msgid "Family Name is required."
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Family Name*"
+msgstr ""
+
+#: src/js/app.js
+msgid "Field is required."
 msgstr ""
 
 #: src/partials/list-print.html
@@ -266,13 +278,17 @@ msgstr ""
 msgid "General List"
 msgstr ""
 
+#: src/js/app.js
 #: src/partials/createAccount.html
-#: src/partials/profile.html
 msgid "Given Name"
 msgstr ""
 
 #: src/partials/createAccount.html
 msgid "Given Name is required."
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Given Name*"
 msgstr ""
 
 #: src/js/app.js
@@ -329,16 +345,20 @@ msgstr ""
 msgid "If you would like to find out more about the project, understand the objectives and benefits, join our mailing list, or simply contact us, visit"
 msgstr ""
 
-#: src/partials/profile.html
-msgid "Invalid entry. Both type and VOIP are required."
+#: src/js/app.js
+msgid "Instant Messenger entry"
 msgstr ""
 
 #: src/partials/profile.html
-msgid "Invalid entry. Both type and number are required."
+msgid "Instant Messengers"
 msgstr ""
 
-#: src/partials/profile.html
-msgid "Invalid entry. Valid email address required."
+#: src/js/app.js
+msgid "Invalid entry."
+msgstr ""
+
+#: src/js/app.js
+msgid "Invalid phone number."
 msgstr ""
 
 #: src/partials/profile.html
@@ -451,6 +471,10 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
+#: src/js/app.js
+msgid "Phone Number entry"
+msgstr ""
+
 #: src/partials/profile.html
 msgid "Phone Numbers"
 msgstr ""
@@ -461,6 +485,10 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "Please create a"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Please update your {{profileName()}} profile."
 msgstr ""
 
 #: src/partials/list-print.html
@@ -615,7 +643,7 @@ msgid "Update Profile"
 msgstr ""
 
 #: src/partials/profile.html
-msgid "VOIP"
+msgid "Username"
 msgstr ""
 
 #: src/partials/createAccount.html

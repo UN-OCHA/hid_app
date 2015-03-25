@@ -10573,6 +10573,10 @@ table tr td:last-child {
   margin-top: 20px;
 }
 
+.alert-wrapper ul {
+  padding-left: 20px;
+}
+
 .page-list .profile-item {
   overflow: visible;
 }

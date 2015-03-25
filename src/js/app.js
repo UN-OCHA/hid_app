@@ -481,8 +481,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
-  var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': []},
-      fieldValueValidation = {'email':{'address': emailValidation}};
+  var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': []};
 
   var pathParams = $location.path().split('/'),
   checkinFlow = pathParams[1] === 'checkin',
@@ -662,67 +661,18 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     return true;
   }
 
-  $scope.checkFieldValueValid = function(field, value) {
-    if (fieldValueValidation.hasOwnProperty(field)) {
-      for (var subField in fieldValueValidation[field]) {
-        if (fieldValueValidation[field].hasOwnProperty(subField) && value.hasOwnProperty(subField)) {
-          // Run value thru custom validation function.
-          if (!fieldValueValidation[field][subField](value[subField])) {
-            // Fails validation.
-            return false;
-          }
-        }
-      }
-    }
-    // Passes validation or field has not been modified so no need to validate.
-    return true;
-  }
-
-  // Checks to see if all fields are valid
-  $scope.checkAllFieldsValid = function () {
-    var allValid = true;
-    // Checks ALL multi field with 2 or more requires inputs for incomplete entries.
-    for (var field in multiFields) {
-      if (multiFields.hasOwnProperty(field) && multiFields[field].length > 1 && $scope.profile[field]) {
-        validateItem(field, $scope.checkMultiRequireFields, true);
-      }
-      else if (typeof $scope.invalidFields[field] !== 'undefined') {
-        delete $scope.invalidFields[field];
-      }
-    }
-
-    // Check if fields with custom validation are valid.
-    for (field in fieldValueValidation) {
-      if (fieldValueValidation.hasOwnProperty(field) && $scope.profile[field]) {
-        validateItem(field, $scope.checkFieldValueValid);
-      }
-    }
-    return allValid;
-
-    function validateItem(field, validFn, resetInvalid) {
-      $scope.invalidFields[field] = (resetInvalid || typeof $scope.invalidFields[field] === 'undefined') ? {} : $scope.invalidFields[field];
-      for (var index in $scope.profile[field]) {
-        if ($scope.profile[field].hasOwnProperty(index)) {
-          if(!validFn(field, $scope.profile[field][index])) {
-            $scope.invalidFields[field][index] =  true;
-            allValid = false;
-          }
-        }
-      }
-    }
-  }
-
-  // Remove error styling when corrected.
-  $scope.removeFieldError = function(field) {
-    if ( $scope.invalidFields[field]
-      && $scope.invalidFields[field][this.$index]
-      && $scope.checkMultiRequireFields(field, this[field])
-      && $scope.checkFieldValueValid(field, this[field])) {
-      delete $scope.invalidFields[field][this.$index]
-    }
-  }
-
   $scope.checkMultiFields = function (excludeExtras) {
+    // Special treatment for voip.
+    if (!excludeExtras && (!$scope.profile.voip[0] || $scope.profile.voip[0].type !== 'Skype')) {
+      // Add Default Skype entry.
+      $scope.profile.voip.unshift({type: 'Skype', number: "_BYPASS"});
+    }
+    else if (excludeExtras && $scope.profile.voip[0] && !$scope.profile.voip[0].number) {
+      // Remove Default Skype entry before save if blank.
+      $scope.profile.voip[0] = "";
+    }
+
+    // Regular multifield validation.
     for (var field in multiFields) {
       if (multiFields.hasOwnProperty(field)) {
         if ($scope.profile[field] && $scope.profile[field].filter) {
@@ -744,42 +694,65 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         }
       }
     }
+
+    // Remove validation bypass for default skype entry.
+    if (!excludeExtras && $scope.profile.voip[0].number == "_BYPASS") {
+      $scope.profile.voip[0].number = "";
+    }
   };
+
   // Add extra blank fields when editing a profile
   if (!checkinFlow) {
     $scope.checkMultiFields();
   }
 
-  // Prevents adding of field if when invalid entry.
-  $scope.checkForValidEntry = function(field, index){
-    return ( $scope.profile[field]
-          && $scope.profile[field][index]
-          && $scope.vaildFieldEntry(field, $scope.profile[field][index])
-          && $scope.checkFieldValueValid(field, $scope.profile[field][index]));
+  $scope.checkEntryValidation = function(field, index) {
+    index = typeof index === 'undefined' ? this.$index : index;
+    var isValid = $scope.checkMultiRequireFields(field, $scope.profile[field][index]);
+
+    $scope.defaultValidObj(field, index).$setValidity('multiField', isValid);
   }
 
-  $scope.changeFieldEntries = function(field, index, last){
-    var validEntry = $scope.checkForValidEntry(field, index);
-    if (last && validEntry) {
+  // Helper used in partial.
+  $scope.defaultValidObj = function(field, index) {
+    index = typeof index === 'undefined' ? this.$index : index;
+    switch (field) {
+      case 'email':
+        return $scope.profileForm[(field + '[' + index + '][address]')];
+      default:
+        return $scope.profileForm[(field + '[' + index + '][number]')];
+    }
+  }
+
+  // Prevents adding of field if when invalid entry.
+  $scope.checkForValidEntry = function(field, index) {
+    return ( $scope.profile[field]
+          && $scope.profile[field][index]
+          && $scope.vaildFieldEntry(field, $scope.profile[field][index]));
+  }
+
+  $scope.changeFieldEntries = function(field) {
+    var validEntry = $scope.checkForValidEntry(field, this.$index);
+    if (this.$last && validEntry) {
       // Add new field.
       $scope.profile[field].push("");
     }
-    else if(last){
+    else if(this.$last){
       // Focus on field.
       this.focus = true;
     }
     else {
       // Remove new field.
-      $scope.profile[field].splice(index, 1);
+      $scope.profile[field].splice(this.$index, 1);
     }
   }
 
-  $scope.styleFieldEntries = function(field, index, last){
-    var validEntry = $scope.checkForValidEntry(field, index);
-    if (last && validEntry) {
+  $scope.styleFieldEntries = function(field) {
+    var validEntry = $scope.checkForValidEntry(field, this.$index);
+    if (this.$last && validEntry) {
       return 'fa-plus';
     }
-    else if (last) {
+    else if (this.$last) {
       return 'fa-pencil';
     }
     else {
@@ -802,11 +775,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if (opkeys.length == 1) {
       $scope.selectedOperation = opkeys[0];
     }
-  };
-
-  // Used in validation alerts.
-  $scope.bumpIndex = function() {
-    return parseInt(this.index) + 1;
   };
 
   /**
@@ -979,6 +947,42 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     return gettextCatalog.getString(str);
   };
 
+  // Text for alerts.
+  $scope.alertField = function(name) {
+    name = name.split(/[[\]]/);
+    var entryNum = typeof name[1] === 'undefined' ? ': ' : ' ' + (parseInt(name[1])+1) + ': ';
+    switch (name[0]) {
+      case 'nameGiven':
+        name = gettextCatalog.getString('Given Name');
+        break;
+      case 'nameFamily':
+        name = gettextCatalog.getString('Family Name');
+        break;
+      case 'phone':
+        name = gettextCatalog.getString('Phone Number entry');
+        break;
+      case 'voip':
+        name = gettextCatalog.getString('Instant Messenger entry');
+        break;
+      case 'email':
+        name = gettextCatalog.getString('Email Address entry');
+        break;
+    }
+    return name + entryNum;
+  }
+
+  $scope.alertMsg = function(type) {
+    switch (type) {
+      case 'required':
+        return gettextCatalog.getString("Field is required.");
+      case 'international-phone-number':
+        return gettextCatalog.getString("Invalid phone number.");
+      case 'multiField':
+        return gettextCatalog.getString("Both type and number are required.");
+      default:
+        return gettextCatalog.getString("Invalid entry.");
+    }
+  }
 
   $scope.back = function () {
     if (history.length) {
@@ -1000,8 +1004,15 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   }
 
   $scope.submitProfile = function () {
+    // Special treatment for voip.
+    if ($scope.profile.voip[0] && !$scope.profile.voip[0].number) {
+      // Remove Default Skype entry before save if blank.
+      $scope.profile.voip[0] = "";
+      $scope.checkEntryValidation('voip', 0);
+    }
+
     // Checks for incomplete entries.
-    if ($scope.checkAllFieldsValid()) {
+    if ($scope.profileForm.$valid) {
       // Removes empty entries.
       $scope.checkMultiFields(true);
       var profile = $scope.profile;
@@ -1076,12 +1087,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
     });
   };
-
-  // Function to validate email values
-  function emailValidation(value) {
-    var emailRegEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return !value.length || emailRegEx.test(value);
-  }
 
   // Converts object to a sortable array.
   function listObjectToArray(obj, kLabel, vLabel) {
