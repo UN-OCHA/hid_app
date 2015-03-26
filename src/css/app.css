@@ -10663,6 +10663,14 @@ table tr td:last-child {
     height: 65px;
   }
 }
+.quick-link .dropdown-menu > li:last-child:after {
+  content: "";
+  height: 1px;
+  width: 1px;
+  position: absolute;
+  bottom: -70px;
+  opacity: 0;
+}
 .quick-link .dropdown-menu > li > button {
   padding: 3px 20px;
   clear: both;
