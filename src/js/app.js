@@ -627,6 +627,13 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
+  $scope.httpCheck = function () {
+    var validObj = $scope.defaultValidObj('uri', this.$index);
+    if (validObj.$invalid && validObj.$viewValue.search(/^http[s]?\:\/\//) === -1) {
+      $scope.profile.uri[this.$index] = 'http://' + validObj.$viewValue;
+    }
+  }
+
   $scope.vaildFieldEntry = function(field, el) {
     if (multiFields.hasOwnProperty(field) && multiFields[field].length) {
       var valid = !!el;
@@ -665,7 +672,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   }
 
   $scope.checkMultiFields = function (excludeExtras) {
-    // Special treatment for voip.
+    // Special treatment for voip & uri.
     if (!excludeExtras && (!$scope.profile.voip[0] || $scope.profile.voip[0].type !== 'Skype')) {
       // Add Default Skype entry.
       $scope.profile.voip.unshift({type: 'Skype', number: "_BYPASS"});
@@ -720,6 +727,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.defaultValidObj = function(field, index) {
     index = typeof index === 'undefined' ? this.$index : index;
     switch (field) {
+      case 'uri':
+        return $scope.profileForm[(field + '[' + index + ']')];
       case 'email':
         return $scope.profileForm[(field + '[' + index + '][address]')];
       default:
@@ -970,6 +979,9 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       case 'email':
         name = gettextCatalog.getString('Email Address entry');
         break;
+      case 'uri':
+        name = gettextCatalog.getString('Websites & Social Media entry');
+        break;
     }
     return name + entryNum;
   }
@@ -1013,7 +1025,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       $scope.profile.voip[0] = "";
       $scope.checkEntryValidation('voip', 0);
     }
-
+    console.log($scope.profileForm)
     // Checks for incomplete entries.
     if ($scope.profileForm.$valid) {
       // Removes empty entries.
@@ -1244,6 +1256,13 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
 
   $scope.locationText = function() {
     return $scope.contact.location || gettextCatalog.getString('Global');
+  }
+
+  $scope.setHttp = function (uri) {
+    if (uri.search(/^http[s]?\:\/\//) == -1) {
+        uri = 'http://' + uri;
+    }
+    return uri;
   }
 
   $scope.back = function () {

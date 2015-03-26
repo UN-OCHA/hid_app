@@ -305,11 +305,14 @@
           <h4 translate>Websites &amp; Social Media</h4>
           <div class="form-group">
             <label class="control-label" for="uri[{{ profile.uri.length - 1 }}]" translate>URL</label>
-            <div class="reveal btn-reveal" ng-repeat="uri in profile.uri track by $index">
-              <input class="form-control" type="text" name="uri[{{$index}}]" ng-model="profile.uri[$index]" ng-blur="focus=0" focus-field="focus"/>
+            <div class="reveal btn-reveal" ng-repeat="uri in profile.uri track by $index" ng-class="{'has-error': profileForm.$submitted && defaultValidObj('uri').$invalid}">
+              <input class="form-control" type="url" name="uri[{{$index}}]" ng-model="profile.uri[$index]" ng-blur="focus=0; httpCheck()" focus-field="focus"/>
               <button type="button" ng-click="changeFieldEntries('uri')" ng-class="{'add' : $last && checkForValidEntry('uri', $index)}">
                 <i class="fa" ng-class="styleFieldEntries('uri')"></i>
               </button>
+              <div class="help-block" ng-show="profileForm.$submitted && defaultValidObj('uri').$invalid">
+                <span ng-repeat="(type, errors) in defaultValidObj('uri').$error">{{alertMsg(type)}}<br></span>
+              </div>
             </div>
           </div>
         </div>
