@@ -491,6 +491,9 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
 
+  // Set to 0 to checkout user.
+  $scope.status = 1;
+
   // Setup scope variables from data injected by routeProvider resolve
   $scope.placesOperations = placesOperations;
   var availPlacesOperations = angular.copy(placesOperations);
@@ -1088,6 +1091,26 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     });
   };
 
+  $scope.checkOut = function () {
+    if ($scope.userCanCheckOut) {
+      var contact = {
+        _id: profileData.contact._id,
+        _profile: profileData.contact._profile,
+        userid:  profileData.profile.userid,
+        status: 0
+      };
+      profileService.saveContact(contact).then(function(data) {
+        if (data && data.status && data.status === 'ok') {
+          profileService.clearData();
+          $scope.back();
+        }
+        else {
+          alert('error');
+        }
+      });
+    }
+  };
+
   // Converts object to a sortable array.
   function listObjectToArray(obj, kLabel, vLabel) {
     var listArray = [];
@@ -1138,6 +1161,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.selectedOperation);
     $scope.userCanEditVerified = profileService.canEditVerified($scope.selectedOperation);
     $scope.userCanDeleteAccount = profileService.canDeleteAccount(profileData.profile);
+    $scope.userCanCheckOut = !checkinFlow && profileService.canCheckOut(profileData.contact);
     $scope.userCanRequestDelete = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
 
     // Determine what roles are available to assign to a user
@@ -1201,7 +1225,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
   $scope.contact = contact;
 
   // Permissions
-  var isOwnProfile = userData.profile.userid === contact._profile._userid;
+  var isOwnProfile = userData.profile._id === contact._profile._id;
   $scope.userCanEditProfile = isOwnProfile || profileService.canEditProfile(contact.locationId);
   $scope.userCanCheckIn = profileService.canCheckIn(contact._profile);
   $scope.userCanCheckOut = profileService.canCheckOut(contact);
@@ -2575,7 +2599,8 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     user = typeof user !== 'undefined' ? user : cacheUserData;
 
     var isLocal = profile.type === 'local',
-        isOwnProfile = profile._profile._id === user.profile._id,
+        pid = typeof profile._profile === 'string' ? profile._profile : profile._profile._id,
+        isOwnProfile = pid === user.profile._id,
         hasRightRole = (hasRole('admin') || (profile.locationId && (hasRole('manager', profile.locationId) || hasRole('editor', profile.locationId))));
 
     return (isLocal && (isOwnProfile || hasRightRole));
