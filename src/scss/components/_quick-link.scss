@@ -76,7 +76,15 @@
       height: 65px;
     }
   }
-
+  .dropdown-menu > li:last-child:after {
+    // Adding spacing when at the bottom of the page.
+    content: "";
+    height: 1px;
+    width: 1px;
+    position: absolute;
+    bottom: -70px;
+    opacity: 0;
+  }
   .dropdown-menu > li > button {
     padding: 3px 20px;
     clear: both;

@@ -9077,9 +9077,14 @@ body {
   background: url(../images/bg.png);
   margin-bottom: 25px;
 }
-
 body.pdf {
   background: none;
+  margin-bottom: 0px;
+}
+
+body.pdf .logo {
+  background: none;
+  margin-right: 150px;
 }
 
 .contactsid-app p {
@@ -10237,6 +10242,9 @@ table tr td:last-child {
 .page-list.print .masthead {
   margin-bottom: 75px;
 }
+.page-list.print.pdf .masthead {
+  margin-bottom: 35px;
+}
 .page-list.print .filters-param-list {
   background-color: #2a5d81;
   color: #fff;
@@ -10261,6 +10269,12 @@ table tr td:last-child {
 .page-list.print table > tbody > tr > th,
 .page-list.print table > tbody > tr > td {
   vertical-align: middle;
+}
+.page-list.print table {
+  overflow: visible;
+}
+.page-list.print tr {
+  page-break-inside: avoid;
 }
 .page-list.print #print-footer {
   float: right;
@@ -10652,6 +10666,14 @@ table tr td:last-child {
   .quick-link > .dropdown > button {
     height: 65px;
   }
+}
+.quick-link .dropdown-menu > li:last-child:after {
+  content: "";
+  height: 1px;
+  width: 1px;
+  position: absolute;
+  bottom: -70px;
+  opacity: 0;
 }
 .quick-link .dropdown-menu > li > button {
   padding: 3px 20px;
