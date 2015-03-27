@@ -378,8 +378,8 @@
             </ui-select>
           </div>
 
-          <div class="checkbox">
-            <label for="verified" ng-click="setVerified()"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="verified && !canRemoveVerified" ng-click="setVerified()" ng-value="verified"/><span translate>Verified Responder</span></label>
+          <div class="checkbox" ng-show="userCanAddVerified">
+            <label for="verified" ng-click="setVerified()"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="verified && !userCanRemoveVerified" ng-click="setVerified()" ng-value="verified"/><span translate>Verified Responder</span></label>
           </div>
         </div>
 

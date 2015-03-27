@@ -619,7 +619,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   // Toggle logic for verified field.
   $scope.setVerified = function() {
-    if ((!$scope.verified && $scope.canAddVerified) || ($scope.verified && $scope.canRemoveVerified)) {
+    if ((!$scope.verified && $scope.userCanAddVerified) || ($scope.verified && $scope.userCanRemoveVerified)) {
       $scope.verified = !$scope.verified;
     }
   };
@@ -670,6 +670,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.checkMultiFields = function (excludeExtras) {
     // Special treatment for voip.
+    $scope.profile.voip = $scope.profile.voip || [];
     if (!excludeExtras && (!$scope.profile.voip[0] || $scope.profile.voip[0].type !== 'Skype')) {
       // Add Default Skype entry.
       $scope.profile.voip.unshift({type: 'Skype', number: "_BYPASS"});
@@ -1005,7 +1006,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if (i > -1) {
       $scope[prop].splice(i, 1);
       if (!$scope['selectedProtectedRoles'].length && !$scope['adminRoles'].length) {
-        $scope.canRemoveVerified = profileService.canRemoveVerified(profileData.contact, profileData.profile)
+        $scope.userCanRemoveVerified = profileService.canRemoveVerified(profileData.contact, profileData.profile)
       }
     }
     else {
@@ -1013,7 +1014,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
       if ($scope[prop].length) {
         $scope.verified = true;
-        $scope.canRemoveVerified = false;
+        $scope.userCanRemoveVerified = false;
       }
     }
   }
@@ -1146,14 +1147,14 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   function setPermissions() {
     var hasRoleAdmin = profileService.hasRole('admin');
+
     $scope.userCanEditRoles = profileService.canEditRoles(profileData.profile) && profileData.profile._id !== userData.profile._id;
     $scope.userCanEditKeyContact = profileService.canEditKeyContact($scope.selectedOperation);
     $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.selectedOperation);
-    $scope.canAddVerified = profileService.canAddVerified($scope.selectedOperation);
-    $scope.canRemoveVerified = profileService.canRemoveVerified(profileData.contact, profileData.profile);
+    $scope.userCanAddVerified = profileService.canAddVerified($scope.selectedOperation);
+    $scope.userCanRemoveVerified = profileService.canRemoveVerified(profileData.contact, profileData.profile);
     $scope.userCanDeleteAccount = profileService.canDeleteAccount(profileData.profile);
     $scope.userCanRequestDelete = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
-
 
 
     // Determine what roles are available to assign to a user
@@ -2581,9 +2582,10 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
   // Can remove verified status other user.
   function canRemoveVerified(contact, profile) {
     var pHasRole = hasRole('admin', null, profile) || hasRole('manager', null, profile) || hasRole('editor', null, profile),
-        pHasProtectedRole = (contact.protectedRoles && contact.protectedRoles.length);
+        pHasProtectedRole = (contact && contact.protectedRoles && contact.protectedRoles.length),
+        locationId = contact ? contact.locationId : null;
 
-    return (!pHasRole && !pHasProtectedRole && canAddVerified(contact.locationId));
+    return (!pHasRole && !pHasProtectedRole && canAddVerified(locationId));
   }
   // Can check-in other user.
   function canCheckIn(profile, user) {
