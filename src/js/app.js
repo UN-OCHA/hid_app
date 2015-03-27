@@ -1025,7 +1025,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       $scope.profile.voip[0] = "";
       $scope.checkEntryValidation('voip', 0);
     }
-    console.log($scope.profileForm)
+
     // Checks for incomplete entries.
     if ($scope.profileForm.$valid) {
       // Removes empty entries.
@@ -1103,6 +1103,23 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     });
   };
 
+  $scope.sendClaimEmail = function () {
+    if (profileData.contact.email && profileData.contact.email[0] && profileData.contact.email[0].address && String(profileData.contact.email[0].address).length) {
+      $scope.sendingClaimEmail = true;
+      var adminName = userData.global.nameGiven + " " + userData.global.nameFamily;
+      profileService.requestClaimEmail(profileData.contact.email[0].address, adminName).then(function(data) {
+        $scope.sendingClaimEmail = false;
+        $scope.confirmSendEmail = false;
+        if (data.status === 'ok') {
+          alert('Account claim email sent successfully.');
+        }
+        else {
+          alert('An error occurred while attempting to send the account claim email. Please try again or contact an administrator.');
+        }
+      });
+    }
+  };
+
   $scope.checkOut = function () {
     if ($scope.userCanCheckOut) {
       var contact = {
@@ -1173,7 +1190,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.selectedOperation);
     $scope.userCanEditVerified = profileService.canEditVerified($scope.selectedOperation);
     $scope.userCanDeleteAccount = profileService.canDeleteAccount(profileData.profile);
-    $scope.userCanCheckOut = !checkinFlow && profileService.canCheckOut(profileData.contact);
+    $scope.userCanCheckOut = !checkinFlow && profileData.contact && profileService.canCheckOut(profileData.contact);
+    $scope.userCanSendClaimEmail = !checkinFlow && profileData.contact && profileService.canSendClaimEmail(profileData.contact);
     $scope.userCanRequestDelete = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
 
     // Determine what roles are available to assign to a user
@@ -2617,7 +2635,7 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     // Optionally pass user to check.
     user = typeof user !== 'undefined' ? user : cacheUserData;
 
-    var isLocal = profile.type === 'local',
+    var isLocal = profile && profile.type === 'local',
         pid = typeof profile._profile === 'string' ? profile._profile : profile._profile._id,
         isOwnProfile = pid === user.profile._id,
         hasRightRole = (hasRole('admin') || (profile.locationId && (hasRole('manager', profile.locationId) || hasRole('editor', profile.locationId))));

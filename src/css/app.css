@@ -9569,15 +9569,29 @@ table tr td:last-child {
   background-position: 10px -78px;
 }
 
-.slide {
-  margin-left: -15px;
-  -webkit-transition: 0.2s ease-out all;
-  transition: 0.2s ease-out all;
-}
-.slide.ng-hide {
+.slide,
+.fade {
   -webkit-transition: 0.2s ease-in all;
   transition: 0.2s ease-in all;
+}
+.slide.ng-hide,
+.fade.ng-hide {
+  -webkit-transition: 0.2s ease-in all;
+  transition: 0.2s ease-in all;
+}
+
+.slide {
+  margin-left: -15px;
+}
+.slide.ng-hide {
   margin-left: -109px;
+}
+
+.fade {
+  opacity: 1;
+}
+.fade.ng-hide {
+  opacity: 0;
 }
 
 #contactsid-app-view {
@@ -10589,6 +10603,17 @@ table tr td:last-child {
 
 .alert-wrapper ul {
   padding-left: 20px;
+}
+
+.admin-area {
+  background-color: #e4e4e4;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.section {
+  margin-bottom: 30px;
 }
 
 .page-list .profile-item {

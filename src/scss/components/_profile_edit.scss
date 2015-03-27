@@ -16,6 +16,15 @@
   margin-top: 20px;
 }
 
- .alert-wrapper ul {
+.alert-wrapper ul {
   padding-left: 20px;
- }
+}
+
+.admin-area {
+  background-color: $neutral-color-3;
+  @include border-radius($border-radius-base);
+}
+
+.section {
+  margin-bottom: 30px;
+}
