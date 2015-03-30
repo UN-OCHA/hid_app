@@ -41,351 +41,351 @@
           </ul>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-12 col-md-6">
-          <div class="form-group" ng-class="{'has-error': profileForm.$submitted && profileForm.nameGiven.$invalid}">
-            <label class="control-label" for="nameGiven" translate>Given Name*</label>
-            <input class="form-control" type="text" name="nameGiven" ng-model="profile.nameGiven" required/>
-            <div class="help-block" ng-show="profileForm.$submitted && profileForm.nameGiven.$invalid">
-              <span ng-repeat="(type, errors) in profileForm.nameGiven.$error">{{alertMsg(type)}}<br></span>
-            </div>
-          </div>
-          <div class="form-group" ng-class="{'has-error': profileForm.$submitted && profileForm.nameFamily.$invalid}">
-            <label class="control-label" for="nameFamily" translate>Family Name*</label>
-            <input class="form-control" type="text" name="nameFamily" ng-model="profile.nameFamily" required/>
-            <div class="help-block" ng-show="profileForm.$submitted && profileForm.nameFamily.$invalid">
-              <span ng-repeat="(type, errors) in profileForm.nameFamily.$error">{{alertMsg(type)}}<br></span>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div class="row">
         <div class="col-sm-12 col-md-6">
-          <h4 translate>Organizational Information</h4>
-          <div class="form-group">
-            <label class="control-label" for="organization[0][name]" translate>Organization</label>
-            <angucomplete-alt
-              id="organization"
-              placeholder="{{'Search for organizations'|translate}}"
-              pause="100"
-              input-changed="changeOrganization"
-              selected-object="setOrganization"
-              remote-url-response-formatter="formatOrganizations"
-              remote-url="{{hrinfoBaseUrl}}/hid/organizations/autocomplete/"
-              search-fields="name"
-              title-field="name"
-              minlength="2"
-              text-searching="{{'Searching...'|translate}}"
-              text-no-results="{{'No results found.'|translate}}"
-              initial-value="{{profile.organization[0].name}}"
-              input-class="form-control"></angucomplete-alt>
 
-            <div class="help-block"><span translate>Request to</span> <a href="http://www.humanitarianresponse.info/help/webform/add-new-organization-form" target="_blank" translate>add a missing organization</a>.</div>
-          </div>
-
-          <div class="form-group">
-            <label class="control-label" for="jobtitle" translate>Job Title</label>
-            <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" />
-          </div>
-          <div class="form-group" ng-show="bundles.length">
-            <label class="control-label" for="bundle[{{profile.bundle.length - 1}}]" translate>Group</label>
-
-            <div class="reveal btn-reveal" ng-repeat="bundle in profile.bundle track by $index" ng-if="profile.type === 'local'">
-              <select class="form-control" name="bundle[{{$index}}]" ng-model="profile.bundle[$index]" ng-options="bundle.value as bundle.value for bundle in bundles | orderBy:'value'" ng-blur="focus=0" focus-field="focus">
-                  <option value=""></option>
-              </select>
-
-              <button type="button" ng-click="changeFieldEntries('bundle')" ng-class="{'add' : $last && checkForValidEntry('bundle', $index)}">
-                <i class="fa" ng-class="styleFieldEntries('bundle')"></i>
-              </button>
+          <div class="section">
+            <div class="form-group" ng-class="{'has-error': profileForm.$submitted && profileForm.nameGiven.$invalid}">
+              <label class="control-label" for="nameGiven" translate>Given Name*</label>
+              <input class="form-control" type="text" name="nameGiven" ng-model="profile.nameGiven" required/>
+              <div class="help-block" ng-show="profileForm.$submitted && profileForm.nameGiven.$invalid">
+                <span ng-repeat="(type, errors) in profileForm.nameGiven.$error">{{alertMsg(type)}}<br></span>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': profileForm.$submitted && profileForm.nameFamily.$invalid}">
+              <label class="control-label" for="nameFamily" translate>Family Name*</label>
+              <input class="form-control" type="text" name="nameFamily" ng-model="profile.nameFamily" required/>
+              <div class="help-block" ng-show="profileForm.$submitted && profileForm.nameFamily.$invalid">
+                <span ng-repeat="(type, errors) in profileForm.nameFamily.$error">{{alertMsg(type)}}<br></span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="col-sm-12 col-md-6">
-          <h4 translate>Location</h4>
-          <div class="form-group">
-            <label class="control-label" for="address[0][country]" translate>Country</label>
-            <angucomplete-alt
-              id="country"
-              placeholder="{{'Search for countries'|translate}}"
-              pause="100"
-              input-changed="changeCountry"
-              selected-object="setCountry"
-              local-data="countries"
-              search-fields="name"
-              title-field="name"
-              minlength="2"
-              text-searching="{{'Searching...'|translate}}"
-              text-no-results="{{'No results found.'|translate}}"
-              initial-value="{{profile.address[0].country}}"
-              input-class="form-control"></angucomplete-alt>
+          <div class="section">
+              <h4 translate>Organizational Information</h4>
+              <div class="form-group">
+                <label class="control-label" for="organization[0][name]" translate>Organization</label>
+                <angucomplete-alt
+                  id="organization"
+                  placeholder="{{'Search for organizations'|translate}}"
+                  pause="100"
+                  input-changed="changeOrganization"
+                  selected-object="setOrganization"
+                  remote-url-response-formatter="formatOrganizations"
+                  remote-url="{{hrinfoBaseUrl}}/hid/organizations/autocomplete/"
+                  search-fields="name"
+                  title-field="name"
+                  minlength="2"
+                  text-searching="{{'Searching...'|translate}}"
+                  text-no-results="{{'No results found.'|translate}}"
+                  initial-value="{{profile.organization[0].name}}"
+                  input-class="form-control"></angucomplete-alt>
+
+                <div class="help-block"><span translate>Request to</span> <a href="http://www.humanitarianresponse.info/help/webform/add-new-organization-form" target="_blank" translate>add a missing organization</a>.</div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label" for="jobtitle" translate>Job Title</label>
+                <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" />
+              </div>
+              <div class="form-group" ng-show="bundles.length">
+                <label class="control-label" for="bundle[{{profile.bundle.length - 1}}]" translate>Group</label>
+
+                <div class="reveal btn-reveal" ng-repeat="bundle in profile.bundle track by $index" ng-if="profile.type === 'local'">
+                  <select class="form-control" name="bundle[{{$index}}]" ng-model="profile.bundle[$index]" ng-options="bundle.value as bundle.value for bundle in bundles | orderBy:'value'" ng-blur="focus=0" focus-field="focus">
+                      <option value=""></option>
+                  </select>
+
+                  <button type="button" ng-click="changeFieldEntries('bundle')" ng-class="{'add' : $last && checkForValidEntry('bundle', $index)}">
+                    <i class="fa" ng-class="styleFieldEntries('bundle')"></i>
+                  </button>
+                </div>
+              </div>
           </div>
 
-          <div cg-busy="regionsPromise">
-            <div class="form-group reveal" ng-show="profile.address[0].country && regions.length">
-              <label class="control-label" for="address[0][administrative_area]" translate>State/Province/Region</label>
+          <div class="section">
+            <h4 translate>Location</h4>
+            <div class="form-group">
+              <label class="control-label" for="address[0][country]" translate>Country</label>
               <angucomplete-alt
-                id="admin_area"
+                id="country"
+                placeholder="{{'Search for countries'|translate}}"
+                pause="100"
+                input-changed="changeCountry"
+                selected-object="setCountry"
+                local-data="countries"
+                search-fields="name"
+                title-field="name"
+                minlength="2"
+                text-searching="{{'Searching...'|translate}}"
+                text-no-results="{{'No results found.'|translate}}"
+                initial-value="{{profile.address[0].country}}"
+                input-class="form-control"></angucomplete-alt>
+            </div>
+
+            <div cg-busy="regionsPromise">
+              <div class="form-group reveal" ng-show="profile.address[0].country && regions.length">
+                <label class="control-label" for="address[0][administrative_area]" translate>State/Province/Region</label>
+                <angucomplete-alt
+                  id="admin_area"
+                  pause="0"
+                  input-changed="changeAdminArea"
+                  selected-object="setAdminArea"
+                  local-data="regions"
+                  search-fields="name"
+                  title-field="name"
+                  minlength="1"
+                  text-searching="{{'Searching...'|translate}}"
+                  text-no-results="{{'No results found.'|translate}}"
+                  initial-value="{{profile.address[0].administrative_area}}"
+                  input-class="form-control"></angucomplete-alt>
+              </div>
+            </div>
+
+            <div class="form-group reveal" ng-show="profile.address[0].country && regions.length && profile.address[0].administrative_area">
+              <label class="control-label" for="address[0][locality]" translate>City</label>
+              <angucomplete-alt
+                id="locality"
                 pause="0"
-                input-changed="changeAdminArea"
-                selected-object="setAdminArea"
-                local-data="regions"
+                input-changed="changeLocality"
+                selected-object="setLocality"
+                local-data="localities"
                 search-fields="name"
                 title-field="name"
                 minlength="1"
                 text-searching="{{'Searching...'|translate}}"
                 text-no-results="{{'No results found.'|translate}}"
-                initial-value="{{profile.address[0].administrative_area}}"
+                initial-value="{{profile.address[0].locality}}"
                 input-class="form-control"></angucomplete-alt>
             </div>
           </div>
 
-          <div class="form-group reveal" ng-show="profile.address[0].country && regions.length && profile.address[0].administrative_area">
-            <label class="control-label" for="address[0][locality]" translate>City</label>
-            <angucomplete-alt
-              id="locality"
-              pause="0"
-              input-changed="changeLocality"
-              selected-object="setLocality"
-              local-data="localities"
-              search-fields="name"
-              title-field="name"
-              minlength="1"
-              text-searching="{{'Searching...'|translate}}"
-              text-no-results="{{'No results found.'|translate}}"
-              initial-value="{{profile.address[0].locality}}"
-              input-class="form-control"></angucomplete-alt>
-          </div>
-        </div>
-      </div>
+          <div class="section">
+            <h4 translate>Phone Numbers</h4>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-xs-5"><label class="control-label" for="phone[{{ profile.phone.length - 1 }}][type]" translate>Type</label></div>
+                <div class="col-xs-7"><label class="control-label" for="phone[{{ profile.phone.length - 1 }}][number]" translate>Number</label></div>
+              </div>
+              <div class="reveal btn-reveal" ng-repeat="phone in profile.phone track by $index">
+                <div class="row form-elements-phone" ng-class="{'has-error': profileForm.$submitted  && defaultValidObj('phone').$invalid}">
+                  <div class="col-xs-5">
+                    <select
+                      class="form-control"
+                      ng-options="type as translate(type) for type in phoneTypes"
+                      name="phone[{{$index}}][type]"
+                      ng-change="checkEntryValidation('phone')"
+                      ng-model="profile.phone[$index].type"
+                      ng-class="{'disabled': !profile.phone[$index].type}">
+                      <option value="">{{'Choose Type' | translate}} *</span></option>
+                    </select>
+                  </div>
 
-      <div class="row">
-        <div class="col-sm-12 col-md-6">
-          <h4 translate>Phone Numbers</h4>
-          <div class="form-group">
-            <div class="row">
-              <div class="col-xs-5"><label class="control-label" for="phone[{{ profile.phone.length - 1 }}][type]" translate>Type</label></div>
-              <div class="col-xs-7"><label class="control-label" for="phone[{{ profile.phone.length - 1 }}][number]" translate>Number</label></div>
-            </div>
-            <div class="reveal btn-reveal" ng-repeat="phone in profile.phone track by $index">
-              <div class="row form-elements-phone" ng-class="{'has-error': profileForm.$submitted  && defaultValidObj('phone').$invalid}">
-                <div class="col-xs-5">
-                  <select
-                    class="form-control"
-                    ng-options="type as translate(type) for type in phoneTypes"
-                    name="phone[{{$index}}][type]"
-                    ng-change="checkEntryValidation('phone')"
-                    ng-model="profile.phone[$index].type"
-                    ng-class="{'disabled': !profile.phone[$index].type}">
-                    <option value="">{{'Choose Type' | translate}} *</span></option>
-                  </select>
-                </div>
-
-                <div class="col-xs-7">
-                  <input
-                    ng-if="phone.type != 'Satellite'"
-                    ng-model="profile.phone[$index].number"
-                    international-phone-number
-                    auto-format="true"
-                    national-mode="false"
-                    responsive-dropdown="true"
-                    preferred-countries="{{defaultPreferredCountryAbbr}}"
-                    class="form-control"
-                    type="text"
-                    name="phone[{{$index}}][number]"
-                    ng-change="setCountryCode(); checkEntryValidation('phone')"
-                    ng-blur="focus=0;"
-                    focus-field="focus"/>
-                  <input
-                    ng-if="phone.type == 'Satellite'"
-                    ng-model="profile.phone[$index].number"
-                    class="form-control"
-                    type="text"
-                    ng-change="checkEntryValidation('phone')"
-                    name="phone[{{$index}}][number]"/>
-                  <input type="hidden" name="phone[{{$index}}][countryCode]" ng-model="profile.phone[$index].countryCode" />
-                  <button type="button" ng-click="changeFieldEntries('phone')" ng-class="{'add' : $last && defaultValidObj('phone').$valid}" >
-                    <i class="fa" ng-class="styleFieldEntries('phone')"></i>
-                  </button>
-                </div>
-                <div class="help-block col-sm-12" ng-show="profileForm.$submitted && defaultValidObj('phone').$invalid">
-                  <span ng-repeat="(type, errors) in defaultValidObj('phone').$error">{{alertMsg(type)}}<br></span>
+                  <div class="col-xs-7">
+                    <input
+                      ng-if="phone.type != 'Satellite'"
+                      ng-model="profile.phone[$index].number"
+                      international-phone-number
+                      auto-format="true"
+                      national-mode="false"
+                      responsive-dropdown="true"
+                      preferred-countries="{{defaultPreferredCountryAbbr}}"
+                      class="form-control"
+                      type="text"
+                      name="phone[{{$index}}][number]"
+                      ng-change="setCountryCode(); checkEntryValidation('phone')"
+                      ng-blur="focus=0;"
+                      focus-field="focus"/>
+                    <input
+                      ng-if="phone.type == 'Satellite'"
+                      ng-model="profile.phone[$index].number"
+                      class="form-control"
+                      type="text"
+                      ng-change="checkEntryValidation('phone')"
+                      name="phone[{{$index}}][number]"/>
+                    <input type="hidden" name="phone[{{$index}}][countryCode]" ng-model="profile.phone[$index].countryCode" />
+                    <button type="button" ng-click="changeFieldEntries('phone')" ng-class="{'add' : $last && defaultValidObj('phone').$valid}" >
+                      <i class="fa" ng-class="styleFieldEntries('phone')"></i>
+                    </button>
+                  </div>
+                  <div class="help-block col-sm-12" ng-show="profileForm.$submitted && defaultValidObj('phone').$invalid">
+                    <span ng-repeat="(type, errors) in defaultValidObj('phone').$error">{{alertMsg(type)}}<br></span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="col-sm-12 col-md-6">
-          <h4 translate>Instant Messengers</h4>
-          <div class="form-group">
-            <div class="row">
-              <div class="col-xs-5"><label class="control-label" for="voip[{{ profile.voip.length - 1 }}][type]" translate>Type</label></div>
-              <div class="col-xs-7"><label class="control-label" for="voip[{{ profile.voip.length - 1 }}][number]" translate>Username</label></div>
-            </div>
-            <div class="reveal btn-reveal" ng-repeat="voip in profile.voip track by $index">
-              <div class="row form-elements-voip" ng-class="{'has-error': profileForm.$submitted  && defaultValidObj('voip').$invalid}">
-                <div class="col-xs-5">
-                  <input
-                    name="voip[{{$index}}][type]"
-                    class="form-control"
-                    placeholder="{{'Type' |translate}} *"
-                    type="text"
-                    ng-disabled="!$index"
-                    ng-model="profile.voip[$index].type"
-                    ng-change="checkEntryValidation('voip')"/>
+          <div class="section">
+            <h4 translate>Instant Messengers</h4>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-xs-5"><label class="control-label" for="voip[{{ profile.voip.length - 1 }}][type]" translate>Type</label></div>
+                <div class="col-xs-7"><label class="control-label" for="voip[{{ profile.voip.length - 1 }}][number]" translate>Username</label></div>
+              </div>
+              <div class="reveal btn-reveal" ng-repeat="voip in profile.voip track by $index">
+                <div class="row form-elements-voip" ng-class="{'has-error': profileForm.$submitted  && defaultValidObj('voip').$invalid}">
+                  <div class="col-xs-5">
+                    <input
+                      name="voip[{{$index}}][type]"
+                      class="form-control"
+                      placeholder="{{'Type' |translate}} *"
+                      type="text"
+                      ng-disabled="!$index"
+                      ng-model="profile.voip[$index].type"
+                      ng-change="checkEntryValidation('voip')"/>
 
-                </div>
-                <div class="col-xs-7">
-                  <input
-                    name="voip[{{$index}}][number]"
-                    class="form-control"
-                    placeholder="{{'Username' |translate}}"
-                    type="text"
-                    ng-model="profile.voip[$index].number"
-                    ng-change="checkEntryValidation('voip')"
-                    ng-blur="focus=0;"
-                    focus-field="focus"/>
+                  </div>
+                  <div class="col-xs-7">
+                    <input
+                      name="voip[{{$index}}][number]"
+                      class="form-control"
+                      placeholder="{{'Username' |translate}}"
+                      type="text"
+                      ng-model="profile.voip[$index].number"
+                      ng-change="checkEntryValidation('voip')"
+                      ng-blur="focus=0;"
+                      focus-field="focus"/>
 
-                  <button type="button" ng-if="$index" ng-click="changeFieldEntries('voip')" ng-class="{'add' : $last && defaultValidObj('voip').$valid}" >
-                    <i class="fa" ng-class="styleFieldEntries('voip')"></i>
-                  </button>
-                </div>
-                <div class="help-block col-sm-12" ng-show="profileForm.$submitted && defaultValidObj('voip').$invalid">
-                  <span ng-repeat="(type, errors) in defaultValidObj('voip').$error">{{alertMsg(type)}}<br></span>
+                    <button type="button" ng-if="$index" ng-click="changeFieldEntries('voip')" ng-class="{'add' : $last && defaultValidObj('voip').$valid}" >
+                      <i class="fa" ng-class="styleFieldEntries('voip')"></i>
+                    </button>
+                  </div>
+                  <div class="help-block col-sm-12" ng-show="profileForm.$submitted && defaultValidObj('voip').$invalid">
+                    <span ng-repeat="(type, errors) in defaultValidObj('voip').$error">{{alertMsg(type)}}<br></span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-sm-12 col-md-6">
-          <h4 translate>Email Addresses</h4>
-          <div class="form-group">
-            <div class="row">
-              <div class="col-xs-5"><label class="control-label" for="email[{{ profile.email.length - 1 }}][type]" translate>Type</label></div>
-              <div class="col-xs-7"><label class="control-label" for="email[{{ profile.email.length - 1 }}][address]"  translate>Email</label></div>
-            </div>
-            <div class="reveal btn-reveal" ng-repeat="email in profile.email track by $index">
-              <div class="row form-elements-email" ng-class="{'has-error': profileForm.$submitted && defaultValidObj('email').$invalid}">
-                <div class="col-xs-5">
-                  <select class="form-control" ng-options="type as translate(type) for type in emailTypes" name="email[{{$index}}][type]" ng-model="profile.email[$index].type" ng-class="{'disabled': !profile.email[$index].type}">
-                    <option value="">{{'Choose Type' | translate}}</option>
-                  </select>
-                </div>
-                <div class="col-xs-7">
-                  <input
-                    class="form-control"
-                    placeholder="{{'Address' | translate}}"
-                    type="text"
-                    name="email[{{$index}}][address]"
-                    ng-model="profile.email[$index].address"
-                    ng-pattern='/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'
-                    ng-change="checkEntryValidation('email')"
-                    ng-blur="focus=0;"
-                    focus-field="focus"/>
+          <div class="section">
+            <h4 translate>Email Addresses</h4>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-xs-5"><label class="control-label" for="email[{{ profile.email.length - 1 }}][type]" translate>Type</label></div>
+                <div class="col-xs-7"><label class="control-label" for="email[{{ profile.email.length - 1 }}][address]"  translate>Email</label></div>
+              </div>
+              <div class="reveal btn-reveal" ng-repeat="email in profile.email track by $index">
+                <div class="row form-elements-email" ng-class="{'has-error': profileForm.$submitted && defaultValidObj('email').$invalid}">
+                  <div class="col-xs-5">
+                    <select class="form-control" ng-options="type as translate(type) for type in emailTypes" name="email[{{$index}}][type]" ng-model="profile.email[$index].type" ng-class="{'disabled': !profile.email[$index].type}">
+                      <option value="">{{'Choose Type' | translate}}</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-7">
+                    <input
+                      class="form-control"
+                      placeholder="{{'Address' | translate}}"
+                      type="text"
+                      name="email[{{$index}}][address]"
+                      ng-model="profile.email[$index].address"
+                      ng-pattern='/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'
+                      ng-change="checkEntryValidation('email')"
+                      ng-blur="focus=0;"
+                      focus-field="focus"/>
 
-                  <button type="button" ng-click="changeFieldEntries('email')" ng-class="{'add' : $last && defaultValidObj('email').$valid}">
-                    <i class="fa" ng-class="styleFieldEntries('email')"></i>
-                  </button>
-                </div>
-                <div class="help-block col-sm-12" ng-show="profileForm.$submitted && defaultValidObj('email').$invalid">
-                  <span ng-repeat="(type, errors) in defaultValidObj('email').$error">{{alertMsg(type)}}<br></span>
+                    <button type="button" ng-click="changeFieldEntries('email')" ng-class="{'add' : $last && defaultValidObj('email').$valid}">
+                      <i class="fa" ng-class="styleFieldEntries('email')"></i>
+                    </button>
+                  </div>
+                  <div class="help-block col-sm-12" ng-show="profileForm.$submitted && defaultValidObj('email').$invalid">
+                    <span ng-repeat="(type, errors) in defaultValidObj('email').$error">{{alertMsg(type)}}<br></span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="col-sm-12 col-md-6">
-          <h4 translate>Websites &amp; Social Media</h4>
-          <div class="form-group">
-            <label class="control-label" for="uri[{{ profile.uri.length - 1 }}]" translate>URL</label>
-            <div class="reveal btn-reveal" ng-repeat="uri in profile.uri track by $index" ng-class="{'has-error': profileForm.$submitted && defaultValidObj('uri').$invalid}">
-              <input class="form-control" type="url" name="uri[{{$index}}]" ng-model="profile.uri[$index]" ng-blur="focus=0; httpCheck()" focus-field="focus"/>
-              <button type="button" ng-click="changeFieldEntries('uri')" ng-class="{'add' : $last && checkForValidEntry('uri', $index)}">
-                <i class="fa" ng-class="styleFieldEntries('uri')"></i>
-              </button>
-              <div class="help-block" ng-show="profileForm.$submitted && defaultValidObj('uri').$invalid">
-                <span ng-repeat="(type, errors) in defaultValidObj('uri').$error">{{alertMsg(type)}}<br></span>
+          <div class="section">
+            <h4 translate>Websites &amp; Social Media</h4>
+            <div class="form-group">
+              <label class="control-label" for="uri[{{ profile.uri.length - 1 }}]" translate>URL</label>
+              <div class="reveal btn-reveal" ng-repeat="uri in profile.uri track by $index" ng-class="{'has-error': profileForm.$submitted && defaultValidObj('uri').$invalid}">
+                <input class="form-control" type="url" name="uri[{{$index}}]" ng-model="profile.uri[$index]" ng-blur="focus=0; httpCheck()" focus-field="focus"/>
+                <button type="button" ng-click="changeFieldEntries('uri')" ng-class="{'add' : $last && checkForValidEntry('uri', $index)}">
+                  <i class="fa" ng-class="styleFieldEntries('uri')"></i>
+                </button>
+                <div class="help-block" ng-show="profileForm.$submitted && defaultValidObj('uri').$invalid">
+                  <span ng-repeat="(type, errors) in defaultValidObj('uri').$error">{{alertMsg(type)}}<br></span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-  <!-- Does "Notes" section within "Notes" section make sense? -->
-
-      <div class="row">
-        <div class="col-sm-12">
-          <h4 translate>Notes</h4>
-          <div class="form-group">
-            <textarea class="form-control" name="notes" ng-model="profile.notes" rows="2"></textarea>
-          </div>
-        </div>
-      </div>
 
 
-<!-- Should we put a new section for all "Admin" privliges? -->
-
-      <div class="row">
-
-        <div class="col-sm-12 col-md-6 operations" ng-show="userCanEditKeyContact || userCanEditProtectedRoles">
-          <h4 translate>Local Administration</h4>
-          <div class="form-group" ng-show="userCanEditProtectedRoles">
-            <label class="control-label" for="adminRoles" translate>Protected Roles</label>
-            <ui-select
-              multiple
-              class="form-control"
-              name="selectedProtectedRoles"
-              ng-model="selectedProtectedRoles"
-              reset-search-input
-              theme="bootstrap"
-              on-select="onRoleChange($item, 'selectedProtectedRoles')"
-              on-remove="onRoleChange($item, 'selectedProtectedRoles')">
-              <ui-select-match placeholder="{{'Protected Roles' |translate}}">{{$item.name}}</ui-select-match>
-              <ui-select-choices repeat="protectedRole.id as protectedRole in protectedRoles | orderBy:'name' | filter: $select.search">
-                <div ng-bind-html="protectedRole.name | highlight: $select.search"></div>
-              </ui-select-choices>
-            </ui-select>
-          </div>
-          <div class="form-group" ng-show="userCanEditKeyContact">
-            <div class="checkbox">
-              <label for="keyContact" ng-click="profile.keyContact = !profile.keyContact"><input type="checkbox" name="keyContact" ng-model="profile.keyContact" ng-click="profile.keyContact = !profile.keyContact"/><span translate>Key Contact</span></label>
+          <div class="section">
+            <h4 translate>Notes</h4>
+            <div class="form-group">
+              <textarea class="form-control" name="notes" ng-model="profile.notes" rows="2"></textarea>
             </div>
           </div>
+
         </div>
 
-        <div class="col-sm-12 col-md-6 operations" ng-show="userCanEditRoles || userCanAddVerified">
-          <h4 translate>Global Administration</h4>
-          <div class="form-group" ng-show="userCanEditRoles">
-            <label class="control-label" for="adminRoles" translate>Admin Privileges</label>
-            <ui-select
-              multiple
-              class="form-control"
-              name="adminRoles"
-              ng-model="adminRoles"
-              ng-disabled="!userCanEditRoles"
-              reset-search-input
-              theme="bootstrap"
-              on-select="onRoleChange($item, 'adminRoles')"
-              on-remove="onRoleChange($item, 'adminRoles')">
-              <ui-select-match placeholder="{{'Admin Privileges' |translate}}">{{$item.name}}</ui-select-match>
-              <ui-select-choices repeat="role.id as role in adminRoleOptions | orderBy:'name' | filter: $select.search">
-                <div ng-bind-html="role.name | highlight: $select.search"></div>
-              </ui-select-choices>
-            </ui-select>
+        <div class="col-sm-12 col-md-6 admin-area" ng-if="userCanEditKeyContact || userCanEditProtectedRoles|| userCanEditRoles || userCanEditVerified">
+
+          <div class="section" ng-show="userCanEditKeyContact || userCanEditProtectedRoles">
+              <h4 translate>Local Administration</h4>
+              <div class="form-group" ng-show="userCanEditProtectedRoles">
+                <label class="control-label" for="adminRoles" translate>Protected Roles</label>
+                <ui-select
+                  multiple
+                  class="form-control"
+                  name="selectedProtectedRoles"
+                  ng-model="selectedProtectedRoles"
+                  reset-search-input
+                  theme="bootstrap"
+                  on-select="onRoleChange($item, 'selectedProtectedRoles')"
+                  on-remove="onRoleChange($item, 'selectedProtectedRoles')">
+                  <ui-select-match placeholder="{{'Protected Roles' |translate}}">{{$item.name}}</ui-select-match>
+                  <ui-select-choices repeat="protectedRole.id as protectedRole in protectedRoles | orderBy:'name' | filter: $select.search">
+                    <div ng-bind-html="protectedRole.name | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+              <div class="form-group" ng-show="userCanEditKeyContact">
+                <div class="checkbox">
+                  <label for="keyContact" ng-click="profile.keyContact = !profile.keyContact"><input type="checkbox" name="keyContact" ng-model="profile.keyContact" ng-click="profile.keyContact = !profile.keyContact"/><span translate>Key Contact</span></label>
+                </div>
+              </div>
           </div>
 
-          <div class="checkbox" ng-show="userCanAddVerified">
-            <label for="verified" ng-click="setVerified()"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="verified && !userCanRemoveVerified" ng-click="setVerified()" ng-value="verified"/><span translate>Verified Responder</span></label>
+          <div class="section" ng-show="userCanEditRoles || userCanEditVerified">
+              <h4 translate>Global Administration</h4>
+              <div class="form-group" ng-show="userCanEditRoles">
+                <label class="control-label" for="adminRoles" translate>Admin Privileges</label>
+                <ui-select
+                  multiple
+                  class="form-control"
+                  name="adminRoles"
+                  ng-model="adminRoles"
+                  ng-disabled="!userCanEditRoles"
+                  reset-search-input
+                  theme="bootstrap"
+                  on-select="onRoleChange($item, 'adminRoles')"
+                  on-remove="onRoleChange($item, 'adminRoles')">
+                  <ui-select-match placeholder="{{'Admin Privileges' |translate}}">{{$item.name}}</ui-select-match>
+                  <ui-select-choices repeat="role.id as role in adminRoleOptions | orderBy:'name' | filter: $select.search">
+                    <div ng-bind-html="role.name | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+
+              <div class="checkbox" ng-show="userCanAddVerified">
+                <label for="verified" ng-click="setVerified()"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="verified && !userCanRemoveVerified" ng-click="setVerified()" ng-value="verified"/><span translate>Verified Responder</span></label>
+              </div>
           </div>
+
+          <div class="section" ng-show="userCanDeleteAccount || userCanSendClaimEmail">
+            <a class="btn btn-primary btn-lg btn-block" ng-show="userCanSendClaimEmail" ng-click="confirmSendEmail = !confirmSendEmail" translate>Send Claim Email</a>
+            <a ng-show="confirmSendEmail" ng-disabled="sendingClaimEmail" class="fade btn btn-warning btn-lg btn-block" ng-click="sendClaimEmail()" translate>Confirm Send Claim Email</a>
+            <a class="btn btn-lg btn-primary btn-block btn-danger" ng-if="userCanDeleteAccount" ng-click="profile.confirmDelete = !profile.confirmDelete" translate>Delete Account</a>
+            <a ng-show="profile.confirmDelete" class="fade btn btn-warning btn-lg btn-block" ng-click="deleteAccount()" translate>Confirm Delete Account</a>
+          </div>
+
         </div>
-
       </div>
 
       <div class="row bottom-submit">
@@ -417,7 +417,7 @@
           <button type="button" class="btn btn-default btn-lg btn-block" ng-if="userCanCheckOut" ng-click="checkOut()" translate>Check-out</button>
           <a class="btn btn-default btn-lg btn-block" ng-if="userCanRequestDelete" href="http://humanitarian.id/removal_request/" translate>Delete My Account</a>
           <a class="btn btn-lg btn-primary btn-block btn-danger" ng-if="userCanDeleteAccount" ng-click="profile.confirmDelete = !profile.confirmDelete" translate>Delete Account</a>
-          <a ng-show="profile.confirmDelete" class="slide btn btn-warning btn-lg btn-block" ng-click="deleteAccount()" translate>Confirm Delete Account</a>
+          <a ng-show="profile.confirmDelete" class="fade btn btn-warning btn-lg btn-block" ng-click="deleteAccount()" translate>Confirm Delete Account</a>
         </div>
       </div>
     </div>

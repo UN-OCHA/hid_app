@@ -1,11 +1,23 @@
-.slide {
-  margin-left: -15px;
-  -webkit-transition:0.2s ease-out all;
-  transition:0.2s ease-out all;
+.slide,
+.fade {
+  -webkit-transition:0.2s ease-in all;
+  transition:0.2s ease-in all;
   &.ng-hide {
     -webkit-transition:0.2s ease-in all;
     transition:0.2s ease-in all;
+  }
+}
+.slide {
+  margin-left: -15px;
+  &.ng-hide {
     margin-left: -109px;
+  }
+}
+.fade {
+  opacity: 1;
+
+  &.ng-hide {
+    opacity: 0;
   }
 }
 
