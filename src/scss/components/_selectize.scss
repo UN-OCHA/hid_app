@@ -437,6 +437,9 @@
   }
   .active {
     background-color: lighten($primary-color-1, 10%);
+    &.disabled {
+      background-color:  transparent;
+    }
     &.create {
       color: #ffffff;
     }
@@ -501,6 +504,9 @@
   .active {
     background-color: lighten($primary-color-1, 10%);
     color:$white;
+    &.disabled {
+      background-color:  transparent;
+    }
     &.create {
       color: #ffffff;
     }
@@ -596,3 +602,47 @@
 .ui-select-match {
   line-height: 28px;
 }
+
+
+//.selectize-light {
+//  &.selectize-control.single .selectize-input {
+//    &:after {
+//      border-color: $text-color transparent transparent transparent;
+//    }
+//    input {
+//      @include placeholder {
+//        color: $text-light;
+//      }
+//    }
+//  }
+//  .selectize-dropdown {
+//    &.not-empty:before,
+//    &.form-control.not-empty:before {
+//      border-top: 1px solid $text-light;
+//    }
+//    .active {
+//      background-color: $secondary-color-3;
+//    }
+//    .ui-select-choices-row .default {
+//      color: $text-light;
+//    }
+//  }
+//}
+
+.searching.selectize-control.single .selectize-input,
+.searching.selectize-light.selectize-control.single .selectize-input {
+  &:after {
+    border:none;
+    content: "\f021";
+    width: 1.28571429em;
+    height: 1.35em;
+    text-align: center;
+    top:15px;
+    right: 10px;
+    font-family: FontAwesome;
+    -webkit-animation:fa-spin 1s linear infinite;
+    -moz-animation:fa-spin 1s linear infinite;
+    animation:fa-spin 1s linear infinite;
+  }
+}
+

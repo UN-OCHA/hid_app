@@ -17,7 +17,7 @@ jso = new JSO({
 jso.callback(null, function (token) {});
 
 // Initialize ng
-app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'angucomplete-alt', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview']);
+app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview']);
 
 app.value('cgBusyDefaults',{
   message:'Loading...',
@@ -470,7 +470,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
   }
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, profileService, authService, placesOperations, profileData, countries, roles, protectedRoles, gettextCatalog, userData) {
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, $http, profileService, authService, placesOperations, profileData, countries, roles, protectedRoles, gettextCatalog, userData) {
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
@@ -596,6 +596,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       $scope.profile.address = [];
       $scope.profile.address[0] = {country: $scope.selectedPlace};
     }
+    $scope.addressList = {};
     $scope.regions = [];
     $scope.localities = [];
     $scope.regionsPromise = profileService.getAdminArea(function() {
@@ -608,12 +609,14 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       return remote_id;
     }()).then(function(data) {
       $scope.regions = data;
+      $scope.addressList.regions = data;
       // If we already have an administrative area set, we should also populate the cities for
       // autocomplete
       if ($scope.profile.address[0].hasOwnProperty('administrative_area')) {
         angular.forEach($scope.regions, function(value, key) {
           if (value.name === $scope.profile.address[0].administrative_area) {
             $scope.localities = value.cities;
+            $scope.addressList.localities = value.cities;
           }
         });
       }
@@ -797,132 +800,112 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
-  /**
-   * Callback for angucomplete selection.
-   */
-  $scope.setOrganization = function(selectedOrganization) {
-    // This callback can get called if the user is deleting text from the
-    // input so we should check to see that there is an actual object for
-    // originalObject before attempting to modify profile information.
-    if (selectedOrganization && selectedOrganization.hasOwnProperty('originalObject') && selectedOrganization.originalObject.hasOwnProperty('name')) {
-      $scope.profile.organization = [angular.extend({}, $scope.profile.organization[0] || {}, selectedOrganization.originalObject)];
+
+  $scope.refreshOrganization = function(select, lengthReq) {
+    var clearOption = {action:'clear', name:"", alt: gettextCatalog.getString('Organizations')},
+        helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
+        emptyOption = {action:'clear', name:"", alt: gettextCatalog.getString('No results found.'), disable: true};
+
+    // Remove text in parentheses.
+    select.search = select.search.replace(/ *\([^)]*\) */g, "");
+
+    if (select.search.length > (lengthReq || 0)) {
+      select.searching = true;
+
+      $http.get($scope.hrinfoBaseUrl + '/hid/organizations/autocomplete/' + encodeURIComponent(select.search))
+        .then(function(response) {
+          select.searching = false;
+          $scope.organizations = [];
+          angular.forEach(response.data, function(value, key) {
+            this.push({'name': value, 'remote_id': key});
+          }, $scope.organizations);
+
+          if ($scope.organizations.length) {
+            $scope.organizations.unshift(clearOption);
+          }
+          else {
+            $scope.organizations.push(emptyOption);
+          }
+        });
+    }
+    else {
+      $scope.organizations = []
+      if (typeof $scope.profile.organization !== 'undefined' && $scope.profile.organization.length) {
+        $scope.organizations.push(clearOption);
+      }
+      $scope.organizations.push(helpOption);
     }
   };
 
-  // Handle the input-changed event on the Organization angucomplete to support
-  // clearing the field.
-  $scope.changeOrganization = function (str) {
-    if (!str || !str.length) {
-      $scope.profile.organization = [];
+  $scope.selectOrg = function(item) {
+    $scope.profile.organization = item.action === "clear" ? [] : [item];
+  }
+
+  $scope.refreshAddress = function(select, prop) {
+    if(select) {
+      var clearOption = {action:'clear', name:""},
+          filter = select.$filter('filter');
+
+      $scope.addressList[prop] = filter($scope[prop], select.search);
+
+      if (select.selected) {
+        switch (prop) {
+          case 'countries':
+            clearOption.alt = gettextCatalog.getString('Country');
+            break;
+          case 'regions':
+            clearOption.alt = gettextCatalog.getString('Region');
+            break;
+          case 'localities':
+            clearOption.alt = gettextCatalog.getString('Locality');
+            break;
+        }
+        $scope.addressList[prop].unshift(clearOption);
+      }
     }
-  };
+  }
 
-  /**
-   * AJAX autocomplete response formatter to massage data into format for the widget.
-   */
-  $scope.formatOrganizations = function(response) {
-    var responseArray = [];
+  $scope.selectAddress = function(item, prop) {
+    var altProp = 'localities';
+    $scope.profile.address = $scope.profile.address || [];
+    $scope.profile.address[0] = $scope.profile.address[0] || {};
 
-    angular.forEach(response, function(value, key) {
-      this.push({'name': value, 'remote_id': key});
-    }, responseArray);
-
-    return responseArray;
-  };
-
-  /**
-   * Callback for country angucomplete selection.
-   */
-  $scope.setCountry = function(selectedCountry) {
-    // This callback can get called if the user is deleting text from the
-    // input so we should check to see that there is an actual object for
-    // originalObject before attempting to modify profile information.
-    if (selectedCountry && selectedCountry.hasOwnProperty('originalObject') && selectedCountry.originalObject.hasOwnProperty('name')) {
-      $scope.profile.address = $scope.profile.address || [];
-      $scope.profile.address[0] = $scope.profile.address[0] || {};
-      var address = {
-        'country': selectedCountry.originalObject.name,
-        'administrative_area': '', // Intentionally empty out the administrative zone
-        'locality': '' // Intentionally empty out the locality
-      };
-      $scope.profile.address[0] = angular.extend({}, $scope.profile.address[0], address);
-
-      // Clear out autocomplete fields for administrative_area and locality
-      $scope.$broadcast('angucomplete-alt:clearInput', 'admin_area');
-      $scope.$broadcast('angucomplete-alt:clearInput', 'locality');
-
-      // Start querying for regions
-      $scope.localities = [];
-      $scope.regionsPromise = profileService.getAdminArea(selectedCountry.originalObject.remote_id).then(function(data) {
-        $scope.regions = data;
-      });
+    if (item.action === "clear") {
+      switch (prop) {
+        case 'country':
+          $scope.profile.address = [];
+          break;
+        case 'administrative_area':
+          $scope.profile.address[0].administrative_area = null;
+          $scope.localities = [];
+        case 'locality':
+          $scope.profile.address[0].locality = null;
+      }
     }
-  };
-
-  // Handle the input-changed event on the Country angucomplete to support
-  // clearing the field.
-  $scope.changeCountry = function (str) {
-    if (!str || !str.length) {
-      $scope.profile.address = [];
+    else {
+      switch (prop) {
+        case 'country':
+          altProp = 'countries';
+          $scope.regionsPromise = profileService.getAdminArea(item.remote_id).then(function(data) {
+            $scope.regions = data;
+            $scope.addressList.regions = data;
+          });
+          $scope.profile.address[0].administrative_area = null;
+          $scope.profile.address[0].locality = null;
+          $scope.localities = [];
+          $scope.addressList.localities = [];
+          break;
+        case 'administrative_area':
+          altProp = 'regions';
+          $scope.localities = item.cities;
+          $scope.addressList.localities = item.cities;
+          $scope.profile.address[0].locality = null;
+          break;
+      }
+      $scope.profile.address[0][prop] = item.name;
+      $scope.refreshAddress(this.$select, altProp);
     }
-  };
-
-  /**
-   * Callback for country angucomplete selection.
-   */
-  $scope.setAdminArea = function(selectedRegion) {
-    // This callback can get called if the user is deleting text from the
-    // input so we should check to see that there is an actual object for
-    // originalObject before attempting to modify profile information.
-    if (selectedRegion && selectedRegion.hasOwnProperty('originalObject') && selectedRegion.originalObject.hasOwnProperty('name')) {
-      $scope.profile.address = $scope.profile.address || [];
-      $scope.profile.address[0] = $scope.profile.address[0] || {};
-      var address = {
-        'administrative_area': selectedRegion.originalObject.name,
-        'locality': '' // Intentionally empty out the locality
-      };
-      $scope.profile.address[0] = angular.extend({}, $scope.profile.address[0], address);
-
-      // Clear out autocomplete field for locality
-      $scope.$broadcast('angucomplete-alt:clearInput', 'locality');
-
-      // Set the available cities for searching
-      $scope.localities = selectedRegion.originalObject.cities;
-    }
-  };
-
-  // Handle the input-changed event on the State/Province/Region angucomplete
-  // to support clearing the field.
-  $scope.changeAdminArea = function (str) {
-    if (!str || !str.length) {
-      $scope.profile.address[0].administrative_area = '';
-    }
-  };
-
-  /**
-   * Callback for country angucomplete selection.
-   */
-  $scope.setLocality = function(selectedLocality) {
-    // This callback can get called if the user is deleting text from the
-    // input so we should check to see that there is an actual object for
-    // originalObject before attempting to modify profile information.
-    if (selectedLocality && selectedLocality.hasOwnProperty('originalObject') && selectedLocality.originalObject.hasOwnProperty('name')) {
-      $scope.profile.address = $scope.profile.address || [];
-      $scope.profile.address[0] = $scope.profile.address[0] || {};
-      var address = {
-        'locality': selectedLocality.originalObject.name
-      };
-      $scope.profile.address[0] = angular.extend({}, $scope.profile.address[0], address);
-    }
-  };
-
-  // Handle the input-changed event on the City angucomplete to support
-  // clearing the field.
-  $scope.changeLocality = function (str) {
-    if (!str || !str.length) {
-      $scope.profile.address[0].locality = '';
-    }
-  };
+  }
 
   // Update submit text when changing language.
   $scope.submitText = function() {
