@@ -11167,6 +11167,9 @@ table tr td:last-child {
 .selectize-dropdown .active {
   background-color: #7bc3d4;
 }
+.selectize-dropdown .active.disabled {
+  background-color: transparent;
+}
 .selectize-dropdown .active.create {
   color: #ffffff;
 }
@@ -11227,6 +11230,9 @@ table tr td:last-child {
 .selectize-light .selectize-dropdown .active {
   background-color: #7bc3d4;
   color: #fff;
+}
+.selectize-light .selectize-dropdown .active.disabled {
+  background-color: transparent;
 }
 .selectize-light .selectize-dropdown .active.create {
   color: #ffffff;
@@ -11323,6 +11329,21 @@ table tr td:last-child {
 
 .ui-select-match {
   line-height: 28px;
+}
+
+.searching.selectize-control.single .selectize-input:after,
+.searching.selectize-light.selectize-control.single .selectize-input:after {
+  border: none;
+  content: "\f021";
+  width: 1.28571429em;
+  height: 1.35em;
+  text-align: center;
+  top: 15px;
+  right: 10px;
+  font-family: FontAwesome;
+  -webkit-animation: fa-spin 1s linear infinite;
+  -moz-animation: fa-spin 1s linear infinite;
+  animation: fa-spin 1s linear infinite;
 }
 
 .sidebar-left {

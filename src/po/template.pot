@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-25T20:36:31.515Z\n"
+"Project-Id-Version: 2015-03-30T20:38:35.022Z\n"
 
 #: src/partials/list-print.html
-msgid "*the term GROUP equals clusters, sectors, working group or other thematic groups"
+msgid "* Groups include clusters, sectors, working group or similar."
 msgstr ""
 
 #: src/partials/header.html
@@ -76,6 +76,7 @@ msgid "Check-in User"
 msgstr ""
 
 #: src/js/app.js
+#: src/partials/profile.html
 msgid "Check-out"
 msgstr ""
 
@@ -112,6 +113,7 @@ msgid "Confirm Delete Account"
 msgstr ""
 
 #: src/partials/contact.html
+#: src/partials/profile.html
 msgid "Confirm Send Claim Email"
 msgstr ""
 
@@ -140,6 +142,7 @@ msgstr ""
 msgid "Contacts"
 msgstr ""
 
+#: src/js/app.js
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Country"
@@ -361,10 +364,6 @@ msgstr ""
 msgid "Invalid phone number."
 msgstr ""
 
-#: src/partials/profile.html
-msgid "Invalid value for"
-msgstr ""
-
 #: src/partials/contact.html
 #: src/partials/createAccount.html
 #: src/partials/list-print.html
@@ -385,6 +384,7 @@ msgstr ""
 msgid "Local Administration"
 msgstr ""
 
+#: src/js/app.js
 #: src/partials/list.html
 msgid "Locality"
 msgstr ""
@@ -433,7 +433,7 @@ msgstr ""
 msgid "No profiles found."
 msgstr ""
 
-#: src/partials/profile.html
+#: src/js/app.js
 msgid "No results found."
 msgstr ""
 
@@ -466,6 +466,10 @@ msgstr ""
 msgid "Organizational Information"
 msgstr ""
 
+#: src/js/app.js
+msgid "Organizations"
+msgstr ""
+
 #: src/partials/createAccount.html
 #: src/partials/list-print.html
 msgid "Phone"
@@ -485,6 +489,10 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "Please create a"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Please select from the list"
 msgstr ""
 
 #: src/partials/profile.html
@@ -515,6 +523,7 @@ msgstr ""
 msgid "Redirecting to authentication system..."
 msgstr ""
 
+#: src/js/app.js
 #: src/partials/list.html
 msgid "Region"
 msgstr ""
@@ -562,16 +571,23 @@ msgid "Search by name, title, or organization"
 msgstr ""
 
 #: src/partials/profile.html
-msgid "Search for countries"
+msgid "Search for country"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Search for locality"
 msgstr ""
 
 #: src/partials/createAccount.html
-#: src/partials/profile.html
 msgid "Search for organizations"
 msgstr ""
 
 #: src/partials/profile.html
-msgid "Searching..."
+msgid "Search for region"
+msgstr ""
+
+#: src/js/app.js
+msgid "Search term must be at least 3 characters long."
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -587,6 +603,7 @@ msgid "Select an operation"
 msgstr ""
 
 #: src/partials/contact.html
+#: src/partials/profile.html
 msgid "Send Claim Email"
 msgstr ""
 
@@ -674,6 +691,10 @@ msgstr ""
 msgid "Website/Social Media"
 msgstr ""
 
+#: src/js/app.js
+msgid "Websites & Social Media entry"
+msgstr ""
+
 #: src/partials/profile.html
 msgid "Websites &amp; Social Media"
 msgstr ""
@@ -709,10 +730,6 @@ msgstr ""
 
 #: src/partials/about.html
 msgid "development server"
-msgstr ""
-
-#: src/partials/profile.html
-msgid "entry"
 msgstr ""
 
 #: src/partials/about.html

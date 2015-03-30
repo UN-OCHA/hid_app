@@ -65,22 +65,25 @@
           <div class="section">
               <h4 translate>Organizational Information</h4>
               <div class="form-group">
-                <label class="control-label" for="organization[0][name]" translate>Organization</label>
-                <angucomplete-alt
-                  id="organization"
-                  placeholder="{{'Search for organizations'|translate}}"
-                  pause="100"
-                  input-changed="changeOrganization"
-                  selected-object="setOrganization"
-                  remote-url-response-formatter="formatOrganizations"
-                  remote-url="{{hrinfoBaseUrl}}/hid/organizations/autocomplete/"
-                  search-fields="name"
-                  title-field="name"
-                  minlength="2"
-                  text-searching="{{'Searching...'|translate}}"
-                  text-no-results="{{'No results found.'|translate}}"
-                  initial-value="{{profile.organization[0].name}}"
-                  input-class="form-control"></angucomplete-alt>
+                <label class="control-label" for="organization" translate>Organization</label>
+
+                <ui-select
+                  name="organization"
+                  class="form-control {{$select.searching ? 'searching' : ''}}"
+                  ng-model="profile.organization[0]"
+                  theme="selectize"
+                  reset-search-input="true"
+                  on-select="selectOrg($item)">
+                    <ui-select-match placeholder="{{'Please select from the list'|translate}}">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices
+                      ng-class="{'not-empty': organizations.length}"
+                      repeat="org.name as org in organizations | orderBy:'name'"
+                      refresh="refreshOrganization($select, 2)"
+                      refresh-delay="200"
+                      ui-disable-choice="org.disable">
+                      <div ng-class="{default: !organizations.name.length}" ng-bind-html="org.alt || (org.name | highlight: $select.search) "></div>
+                    </ui-select-choices>
+                </ui-select>
 
                 <div class="help-block"><span translate>Request to</span> <a href="http://www.humanitarianresponse.info/help/webform/add-new-organization-form" target="_blank" translate>add a missing organization</a>.</div>
               </div>
@@ -107,57 +110,62 @@
           <div class="section">
             <h4 translate>Location</h4>
             <div class="form-group">
-              <label class="control-label" for="address[0][country]" translate>Country</label>
-              <angucomplete-alt
-                id="country"
-                placeholder="{{'Search for countries'|translate}}"
-                pause="100"
-                input-changed="changeCountry"
-                selected-object="setCountry"
-                local-data="countries"
-                search-fields="name"
-                title-field="name"
-                minlength="2"
-                text-searching="{{'Searching...'|translate}}"
-                text-no-results="{{'No results found.'|translate}}"
-                initial-value="{{profile.address[0].country}}"
-                input-class="form-control"></angucomplete-alt>
+              <label class="control-label" for="address.country" translate>Country</label>
+              <ui-select
+                name="address.country"
+                class="form-control"
+                ng-model="profile.address[0].country"
+                theme="selectize"
+                reset-search-input="true"
+                on-select="selectAddress($item, 'country')">
+                  <ui-select-match placeholder="{{'Search for country'|translate}}">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices
+                    ng-class="{'not-empty': addressList.countries.length}"
+                    refresh="refreshAddress($select, 'countries')"
+                    repeat="country.name as country in addressList.countries | orderBy:'name'">
+                    <div ng-class="{default: !country.name.length}" ng-bind-html="country.alt || (country.name | highlight: $select.search)"></div>
+                  </ui-select-choices>
+              </ui-select>
             </div>
 
             <div cg-busy="regionsPromise">
               <div class="form-group reveal" ng-show="profile.address[0].country && regions.length">
-                <label class="control-label" for="address[0][administrative_area]" translate>State/Province/Region</label>
-                <angucomplete-alt
-                  id="admin_area"
-                  pause="0"
-                  input-changed="changeAdminArea"
-                  selected-object="setAdminArea"
-                  local-data="regions"
-                  search-fields="name"
-                  title-field="name"
-                  minlength="1"
-                  text-searching="{{'Searching...'|translate}}"
-                  text-no-results="{{'No results found.'|translate}}"
-                  initial-value="{{profile.address[0].administrative_area}}"
-                  input-class="form-control"></angucomplete-alt>
+                <label class="control-label" for="address.administrative_area" translate>State/Province/Region</label>
+                <ui-select
+                  name="address.administrative_area"
+                  class="form-control"
+                  ng-model="profile.address[0].administrative_area"
+                  theme="selectize"
+                  reset-search-input="true"
+                  on-select="selectAddress($item, 'administrative_area')">
+                    <ui-select-match placeholder="{{'Search for region'|translate}}">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices
+                      ng-class="{'not-empty': addressList.regions.length}"
+                      refresh="refreshAddress($select, 'regions')"
+                      repeat="region.name as region in addressList.regions | orderBy:'name'">
+                      <div ng-class="{default: !region.name.length}" ng-bind-html="region.alt || (region.name | highlight: $select.search)"></div>
+                    </ui-select-choices>
+                </ui-select>
               </div>
             </div>
 
             <div class="form-group reveal" ng-show="profile.address[0].country && regions.length && profile.address[0].administrative_area">
               <label class="control-label" for="address[0][locality]" translate>City</label>
-              <angucomplete-alt
-                id="locality"
-                pause="0"
-                input-changed="changeLocality"
-                selected-object="setLocality"
-                local-data="localities"
-                search-fields="name"
-                title-field="name"
-                minlength="1"
-                text-searching="{{'Searching...'|translate}}"
-                text-no-results="{{'No results found.'|translate}}"
-                initial-value="{{profile.address[0].locality}}"
-                input-class="form-control"></angucomplete-alt>
+              <ui-select
+                name="address.locality"
+                class="form-control"
+                ng-model="profile.address[0].locality"
+                theme="selectize"
+                reset-search-input="true"
+                on-select="selectAddress($item, 'locality')">
+                  <ui-select-match placeholder="{{'Search for locality'|translate}}">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices
+                    ng-class="{'not-empty': addressList.localities.length}"
+                    refresh="refreshAddress($select, 'localities')"
+                    repeat="locality.name as locality in addressList.localities | orderBy:'name'">
+                    <div ng-class="{default: !locality.name.length}" ng-bind-html="locality.alt || (locality.name | highlight: $select.search)"></div>
+                  </ui-select-choices>
+              </ui-select>
             </div>
           </div>
 
