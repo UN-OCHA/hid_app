@@ -337,8 +337,8 @@
                   ng-model="selectedProtectedRoles"
                   reset-search-input
                   theme="bootstrap"
-                  on-select="onChange($item, 'selectedProtectedRoles')"
-                  on-remove="onChange($item, 'selectedProtectedRoles')">
+                  on-select="onRoleChange($item, 'selectedProtectedRoles')"
+                  on-remove="onRoleChange($item, 'selectedProtectedRoles')">
                   <ui-select-match placeholder="{{'Protected Roles' |translate}}">{{$item.name}}</ui-select-match>
                   <ui-select-choices repeat="protectedRole.id as protectedRole in protectedRoles | orderBy:'name' | filter: $select.search">
                     <div ng-bind-html="protectedRole.name | highlight: $select.search"></div>
@@ -364,8 +364,8 @@
                   ng-disabled="!userCanEditRoles"
                   reset-search-input
                   theme="bootstrap"
-                  on-select="onChange($item, 'adminRoles')"
-                  on-remove="onChange($item, 'adminRoles')">
+                  on-select="onRoleChange($item, 'adminRoles')"
+                  on-remove="onRoleChange($item, 'adminRoles')">
                   <ui-select-match placeholder="{{'Admin Privileges' |translate}}">{{$item.name}}</ui-select-match>
                   <ui-select-choices repeat="role.id as role in adminRoleOptions | orderBy:'name' | filter: $select.search">
                     <div ng-bind-html="role.name | highlight: $select.search"></div>
@@ -373,8 +373,8 @@
                 </ui-select>
               </div>
 
-              <div class="checkbox" ng-show="userCanEditVerified">
-                <label for="verified" ng-click="verified = !userCanEditVerified ? verified : !verified"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="!userCanEditVerified" ng-readonly="!userCanEditVerified" ng-click="verified = !verified"/><span translate>Verified Responder</span></label>
+              <div class="checkbox" ng-show="userCanAddVerified">
+                <label for="verified" ng-click="setVerified()"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="verified && !userCanRemoveVerified" ng-click="setVerified()" ng-value="verified"/><span translate>Verified Responder</span></label>
               </div>
           </div>
 
@@ -383,13 +383,10 @@
             <a ng-show="confirmSendEmail" ng-disabled="sendingClaimEmail" class="fade btn btn-warning btn-lg btn-block" ng-click="sendClaimEmail()" translate>Confirm Send Claim Email</a>
             <a class="btn btn-lg btn-primary btn-block btn-danger" ng-if="userCanDeleteAccount" ng-click="profile.confirmDelete = !profile.confirmDelete" translate>Delete Account</a>
             <a ng-show="profile.confirmDelete" class="fade btn btn-warning btn-lg btn-block" ng-click="deleteAccount()" translate>Confirm Delete Account</a>
-
           </div>
 
         </div>
       </div>
-
-
 
       <div class="row bottom-submit">
         <div class="col-sm-12 col-md-6">
