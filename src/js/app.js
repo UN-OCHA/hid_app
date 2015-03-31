@@ -546,6 +546,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.$watch("selectedOperation", function(newValue, oldValue) {
     if (newValue !== oldValue && $scope.selectedPlace.length && $scope.selectedOperation.length) {
       setBundles();
+      setDefaultCountry();
       setPreferedCountries();
       setPermissions();
       // Scoll to top of form.
@@ -592,35 +593,34 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   // Now we have a profile, use the profile's country to fetch regions and cities
   if ($scope.profile.address) {
-    if (!$scope.profile.address.length || !$scope.profile.address[0].hasOwnProperty('country')) {
-      $scope.profile.address = [];
-      $scope.profile.address[0] = {country: $scope.selectedPlace};
-    }
+    setDefaultCountry();
     $scope.addressList = {};
     $scope.regions = [];
     $scope.localities = [];
-    $scope.regionsPromise = profileService.getAdminArea(function() {
-      var remote_id = null;
-      angular.forEach($scope.countries, function(value, key) {
-        if (value.name === $scope.profile.address[0].country) {
-          remote_id = value.remote_id;
-        }
-      });
-      return remote_id;
-    }()).then(function(data) {
-      $scope.regions = data;
-      $scope.addressList.regions = data;
-      // If we already have an administrative area set, we should also populate the cities for
-      // autocomplete
-      if ($scope.profile.address[0].hasOwnProperty('administrative_area')) {
-        angular.forEach($scope.regions, function(value, key) {
-          if (value.name === $scope.profile.address[0].administrative_area) {
-            $scope.localities = value.cities;
-            $scope.addressList.localities = value.cities;
+    if ($scope.profile.address[0]) {
+      $scope.regionsPromise = profileService.getAdminArea(function() {
+        var remote_id = null;
+        angular.forEach($scope.countries, function(value, key) {
+          if (value.name === $scope.profile.address[0].country) {
+            remote_id = value.remote_id;
           }
         });
-      }
-    });
+        return remote_id;
+      }()).then(function(data) {
+        $scope.regions = data;
+        $scope.addressList.regions = data;
+        // If we already have an administrative area set, we should also populate the cities for
+        // autocomplete
+        if ($scope.profile.address[0].hasOwnProperty('administrative_area')) {
+          angular.forEach($scope.regions, function(value, key) {
+            if (value.name === $scope.profile.address[0].administrative_area) {
+              $scope.localities = value.cities;
+              $scope.addressList.localities = value.cities;
+            }
+          });
+        }
+      });
+    }
   }
 
   // Toggle logic for verified field.
@@ -1137,6 +1137,48 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
+  $scope.setPreferedCountries = setPreferedCountries;
+
+  // If profile is local, set preferred county code to checkin location.
+  function setPreferedCountries() {
+    var address, match, countryMatch, iso2Codes;
+    $scope.defaultPreferredCountryAbbr = [];
+
+    address = $scope.profile.address || profileData.contact.address;
+    match = (address[0] && address[0].hasOwnProperty('country') && address[0].country.length) ? address[0].country.toUpperCase() : $scope.selectedPlace.toUpperCase();
+
+    countryMatch = $.fn.intlTelInput.getCountryData().filter(function (el) {
+      // Returns country data that is similar to selectedPlace.
+      return el.name.toUpperCase().match(match);
+    });
+
+    iso2Codes = [];
+    for (var i in countryMatch) {
+      iso2Codes.push(countryMatch[i].iso2)
+    };
+    // Converts array to a string.
+    $scope.defaultPreferredCountryAbbr = iso2Codes.join(', ') || "ch";
+    updateCountryCodes(iso2Codes[0]);
+  }
+
+  function updateCountryCodes(iso2) {
+    angular.forEach($scope.profile.phone, function(value, key) {
+      if (!value.number) {
+        var countryInfo = jQuery('input[name="phone[' + key + '][number]"]').intlTelInput('selectCountry', iso2);
+      }
+    });
+  }
+
+  // If no country is selected, change to it to check-in location.
+  function setDefaultCountry() {
+    if ($scope.profile.type == 'local' && $scope.profile.address) {
+      if (!$scope.profile.address.length || !$scope.profile.address[0].country) {
+        $scope.profile.address = [];
+        $scope.profile.address[0] = {country: $scope.selectedPlace};
+      }
+    }
+  }
+
   // Converts object to a sortable array.
   function listObjectToArray(obj, kLabel, vLabel) {
     var listArray = [];
@@ -1156,28 +1198,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   function setBundles(){
     var bundles = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].bundles;
     $scope.bundles = listObjectToArray(bundles);
-  }
-
-  // If profile is local, set preferred county code to checkin location.
-  function setPreferedCountries() {
-    if ($scope.profile.type === 'local') {
-      $scope.defaultPreferredCountryAbbr = [];
-      var match, countryMatch;
-
-      match = $scope.selectedPlace.toUpperCase();
-      countryMatch = $.fn.intlTelInput.getCountryData().filter(function (el) {
-        // Returns country data that is similar to selectedPlace.
-        return el.name.toUpperCase().match(match);
-      });
-      for (var i in countryMatch) {
-        $scope.defaultPreferredCountryAbbr.push(countryMatch[i].iso2)
-      };
-      // Converts array to a string.
-      $scope.defaultPreferredCountryAbbr = $scope.defaultPreferredCountryAbbr.join(', ') || "ch";
-    }
-    else {
-      $scope.defaultPreferredCountryAbbr = "ch";
-    }
   }
 
   function setPermissions() {

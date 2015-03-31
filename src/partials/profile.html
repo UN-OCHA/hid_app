@@ -117,7 +117,7 @@
                 ng-model="profile.address[0].country"
                 theme="selectize"
                 reset-search-input="true"
-                on-select="selectAddress($item, 'country')">
+                on-select="selectAddress($item, 'country'); setPreferedCountries()">
                   <ui-select-match placeholder="{{'Search for country'|translate}}">{{$select.selected.name}}</ui-select-match>
                   <ui-select-choices
                     ng-class="{'not-empty': addressList.countries.length}"
