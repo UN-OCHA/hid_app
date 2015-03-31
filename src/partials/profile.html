@@ -404,7 +404,7 @@
         </div>
         <div class="col-sm-12 col-md-6">
           <div class="form-group">
-            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="back()" ng-bind="cancelText()"></button>
+            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="back()" translate>Cancel</button>
           </div>
         </div>
       </div>
@@ -421,7 +421,7 @@
       <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
         <div class="actions">
           <input class="btn btn-primary btn-lg btn-block" type="submit" ng-value="submitText()"/>
-          <button type="button" class="btn btn-default btn-lg btn-block" ng-click="back()" ng-bind="cancelText()"></button>
+          <button type="button" class="btn btn-default btn-lg btn-block" ng-click="back()" translate>Cancel</button>
           <button type="button" class="btn btn-default btn-lg btn-block" ng-if="userCanCheckOut" ng-click="checkOut()" translate>Check-out</button>
           <a class="btn btn-default btn-lg btn-block" ng-if="userCanRequestDelete" href="http://humanitarian.id/removal_request/" translate>Delete My Account</a>
           <a class="btn btn-lg btn-primary btn-block btn-danger" ng-if="userCanDeleteAccount" ng-click="profile.confirmDelete = !profile.confirmDelete" translate>Delete Account</a>

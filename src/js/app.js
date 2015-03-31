@@ -909,27 +909,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   // Update submit text when changing language.
   $scope.submitText = function() {
-    if ($scope.profile.type === 'global') {
-      return gettextCatalog.getString('Update Profile');
-    }
-    else if (!checkinFlow) {
-      return gettextCatalog.getString('Update Check-in')
+    if ($scope.profile.type === 'global' || !checkinFlow) {
+      return gettextCatalog.getString('Save');
     }
     else {
       return gettextCatalog.getString('Check-in')
-    }
-  }
-
-  // Update submit text when changing language.
-  $scope.cancelText = function() {
-    if ($scope.profile.type === 'global') {
-      return gettextCatalog.getString('Cancel Profile Update');
-    }
-    else if (!checkinFlow) {
-      return gettextCatalog.getString('Cancel Check-in Update')
-    }
-    else {
-      return gettextCatalog.getString('Cancel Check-in')
     }
   }
 
