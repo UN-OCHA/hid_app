@@ -9319,45 +9319,62 @@ label[for=keyContact] .fa {
   border-radius: 0px;
   border: 1px solid #b9b9b9;
 }
-.form-elements-phone .col-xs-5,
-.form-elements-email .col-xs-5,
-.form-elements-voip .col-xs-5 {
+.form-elements-phone .form-prefix,
+.form-elements-email .form-prefix,
+.form-elements-voip .form-prefix {
   padding-right: 0px;
 }
-.form-elements-phone .col-xs-5:before,
-.form-elements-email .col-xs-5:before,
-.form-elements-voip .col-xs-5:before {
+.form-elements-phone .form-prefix .form-control,
+.form-elements-email .form-prefix .form-control,
+.form-elements-voip .form-prefix .form-control {
+  border-right: none;
+}
+.form-elements-phone .form-suffix,
+.form-elements-email .form-suffix,
+.form-elements-voip .form-suffix {
+  padding-left: 0px;
+}
+.form-elements-phone .form-suffix .form-control,
+.form-elements-email .form-suffix .form-control,
+.form-elements-voip .form-suffix .form-control {
+  border-left: none;
+  text-align: right;
+}
+.form-elements-phone .form-body,
+.form-elements-email .form-body,
+.form-elements-voip .form-body {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.form-elements-phone .form-body .form-control,
+.form-elements-email .form-body .form-control,
+.form-elements-voip .form-body .form-control {
+  border-left: none;
+  border-right: none;
+  text-align: right;
+}
+.form-elements-phone .intl-tel-input:before,
+.form-elements-phone .form-prefix:before,
+.form-elements-email .intl-tel-input:before,
+.form-elements-email .form-prefix:before,
+.form-elements-voip .intl-tel-input:before,
+.form-elements-voip .form-prefix:before {
   content: "";
   border-left: 1px solid #b9b9b9;
   height: 22px;
   position: absolute;
   right: 0;
   bottom: 10px;
-}
-.form-elements-phone .col-xs-5 .form-control,
-.form-elements-email .col-xs-5 .form-control,
-.form-elements-voip .col-xs-5 .form-control {
-  border-right: none;
-}
-.form-elements-phone .col-xs-7,
-.form-elements-email .col-xs-7,
-.form-elements-voip .col-xs-7 {
-  padding-left: 0px;
-}
-.form-elements-phone .col-xs-7 .form-control,
-.form-elements-email .col-xs-7 .form-control,
-.form-elements-voip .col-xs-7 .form-control {
-  border-left: none;
-  text-align: right;
+  z-index: 10;
 }
 .form-elements-phone.has-error .form-control,
 .form-elements-email.has-error .form-control,
 .form-elements-voip.has-error .form-control {
   border-color: #B8303E;
 }
-.form-elements-phone.has-error .col-xs-5:before,
-.form-elements-email.has-error .col-xs-5:before,
-.form-elements-voip.has-error .col-xs-5:before {
+.form-elements-phone.has-error .form-prefix:before,
+.form-elements-email.has-error .form-prefix:before,
+.form-elements-voip.has-error .form-prefix:before {
   border-left: 1px solid #B8303E;
 }
 
@@ -9389,8 +9406,8 @@ label[for=keyContact] .fa {
   right: -10px;
 }
 
-.angucomplete-dropdown {
-  width: 100%;
+.form-elements-phone .form-suffix .form-control {
+  text-align: left;
 }
 
 .ui-select-multiple.ui-select-bootstrap .btn-default {
