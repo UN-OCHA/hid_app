@@ -49,7 +49,7 @@
 
               <div class="profile-view__items same-height-col">
                 <div class="phone" ng-repeat="phone in contact.phone">
-                  <div class="profile-view__item">{{phone.type | translate}}: <a href="tel:{{phone.number}}">{{phone.number}}</a></div>
+                  <div class="profile-view__item">{{phone.type | translate}}: <a href="tel:{{phone.number}}">{{phoneDisplay(phone.number)}}</a></div>
                 </div>
                 <div class="email" ng-repeat="email in contact.email">
                   <div class="profile-view__item"><span ng-show="email.type">{{email.type | translate}}: </span><a href="mailto:{{email.address}}">{{email.address}}</a></div>

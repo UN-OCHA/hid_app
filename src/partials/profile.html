@@ -32,6 +32,7 @@
   <form name="profileForm" class="update-profile profile-form row" ng-show="selectedPlace.length && selectedOperation.length" ng-class="{'show-options': profileOptions}" novalidate ng-submit="submitProfile()">
     <div class="form-content col-xs-12 col-sm-8 col-md-9 pull-right" >
       <h3>{{profileName()}} <span translate>Profile</span></h3>
+      <p class="help-block">* <em>Required field</em></p>
       <div class="row alert-wrapper">
         <browser-alert></browser-alert>
         <div class="alert alert-danger col-xs-12" ng-show="profileForm.$submitted && profileForm.$invalid">
@@ -117,7 +118,7 @@
                 ng-model="profile.address[0].country"
                 theme="selectize"
                 reset-search-input="true"
-                on-select="selectAddress($item, 'country')">
+                on-select="selectAddress($item, 'country'); setPreferedCountries()">
                   <ui-select-match placeholder="{{'Search for country'|translate}}">{{$select.selected.name}}</ui-select-match>
                   <ui-select-choices
                     ng-class="{'not-empty': addressList.countries.length}"
@@ -173,12 +174,16 @@
             <h4 translate>Phone Numbers</h4>
             <div class="form-group">
               <div class="row">
-                <div class="col-xs-5"><label class="control-label" for="phone[{{ profile.phone.length - 1 }}][type]" translate>Type</label></div>
-                <div class="col-xs-7"><label class="control-label" for="phone[{{ profile.phone.length - 1 }}][number]" translate>Number</label></div>
+                <div class="col-xs-4"><label class="control-label" for="phone[{{ profile.phone.length - 1 }}][type]" translate>Type</label></div>
+                <div class="col-xs-5 col-lg-4"><label class="control-label" for="phone[{{ profile.phone.length - 1 }}][number]" translate>Number</label>
+                </div>
+                <div class="col-xs-3 col-lg-4">
+                  <label class="control-label" for="phone[{{ profile.phone.length - 1 }}][ext]" translate>Extension</label>
+                </div>
               </div>
               <div class="reveal btn-reveal" ng-repeat="phone in profile.phone track by $index">
                 <div class="row form-elements-phone" ng-class="{'has-error': profileForm.$submitted  && defaultValidObj('phone').$invalid}">
-                  <div class="col-xs-5">
+                  <div class="form-prefix col-xs-4">
                     <select
                       class="form-control"
                       ng-options="type as translate(type) for type in phoneTypes"
@@ -190,18 +195,20 @@
                     </select>
                   </div>
 
-                  <div class="col-xs-7">
+                  <div class="form-body col-xs-6 col-md-5">
                     <input
                       ng-if="phone.type != 'Satellite'"
                       ng-model="profile.phone[$index].number"
                       international-phone-number
                       auto-format="true"
                       national-mode="false"
+                      allow-extensions="true"
                       responsive-dropdown="true"
                       preferred-countries="{{defaultPreferredCountryAbbr}}"
                       class="form-control"
                       type="text"
                       name="phone[{{$index}}][number]"
+                      placeholder="{{setPhonePlaceholder()}}"
                       ng-change="setCountryCode(); checkEntryValidation('phone')"
                       ng-blur="focus=0;"
                       focus-field="focus"/>
@@ -213,6 +220,9 @@
                       ng-change="checkEntryValidation('phone')"
                       name="phone[{{$index}}][number]"/>
                     <input type="hidden" name="phone[{{$index}}][countryCode]" ng-model="profile.phone[$index].countryCode" />
+                  </div>
+                  <div class="form-suffix col-xs-2 col-md-3">
+                    <input type="text" class="form-control" name="phone[{{$index}}][ext]" ng-model="profile.phone[$index].ext" maxlength="4" placeholder="{{'Ext.' | translate}}"/>
                     <button type="button" ng-click="changeFieldEntries('phone')" ng-class="{'add' : $last && defaultValidObj('phone').$valid}" >
                       <i class="fa" ng-class="styleFieldEntries('phone')"></i>
                     </button>
@@ -229,12 +239,12 @@
             <h4 translate>Instant Messengers</h4>
             <div class="form-group">
               <div class="row">
-                <div class="col-xs-5"><label class="control-label" for="voip[{{ profile.voip.length - 1 }}][type]" translate>Type</label></div>
-                <div class="col-xs-7"><label class="control-label" for="voip[{{ profile.voip.length - 1 }}][number]" translate>Username</label></div>
+                <div class="col-xs-4"><label class="control-label" for="voip[{{ profile.voip.length - 1 }}][type]" translate>Type</label></div>
+                <div class="col-xs-8"><label class="control-label" for="voip[{{ profile.voip.length - 1 }}][number]" translate>Username</label></div>
               </div>
               <div class="reveal btn-reveal" ng-repeat="voip in profile.voip track by $index">
                 <div class="row form-elements-voip" ng-class="{'has-error': profileForm.$submitted  && defaultValidObj('voip').$invalid}">
-                  <div class="col-xs-5">
+                  <div class="form-prefix col-xs-4">
                     <input
                       name="voip[{{$index}}][type]"
                       class="form-control"
@@ -245,7 +255,7 @@
                       ng-change="checkEntryValidation('voip')"/>
 
                   </div>
-                  <div class="col-xs-7">
+                  <div class="form-suffix col-xs-8">
                     <input
                       name="voip[{{$index}}][number]"
                       class="form-control"
@@ -272,17 +282,17 @@
             <h4 translate>Email Addresses</h4>
             <div class="form-group">
               <div class="row">
-                <div class="col-xs-5"><label class="control-label" for="email[{{ profile.email.length - 1 }}][type]" translate>Type</label></div>
-                <div class="col-xs-7"><label class="control-label" for="email[{{ profile.email.length - 1 }}][address]"  translate>Email</label></div>
+                <div class="col-xs-4"><label class="control-label" for="email[{{ profile.email.length - 1 }}][type]" translate>Type</label></div>
+                <div class="col-xs-8"><label class="control-label" for="email[{{ profile.email.length - 1 }}][address]"  translate>Email</label></div>
               </div>
               <div class="reveal btn-reveal" ng-repeat="email in profile.email track by $index">
                 <div class="row form-elements-email" ng-class="{'has-error': profileForm.$submitted && defaultValidObj('email').$invalid}">
-                  <div class="col-xs-5">
+                  <div class="form-prefix col-xs-4">
                     <select class="form-control" ng-options="type as translate(type) for type in emailTypes" name="email[{{$index}}][type]" ng-model="profile.email[$index].type" ng-class="{'disabled': !profile.email[$index].type}">
                       <option value="">{{'Choose Type' | translate}}</option>
                     </select>
                   </div>
-                  <div class="col-xs-7">
+                  <div class="form-suffix col-xs-8">
                     <input
                       class="form-control"
                       placeholder="{{'Address' | translate}}"
@@ -389,10 +399,17 @@
           <div class="section" ng-show="userCanDeleteAccount || userCanSendClaimEmail">
             <a class="btn btn-primary btn-lg btn-block" ng-show="userCanSendClaimEmail" ng-click="confirmSendEmail = !confirmSendEmail" translate>Send Claim Email</a>
             <a ng-show="confirmSendEmail" ng-disabled="sendingClaimEmail" class="fade btn btn-warning btn-lg btn-block" ng-click="sendClaimEmail()" translate>Confirm Send Claim Email</a>
-            <a class="btn btn-lg btn-primary btn-block btn-danger" ng-if="userCanDeleteAccount" ng-click="profile.confirmDelete = !profile.confirmDelete" translate>Delete Account</a>
-            <a ng-show="profile.confirmDelete" class="fade btn btn-warning btn-lg btn-block" ng-click="deleteAccount()" translate>Confirm Delete Account</a>
           </div>
 
+        </div>
+      </div>
+
+      <div class="row alert-wrapper">
+        <div class="alert alert-danger col-xs-12" ng-show="profileForm.$submitted && profileForm.$invalid">
+          <strong translate>Please update your {{profileName()}} profile.</strong><br>
+          <ul ng-repeat="(type, errors) in profileForm.$error">
+            <li ng-repeat="error in errors">{{alertField(error.$name)}}{{alertMsg(type)}}</li>
+          </ul>
         </div>
       </div>
 
@@ -424,6 +441,7 @@
           <button type="button" class="btn btn-default btn-lg btn-block" ng-click="back()" translate>Cancel</button>
           <button type="button" class="btn btn-default btn-lg btn-block" ng-if="userCanCheckOut" ng-click="checkOut()" translate>Check-out</button>
           <a class="btn btn-default btn-lg btn-block" ng-if="userCanRequestDelete" href="http://humanitarian.id/removal_request/" translate>Delete My Account</a>
+          <a class="btn btn-default btn-lg btn-block" ng-if="userCanRequestPassword" href="{{passwordUrl}}" translate>Reset My Password</a>
           <a class="btn btn-lg btn-primary btn-block btn-danger" ng-if="userCanDeleteAccount" ng-click="profile.confirmDelete = !profile.confirmDelete" translate>Delete Account</a>
           <a ng-show="profile.confirmDelete" class="fade btn btn-warning btn-lg btn-block" ng-click="deleteAccount()" translate>Confirm Delete Account</a>
         </div>
