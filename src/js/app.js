@@ -622,6 +622,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
     });
   }
+  // Split ext into own field.
+  phoneSplit();
 
   // Toggle logic for verified field.
   $scope.setVerified = function() {
@@ -636,6 +638,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       this.profile.phone[this.$index].countryCode = countryInfo.dialCode;
     }
   };
+
+  $scope.setPhonePlaceholder = function() {
+    var countryInfo = jQuery('input[name="phone[' + this.$index + '][number]"]').intlTelInput('getSelectedCountryData');
+    return intlTelInputUtils.getExampleNumber(countryInfo.iso2, false, 0).replace(/[0-9]/g, "5");
+  }
 
   $scope.httpCheck = function () {
     var validObj = $scope.defaultValidObj('uri', this.$index);
@@ -1029,6 +1036,9 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if ($scope.profileForm.$valid) {
       // Removes empty entries.
       $scope.checkMultiFields(true);
+      phoneJoin();
+
+
       var profile = $scope.profile;
       if (profileData.profile && profileData.profile.userid && profileData.profile._id) {
         profile.userid = profileData.profile.userid;
@@ -1152,6 +1162,26 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
     return listArray;
   }
+
+  // Break extension off phone number.
+  function phoneSplit() {
+    angular.forEach($scope.profile.phone, function(value, key) {
+      if (value.hasOwnProperty('number')) {
+        var parts = value.number.split(',');
+        $scope.profile.phone[key].number = parts[0];
+        $scope.profile.phone[key].ext = parts[1];
+      }
+    });
+  };
+
+  // Add extension to phone number.
+  function phoneJoin() {
+    angular.forEach($scope.profile.phone, function(value, key) {
+      if (value.number && value.ext) {
+        $scope.profile.phone[key].number += ',' + value.ext;
+      }
+    });
+  };
 
   function setBundles(){
     var bundles = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].bundles;
@@ -1281,6 +1311,15 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
         uri = 'http://' + uri;
     }
     return uri;
+  }
+
+  $scope.phoneDisplay = function (number) {
+    if (number) {
+      var parts = number.split(',');
+      number = parts[1] ? parts[0] +' ext. ' + parts[1] : number;
+    }
+
+    return number;
   }
 
   $scope.back = function () {
