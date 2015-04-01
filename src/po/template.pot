@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-03-31T18:51:41.523Z\n"
+"Project-Id-Version: 2015-04-01T18:00:52.096Z\n"
 
 #: src/partials/list-print.html
 msgid "* Groups include clusters, sectors, working group or similar."
@@ -53,16 +53,8 @@ msgstr ""
 msgid "Both type and number are required."
 msgstr ""
 
-#: src/js/app.js
-msgid "Cancel Check-in"
-msgstr ""
-
-#: src/js/app.js
-msgid "Cancel Check-in Update"
-msgstr ""
-
-#: src/js/app.js
-msgid "Cancel Profile Update"
+#: src/partials/profile.html
+msgid "Cancel"
 msgstr ""
 
 #: src/js/app.js
@@ -242,6 +234,14 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "Export Results"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Ext."
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Extension"
 msgstr ""
 
 #: src/partials/header.html
@@ -563,6 +563,10 @@ msgid "Role"
 msgstr ""
 
 #: src/js/app.js
+msgid "Save"
+msgstr ""
+
+#: src/js/app.js
 msgid "Saving..."
 msgstr ""
 
@@ -653,14 +657,6 @@ msgstr ""
 
 #: src/js/app.js
 msgid "Unverify account"
-msgstr ""
-
-#: src/js/app.js
-msgid "Update Check-in"
-msgstr ""
-
-#: src/js/app.js
-msgid "Update Profile"
 msgstr ""
 
 #: src/partials/profile.html
