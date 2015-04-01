@@ -491,8 +491,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
 
-  // Set to 0 to checkout user.
-  $scope.status = 1;
+  $scope.passwordUrl = contactsId.authBaseUrl + "/#forgotPass";
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.placesOperations = placesOperations;
@@ -1222,6 +1221,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.userCanCheckOut = !checkinFlow && profileData.contact && profileService.canCheckOut(profileData.contact);
     $scope.userCanSendClaimEmail = !checkinFlow && profileData.contact && profileService.canSendClaimEmail(profileData.contact);
     $scope.userCanRequestDelete = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
+    $scope.userCanRequestPassword = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
 
 
     // Determine what roles are available to assign to a user
