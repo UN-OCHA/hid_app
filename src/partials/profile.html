@@ -32,6 +32,7 @@
   <form name="profileForm" class="update-profile profile-form row" ng-show="selectedPlace.length && selectedOperation.length" ng-class="{'show-options': profileOptions}" novalidate ng-submit="submitProfile()">
     <div class="form-content col-xs-12 col-sm-8 col-md-9 pull-right" >
       <h3>{{profileName()}} <span translate>Profile</span></h3>
+      <p class="help-block">* <em>Required field</em></p>
       <div class="row alert-wrapper">
         <browser-alert></browser-alert>
         <div class="alert alert-danger col-xs-12" ng-show="profileForm.$submitted && profileForm.$invalid">
@@ -402,6 +403,15 @@
             <a ng-show="profile.confirmDelete" class="fade btn btn-warning btn-lg btn-block" ng-click="deleteAccount()" translate>Confirm Delete Account</a>
           </div>
 
+        </div>
+      </div>
+
+      <div class="row alert-wrapper">
+        <div class="alert alert-danger col-xs-12" ng-show="profileForm.$submitted && profileForm.$invalid">
+          <strong translate>Please update your {{profileName()}} profile.</strong><br>
+          <ul ng-repeat="(type, errors) in profileForm.$error">
+            <li ng-repeat="error in errors">{{alertField(error.$name)}}{{alertMsg(type)}}</li>
+          </ul>
         </div>
       </div>
 
