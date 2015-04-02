@@ -289,7 +289,7 @@ app.controller("DashboardCtrl", function($scope, $route, profileService, globalP
   };
 });
 
-app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, profileService, authService, placesOperations, globalProfileId, userData, gettextCatalog) {
+app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, profileService, authService, operations, globalProfileId, userData, gettextCatalog) {
   $scope.logoutPath = '/#logout';
   $scope.globalProfileId = globalProfileId;
   $scope.userData = userData;
@@ -304,10 +304,17 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
   $scope.query = $location.search();
 
   // Setup scope variables from data injected by routeProvider resolve
-  $scope.placesOperations = placesOperations;
-  var availPlacesOperations = angular.copy(placesOperations);
-  // Convert list into an array that can be sorted
-  $scope.availPlacesOperations = listObjectToArray(availPlacesOperations, 'place', 'operations');
+  $scope.operations = operations;
+  var availOperations = angular.copy(operations);
+
+  // Convert list into a sorted array
+  $scope.availOperations = [];
+  angular.forEach(availOperations, function (value, key) {
+    $scope.availOperations.push(value);
+  });
+  $scope.availOperations.sort(function (a, b) {
+    return a.name && b.name ? String(a.name).localeCompare(b.name) : false;
+  });
 
   $scope.back = function () {
     if (history.length) {
@@ -367,8 +374,8 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     profile.adminName = userData.global.nameGiven + " " + userData.global.nameFamily;
 
     if ($scope.profile.location) {
-      profile.locationId = Object.keys($scope.profile.location.operations);
-      profile.location = $scope.profile.location.place;
+      profile.locationId = $scope.profile.location.remote_id;
+      profile.location = $scope.profile.location.name;
     }
 
     if ($scope.selectedOrganization){
@@ -470,7 +477,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
   }
 });
 
-app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, $http, profileService, authService, placesOperations, profileData, countries, roles, protectedRoles, gettextCatalog, userData) {
+app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, $filter, $timeout, $http, profileService, authService, operations, profileData, countries, roles, protectedRoles, gettextCatalog, userData) {
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
@@ -481,7 +488,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
-  var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': []};
+  var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': [], 'disasters': ['remote_id']};
 
   var pathParams = $location.path().split('/'),
   checkinFlow = pathParams[1] === 'checkin',
@@ -494,36 +501,31 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.passwordUrl = contactsId.authBaseUrl + "/#forgotPass";
 
   // Setup scope variables from data injected by routeProvider resolve
-  $scope.placesOperations = placesOperations;
-  var availPlacesOperations = angular.copy(placesOperations);
-  $scope.availPlacesOperations = availPlacesOperations;
+  $scope.operations = operations;
   $scope.profileData = profileData;
   $scope.countries = countries;
 
   // Exclude operations for which the user is already checked in.
+  var availOperations = angular.copy(operations);
   if (profileData && profileData.contacts && profileData.contacts.length) {
-    var checkedInKeys = profileData.contacts.map(function (val, idx, arr) {
-      return (val.locationId && val.locationId.length) ? val.locationId : null;
-    });
-    for (var ckey in availPlacesOperations) {
-      if (availPlacesOperations.hasOwnProperty(ckey)) {
-        for (var okey in availPlacesOperations[ckey]) {
-          if (availPlacesOperations[ckey].hasOwnProperty(okey) && checkedInKeys.indexOf(okey) !== -1) {
-            delete availPlacesOperations[ckey][okey];
-            if ($.isEmptyObject(availPlacesOperations[ckey])) {
-              delete availPlacesOperations[ckey];
-            }
-          }
-        }
+    profileData.contacts.forEach(function (val, idx, arr) {
+      if (val.type === 'local' && val.locationId && val.locationId.length && availOperations.hasOwnProperty(val.locationId)) {
+        delete availOperations[val.locationId];
       }
-    }
+    });
   }
-  // Convert list into an array that can be sorted
-  $scope.availPlacesOperations = listObjectToArray(availPlacesOperations, 'place', 'operations');
+
+  // Convert list into a sorted array
+  $scope.availOperations = [];
+  angular.forEach(availOperations, function (value, key) {
+    $scope.availOperations.push(value);
+  });
+  $scope.availOperations.sort(function (a, b) {
+    return a.name && b.name ? String(a.name).localeCompare(b.name) : false;
+  });
 
   // When checking in to a new crisis, load the user's global profile to clone.
   if (checkinFlow) {
-    $scope.selectedPlace = '';
     $scope.selectedOperation = '';
     $scope.profile = profileData.global ? angular.fromJson(angular.toJson(profileData.global)) : {};
     if ($scope.profile._id) {
@@ -536,15 +538,15 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.profile.keyContact = false;
   }
   else {
-    $scope.selectedPlace = 'none';
     $scope.selectedOperation = 'none';
     setPreferedCountries();
   }
 
   // Creates an array to be used as options for group select
   $scope.$watch("selectedOperation", function(newValue, oldValue) {
-    if (newValue !== oldValue && $scope.selectedPlace.length && $scope.selectedOperation.length) {
+    if (newValue !== oldValue && $scope.selectedOperation.length) {
       setBundles();
+      setDisasters();
       setDefaultCountry();
       setPreferedCountries();
       setPermissions();
@@ -558,16 +560,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   // If loading an existing contact profile by ID, find it in the user's data.
   if (!checkinFlow && $scope.profileId.length) {
     $scope.profile = profileData.contact || {};
-    if ($scope.profile.locationId) {
-      for (var place in $scope.placesOperations) {
-        if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.profile.locationId)) {
-          $scope.selectedPlace = place;
-          $scope.selectedOperation = $scope.profile.locationId;
-          setBundles();
-          setPreferedCountries();
-          break;
-        }
-      }
+    if ($scope.profile.locationId && $scope.operations.hasOwnProperty($scope.profile.locationId)) {
+      $scope.selectedOperation = $scope.profile.locationId;
+      setBundles();
+      setDisasters();
+      setPreferedCountries();
     }
     setPermissions();
   }
@@ -789,23 +786,9 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   }
 
-  $scope.selectOperation = function() {
-    $scope.selectedOperation = this.opid;
+  $scope.selectOperation = function(operationId) {
+    $scope.selectedOperation = operationId;
   }
-  $scope.selectPlace = function () {
-    var opkeys = [],
-        key;
-    for (key in this.place.operations) {
-      if (this.place.operations.hasOwnProperty(key)) {
-        opkeys.push(key);
-      }
-    }
-    $scope.selectedPlace = this.place.place;
-    if (opkeys.length == 1) {
-      $scope.selectedOperation = opkeys[0];
-    }
-  };
-
 
   $scope.refreshOrganization = function(select, lengthReq) {
     var clearOption = {action:'clear', name:"", alt: gettextCatalog.getString('Organizations')},
@@ -928,8 +911,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if ($scope.profile.type === 'global') {
       return gettextCatalog.getString('Global');
     }
-    else if (!$scope.profile.location && $scope.selectedPlace && $scope.selectedOperation) {
-      return $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].name
+    else if (!$scope.profile.location && $scope.selectedOperation) {
+      return $scope.operations[$scope.selectedOperation].name
     }
     else {
       return $scope.profile.location;
@@ -1015,6 +998,17 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       $scope.checkEntryValidation('voip', 0);
     }
 
+    // Ensure disasters are stored with the display name
+    angular.forEach($scope.profile.disasters, function (item) {
+      if (item.remote_id && $scope.operations[$scope.selectedOperation].disasters) {
+        angular.forEach($scope.operations[$scope.selectedOperation].disasters, function (ditem) {
+          if (ditem.remote_id == item.remote_id) {
+            item.name = ditem.name;
+          }
+        });
+      }
+    });
+
     // Checks for incomplete entries.
     if ($scope.profileForm.$valid) {
       // Removes empty entries.
@@ -1035,7 +1029,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
       if (checkinFlow) {
         profile.locationId = $scope.selectedOperation;
-        profile.location = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].name;
+        profile.location = $scope.operations[$scope.selectedOperation].name;
 
         //Determine if user being checked in is the same as the logged in user
         //If not, we need to add some properties to contact so profile service can send an email notifying the user
@@ -1167,7 +1161,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if ($scope.profile.type == 'local' && $scope.profile.address) {
       if (!$scope.profile.address.length || !$scope.profile.address[0].country) {
         $scope.profile.address = [];
-        $scope.profile.address[0] = {country: $scope.selectedPlace};
+        $scope.profile.address[0] = {country: $scope.operations[$scope.selectedOperation].name};
       }
     }
   }
@@ -1209,8 +1203,35 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   };
 
   function setBundles(){
-    var bundles = $scope.placesOperations[$scope.selectedPlace][$scope.selectedOperation].bundles;
+    var bundles = $scope.operations[$scope.selectedOperation].bundles;
     $scope.bundles = listObjectToArray(bundles);
+  }
+
+  function setDisasters() {
+    var disasterOptions = $scope.operations[$scope.selectedOperation].disasters;
+    $scope.disasterOptions = listObjectToArray(disasterOptions);
+  }
+
+  // If profile is local, set preferred county code to checkin location.
+  function setPreferedCountries() {
+    if ($scope.profile.type === 'local') {
+      $scope.defaultPreferredCountryAbbr = [];
+      var match, countryMatch;
+
+      match = $scope.operations.hasOwnProperty($scope.selectedOperation) ? $scope.operations[$scope.selectedOperation].name.toUpperCase() : '';
+      countryMatch = $.fn.intlTelInput.getCountryData().filter(function (el) {
+        // Returns country data that is similar to selectedOperation.
+        return el.name.toUpperCase().match(match);
+      });
+      for (var i in countryMatch) {
+        $scope.defaultPreferredCountryAbbr.push(countryMatch[i].iso2)
+      };
+      // Converts array to a string.
+      $scope.defaultPreferredCountryAbbr = $scope.defaultPreferredCountryAbbr.join(', ') || "ch";
+    }
+    else {
+      $scope.defaultPreferredCountryAbbr = "ch";
+    }
   }
 
   function setPermissions() {
@@ -1226,7 +1247,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.userCanSendClaimEmail = !checkinFlow && profileData.contact && profileService.canSendClaimEmail(profileData.contact);
     $scope.userCanRequestDelete = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
     $scope.userCanRequestPassword = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
-
 
     // Determine what roles are available to assign to a user
     if ($scope.userCanEditRoles && hasRoleAdmin) {
@@ -1416,16 +1436,17 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
   };
 });
 
-app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, placesOperations, gettextCatalog, protectedRoles, countries) {
-  var searchKeys = ['address.administrative_area', 'address.country', 'address.locality', 'bundle','keyContact', 'organization.name', 'protectedRoles', 'role','text','verified'];
+app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries) {
+  var searchKeys = ['address.administrative_area', 'address.country', 'address.locality', 'bundle', 'disasters.remote_id', 'keyContact', 'organization.name', 'protectedRoles', 'role', 'text', 'verified'];
 
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
-  $scope.placesOperations = placesOperations;
+  $scope.operations = operations;
 
   $scope.contacts = [];
   $scope.bundles = [];
+  $scope.disasterOptions = [];
   $scope.organizations = [];
   $scope.protectedRoles = [];
   $scope.countries = countries;
@@ -1474,14 +1495,13 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   $scope.countries.unshift({action:'clear', name:"", alt:'Country'});
 
   if ($scope.locationId !== 'global') {
-    // Create bundles array.
-    for (var place in $scope.placesOperations) {
-      if ($scope.placesOperations.hasOwnProperty(place) && $scope.placesOperations[place].hasOwnProperty($scope.locationId)) {
-        $scope.location = place;
-        $scope.bundles = listObjectToArray($scope.placesOperations[place][$scope.locationId].bundles);
-        $scope.bundles.unshift({action:'clear', value:"", alt:'Group'});
-        break;
-      }
+    // Create bundles and disasters array.
+    if ($scope.operations.hasOwnProperty($scope.locationId)) {
+      $scope.location = $scope.operations[$scope.locationId].name;
+      $scope.bundles = listObjectToArray($scope.operations[$scope.locationId].bundles);
+      $scope.bundles.unshift({action:'clear', value: {name: ""}, alt:'Group'});
+      $scope.disasterOptions = listObjectToArray($scope.operations[$scope.locationId].disasters);
+      $scope.disasterOptions.unshift({action:'clear', value: {name: ""}, alt:'Disaster'});
     }
 
     // Fetch regions and cities for filters.
@@ -1917,7 +1937,7 @@ app.config(function($routeProvider, $locationProvider) {
     controller: 'ProfileCtrl',
     requireAuth: true,
     resolve: {
-      placesOperations : function(profileService) {
+      operations : function(profileService) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
@@ -1996,7 +2016,7 @@ app.config(function($routeProvider, $locationProvider) {
     controller: 'ProfileCtrl',
     requireAuth: true,
     resolve: {
-      placesOperations : function(profileService) {
+      operations : function(profileService) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
@@ -2165,7 +2185,7 @@ app.config(function($routeProvider, $locationProvider) {
           return data;
         });
       },
-      placesOperations : function(profileService) {
+      operations : function(profileService) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
@@ -2189,7 +2209,7 @@ app.config(function($routeProvider, $locationProvider) {
           return data;
         });
       },
-      placesOperations : function(profileService) {
+      operations : function(profileService) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
@@ -2204,7 +2224,7 @@ app.config(function($routeProvider, $locationProvider) {
     controller: 'CreateAccountCtrl',
     requireAuth: true,
     resolve: {
-      placesOperations : function(profileService) {
+      operations : function(profileService) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
@@ -2411,13 +2431,13 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     else {
       promise = $http({
         method: "get",
-        url: contactsId.hrinfoBaseUrl + "/hid/operations"
+        url: contactsId.profilesBaseUrl + "/v0/app/data",
+        params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
       })
       .then(handleSuccess, handleError).then(function(data) {
-        if (data) {
-          cacheOperationsData = data;
+        if (data && data.operations) {
+          cacheOperationsData = data.operations;
         }
-
         return cacheOperationsData;
       });
       return promise;

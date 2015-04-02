@@ -88,10 +88,10 @@
 
         <div class="form-group" ng-show="bundles.length">
           <label class="control-label element-invisible" for="bundle" translate>Group</label>
-          <ui-select ng-model="query.bundle" theme="selectize" class="form-control"  name="bundle" on-select="onSelect($item, 'bundle')">
-            <ui-select-match placeholder="{{'Group'|translate}}">{{$select.selected.value}}</ui-select-match>
-            <ui-select-choices ng-class="{'not-empty': bundles.length}" repeat="bundle.value as bundle in bundles | orderBy:'value' | filter: $select.search">
-              <div ng-class="{default: !bundle.value.length}" ng-bind-html="bundle.alt || (bundle.value | highlight: $select.search)"></div>
+          <ui-select ng-model="query.bundle" theme="selectize" class="form-control"  name="bundle" on-select="onSelect($item.value, 'bundle')">
+            <ui-select-match placeholder="{{'Group'|translate}}">{{$select.selected.value.name}}</ui-select-match>
+            <ui-select-choices ng-class="{'not-empty': bundles.length}" repeat="bundle.value.name as bundle in bundles | orderBy:'bundle.value.name' | filter: $select.search">
+              <div ng-class="{default: !bundle.value.length}" ng-bind-html="bundle.alt || (bundle.value.name | highlight: $select.search)"></div>
             </ui-select-choices>
           </ui-select>
         </div>
@@ -118,6 +118,16 @@
             <ui-select-match placeholder="{{'Role'|translate}}">{{$select.selected.name}}</ui-select-match>
             <ui-select-choices ng-class="{'not-empty': protectedRoles.length}" repeat="protectedRole.id as protectedRole in protectedRoles | orderBy:'name' | filter: $select.search">
               <div ng-class="{default: !protectedRole.name.length}" ng-bind-html="protectedRole.alt || (protectedRole.name | highlight: $select.search)"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+
+        <div class="form-group" ng-show="disasterOptions.length">
+          <label class="control-label element-invisible" for="disaster" translate>Disasters</label>
+          <ui-select ng-model="query['disasters.remote_id']" theme="selectize" class="form-control" name="disaster" on-select="onSelect($item.value, 'disasters.remote_id')">
+            <ui-select-match placeholder="{{'Disaster'|translate}}">{{$select.selected.value.name}}</ui-select-match>
+            <ui-select-choices ng-class="{'not-empty': disasters.length}" repeat="disaster.value.remote_id as disaster in disasterOptions | orderBy:'disaster.value.name' | filter: $select.search">
+              <div ng-class="{default: !disaster.value.length}" ng-bind-html="disaster.alt || (disaster.value.name | highlight: $select.search)"></div>
             </ui-select-choices>
           </ui-select>
         </div>
