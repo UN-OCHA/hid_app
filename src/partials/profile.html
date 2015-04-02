@@ -4,32 +4,21 @@
 
 <div class="main" ng-show="!isRouteLoading">
   <div class="row">
-    <div class="active-countries col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3" ng-hide="selectedPlace.length">
+    <div class="active-operations col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3" ng-hide="selectedOperation.length">
       <div class="back-link"><button type="button" class="btn btn-warning btn-sm" ng-click="back()"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></button></div>
       <h3 translate>Select a country</h3>
       <ul class="active-countries-container list-group">
-        <li class="country-item list-group-item" ng-repeat="(pKey, place) in availPlacesOperations | orderBy: 'place'">
-          <a href="" ng-click="selectPlace()">{{place.place}}</a>
+        <li class="country-item list-group-item" ng-repeat="(idx, operation) in availOperations">
+          <a href="" ng-click="selectOperation(operation.remote_id)">{{operation.name}}</a>
         </li>
-        <li class="country-item" ng-if="availPlacesOperations.length == 0">
+        <li class="operation-item" ng-if="availOperations.length == 0">
           <em translate>No active operations found.</em>
-        </li>
-      </ul>
-    </div>
-
-    <div class="active-operations col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3" ng-show="selectedPlace.length && !selectedOperation.length">
-      <div class="back-link"><a class="btn btn-warning btn-sm" href="" ng-click="selectedPlace = ''"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a></div>
-      <h3 translate>Select an operation</h3>
-      <ul class="active-operations-container list-group" ng-repeat="(pKey, place) in availPlacesOperations" ng-show="selectedPlace == place.place" data-place="{{place.place}}">
-        <li class="operation-item list-group-item" ng-repeat="(opid, operation) in place.operations">
-          <a href="" ng-click="selectOperation()">{{operation.name}}</a>
         </li>
       </ul>
     </div>
   </div>
 
-
-  <form name="profileForm" class="update-profile profile-form row" ng-show="selectedPlace.length && selectedOperation.length" ng-class="{'show-options': profileOptions}" novalidate ng-submit="submitProfile()">
+  <form name="profileForm" class="update-profile profile-form row" ng-show="selectedOperation.length" ng-class="{'show-options': profileOptions}" novalidate ng-submit="submitProfile()">
     <div class="form-content col-xs-12 col-sm-8 col-md-9 pull-right" >
       <h3>{{profileName()}} <span translate>Profile</span></h3>
       <div class="row alert-wrapper">
@@ -96,7 +85,7 @@
                 <label class="control-label" for="bundle[{{profile.bundle.length - 1}}]" translate>Group</label>
 
                 <div class="reveal btn-reveal" ng-repeat="bundle in profile.bundle track by $index" ng-if="profile.type === 'local'">
-                  <select class="form-control" name="bundle[{{$index}}]" ng-model="profile.bundle[$index]" ng-options="bundle.value as bundle.value for bundle in bundles | orderBy:'value'" ng-blur="focus=0" focus-field="focus">
+                  <select class="form-control" name="bundle[{{$index}}]" ng-model="profile.bundle[$index]" ng-options="bundle.value.name as bundle.value.name for bundle in bundles | orderBy:'value.name'" ng-blur="focus=0" focus-field="focus">
                       <option value=""></option>
                   </select>
 

@@ -14,7 +14,7 @@
 
         <div class="form-group">
           <label class="control-label-light" for="location">* <span translate>Crisis</span></label>
-          <select class="form-control" name="location" ng-click="selectPlace()" ng-model="profile.location" ng-options="item.place for item in availPlacesOperations | orderBy:'place'" ng-blur="focus=0" focus-field="focus" required ng-class="{invalid: submitted && createAccountForm.location.$invalid}">
+          <select class="form-control" name="location" ng-model="profile.location" ng-options="item.name for item in availOperations" ng-blur="focus=0" focus-field="focus" required ng-class="{invalid: submitted && createAccountForm.location.$invalid}">
               <option value=""></option>
           </select>
           <div class="error" ng-show="createAccountForm.location.$error.required && submitted" translate>Crisis is required.</div>
