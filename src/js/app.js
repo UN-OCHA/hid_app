@@ -498,8 +498,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
 
-  // Set to 0 to checkout user.
-  $scope.status = 1;
+  $scope.passwordUrl = contactsId.authBaseUrl + "/#forgotPass";
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.operations = operations;
@@ -548,6 +547,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if (newValue !== oldValue && $scope.selectedOperation.length) {
       setBundles();
       setDisasters();
+      setDefaultCountry();
       setPreferedCountries();
       setPermissions();
       // Scoll to top of form.
@@ -589,36 +589,37 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   // Now we have a profile, use the profile's country to fetch regions and cities
   if ($scope.profile.address) {
-    if (!$scope.profile.address.length || !$scope.profile.address[0].hasOwnProperty('country')) {
-      $scope.profile.address = [];
-      $scope.profile.address[0] = {country: $scope.operations[$scope.selectedOperation].name};
-    }
+    setDefaultCountry();
     $scope.addressList = {};
     $scope.regions = [];
     $scope.localities = [];
-    $scope.regionsPromise = profileService.getAdminArea(function() {
-      var remote_id = null;
-      angular.forEach($scope.countries, function(value, key) {
-        if (value.name === $scope.profile.address[0].country) {
-          remote_id = value.remote_id;
-        }
-      });
-      return remote_id;
-    }()).then(function(data) {
-      $scope.regions = data;
-      $scope.addressList.regions = data;
-      // If we already have an administrative area set, we should also populate the cities for
-      // autocomplete
-      if ($scope.profile.address[0].hasOwnProperty('administrative_area')) {
-        angular.forEach($scope.regions, function(value, key) {
-          if (value.name === $scope.profile.address[0].administrative_area) {
-            $scope.localities = value.cities;
-            $scope.addressList.localities = value.cities;
+    if ($scope.profile.address[0]) {
+      $scope.regionsPromise = profileService.getAdminArea(function() {
+        var remote_id = null;
+        angular.forEach($scope.countries, function(value, key) {
+          if (value.name === $scope.profile.address[0].country) {
+            remote_id = value.remote_id;
           }
         });
-      }
-    });
+        return remote_id;
+      }()).then(function(data) {
+        $scope.regions = data;
+        $scope.addressList.regions = data;
+        // If we already have an administrative area set, we should also populate the cities for
+        // autocomplete
+        if ($scope.profile.address[0].hasOwnProperty('administrative_area')) {
+          angular.forEach($scope.regions, function(value, key) {
+            if (value.name === $scope.profile.address[0].administrative_area) {
+              $scope.localities = value.cities;
+              $scope.addressList.localities = value.cities;
+            }
+          });
+        }
+      });
+    }
   }
+  // Split ext into own field.
+  phoneSplit();
 
   // Toggle logic for verified field.
   $scope.setVerified = function() {
@@ -633,6 +634,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       this.profile.phone[this.$index].countryCode = countryInfo.dialCode;
     }
   };
+
+  $scope.setPhonePlaceholder = function() {
+    var countryInfo = jQuery('input[name="phone[' + this.$index + '][number]"]').intlTelInput('getSelectedCountryData');
+    return intlTelInputUtils.getExampleNumber(countryInfo.iso2, false, 0).replace(/[0-9]/g, "5");
+  }
 
   $scope.httpCheck = function () {
     var validObj = $scope.defaultValidObj('uri', this.$index);
@@ -892,27 +898,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   // Update submit text when changing language.
   $scope.submitText = function() {
-    if ($scope.profile.type === 'global') {
-      return gettextCatalog.getString('Update Profile');
-    }
-    else if (!checkinFlow) {
-      return gettextCatalog.getString('Update Check-in')
+    if ($scope.profile.type === 'global' || !checkinFlow) {
+      return gettextCatalog.getString('Save');
     }
     else {
       return gettextCatalog.getString('Check-in')
-    }
-  }
-
-  // Update submit text when changing language.
-  $scope.cancelText = function() {
-    if ($scope.profile.type === 'global') {
-      return gettextCatalog.getString('Cancel Profile Update');
-    }
-    else if (!checkinFlow) {
-      return gettextCatalog.getString('Cancel Check-in Update')
-    }
-    else {
-      return gettextCatalog.getString('Cancel Check-in')
     }
   }
 
@@ -1023,6 +1013,9 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if ($scope.profileForm.$valid) {
       // Removes empty entries.
       $scope.checkMultiFields(true);
+      phoneJoin();
+
+
       var profile = $scope.profile;
       if (profileData.profile && profileData.profile.userid && profileData.profile._id) {
         profile.userid = profileData.profile.userid;
@@ -1131,6 +1124,48 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
+  $scope.setPreferedCountries = setPreferedCountries;
+
+  // If profile is local, set preferred county code to checkin location.
+  function setPreferedCountries() {
+    var address, match, countryMatch, iso2Codes;
+    $scope.defaultPreferredCountryAbbr = [];
+
+    address = $scope.profile.address || profileData.contact.address;
+    match = (address[0] && address[0].hasOwnProperty('country') && address[0].country.length) ? address[0].country.toUpperCase() : $scope.selectedPlace.toUpperCase();
+
+    countryMatch = $.fn.intlTelInput.getCountryData().filter(function (el) {
+      // Returns country data that is similar to selectedPlace.
+      return el.name.toUpperCase().match(match);
+    });
+
+    iso2Codes = [];
+    for (var i in countryMatch) {
+      iso2Codes.push(countryMatch[i].iso2)
+    };
+    // Converts array to a string.
+    $scope.defaultPreferredCountryAbbr = iso2Codes.join(', ') || "ch";
+    updateCountryCodes(iso2Codes[0]);
+  }
+
+  function updateCountryCodes(iso2) {
+    angular.forEach($scope.profile.phone, function(value, key) {
+      if (!value.number) {
+        var countryInfo = jQuery('input[name="phone[' + key + '][number]"]').intlTelInput('selectCountry', iso2);
+      }
+    });
+  }
+
+  // If no country is selected, change to it to check-in location.
+  function setDefaultCountry() {
+    if ($scope.profile.type == 'local' && $scope.profile.address) {
+      if (!$scope.profile.address.length || !$scope.profile.address[0].country) {
+        $scope.profile.address = [];
+        $scope.profile.address[0] = {country: $scope.operations[$scope.selectedOperation].name};
+      }
+    }
+  }
+
   // Converts object to a sortable array.
   function listObjectToArray(obj, kLabel, vLabel) {
     var listArray = [];
@@ -1146,6 +1181,26 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
     return listArray;
   }
+
+  // Break extension off phone number.
+  function phoneSplit() {
+    angular.forEach($scope.profile.phone, function(value, key) {
+      if (value.hasOwnProperty('number')) {
+        var parts = value.number.split(',');
+        $scope.profile.phone[key].number = parts[0];
+        $scope.profile.phone[key].ext = parts[1];
+      }
+    });
+  };
+
+  // Add extension to phone number.
+  function phoneJoin() {
+    angular.forEach($scope.profile.phone, function(value, key) {
+      if (value.number && value.ext) {
+        $scope.profile.phone[key].number += ',' + value.ext;
+      }
+    });
+  };
 
   function setBundles(){
     var bundles = $scope.operations[$scope.selectedOperation].bundles;
@@ -1191,6 +1246,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.userCanCheckOut = !checkinFlow && profileData.contact && profileService.canCheckOut(profileData.contact);
     $scope.userCanSendClaimEmail = !checkinFlow && profileData.contact && profileService.canSendClaimEmail(profileData.contact);
     $scope.userCanRequestDelete = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
+    $scope.userCanRequestPassword = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
 
     // Determine what roles are available to assign to a user
     if ($scope.userCanEditRoles && hasRoleAdmin) {
@@ -1279,6 +1335,15 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
         uri = 'http://' + uri;
     }
     return uri;
+  }
+
+  $scope.phoneDisplay = function (number) {
+    if (number) {
+      var parts = number.split(',');
+      number = parts[1] ? parts[0] +' ext. ' + parts[1] : number;
+    }
+
+    return number;
   }
 
   $scope.back = function () {

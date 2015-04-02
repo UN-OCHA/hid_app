@@ -33,22 +33,14 @@
     border: 1px solid $neutral-color-2;
   }
 
-  .col-xs-5 {
+  .form-prefix {
     padding-right: 0px;
-    &:before {
-      content: "";
-      border-left: 1px solid $neutral-color-2;
-      height: 22px;
-      position: absolute;
-      right: 0;
-      bottom: 10px;
-    }
     .form-control {
       border-right: none;
     }
   }
 
-  .col-xs-7 {
+  .form-suffix {
     padding-left: 0px;
     .form-control {
       border-left: none;
@@ -56,12 +48,33 @@
     }
   }
 
+  .form-body {
+    padding-left: 0px;
+    padding-right: 0px;
+    .form-control {
+      border-left: none;
+      border-right: none;
+      text-align: right;
+    }
+  }
+  .form-body:before,
+  .intl-tel-input:before,
+  .form-prefix:before {
+    content: "";
+    border-left: 1px solid $neutral-color-2;
+    height: 22px;
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    z-index: 10;
+  }
+
   &.has-error {
     .form-control {
       border-color: /*1px solid */$secondary-color-1;
     }
 
-    .col-xs-5 {
+    .form-prefix {
       &:before {
         border-left: 1px solid $secondary-color-1;
       }
@@ -100,8 +113,10 @@
   }
 }
 
-.angucomplete-dropdown {
-  width: 100%;
+.form-elements-phone {
+  .form-suffix .form-control {
+    text-align: left;
+  }
 }
 
 .ui-select-multiple.ui-select-bootstrap {
