@@ -488,7 +488,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
-  var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': []};
+  var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': [], 'disasters': ['remote_id']};
 
   var pathParams = $location.path().split('/'),
   checkinFlow = pathParams[1] === 'checkin',
@@ -547,6 +547,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.$watch("selectedOperation", function(newValue, oldValue) {
     if (newValue !== oldValue && $scope.selectedOperation.length) {
       setBundles();
+      setDisasters();
       setPreferedCountries();
       setPermissions();
       // Scoll to top of form.
@@ -562,6 +563,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     if ($scope.profile.locationId && $scope.operations.hasOwnProperty($scope.profile.locationId)) {
       $scope.selectedOperation = $scope.profile.locationId;
       setBundles();
+      setDisasters();
       setPreferedCountries();
     }
     setPermissions();
@@ -1006,6 +1008,17 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       $scope.checkEntryValidation('voip', 0);
     }
 
+    // Ensure disasters are stored with the display name
+    angular.forEach($scope.profile.disasters, function (item) {
+      if (item.remote_id && $scope.operations[$scope.selectedOperation].disasters) {
+        angular.forEach($scope.operations[$scope.selectedOperation].disasters, function (ditem) {
+          if (ditem.remote_id == item.remote_id) {
+            item.name = ditem.name;
+          }
+        });
+      }
+    });
+
     // Checks for incomplete entries.
     if ($scope.profileForm.$valid) {
       // Removes empty entries.
@@ -1358,8 +1371,8 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
   };
 });
 
-  var searchKeys = ['address.administrative_area', 'address.country', 'address.locality', 'bundle','keyContact', 'organization.name', 'protectedRoles', 'role','text','verified'];
 app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries) {
+  var searchKeys = ['address.administrative_area', 'address.country', 'address.locality', 'bundle', 'disasters.remote_id', 'keyContact', 'organization.name', 'protectedRoles', 'role', 'text', 'verified'];
 
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
@@ -1368,6 +1381,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
 
   $scope.contacts = [];
   $scope.bundles = [];
+  $scope.disasterOptions = [];
   $scope.organizations = [];
   $scope.protectedRoles = [];
   $scope.countries = countries;
@@ -1421,6 +1435,8 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
       $scope.location = $scope.operations[$scope.locationId].name;
       $scope.bundles = listObjectToArray($scope.operations[$scope.locationId].bundles);
       $scope.bundles.unshift({action:'clear', value: {name: ""}, alt:'Group'});
+      $scope.disasterOptions = listObjectToArray($scope.operations[$scope.locationId].disasters);
+      $scope.disasterOptions.unshift({action:'clear', value: {name: ""}, alt:'Disaster'});
     }
 
     // Fetch regions and cities for filters.

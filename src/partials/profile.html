@@ -94,6 +94,19 @@
                   </button>
                 </div>
               </div>
+              <div class="form-group" ng-show="disasterOptions.length" ng-if="profile.type === 'local'">
+                <label class="control-label" for="disasters[{{profile.disasters.length - 1}}]" translate>Disaster</label>
+
+                <div class="reveal btn-reveal" ng-repeat="disaster in profile.disasters track by $index">
+                  <select class="form-control" name="disasters[{{$index}}]" ng-model="profile.disasters[$index].remote_id" ng-options="disaster.value.remote_id as disaster.value.name for disaster in disasterOptions | orderBy:'disaster.value.name'" ng-blur="focus=0" focus-field="focus">
+                      <option value=""></option>
+                  </select>
+
+                  <button type="button" ng-click="changeFieldEntries('disasters')" ng-class="{'add' : $last && checkForValidEntry('disasters', $index)}">
+                    <i class="fa" ng-class="styleFieldEntries('disasters')"></i>
+                  </button>
+                </div>
+              </div>
           </div>
 
           <div class="section">
