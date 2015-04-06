@@ -23,7 +23,7 @@
       <li class="profile-item list-group-item" ng-repeat="contact in contacts | orderBy: ['nameGiven', 'nameFamily']" ng-init="contactInit()" ng-class="{'has-quick-link': contact.ql.userCanEditProfile}">
         <div class="row">
           <div class="contact-item contact-item--name col-xs-12 col-md-3" >
-            <a href="#/contact/{{contact._id}}">{{contact.nameGiven}} {{contact.nameFamily}}</a>
+            <a href="#/contact/{{contact._id}}" title="{{contact.nameGiven}} {{contact.nameFamily}}">{{contact.nameGiven}} {{contact.nameFamily}}</a>
             <div class="contact-item__markers" ng-if="contact.keyContact || contact._profile.verified">
               <div class="contact-item__key-contact" title="Key Contact" ng-if="contact.keyContact">*</div>
               <span class="contact-item__verified" title="Verified" ng-if="contact._profile.verified"><i class="fa fa-check-circle"></i></span>

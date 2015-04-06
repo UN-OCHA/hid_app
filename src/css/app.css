@@ -9353,10 +9353,13 @@ label[for=keyContact] .fa {
   border-right: none;
   text-align: right;
 }
+.form-elements-phone .form-body:before,
 .form-elements-phone .intl-tel-input:before,
 .form-elements-phone .form-prefix:before,
+.form-elements-email .form-body:before,
 .form-elements-email .intl-tel-input:before,
 .form-elements-email .form-prefix:before,
+.form-elements-voip .form-body:before,
 .form-elements-voip .intl-tel-input:before,
 .form-elements-voip .form-prefix:before {
   content: "";
@@ -9715,7 +9718,7 @@ table tr td:last-child {
 }
 .contact-item--name a {
   color: #54b1c8;
-  float: left;
+  overflow: hidden;
 }
 @media (min-width: 992px) {
   .contact-item--name {
@@ -9756,13 +9759,15 @@ table tr td:last-child {
 .contact-item__markers {
   width: 20px;
   display: inline-block;
-  float: left;
-  margin-left: 10px;
+  position: absolute;
+  top: 0;
+  right: 40px;
 }
 @media (min-width: 992px) {
   .contact-item__markers {
     margin-top: 5px;
     height: 40px;
+    right: 0;
   }
 }
 
