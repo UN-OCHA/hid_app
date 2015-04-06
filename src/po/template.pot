@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-01T18:00:52.096Z\n"
+"Project-Id-Version: 2015-04-06T15:17:31.975Z\n"
 
 #: src/partials/list-print.html
 msgid "* Groups include clusters, sectors, working group or similar."
@@ -182,6 +182,15 @@ msgstr ""
 msgid "Deleting..."
 msgstr ""
 
+#: src/partials/list.html
+#: src/partials/profile.html
+msgid "Disaster"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Disasters"
+msgstr ""
+
 #: src/partials/browser-alert.html
 msgid "Download Google Chrome"
 msgstr ""
@@ -348,6 +357,15 @@ msgstr ""
 msgid "If you would like to find out more about the project, understand the objectives and benefits, join our mailing list, or simply contact us, visit"
 msgstr ""
 
+#: src/partials/profile.html
+msgid "Image Type"
+msgstr ""
+
+#: src/js/app.js
+#: src/partials/profile.html
+msgid "Image URL"
+msgstr ""
+
 #: src/js/app.js
 msgid "Instant Messenger entry"
 msgstr ""
@@ -512,6 +530,10 @@ msgid "Profile"
 msgstr ""
 
 #: src/partials/profile.html
+msgid "Profile Image"
+msgstr ""
+
+#: src/partials/profile.html
 msgid "Profile Options"
 msgstr ""
 
@@ -538,6 +560,10 @@ msgstr ""
 
 #: src/js/app.js
 msgid "Reminder sent"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Remove Image"
 msgstr ""
 
 #: src/partials/createAccount.html
@@ -606,10 +632,6 @@ msgstr ""
 msgid "Select a country"
 msgstr ""
 
-#: src/partials/profile.html
-msgid "Select an operation"
-msgstr ""
-
 #: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Send Claim Email"
@@ -617,6 +639,10 @@ msgstr ""
 
 #: src/js/app.js
 msgid "Sending..."
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Social Media Id"
 msgstr ""
 
 #: src/partials/profile.html
@@ -657,6 +683,10 @@ msgstr ""
 
 #: src/js/app.js
 msgid "Unverify account"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Update Image"
 msgstr ""
 
 #: src/partials/profile.html

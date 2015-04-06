@@ -344,9 +344,9 @@
 
         </div>
 
-        <div class="col-sm-12 col-md-6 admin-area" ng-if="userCanEditKeyContact || userCanEditProtectedRoles|| userCanEditRoles || userCanEditVerified">
-
-          <div class="section" ng-show="userCanEditKeyContact || userCanEditProtectedRoles">
+        <div class="col-sm-12 col-md-6" >
+          <div class="admin-area row" ng-if="userCanEditKeyContact || userCanEditProtectedRoles|| userCanEditRoles || userCanEditVerified">
+            <div class="section col-sm-12" ng-show="userCanEditKeyContact || userCanEditProtectedRoles">
               <h4 translate>Local Administration</h4>
               <div class="form-group" ng-show="userCanEditProtectedRoles">
                 <label class="control-label" for="adminRoles" translate>Protected Roles</label>
@@ -370,9 +370,9 @@
                   <label for="keyContact" ng-click="profile.keyContact = !profile.keyContact"><input type="checkbox" name="keyContact" ng-model="profile.keyContact" ng-click="profile.keyContact = !profile.keyContact"/><span translate>Key Contact</span></label>
                 </div>
               </div>
-          </div>
+            </div>
 
-          <div class="section" ng-show="userCanEditRoles || userCanEditVerified">
+            <div class="section col-sm-12" ng-show="userCanEditRoles || userCanEditVerified">
               <h4 translate>Global Administration</h4>
               <div class="form-group" ng-show="userCanEditRoles">
                 <label class="control-label" for="adminRoles" translate>Admin Privileges</label>
@@ -396,11 +396,49 @@
               <div class="checkbox" ng-show="userCanAddVerified">
                 <label for="verified" ng-click="setVerified()"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="verified && !userCanRemoveVerified" ng-click="setVerified()" ng-value="verified"/><span translate>Verified Responder</span></label>
               </div>
+            </div>
+
+            <div class="section col-sm-12" ng-show="userCanSendClaimEmail">
+              <a class="btn btn-primary btn-lg btn-block" ng-show="userCanSendClaimEmail" ng-click="confirmSendEmail = !confirmSendEmail" translate>Send Claim Email</a>
+              <a ng-show="confirmSendEmail" ng-disabled="sendingClaimEmail" class="fade btn btn-warning btn-lg btn-block" ng-click="sendClaimEmail()" translate>Confirm Send Claim Email</a>
+            </div>
+
           </div>
 
-          <div class="section" ng-show="userCanDeleteAccount || userCanSendClaimEmail">
-            <a class="btn btn-primary btn-lg btn-block" ng-show="userCanSendClaimEmail" ng-click="confirmSendEmail = !confirmSendEmail" translate>Send Claim Email</a>
-            <a ng-show="confirmSendEmail" ng-disabled="sendingClaimEmail" class="fade btn btn-warning btn-lg btn-block" ng-click="sendClaimEmail()" translate>Confirm Send Claim Email</a>
+          <div class="section profile-image" ng-class="{'open': updatingImage, 'empty': !profile.image[0].imageUrl}" ng-if="profile.type === 'global'">
+            <h4 translate>Profile Image</h4>
+            <div class="form-group">
+              <div class="profile-image-wrapper">
+                <span class="helper"></span>
+                <img class="fade" ng-show="profile.image[0].imageUrl" ng-src="{{profile.image[0].imageUrl}}">
+              </div>
+            </div>
+            <div class="form-elements-profile-image fade" ng-show="updatingImage">
+              <div class="form-group">
+                <label class="control-label" for="image[0].type" translate>Image Type</label>
+                <select
+                  class="form-control"
+                  ng-options="type as translate(type) for type in imageTypes"
+                  name="imageType"
+                  ng-model="profile.image[0].type">
+                  <option value="">{{'Choose Type' | translate}} *</span></option>
+                </select>
+              </div>
+              <div class="fade" ng-hide="!profile.image[0].type">
+                <div class="form-group" ng-show="profile.image[0].type && profile.image[0].type !== 'URL'">
+                  <label class="control-label" for="image.socialMediaId" translate>Social Media Id</label>
+                  <input class="form-control" type="text" name="image.socialMediaId" ng-model="profile.image[0].socialMediaId" />
+                </div>
+                <div class="form-group" ng-show="profile.image[0].type === 'URL'">
+                  <label class="control-label" for="image.url" translate>Image URL</label>
+                  <input class="form-control" type="url" name="image.url" ng-model="profile.image[0].url"/>
+                </div>
+              </div>
+            </div>
+            <div class="profile-image-actions">
+              <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="updateImage();" translate>Update Image</button>
+              <button type="button" class="btn btn-default btn-lg btn-block" ng-click="profile.image[0] = {}; updatingImage = 0;" translate>Remove Image</button>
+            </div>
           </div>
 
         </div>

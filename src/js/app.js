@@ -488,6 +488,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
+  $scope.imageTypes = ['URL', 'Facebook', 'Google+'];
   var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': [], 'disasters': ['remote_id']};
 
   var pathParams = $location.path().split('/'),
@@ -589,11 +590,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
 
   // Now we have a profile, use the profile's country to fetch regions and cities
   if ($scope.profile.address) {
-    setDefaultCountry();
     $scope.addressList = {};
     $scope.regions = [];
     $scope.localities = [];
     if ($scope.profile.address[0]) {
+      setDefaultCountry();
       $scope.regionsPromise = profileService.getAdminArea(function() {
         var remote_id = null;
         angular.forEach($scope.countries, function(value, key) {
@@ -620,6 +621,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   }
   // Split ext into own field.
   phoneSplit();
+  // Show image if field is populated.
+  setImage();
 
   // Toggle logic for verified field.
   $scope.setVerified = function() {
@@ -790,6 +793,14 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.selectedOperation = operationId;
   }
 
+  $scope.updateImage = function() {
+    $scope.updatingImage = !$scope.updatingImage;
+
+    if (!$scope.updatingImage) {
+      setImage();
+    }
+  }
+
   $scope.refreshOrganization = function(select, lengthReq) {
     var clearOption = {action:'clear', name:"", alt: gettextCatalog.getString('Organizations')},
         helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
@@ -946,6 +957,9 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       case 'uri':
         name = gettextCatalog.getString('Websites & Social Media entry');
         break;
+      case 'imageURL':
+        name = gettextCatalog.getString('Image URL');
+        break;
     }
     return name + entryNum;
   }
@@ -1058,6 +1072,9 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       if ($scope.userCanEditProtectedRoles) {
         profile.newProtectedRoles = $scope.selectedProtectedRoles;
       }
+      if (profile.image && profile.image[0] && profile.image[0].imageUrl) {
+        profile.image[0].url = profile.image[0].imageUrl;
+      }
 
       profile.verified = $scope.verified;
 
@@ -1159,7 +1176,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   // If no country is selected, change to it to check-in location.
   function setDefaultCountry() {
     if ($scope.profile.type == 'local' && $scope.profile.address) {
-      if (!$scope.profile.address.length || !$scope.profile.address[0].country) {
+      if (!$scope.profile.address.length || ($scope.profile.address[0] && !$scope.profile.address[0].country)) {
         $scope.profile.address = [];
         $scope.profile.address[0] = {country: $scope.operations[$scope.selectedOperation].name};
       }
@@ -1234,6 +1251,41 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   }
 
+  // Shows image url.
+  function setImage() {
+    if (!$scope.profile.image || !$scope.profile.image[0]) {
+      return
+    }
+    if ($scope.profile.image[0].type === 'URL') {
+      $scope.profile.image[0].imageUrl = $scope.profile.image[0].url;
+    }
+    else if (typeof $scope.profile.image[0].type !== 'undefined') {
+      var defaultWidth = 325,
+          request = {method:"get"},
+          cb;
+
+      if ($scope.profile.image[0].type === 'Facebook') {
+        request.url = "https://graph.facebook.com/" + $scope.profile.image[0].socialMediaId + "/picture";
+        request.params = {type: "square", redirect: false, width: defaultWidth};
+        cb = function(response) {
+          if (response.data && response.data.data) {
+            $scope.profile.image[0].imageUrl = response.data.data.url;
+          }
+        }
+      }
+      else {
+        request.url = "https://www.googleapis.com/plus/v1/people/" + $scope.profile.image[0].socialMediaId;
+        request.params = {type: "image", key: contactsId.googlePlusApiKey};
+        cb = function(response) {
+          if (response.data && response.data.image) {
+            $scope.profile.image[0].imageUrl = response.data.image.url.replace('?sz=50', ('?sz=' +defaultWidth));
+          }
+        }
+      }
+      $http(request).then(cb);
+    }
+  }
+
   function setPermissions() {
     var hasRoleAdmin = profileService.hasRole('admin');
 
@@ -1305,7 +1357,7 @@ app.directive('focusField', function() {
   };
 });
 
-app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, profileService, contact, gettextCatalog, userData, protectedRoles) {
+app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, profileService, contact, gettextCatalog, userData, protectedRoles, profileData) {
   $scope.contact = contact;
 
   // Permissions
@@ -1318,13 +1370,16 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
   // is an admin or a manager/editor in the location of this contact.
   $scope.userCanSendClaimEmail = profileService.canSendClaimEmail(contact);
 
-
   var roleFilter = $filter('filter');
   $scope.contact.protectedRolesByName = [];
   angular.forEach($scope.contact.protectedRoles, function(value, key) {
     var role = roleFilter(protectedRoles,function(d) { return d.id === value;})[0].name;
     this.push(role);
   }, $scope.contact.protectedRolesByName);
+
+  if (profileData.global.image && profileData.global.image[0] && profileData.global.image[0].url) {
+    $scope.imageUrl = profileData.global.image[0].url;
+  }
 
   $scope.locationText = function() {
     return $scope.contact.location || gettextCatalog.getString('Global');
@@ -2022,76 +2077,7 @@ app.config(function($routeProvider, $locationProvider) {
         });
       },
       profileData : function(profileService, $route) {
-        var contactId = $route.current.params.profileId || '',
-          profileData = {},
-          i,
-          num,
-          val;
-        if (contactId && contactId.length) {
-          // Check if the contact is for the current user
-          return profileService.getUserData().then(function (data) {
-            if (data && data.contacts && data.contacts.length) {
-              num = data.contacts.length;
-              for (i = 0; i < num; i++) {
-                val = data.contacts[i];
-                if (val && val._id && val._id === contactId) {
-                  // Contact is for the current user.
-                  profileData.contact = val;
-                  profileData.contacts = data.contacts;
-                  profileData.profile = data.profile;
-
-                  // If this contact is local, return the user's profile and global contact too.
-                  if (val.type === 'local') {
-                    profileData.global = {};
-                    for (i = 0; i < num; i++) {
-                      val = data.contacts[i];
-                      if (val && val.type && val.type === 'global') {
-                        profileData.global = val;
-                        break;
-                      }
-                    }
-                  }
-                  return profileData;
-                }
-              }
-            }
-            else {
-              return profileData;
-            }
-
-            // Contact is not for the current user
-            return profileService.getContacts({_id: contactId}).then(function (data) {
-              if (data && data.contacts && data.contacts[0] && data.contacts[0]._profile && data.contacts[0]._profile._id) {
-                return profileService.getProfileById(data.contacts[0]._profile._id).then(function (data) {
-                  if (data && data.profile && data.contacts && data.contacts.length) {
-                    num = data.contacts.length;
-                    for (i = 0; i < num; i++) {
-                      val = data.contacts[i];
-                      // Find the matching contact
-                      if (val && val._id && val._id === contactId) {
-                        profileData.contact = val;
-                      }
-                      // And the user's global contact
-                      else if (val && val._id && val._id !== contactId && val.type && val.type === 'global') {
-                        profileData.global = val;
-                      }
-                    }
-                    if (profileData.contact && profileData.contact._id) {
-                      profileData.profile = data.profile;
-                    }
-                  }
-                  return profileData;
-                });
-              }
-              else {
-                return profileData;
-              }
-            });
-          });
-        }
-        else {
-          return profileData;
-        }
+        return profileService.getProfileData($route.current.params.profileId);
       },
       countries : function(profileService) {
         return profileService.getCountries();
@@ -2169,6 +2155,9 @@ app.config(function($routeProvider, $locationProvider) {
             return userdata;
           }
         });
+      },
+      profileData : function(profileService, $route) {
+        return profileService.getProfileData($route.current.params.contactId);
       }
     }
   }).
@@ -2354,7 +2343,7 @@ app.service("authService", function($location, $http, $q, $rootScope) {
   return authService;
 });
 
-app.service("profileService", function(authService, $http, $q, $rootScope) {
+app.service("profileService", function(authService, $http, $q, $rootScope, $filter) {
   var cacheUserData = false,
       cacheOperationsData = false,
       cacheRolesData = false,
@@ -2369,6 +2358,7 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
     getProfileByUser: getProfileByUser,
     getProfiles: getProfiles,
     getContacts: getContacts,
+    getProfileData: getProfileData,
     saveProfile: saveProfile,
     deleteProfile: deleteProfile,
     saveContact: saveContact,
@@ -2481,6 +2471,50 @@ app.service("profileService", function(authService, $http, $q, $rootScope) {
       params: terms
     });
     return(request.then(handleSuccess, handleError));
+  }
+
+  function getProfileData(contactId) {
+    contactId = contactId || '';
+
+    var promise = getUserData(),
+        filter = $filter('filter');
+
+    return getUserData().then(function(data){
+      // Check if the contact is for the current user
+      if (data && data.contacts && data.contacts.length) {
+        var match = filter(data.contacts, function(d){return d._id === contactId;});
+        if (match.length) {
+          // Contact is for the current user.
+          return prepProfileData(match[0], data, true);
+        }
+        else {
+          // Contact is not for the current user
+          return getContacts({_id: contactId}).then(function(data) {
+            if (data && data.contacts && data.contacts[0] && data.contacts[0]._profile && data.contacts[0]._profile._id) {
+                var cont = data.contacts[0];
+                return getProfileById(data.contacts[0]._profile._id).then(function (data) {
+                  if (data && data.profile && data.contacts && data.contacts.length) {
+                    return prepProfileData(cont, data, false);
+                  }
+                });
+            }
+          });
+        }
+      }
+      return {};
+    });
+
+    function prepProfileData(contact, data, isUserProfile) {
+      var globalMatch = filter(data.contacts, function(d){return d.type === 'global';}),
+          profileData = {
+            contact: contact,
+            contacts: data.contacts,
+            profile: data.profile,
+            global: globalMatch.length ? globalMatch[0] : {},
+            isUserProfile: isUserProfile
+          };
+      return profileData;
+    }
   }
 
   // Save a profile (create or update existing).

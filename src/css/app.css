@@ -9353,10 +9353,13 @@ label[for=keyContact] .fa {
   border-right: none;
   text-align: right;
 }
+.form-elements-phone .form-body:before,
 .form-elements-phone .intl-tel-input:before,
 .form-elements-phone .form-prefix:before,
+.form-elements-email .form-body:before,
 .form-elements-email .intl-tel-input:before,
 .form-elements-email .form-prefix:before,
+.form-elements-voip .form-body:before,
 .form-elements-voip .intl-tel-input:before,
 .form-elements-voip .form-prefix:before {
   content: "";
@@ -10450,6 +10453,97 @@ table tr td:last-child {
   }
 }
 
+.profile-image.empty .profile-image-actions, .profile-image:hover .profile-image-actions {
+  opacity: 1;
+}
+.profile-image.open .profile-image-actions {
+  opacity: 1;
+  bottom: 30px;
+  margin-bottom: 0px;
+}
+.profile-image.open .profile-image-wrapper img {
+  opacity: 0.1;
+}
+.profile-image .profile-image-wrapper {
+  height: 324px;
+  background-color: #e4e4e4;
+  text-align: center;
+}
+.profile-image .profile-image-wrapper img {
+  vertical-align: middle;
+  max-height: 324px;
+  max-width: 324px;
+  opacity: 1;
+}
+.profile-image .profile-image-wrapper .helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+.profile-image .form-elements-profile-image {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 60px 30px 0;
+  z-index: 10;
+}
+.profile-image .profile-image-actions {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  padding: 0 30px;
+  bottom: 50%;
+  margin-bottom: -55px;
+  -webkit-transition: 0.2s ease-in all;
+  transition: 0.2s ease-in all;
+  z-index: 10;
+}
+
+.page-contact .profile-image .profile-image-wrapper {
+  height: 256px;
+  margin-bottom: 20px;
+  background-color: transparent;
+}
+@media (min-width: 768px) {
+  .page-contact .profile-image .profile-image-wrapper {
+    margin-top: 20px;
+    height: 216px;
+  }
+}
+@media (min-width: 992px) {
+  .page-contact .profile-image .profile-image-wrapper {
+    height: 208px;
+  }
+}
+@media (min-width: 1200px) {
+  .page-contact .profile-image .profile-image-wrapper {
+    height: 256px;
+  }
+}
+.page-contact .profile-image .profile-image-wrapper img {
+  max-height: 256px;
+  max-width: 256px;
+}
+@media (min-width: 768px) {
+  .page-contact .profile-image .profile-image-wrapper img {
+    max-height: 216px;
+    max-width: 216px;
+  }
+}
+@media (min-width: 992px) {
+  .page-contact .profile-image .profile-image-wrapper img {
+    max-height: 208px;
+    max-width: 208px;
+  }
+}
+@media (min-width: 1200px) {
+  .page-contact .profile-image .profile-image-wrapper img {
+    max-height: 256px;
+    max-width: 256px;
+  }
+}
+
 .profile-item {
   margin-bottom: 8px;
   overflow: hidden;
@@ -10631,6 +10725,7 @@ table tr td:last-child {
 
 .section {
   margin-bottom: 30px;
+  position: relative;
 }
 
 .page-list .profile-item {
