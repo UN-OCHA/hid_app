@@ -15,6 +15,13 @@
       </div>
 
       <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
+
+        <div class="profile-image hidden-xs" ng-show="imageUrl">
+          <div class="profile-image-wrapper">
+            <span class="helper"></span>
+            <img class="fade" ng-src="{{imageUrl}}">
+          </div>
+        </div>
         <div class="actions">
           <a class="btn btn-warning btn-lg btn-block" href ng-click="back();"><i
           class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a>
@@ -47,7 +54,16 @@
                 </div>
               </div>
 
+
               <div class="profile-view__items same-height-col">
+
+                <div class="profile-image visible-xs" ng-show="imageUrl">
+                  <div class="profile-image-wrapper">
+                    <span class="helper"></span>
+                    <img class="fade" ng-src="{{imageUrl}}">
+                  </div>
+                </div>
+
                 <div class="phone" ng-repeat="phone in contact.phone">
                   <div class="profile-view__item">{{phone.type | translate}}: <a href="tel:{{phone.number}}">{{phoneDisplay(phone.number)}}</a></div>
                 </div>
