@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-06T15:17:31.975Z\n"
+"Project-Id-Version: 2015-04-07T15:43:21.584Z\n"
 
 #: src/partials/list-print.html
 msgid "* Groups include clusters, sectors, working group or similar."
@@ -743,6 +743,10 @@ msgstr ""
 
 #: src/partials/about.html
 msgid "You are welcome to register and test the application on our"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "add a missing group"
 msgstr ""
 
 #: src/partials/createAccount.html
