@@ -433,33 +433,33 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
   }
 
   $scope.refreshOrganization = function(select, lengthReq) {
-    var clearOption = {action:'clear', name:"", alt:'Organizations'};
+    var helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
+        emptyOption = {action:'clear', name:"", alt: gettextCatalog.getString('No results found.'), disable: true};
 
     // Remove text in parentheses.
     select.search = select.search.replace(/ *\([^)]*\) */g, "");
 
     if (select.search.length > (lengthReq || 0)) {
+      select.searching = true;
       $http.get($scope.hrinfoBaseUrl + '/hid/organizations/autocomplete/' + encodeURIComponent(select.search))
         .then(function(response) {
+          select.searching = false;
           $scope.organizations = [];
           angular.forEach(response.data, function(value, key) {
             this.push({'name': value, 'remote_id': key});
           }, $scope.organizations);
-          if ($scope.organizations.length) {
-            $scope.organizations.unshift(clearOption);
+          if (!$scope.organizations.length) {
+            $scope.organizations.unshift(emptyOption);
           }
         });
     }
     else {
-      $scope.organizations = [];
-      if (typeof $scope.query['organization.name'] !== 'undefined' && $scope.query['organization.name'].length) {
-        $scope.organizations.push(clearOption);
-      }
+      $scope.organizations = [helpOption];
     }
   };
 
   $scope.onSelect = function(item, qProp) {
-    if (item.action === "clear") {
+    if (!item) {
       $scope.query[qProp] = undefined;
     }
     if (item.name && item.remote_id){
@@ -482,9 +482,9 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   $scope.profile = {};
 
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
-  $scope.invalidFields = {};
   $scope.adminRoleOptions = [];
   $scope.protectedRoles = protectedRoles;
+  $scope.addressList = {};
 
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
@@ -546,10 +546,10 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   // Creates an array to be used as options for group select
   $scope.$watch("selectedOperation", function(newValue, oldValue) {
     if (newValue !== oldValue && $scope.selectedOperation.length) {
+      $scope.initCountry();
       setBundles();
       setDisasters();
-      setDefaultCountry();
-      setPreferedCountries();
+      setOffices();
       setPermissions();
       // Scoll to top of form.
       window.scrollTo(0,0);
@@ -565,7 +565,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       $scope.selectedOperation = $scope.profile.locationId;
       setBundles();
       setDisasters();
-      setPreferedCountries();
+      setOffices();
     }
     setPermissions();
   }
@@ -588,37 +588,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.profile.email = [{address: accountData.email}];
   }
 
-  // Now we have a profile, use the profile's country to fetch regions and cities
-  if ($scope.profile.address) {
-    $scope.addressList = {};
-    $scope.regions = [];
-    $scope.localities = [];
-    if ($scope.profile.address[0]) {
-      setDefaultCountry();
-      $scope.regionsPromise = profileService.getAdminArea(function() {
-        var remote_id = null;
-        angular.forEach($scope.countries, function(value, key) {
-          if (value.name === $scope.profile.address[0].country) {
-            remote_id = value.remote_id;
-          }
-        });
-        return remote_id;
-      }()).then(function(data) {
-        $scope.regions = data;
-        $scope.addressList.regions = data;
-        // If we already have an administrative area set, we should also populate the cities for
-        // autocomplete
-        if ($scope.profile.address[0].hasOwnProperty('administrative_area')) {
-          angular.forEach($scope.regions, function(value, key) {
-            if (value.name === $scope.profile.address[0].administrative_area) {
-              $scope.localities = value.cities;
-              $scope.addressList.localities = value.cities;
-            }
-          });
-        }
-      });
-    }
-  }
   // Split ext into own field.
   phoneSplit();
   // Show image if field is populated.
@@ -802,8 +771,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   }
 
   $scope.refreshOrganization = function(select, lengthReq) {
-    var clearOption = {action:'clear', name:"", alt: gettextCatalog.getString('Organizations')},
-        helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
+    var helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
         emptyOption = {action:'clear', name:"", alt: gettextCatalog.getString('No results found.'), disable: true};
 
     // Remove text in parentheses.
@@ -820,90 +788,45 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
             this.push({'name': value, 'remote_id': key});
           }, $scope.organizations);
 
-          if ($scope.organizations.length) {
-            $scope.organizations.unshift(clearOption);
-          }
-          else {
+          if (!$scope.organizations.length) {
             $scope.organizations.push(emptyOption);
           }
         });
     }
     else {
       $scope.organizations = []
-      if (typeof $scope.profile.organization !== 'undefined' && $scope.profile.organization.length) {
-        $scope.organizations.push(clearOption);
-      }
       $scope.organizations.push(helpOption);
     }
   };
 
-  $scope.selectOrg = function(item) {
-    $scope.profile.organization = item.action === "clear" ? [] : [item];
-  }
-
-  $scope.refreshAddress = function(select, prop) {
-    if(select) {
-      var clearOption = {action:'clear', name:""},
-          filter = select.$filter('filter');
-
-      $scope.addressList[prop] = filter($scope[prop], select.search);
-
-      if (select.selected) {
-        switch (prop) {
-          case 'countries':
-            clearOption.alt = gettextCatalog.getString('Country');
-            break;
-          case 'regions':
-            clearOption.alt = gettextCatalog.getString('Region');
-            break;
-          case 'localities':
-            clearOption.alt = gettextCatalog.getString('Locality');
-            break;
-        }
-        $scope.addressList[prop].unshift(clearOption);
-      }
+  $scope.selectCountry = function(item, isInit) {
+    if (item && item.hasOwnProperty('remote_id')) {
+      $scope.regionsPromise = profileService.getAdminArea(item.remote_id).then(function(data) {
+        $scope.regions = data;
+      });
     }
+    if (!isInit) {
+      $scope.profile.address[0].administrative_area = null;
+    }
+
+    setPreferedCountries();
   }
 
-  $scope.selectAddress = function(item, prop) {
-    var altProp = 'localities';
+  $scope.initCountry = function() {
+    $scope.regions = [];
     $scope.profile.address = $scope.profile.address || [];
     $scope.profile.address[0] = $scope.profile.address[0] || {};
 
-    if (item.action === "clear") {
-      switch (prop) {
-        case 'country':
-          $scope.profile.address = [];
-          break;
-        case 'administrative_area':
-          $scope.profile.address[0].administrative_area = null;
-          $scope.localities = [];
-        case 'locality':
-          $scope.profile.address[0].locality = null;
-      }
+    if (!$scope.profile.address[0].country && $scope.profile.type == 'local' && $scope.selectedOperation && $scope.operations[$scope.selectedOperation]) {
+      $scope.profile.address[0].country = $scope.operations[$scope.selectedOperation].name;
     }
-    else {
-      switch (prop) {
-        case 'country':
-          altProp = 'countries';
-          $scope.regionsPromise = profileService.getAdminArea(item.remote_id).then(function(data) {
-            $scope.regions = data;
-            $scope.addressList.regions = data;
-          });
-          $scope.profile.address[0].administrative_area = null;
-          $scope.profile.address[0].locality = null;
-          $scope.localities = [];
-          $scope.addressList.localities = [];
-          break;
-        case 'administrative_area':
-          altProp = 'regions';
-          $scope.localities = item.cities;
-          $scope.addressList.localities = item.cities;
-          $scope.profile.address[0].locality = null;
-          break;
-      }
-      $scope.profile.address[0][prop] = item.name;
-      $scope.refreshAddress(this.$select, altProp);
+
+    if ($scope.profile.address[0].country) {
+      angular.forEach($scope.countries, function(value, key) {
+        if (value.name === $scope.profile.address[0].country) {
+          $scope.selectCountry(value, true);
+        }
+      });
     }
   }
 
@@ -1141,15 +1064,23 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     }
   };
 
-  $scope.setPreferedCountries = setPreferedCountries;
-
   // If profile is local, set preferred county code to checkin location.
   function setPreferedCountries() {
     var address, match, countryMatch, iso2Codes;
     $scope.defaultPreferredCountryAbbr = [];
 
-    address = $scope.profile.address || profileData.contact.address;
-    match = (address[0] && address[0].hasOwnProperty('country') && address[0].country.length) ? address[0].country.toUpperCase() : $scope.selectedPlace.toUpperCase();
+    if ($scope.profile.hasOwnProperty('address')) {
+      address = $scope.profile.address;
+    }
+    else if (profileData.hasOwnProperty('contact') && profileData.contact.hasOwnProperty('address')) {
+      address = profileData.contact.address;
+    }
+    else {
+      address = [{}];
+    }
+
+    match = (typeof address[0].country === 'string' && address[0].country.length) ? address[0].country.toUpperCase()
+      : ($scope.profile.location) ? $scope.profile.location.toUpperCase() : $scope.selectedOperation;
 
     countryMatch = $.fn.intlTelInput.getCountryData().filter(function (el) {
       // Returns country data that is similar to selectedPlace.
@@ -1157,11 +1088,14 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     });
 
     iso2Codes = [];
-    for (var i in countryMatch) {
-      iso2Codes.push(countryMatch[i].iso2)
-    };
+    angular.forEach(countryMatch, function(value){
+      this.push(value.iso2);
+    },iso2Codes);
+
+    iso2Codes = iso2Codes.length ? iso2Codes : ["ch"]
+
     // Converts array to a string.
-    $scope.defaultPreferredCountryAbbr = iso2Codes.join(', ') || "ch";
+    $scope.defaultPreferredCountryAbbr = iso2Codes.join(', ');
     updateCountryCodes(iso2Codes[0]);
   }
 
@@ -1171,16 +1105,6 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         var countryInfo = jQuery('input[name="phone[' + key + '][number]"]').intlTelInput('selectCountry', iso2);
       }
     });
-  }
-
-  // If no country is selected, change to it to check-in location.
-  function setDefaultCountry() {
-    if ($scope.profile.type == 'local' && $scope.profile.address) {
-      if (!$scope.profile.address.length || ($scope.profile.address[0] && !$scope.profile.address[0].country)) {
-        $scope.profile.address = [];
-        $scope.profile.address[0] = {country: $scope.operations[$scope.selectedOperation].name};
-      }
-    }
   }
 
   // Converts object to a sortable array.
@@ -1229,26 +1153,11 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.disasterOptions = listObjectToArray(disasterOptions);
   }
 
-  // If profile is local, set preferred county code to checkin location.
-  function setPreferedCountries() {
-    if ($scope.profile.type === 'local') {
-      $scope.defaultPreferredCountryAbbr = [];
-      var match, countryMatch;
-
-      match = $scope.operations.hasOwnProperty($scope.selectedOperation) ? $scope.operations[$scope.selectedOperation].name.toUpperCase() : '';
-      countryMatch = $.fn.intlTelInput.getCountryData().filter(function (el) {
-        // Returns country data that is similar to selectedOperation.
-        return el.name.toUpperCase().match(match);
-      });
-      for (var i in countryMatch) {
-        $scope.defaultPreferredCountryAbbr.push(countryMatch[i].iso2)
-      };
-      // Converts array to a string.
-      $scope.defaultPreferredCountryAbbr = $scope.defaultPreferredCountryAbbr.join(', ') || "ch";
-    }
-    else {
-      $scope.defaultPreferredCountryAbbr = "ch";
-    }
+  function setOffices() {
+    $scope.offices = [];
+    angular.forEach($scope.operations[$scope.selectedOperation].offices, function(value) {
+      $scope.offices.push(value);
+    }, $scope.offices);
   }
 
   // Shows image url.
@@ -1492,7 +1401,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
 });
 
 app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries) {
-  var searchKeys = ['address.administrative_area', 'address.country', 'address.locality', 'bundle', 'disasters.remote_id', 'keyContact', 'organization.name', 'protectedRoles', 'role', 'text', 'verified'];
+  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'keyContact', 'organization.name', 'protectedRoles', 'role', 'text', 'verified'];
 
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
@@ -1546,28 +1455,21 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
     $scope.printUrl = '#' + pathParams.join('/');
   }
 
-  // Add default country entry.
-  $scope.countries.unshift({action:'clear', name:"", alt:'Country'});
-
   if ($scope.locationId !== 'global') {
     // Create bundles and disasters array.
     if ($scope.operations.hasOwnProperty($scope.locationId)) {
       $scope.location = $scope.operations[$scope.locationId].name;
       $scope.bundles = listObjectToArray($scope.operations[$scope.locationId].bundles);
-      $scope.bundles.unshift({action:'clear', value: {name: ""}, alt:'Group'});
       $scope.disasterOptions = listObjectToArray($scope.operations[$scope.locationId].disasters);
-      $scope.disasterOptions.unshift({action:'clear', value: {name: ""}, alt:'Disaster'});
     }
 
-    // Fetch regions and cities for filters.
+    // Fetch regions for filter.
     if ($scope.location) {
       var tmpRegion = $scope.query['address.administrative_area'],
-          tmpLocality = $scope.query['address.locality'],
           len = $scope.countries.length,
           remote_id = null;
 
       $scope.regions = tmpRegion ? [{name: tmpRegion}] : [];
-      $scope.localities = tmpLocality ? [{name: tmpLocality}] :[];
       profileService.getAdminArea(function() {
         for (var i = 0; i < len; i++) {
           if ($scope.countries[i].name === $scope.location) {
@@ -1578,24 +1480,12 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
         return remote_id;
       }()).then(function(data) {
         $scope.regions = data;
-        $scope.regions.unshift({action:'clear', name:"", alt:'Region'});
-        // If we already have an administrative area set, we should also populate the cities for
-        // autocomplete
-        if ($scope.query.hasOwnProperty('address.administrative_area')) {
-          angular.forEach($scope.regions, function(value, key) {
-            if (value.name === $scope.query['address.administrative_area']) {
-              $scope.localities = value.cities;
-              $scope.localities.unshift({action:'clear', name:"", alt:'Locality'});
-            }
-          });
-        }
       });
     }
   }
 
   // Create protected roles array.
   $scope.protectedRoles = protectedRoles;
-  $scope.protectedRoles.unshift({action:'clear', name:"", id:"", alt:'Role'});
 
 
   $scope.contactInit = function() {
@@ -1746,7 +1636,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   };
 
   // Sets sets url params thru $location.search().
-  $scope.submitSearch = function(){
+  $scope.submitSearch = function() {
     var query = $scope.query,
         sObj = {};
 
@@ -1785,41 +1675,30 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
 
   // Autocomplete call for Orgs
   $scope.refreshOrganization = function(select, lengthReq) {
-    var clearOption = {action:'clear', name:"", alt:'Organizations'};
+    var helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
+        emptyOption = {action:'clear', name:"", alt: gettextCatalog.getString('No results found.'), disable: true};
 
     // Remove text in parentheses.
     select.search = select.search.replace(/ *\([^)]*\) */g, "");
 
     if (select.search.length > (lengthReq || 0)) {
+      select.searching = true;
       $http.get($scope.hrinfoBaseUrl + '/hid/organizations/autocomplete/' + encodeURIComponent(select.search))
         .then(function(response) {
+          select.searching = false;
           $scope.organizations = [];
           angular.forEach(response.data, function(value, key) {
             this.push({'name': value, 'remote_id': key});
           }, $scope.organizations);
-          if ($scope.organizations.length) {
-            $scope.organizations.unshift(clearOption);
+          if (!$scope.organizations.length) {
+            $scope.organizations.unshift(emptyOption);
           }
         });
     }
     else {
-      $scope.organizations = [];
-      if (typeof $scope.query['organization.name'] !== 'undefined' && $scope.query['organization.name'].length) {
-        $scope.organizations.push(clearOption);
-      }
+      $scope.organizations = [helpOption];
     }
   };
-
-  $scope.onSelect = function(item, qProp) {
-    if (item.action === "clear") {
-      $scope.query[qProp] = undefined;
-    }
-    if (qProp === "address.administrative_area" && $scope.query.hasOwnProperty('address.locality')) {
-      delete $scope.query['address.locality'];
-    }
-    // Search upon changing filter.
-    $scope.submitSearch();
-  }
 
   $scope.loadMoreContacts = function(inview, inviewpart) {
     // Don't do anything if elem not completely visible
@@ -2608,14 +2487,6 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
       var regionData = [];
       if (data && data.regions) {
         angular.forEach(data.regions, function(value, key) {
-          var region = value;
-          var cities = [];
-          if (region.hasOwnProperty('cities')) {
-            angular.forEach(region.cities, function(value, key) {
-              this.push(angular.extend({}, {'remote_id': key, 'name': value}));
-            }, cities);
-          }
-          region.cities = cities;
           this.push(angular.extend({}, value, {'remote_id' : key}));
         }, regionData);
       }
