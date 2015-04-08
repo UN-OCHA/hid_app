@@ -1376,8 +1376,8 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
     var role = roleFilter(protectedRoles,function(d) { return d.id === value;});
     if (role && role[0] && role[0].name){
       var roleName = role[0].name;
+      this.push(roleName); 
     }
-    this.push(roleName);  
   }, $scope.contact.protectedRolesByName);
 
   if (profileData.global.image && profileData.global.image[0] && profileData.global.image[0].url) {
