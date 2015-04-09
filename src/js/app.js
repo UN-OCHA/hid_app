@@ -2228,9 +2228,8 @@ app.service("authService", function($location, $http, $q, $rootScope) {
 
 app.service("profileService", function(authService, $http, $q, $rootScope, $filter) {
   var cacheUserData = false,
-      cacheOperationsData = false,
-      cacheRolesData = false,
-      cacheProtectedRolesData = false;
+      cacheAppData = false,
+      promiseAppData = false;
 
   // Return public API.
   return({
@@ -2264,7 +2263,7 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
     canDeleteAccount: canDeleteAccount
   });
 
-  // Get app data.
+  // Get user data.
   function getUserData() {
     var promise;
 
@@ -2293,25 +2292,44 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
   }
 
   // Get app data.
-  function getOperationsData() {
-    var promise;
-
-    if (cacheOperationsData) {
-      promise = $q.defer();
-      promise.resolve(cacheOperationsData);
+  function getAppData() {
+    if (cacheAppData) {
+      var promise = $q.defer();
+      promise.resolve(cacheAppData);
       return promise.promise;
     }
+    else if (promiseAppData) {
+      return promiseAppData;
+    }
     else {
-      promise = $http({
+      promiseAppData = $http({
         method: "get",
         url: contactsId.profilesBaseUrl + "/v0/app/data",
         params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
       })
       .then(handleSuccess, handleError).then(function(data) {
-        if (data && data.operations) {
-          cacheOperationsData = data.operations;
+        if (data) {
+          cacheAppData = data;
         }
-        return cacheOperationsData;
+        return cacheAppData;
+      });
+      return promiseAppData;
+    }
+  }
+
+  // Get operations data (part of app data).
+  function getOperationsData() {
+    var promise;
+
+    if (cacheAppData) {
+      promise = $q.defer();
+      promise.resolve(cacheAppData.operations);
+      return promise.promise;
+    }
+    else {
+      promise = getAppData()
+      .then(function(data) {
+        return (data && data.operations) ? data.operations : false;
       });
       return promise;
     }
@@ -2320,9 +2338,7 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
   // Clear stored app data.
   function clearData() {
     cacheUserData = false;
-    cacheOperationsData = false;
-    cacheRolesData = false;
-    cacheProtectedRolesData = false;
+    cacheAppData = false;
   }
 
   // Get a profile by ID.
@@ -2503,24 +2519,16 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
   function getRoles() {
     var promise;
 
-    if (cacheRolesData) {
+    if (cacheAppData) {
       promise = $q.defer();
-      promise.resolve(cacheRolesData);
+      promise.resolve(cacheAppData.roles);
       return promise.promise;
     }
     else {
-      promise = $http({
-        method: "get",
-        url: contactsId.profilesBaseUrl + "/v0/app/data",
-        params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
-      })
-      .then(handleSuccess, handleError).then(function(data) {
-        if (data && data.roles) {
-          cacheRolesData = data.roles;
-        }
-        return cacheRolesData;
+      promise = getAppData()
+      .then(function(data) {
+        return (data && data.roles) ? data.roles : false;
       });
-
       return promise;
     }
   }
@@ -2528,24 +2536,16 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
   function getProtectedRoles() {
     var promise;
 
-    if (cacheProtectedRolesData) {
+    if (cacheAppData) {
       promise = $q.defer();
-      promise.resolve(cacheProtectedRolesData);
+      promise.resolve(cacheAppData.protectedRoles);
       return promise.promise;
     }
     else {
-      promise = $http({
-        method: "get",
-        url: contactsId.profilesBaseUrl + "/v0/app/data",
-        params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
-      })
-      .then(handleSuccess, handleError).then(function(data) {
-        if (data && data.protectedRoles) {
-          cacheProtectedRolesData = data.protectedRoles;
-        }
-        return cacheProtectedRolesData;
+      promise = getAppData()
+      .then(function(data) {
+        return (data && data.protectedRoles) ? data.protectedRoles : false;
       });
-
       return promise;
     }
   }
