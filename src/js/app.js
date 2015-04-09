@@ -1197,7 +1197,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   }
 
   function setPermissions() {
-    var hasRoleAdmin = profileService.hasRole('admin');
+    var hasRoleAdmin = profileService.hasRole('admin'),
+        contactNotEmpty = profileData.contact && Object.keys(profileData.contact).length;
 
     $scope.userCanEditRoles = profileService.canEditRoles(profileData.profile) && profileData.profile._id !== userData.profile._id;
     $scope.userCanEditKeyContact = profileService.canEditKeyContact($scope.selectedOperation);
@@ -1205,8 +1206,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.userCanAddVerified = profileService.canAddVerified($scope.selectedOperation);
     $scope.userCanRemoveVerified = profileService.canRemoveVerified(profileData.contact, profileData.profile);
     $scope.userCanDeleteAccount = profileService.canDeleteAccount(profileData.profile);
-    $scope.userCanCheckOut = !checkinFlow && profileData.contact && Object.keys(profileData.contact).length && profileService.canCheckOut(profileData.contact);
-    $scope.userCanSendClaimEmail = !checkinFlow && profileData.contact && profileService.canSendClaimEmail(profileData.contact);
+    $scope.userCanCheckOut = !checkinFlow && contactNotEmpty && profileService.canCheckOut(profileData.contact);
+    $scope.userCanSendClaimEmail = !checkinFlow && contactNotEmpty && profileService.canSendClaimEmail(profileData.contact);
     $scope.userCanRequestDelete = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
     $scope.userCanRequestPassword = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
 
