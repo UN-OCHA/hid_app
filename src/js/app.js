@@ -1299,7 +1299,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.userCanSendClaimEmail = !checkinFlow && profileData.contact && profileService.canSendClaimEmail(profileData.contact);
     $scope.userCanRequestDelete = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
     $scope.userCanRequestPassword = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
-
+    $scope.userCanAssignOrganizationEditor  =  profileService.canAssignOrganizationEditor();
     // Determine what roles are available to assign to a user
     if ($scope.userCanEditRoles && hasRoleAdmin) {
       // You're an admin and can assign any role

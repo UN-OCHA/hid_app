@@ -78,7 +78,7 @@
                 <div class="help-block"><span translate>Request to</span> <a href="http://www.humanitarianresponse.info/help/webform/add-new-organization-form" target="_blank" translate>add a missing organization</a>.</div>
               </div>
 
-              <div class="form-group" ng-show="canAssignOrganizationEditor">
+              <div class="form-group" ng-show="userCanAssignOrganizationEditor">
                 <div class="checkbox">
                   <label for="keyContact" ng-click="profile.organizationEditor = !profile.organizationEditor"><input type="checkbox" name="organizationEditor" ng-model="profile.organizationEditor" ng-click="profile.organizationEditor = !profile.organizationEditor"/><span translate>Organization Editor</span></label>
                 </div>
