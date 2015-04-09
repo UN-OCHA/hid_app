@@ -41,16 +41,17 @@
 
         <div class="form-group">
           <label class="control-label-light" for="organization">* <span translate>Organization</span></label>
+
           <ui-select
             required
-            class="form-controls selectize-light"
+            class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
             name="organization"
             ng-model="profile.organization[0].name"
-            theme="selectize"
+            theme="bootstrap"
             reset-search-input="true"
             on-select="onSelect($item, 'organization.name')">
               <ui-select-match placeholder="{{'Search for organizations'|translate}}">{{$select.selected.name}}</ui-select-match>
-              <ui-select-choices ng-class="{'not-empty': organizations.length}" repeat="org.name as org in organizations | orderBy:'name'" refresh="refreshOrganization($select, 2)" refresh-delay="200">
+              <ui-select-choices repeat="org.name as org in organizations | orderBy:'name'" refresh="refreshOrganization($select, 2)" ui-disable-choice="org.disable">
                 <div ng-bind-html="org.alt || (org.name | highlight: $select.search) "></div>
               </ui-select-choices>
           </ui-select>
