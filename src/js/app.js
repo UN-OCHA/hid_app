@@ -372,6 +372,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     profile.type = 'local';
     profile.isNewContact = true;
     profile.adminName = userData.global.nameGiven + " " + userData.global.nameFamily;
+    profile.adminEmail = userData.global.email && userData.global.email[0] ? userData.global.email[0].address : "";
 
     if ($scope.profile.location) {
       profile.locationId = $scope.profile.location.remote_id;
