@@ -1079,7 +1079,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       address = [{}];
     }
 
-    match = (typeof address[0].country === 'string' && address[0].country.length) ? address[0].country.toUpperCase()
+    match = (address.length && typeof address[0].country === 'string' && address[0].country.length) ? address[0].country.toUpperCase()
       : ($scope.profile.location) ? $scope.profile.location.toUpperCase() : $scope.selectedOperation;
 
     countryMatch = $.fn.intlTelInput.getCountryData().filter(function (el) {
@@ -1285,7 +1285,7 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
     var role = roleFilter(protectedRoles,function(d) { return d.id === value;});
     if (role && role[0] && role[0].name){
       var roleName = role[0].name;
-      this.push(roleName); 
+      this.push(roleName);
     }
   }, $scope.contact.protectedRolesByName);
 
