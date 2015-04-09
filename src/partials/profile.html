@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <form name="profileForm" class="update-profile profile-form row" ng-show="selectedOperation.length" ng-class="{'show-options': profileOptions}" novalidate ng-submit="submitProfile()">
+  <form name="profileForm" autocomplete="off" class="update-profile profile-form row" ng-show="selectedOperation.length" ng-class="{'show-options': profileOptions}" novalidate ng-submit="submitProfile()">
     <div class="form-content col-xs-12 col-sm-8 col-md-9 pull-right" >
       <h3>{{profileName()}} <span translate>Profile</span></h3>
       <p class="help-block">* <em>Required field</em></p>
@@ -61,15 +61,13 @@
                   name="organization"
                   class="form-control {{$select.searching ? 'searching' : ''}}"
                   ng-model="profile.organization[0]"
-                  theme="selectize"
-                  reset-search-input="true"
-                  on-select="selectOrg($item)">
-                    <ui-select-match placeholder="{{'Please select from the list'|translate}}">{{$select.selected.name}}</ui-select-match>
+                  theme="bootstrap"
+                  reset-search-input="true">
+                    <ui-select-match allow-clear placeholder="{{'Please select from the list'|translate}}">{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices
                       ng-class="{'not-empty': organizations.length}"
-                      repeat="org.name as org in organizations | orderBy:'name'"
+                      repeat="org in organizations | orderBy:'name'"
                       refresh="refreshOrganization($select, 2)"
-                      refresh-delay="200"
                       ui-disable-choice="org.disable">
                       <div ng-class="{default: !organizations.name.length}" ng-bind-html="org.alt || (org.name | highlight: $select.search) "></div>
                     </ui-select-choices>
@@ -124,59 +122,56 @@
               <ui-select
                 name="address.country"
                 class="form-control"
+                autocomplete="off"
                 ng-model="profile.address[0].country"
-                theme="selectize"
+                theme="bootstrap"
                 reset-search-input="true"
-                on-select="selectAddress($item, 'country'); setPreferedCountries()">
-                  <ui-select-match placeholder="{{'Search for country'|translate}}">{{$select.selected.name}}</ui-select-match>
-                  <ui-select-choices
-                    ng-class="{'not-empty': addressList.countries.length}"
-                    refresh="refreshAddress($select, 'countries')"
-                    repeat="country.name as country in addressList.countries | orderBy:'name'">
-                    <div ng-class="{default: !country.name.length}" ng-bind-html="country.alt || (country.name | highlight: $select.search)"></div>
+                ng-init="initCountry($item)"
+                on-select="selectCountry($item)">
+                  <ui-select-match allow-clear placeholder="{{'Search for country'|translate}}">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices ng-class="{'not-empty': countries.length}" repeat="country.name as country in countries | orderBy:'name' |filter: $select.search">
+                    <div ng-bind-html="country.name | highlight: $select.search"></div>
                   </ui-select-choices>
               </ui-select>
             </div>
 
             <div cg-busy="regionsPromise">
               <div class="form-group reveal" ng-show="profile.address[0].country && regions.length">
-                <label class="control-label" for="address.administrative_area" translate>State/Province/Region</label>
+                <label class="control-label" for="address.administrative_area" translate>Region / State</label>
                 <ui-select
                   name="address.administrative_area"
                   class="form-control"
                   ng-model="profile.address[0].administrative_area"
-                  theme="selectize"
-                  reset-search-input="true"
-                  on-select="selectAddress($item, 'administrative_area')">
-                    <ui-select-match placeholder="{{'Search for region'|translate}}">{{$select.selected.name}}</ui-select-match>
-                    <ui-select-choices
-                      ng-class="{'not-empty': addressList.regions.length}"
-                      refresh="refreshAddress($select, 'regions')"
-                      repeat="region.name as region in addressList.regions | orderBy:'name'">
-                      <div ng-class="{default: !region.name.length}" ng-bind-html="region.alt || (region.name | highlight: $select.search)"></div>
+                  theme="bootstrap"
+                  search-enabled="false">
+                    <ui-select-match allow-clear placeholder="{{'Select a region'|translate}}">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices ng-class="{'not-empty': regions.length}" repeat="region.name as region in regions | orderBy:'name'">
+                      <div ng-bind-html="region.name"></div>
                     </ui-select-choices>
                 </ui-select>
               </div>
             </div>
 
-            <div class="form-group reveal" ng-show="profile.address[0].country && regions.length && profile.address[0].administrative_area">
-              <label class="control-label" for="address[0][locality]" translate>City</label>
+            <div class="form-group" ng-show="offices.length">
+              <label class="control-label" for="office" translate>Coordination Office</label>
               <ui-select
-                name="address.locality"
+                name="office"
                 class="form-control"
-                ng-model="profile.address[0].locality"
-                theme="selectize"
-                reset-search-input="true"
-                on-select="selectAddress($item, 'locality')">
-                  <ui-select-match placeholder="{{'Search for locality'|translate}}">{{$select.selected.name}}</ui-select-match>
-                  <ui-select-choices
-                    ng-class="{'not-empty': addressList.localities.length}"
-                    refresh="refreshAddress($select, 'localities')"
-                    repeat="locality.name as locality in addressList.localities | orderBy:'name'">
-                    <div ng-class="{default: !locality.name.length}" ng-bind-html="locality.alt || (locality.name | highlight: $select.search)"></div>
+                ng-model="profile.office[0]"
+                theme="bootstrap"
+                search-enabled="false">
+                  <ui-select-match allow-clear placeholder="{{'Select an office'|translate}}">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="office in offices | orderBy:'name'">
+                    <div ng-bind-html="office.name"></div>
                   </ui-select-choices>
               </ui-select>
             </div>
+
+            <div class="form-group">
+              <label class="control-label" for="address.locality" translate>Location Details</label>
+              <textarea class="form-control" name="address.locality" ng-model="profile.address[0].locality" rows="2"></textarea>
+            </div>
+
           </div>
 
           <div class="section">
