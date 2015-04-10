@@ -10578,21 +10578,29 @@ table tr td:last-child {
   margin: 0;
   width: 80%;
   margin-right: -200px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 24px;
 }
 .profile-item h4 a {
   display: block;
-  width: 100%;
   color: #54b1c8;
-  text-transform: uppercase;
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 24px;
   padding: 30px 15px;
   margin: -15px 0;
 }
 @media (min-width: 768px) {
   .profile-item h4 a {
     padding: 25px 15px;
+    display: inline-block;
+  }
+}
+.profile-item h4 .profile-item-disaster-spacer {
+  display: none;
+}
+@media (min-width: 768px) {
+  .profile-item h4 .profile-item-disaster-spacer {
+    display: inline;
   }
 }
 .profile-item .btn-group {
