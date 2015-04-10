@@ -1197,7 +1197,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   }
 
   function setPermissions() {
-    var hasRoleAdmin = profileService.hasRole('admin');
+    var hasRoleAdmin = profileService.hasRole('admin'),
+        contactNotEmpty = profileData.contact && Object.keys(profileData.contact).length;
 
     $scope.userCanEditRoles = profileService.canEditRoles(profileData.profile) && profileData.profile._id !== userData.profile._id;
     $scope.userCanEditKeyContact = profileService.canEditKeyContact($scope.selectedOperation);
@@ -1205,8 +1206,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.userCanAddVerified = profileService.canAddVerified($scope.selectedOperation);
     $scope.userCanRemoveVerified = profileService.canRemoveVerified(profileData.contact, profileData.profile);
     $scope.userCanDeleteAccount = profileService.canDeleteAccount(profileData.profile);
-    $scope.userCanCheckOut = !checkinFlow && profileData.contact && profileService.canCheckOut(profileData.contact);
-    $scope.userCanSendClaimEmail = !checkinFlow && profileData.contact && profileService.canSendClaimEmail(profileData.contact);
+    $scope.userCanCheckOut = !checkinFlow && contactNotEmpty && profileService.canCheckOut(profileData.contact);
+    $scope.userCanSendClaimEmail = !checkinFlow && contactNotEmpty && profileService.canSendClaimEmail(profileData.contact);
     $scope.userCanRequestDelete = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
     $scope.userCanRequestPassword = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
 
@@ -2365,6 +2366,10 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
     return getUserData().then(function(data){
       // Check if the contact is for the current user
       if (data && data.contacts && data.contacts.length) {
+        if (!contactId) {
+          return prepProfileData({}, data, true);
+        }
+
         var match = filter(data.contacts, function(d){return d._id === contactId;});
         if (match.length) {
           // Contact is for the current user.
@@ -2396,6 +2401,7 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
             global: globalMatch.length ? globalMatch[0] : {},
             isUserProfile: isUserProfile
           };
+
       return profileData;
     }
   }
@@ -2617,7 +2623,6 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
   function canCheckOut(profile, user) {
     // Optionally pass user to check.
     user = typeof user !== 'undefined' ? user : cacheUserData;
-
     var isLocal = profile && profile.type === 'local',
         pid = typeof profile._profile === 'string' ? profile._profile : profile._profile._id,
         isOwnProfile = pid === user.profile._id,
