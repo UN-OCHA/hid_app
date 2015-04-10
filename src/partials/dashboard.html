@@ -22,16 +22,20 @@
 
       <h3><span translate>My checked-in lists</span> :</h3>
       <ul class="active-profiles-container list-group">
-        <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts | orderBy: ['location', 'operation']" ng-if="profile.type == 'local'">
+        <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts | orderBy: 'location'" ng-if="profile.type == 'local'">
 
           <button ng-show="profile.confirmDelete" class="slide btn btn-warning" href ng-click="checkout(profile._id)" ng-if="profile.type == 'local'" translate>Checkout</button>
 
           <h4>
-            <a href="#/list/{{profile.locationId}}">
-              <span class="profile-item-name">{{profile.location}}
-                <span class="operation" ng-show="profile.operation.length"> &ndash; {{profile.operation}}</span>
+              <span class="profile-item-name">
+                <a href="#/list/{{profile.locationId}}">{{profile.location}}</a>
+                <span class="profile-item-disasters" ng-show="profile.disasters.length">
+                  <span class="profile-item-disaster-spacer">/</span>
+                  <span class="profile-item-disaster" ng-repeat="disaster in profile.disasters | orderBy: 'name'">
+                    <a href="#/list/{{profile.locationId}}?disasters.remote_id={{disaster.remote_id}}">{{disaster.name}}</a>
+                  </span>
+                </span>
               </span>
-            </a>
           </h4>
           <div class="btn-group">
             <a class="btn btn-sm" href="#/profile/{{profile._id}}" title="{{'Edit my' | translate}} {{profile.location}} {{'profile' | translate}}"><i class="fa fa-pencil"></i></a>
