@@ -1494,6 +1494,13 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   // Create protected roles array.
   $scope.protectedRoles = protectedRoles;
 
+  $scope.parseAcronym = function (orgName) {
+    if (!orgName || !orgName.length) {
+      return '';
+    }
+    var acronymMatch = orgName.match(/\((.*)\)$/);
+    return acronymMatch ? acronymMatch[1] : orgName;
+  };
 
   $scope.contactInit = function() {
     var isOwn = userData.profile._id === this.contact._profile._id;
