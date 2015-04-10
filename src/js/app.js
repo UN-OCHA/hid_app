@@ -1295,6 +1295,8 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
     $scope.imageUrl = profileData.global.image[0].url;
   }
 
+  $scope.contact.disastersString = $scope.contact.disasters.reduce(function (last, val) { return last ? (last + ', ' + val.name) : val.name; }, '');
+
   $scope.locationText = function() {
     return $scope.contact.location || gettextCatalog.getString('Global');
   }
