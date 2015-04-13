@@ -372,6 +372,7 @@ app.controller("CreateAccountCtrl", function($scope, $location, $route, $http, p
     profile.type = 'local';
     profile.isNewContact = true;
     profile.adminName = userData.global.nameGiven + " " + userData.global.nameFamily;
+    profile.adminEmail = userData.global.email && userData.global.email[0] ? userData.global.email[0].address : "";
 
     if ($scope.profile.location) {
       profile.locationId = $scope.profile.location.remote_id;
@@ -1196,7 +1197,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   }
 
   function setPermissions() {
-    var hasRoleAdmin = profileService.hasRole('admin');
+    var hasRoleAdmin = profileService.hasRole('admin'),
+        contactNotEmpty = profileData.contact && Object.keys(profileData.contact).length;
 
     $scope.userCanEditRoles = profileService.canEditRoles(profileData.profile) && profileData.profile._id !== userData.profile._id;
     $scope.userCanEditKeyContact = profileService.canEditKeyContact($scope.selectedOperation);
@@ -1204,8 +1206,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.userCanAddVerified = profileService.canAddVerified($scope.selectedOperation);
     $scope.userCanRemoveVerified = profileService.canRemoveVerified(profileData.contact, profileData.profile);
     $scope.userCanDeleteAccount = profileService.canDeleteAccount(profileData.profile);
-    $scope.userCanCheckOut = !checkinFlow && profileData.contact && profileService.canCheckOut(profileData.contact);
-    $scope.userCanSendClaimEmail = !checkinFlow && profileData.contact && profileService.canSendClaimEmail(profileData.contact);
+    $scope.userCanCheckOut = !checkinFlow && contactNotEmpty && profileService.canCheckOut(profileData.contact);
+    $scope.userCanSendClaimEmail = !checkinFlow && contactNotEmpty && profileService.canSendClaimEmail(profileData.contact);
     $scope.userCanRequestDelete = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
     $scope.userCanRequestPassword = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
     $scope.userCanAssignOrganizationEditor  =  profileService.canAssignOrganizationEditor();
@@ -1292,6 +1294,8 @@ app.controller("ContactCtrl", function($scope, $route, $routeParams, $filter, pr
   if (profileData.global.image && profileData.global.image[0] && profileData.global.image[0].url) {
     $scope.imageUrl = profileData.global.image[0].url;
   }
+
+  $scope.contact.disastersString = $scope.contact.disasters.reduce(function (last, val) { return last ? (last + ', ' + val.name) : val.name; }, '');
 
   $scope.locationText = function() {
     return $scope.contact.location || gettextCatalog.getString('Global');
@@ -1490,6 +1494,13 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   // Create protected roles array.
   $scope.protectedRoles = protectedRoles;
 
+  $scope.parseAcronym = function (orgName) {
+    if (!orgName || !orgName.length) {
+      return '';
+    }
+    var acronymMatch = orgName.match(/\((.*)\)$/);
+    return acronymMatch ? acronymMatch[1] : orgName;
+  };
 
   $scope.contactInit = function() {
     var isOwn = userData.profile._id === this.contact._profile._id;
@@ -2227,9 +2238,8 @@ app.service("authService", function($location, $http, $q, $rootScope) {
 
 app.service("profileService", function(authService, $http, $q, $rootScope, $filter) {
   var cacheUserData = false,
-      cacheOperationsData = false,
-      cacheRolesData = false,
-      cacheProtectedRolesData = false;
+      cacheAppData = false,
+      promiseAppData = false;
 
   // Return public API.
   return({
@@ -2264,7 +2274,7 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
     canAssignOrganizationEditor: canAssignOrganizationEditor
   });
 
-  // Get app data.
+  // Get user data.
   function getUserData() {
     var promise;
 
@@ -2293,25 +2303,44 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
   }
 
   // Get app data.
-  function getOperationsData() {
-    var promise;
-
-    if (cacheOperationsData) {
-      promise = $q.defer();
-      promise.resolve(cacheOperationsData);
+  function getAppData() {
+    if (cacheAppData) {
+      var promise = $q.defer();
+      promise.resolve(cacheAppData);
       return promise.promise;
     }
+    else if (promiseAppData) {
+      return promiseAppData;
+    }
     else {
-      promise = $http({
+      promiseAppData = $http({
         method: "get",
         url: contactsId.profilesBaseUrl + "/v0/app/data",
         params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
       })
       .then(handleSuccess, handleError).then(function(data) {
-        if (data && data.operations) {
-          cacheOperationsData = data.operations;
+        if (data) {
+          cacheAppData = data;
         }
-        return cacheOperationsData;
+        return cacheAppData;
+      });
+      return promiseAppData;
+    }
+  }
+
+  // Get operations data (part of app data).
+  function getOperationsData() {
+    var promise;
+
+    if (cacheAppData) {
+      promise = $q.defer();
+      promise.resolve(cacheAppData.operations);
+      return promise.promise;
+    }
+    else {
+      promise = getAppData()
+      .then(function(data) {
+        return (data && data.operations) ? data.operations : false;
       });
       return promise;
     }
@@ -2320,9 +2349,7 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
   // Clear stored app data.
   function clearData() {
     cacheUserData = false;
-    cacheOperationsData = false;
-    cacheRolesData = false;
-    cacheProtectedRolesData = false;
+    cacheAppData = false;
   }
 
   // Get a profile by ID.
@@ -2365,6 +2392,10 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
     return getUserData().then(function(data){
       // Check if the contact is for the current user
       if (data && data.contacts && data.contacts.length) {
+        if (!contactId) {
+          return prepProfileData({}, data, true);
+        }
+
         var match = filter(data.contacts, function(d){return d._id === contactId;});
         if (match.length) {
           // Contact is for the current user.
@@ -2396,6 +2427,7 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
             global: globalMatch.length ? globalMatch[0] : {},
             isUserProfile: isUserProfile
           };
+
       return profileData;
     }
   }
@@ -2503,24 +2535,16 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
   function getRoles() {
     var promise;
 
-    if (cacheRolesData) {
+    if (cacheAppData) {
       promise = $q.defer();
-      promise.resolve(cacheRolesData);
+      promise.resolve(cacheAppData.roles);
       return promise.promise;
     }
     else {
-      promise = $http({
-        method: "get",
-        url: contactsId.profilesBaseUrl + "/v0/app/data",
-        params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
-      })
-      .then(handleSuccess, handleError).then(function(data) {
-        if (data && data.roles) {
-          cacheRolesData = data.roles;
-        }
-        return cacheRolesData;
+      promise = getAppData()
+      .then(function(data) {
+        return (data && data.roles) ? data.roles : false;
       });
-
       return promise;
     }
   }
@@ -2528,24 +2552,16 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
   function getProtectedRoles() {
     var promise;
 
-    if (cacheProtectedRolesData) {
+    if (cacheAppData) {
       promise = $q.defer();
-      promise.resolve(cacheProtectedRolesData);
+      promise.resolve(cacheAppData.protectedRoles);
       return promise.promise;
     }
     else {
-      promise = $http({
-        method: "get",
-        url: contactsId.profilesBaseUrl + "/v0/app/data",
-        params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
-      })
-      .then(handleSuccess, handleError).then(function(data) {
-        if (data && data.protectedRoles) {
-          cacheProtectedRolesData = data.protectedRoles;
-        }
-        return cacheProtectedRolesData;
+      promise = getAppData()
+      .then(function(data) {
+        return (data && data.protectedRoles) ? data.protectedRoles : false;
       });
-
       return promise;
     }
   }
@@ -2617,7 +2633,6 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
   function canCheckOut(profile, user) {
     // Optionally pass user to check.
     user = typeof user !== 'undefined' ? user : cacheUserData;
-
     var isLocal = profile && profile.type === 'local',
         pid = typeof profile._profile === 'string' ? profile._profile : profile._profile._id,
         isOwnProfile = pid === user.profile._id,

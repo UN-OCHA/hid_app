@@ -39,7 +39,7 @@
             <td ng-if="locationId !== 'global'">
               <div class="avoid"><span ng-repeat="bundle in contact.bundle | orderBy">{{bundle}}{{ !$last ? ', ' : ''}}</span></div>
             </td>
-            <td><div class="avoid">{{contact.organization[0].name}}</div></td>
+            <td><div class="avoid">{{parseAcronym(contact.organization[0].name)}}</div></td>
             <td><div class="avoid">{{contact.jobtitle}}</div></td>
             <td>
               <div class="avoid">
