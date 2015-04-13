@@ -1734,7 +1734,7 @@ app.controller("ListCtrl", function($scope, $route, $routeParams, $location, $ht
   }
 
   $scope.locationText = function() {
-    return $scope.location || gettextCatalog.getString('Global');
+    return $scope.location || gettextCatalog.getString('Global Contact List');
   }
 
   $scope.orphanText = function(contact) {
