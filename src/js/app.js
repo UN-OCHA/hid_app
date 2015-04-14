@@ -1155,7 +1155,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         $scope.profile.phone[key].number = parts[0];
         $scope.profile.phone[key].ext = parts[1];
       }
-    } ;
+    });
   };
 
   // Add extension to phone number.
