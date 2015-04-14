@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-07T15:43:21.584Z\n"
+"Project-Id-Version: 2015-04-14T17:15:01.303Z\n"
 
 #: src/partials/list-print.html
 msgid "* Groups include clusters, sectors, working group or similar."
@@ -14,10 +14,6 @@ msgstr ""
 
 #: src/partials/about.html
 msgid "About Humanitarian ID"
-msgstr ""
-
-#: src/js/app.js
-msgid "Account Created!"
 msgstr ""
 
 #: src/partials/profile.html
@@ -36,28 +32,15 @@ msgstr ""
 msgid "Are you sure that you want to create an account for <b>{{profile.nameGiven}} {{profile.nameFamily}}</b> with no email address?"
 msgstr ""
 
-#: src/js/app.js
-msgid "Are you sure?"
-msgstr ""
-
-#: src/js/app.js
-msgid "Assign key contact"
-msgstr ""
-
 #: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Back"
-msgstr ""
-
-#: src/js/app.js
-msgid "Both type and number are required."
 msgstr ""
 
 #: src/partials/profile.html
 msgid "Cancel"
 msgstr ""
 
-#: src/js/app.js
 #: src/partials/dashboard.html
 #: src/partials/list.html
 msgid "Check-in"
@@ -67,7 +50,6 @@ msgstr ""
 msgid "Check-in User"
 msgstr ""
 
-#: src/js/app.js
 #: src/partials/profile.html
 msgid "Check-out"
 msgstr ""
@@ -80,20 +62,12 @@ msgstr ""
 msgid "Check-out from"
 msgstr ""
 
-#: src/js/app.js
-msgid "Checking-out..."
-msgstr ""
-
 #: src/partials/dashboard.html
 msgid "Checkout"
 msgstr ""
 
 #: src/partials/profile.html
 msgid "Choose Type"
-msgstr ""
-
-#: src/partials/profile.html
-msgid "City"
 msgstr ""
 
 #: src/partials/list-print.html
@@ -113,11 +87,6 @@ msgstr ""
 msgid "Confirm User Checkout"
 msgstr ""
 
-#: src/partials/list-print.html
-#: src/partials/list.html
-msgid "Contact List"
-msgstr ""
-
 #: src/partials/list.html
 msgid "Contact List Filters"
 msgstr ""
@@ -126,15 +95,14 @@ msgstr ""
 msgid "Contact Options"
 msgstr ""
 
-#: src/js/app.js
-msgid "Contact already exists"
-msgstr ""
-
 #: src/partials/list.html
 msgid "Contacts"
 msgstr ""
 
-#: src/js/app.js
+#: src/partials/profile.html
+msgid "Coordination Office"
+msgstr ""
+
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Country"
@@ -174,19 +142,12 @@ msgstr ""
 msgid "Delete My Account"
 msgstr ""
 
-#: src/js/app.js
-msgid "Delete account"
-msgstr ""
-
-#: src/js/app.js
-msgid "Deleting..."
-msgstr ""
-
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Disaster"
 msgstr ""
 
+#: src/partials/contact.html
 #: src/partials/list.html
 msgid "Disasters"
 msgstr ""
@@ -207,10 +168,6 @@ msgstr ""
 msgid "Edit Global Profile"
 msgstr ""
 
-#: src/js/app.js
-msgid "Edit New Account"
-msgstr ""
-
 #: src/partials/contact.html
 msgid "Edit Profile"
 msgstr ""
@@ -227,10 +184,6 @@ msgstr ""
 
 #: src/partials/createAccount.html
 msgid "Email Address"
-msgstr ""
-
-#: src/js/app.js
-msgid "Email Address entry"
 msgstr ""
 
 #: src/partials/profile.html
@@ -257,7 +210,6 @@ msgstr ""
 msgid "External Links"
 msgstr ""
 
-#: src/js/app.js
 #: src/partials/createAccount.html
 msgid "Family Name"
 msgstr ""
@@ -268,10 +220,6 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Family Name*"
-msgstr ""
-
-#: src/js/app.js
-msgid "Field is required."
 msgstr ""
 
 #: src/partials/list-print.html
@@ -290,7 +238,6 @@ msgstr ""
 msgid "General List"
 msgstr ""
 
-#: src/js/app.js
 #: src/partials/createAccount.html
 msgid "Given Name"
 msgstr ""
@@ -301,10 +248,6 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Given Name*"
-msgstr ""
-
-#: src/js/app.js
-msgid "Global"
 msgstr ""
 
 #: src/partials/profile.html
@@ -361,25 +304,12 @@ msgstr ""
 msgid "Image Type"
 msgstr ""
 
-#: src/js/app.js
 #: src/partials/profile.html
 msgid "Image URL"
 msgstr ""
 
-#: src/js/app.js
-msgid "Instant Messenger entry"
-msgstr ""
-
 #: src/partials/profile.html
 msgid "Instant Messengers"
-msgstr ""
-
-#: src/js/app.js
-msgid "Invalid entry."
-msgstr ""
-
-#: src/js/app.js
-msgid "Invalid phone number."
 msgstr ""
 
 #: src/partials/contact.html
@@ -394,23 +324,18 @@ msgstr ""
 msgid "Key Contact"
 msgstr ""
 
-#: src/js/app.js
-msgid "Loading..."
-msgstr ""
-
 #: src/partials/profile.html
 msgid "Local Administration"
-msgstr ""
-
-#: src/js/app.js
-#: src/partials/list.html
-msgid "Locality"
 msgstr ""
 
 #: src/partials/contact.html
 #: src/partials/list-print.html
 #: src/partials/profile.html
 msgid "Location"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Location Details"
 msgstr ""
 
 #: src/partials/header.html
@@ -434,10 +359,6 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: src/js/app.js
-msgid "Name added to the list"
-msgstr ""
-
 #: src/partials/profile.html
 msgid "No active operations found."
 msgstr ""
@@ -449,10 +370,6 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "No profiles found."
-msgstr ""
-
-#: src/js/app.js
-msgid "No results found."
 msgstr ""
 
 #: src/partials/404.html
@@ -484,17 +401,9 @@ msgstr ""
 msgid "Organizational Information"
 msgstr ""
 
-#: src/js/app.js
-msgid "Organizations"
-msgstr ""
-
 #: src/partials/createAccount.html
 #: src/partials/list-print.html
 msgid "Phone"
-msgstr ""
-
-#: src/js/app.js
-msgid "Phone Number entry"
 msgstr ""
 
 #: src/partials/profile.html
@@ -541,25 +450,16 @@ msgstr ""
 msgid "Protected Roles"
 msgstr ""
 
-#: src/js/app.js
-msgid "Redirecting to authentication system..."
-msgstr ""
-
-#: src/js/app.js
 #: src/partials/list.html
 msgid "Region"
 msgstr ""
 
+#: src/partials/profile.html
+msgid "Region / State"
+msgstr ""
+
 #: src/partials/index.html
 msgid "Register"
-msgstr ""
-
-#: src/js/app.js
-msgid "Remind Orphan"
-msgstr ""
-
-#: src/js/app.js
-msgid "Reminder sent"
 msgstr ""
 
 #: src/partials/profile.html
@@ -588,14 +488,6 @@ msgstr ""
 msgid "Role"
 msgstr ""
 
-#: src/js/app.js
-msgid "Save"
-msgstr ""
-
-#: src/js/app.js
-msgid "Saving..."
-msgstr ""
-
 #: src/partials/list.html
 msgid "Search"
 msgstr ""
@@ -608,20 +500,8 @@ msgstr ""
 msgid "Search for country"
 msgstr ""
 
-#: src/partials/profile.html
-msgid "Search for locality"
-msgstr ""
-
 #: src/partials/createAccount.html
 msgid "Search for organizations"
-msgstr ""
-
-#: src/partials/profile.html
-msgid "Search for region"
-msgstr ""
-
-#: src/js/app.js
-msgid "Search term must be at least 3 characters long."
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -632,21 +512,21 @@ msgstr ""
 msgid "Select a country"
 msgstr ""
 
+#: src/partials/profile.html
+msgid "Select a region"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Select an office"
+msgstr ""
+
 #: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Send Claim Email"
 msgstr ""
 
-#: src/js/app.js
-msgid "Sending..."
-msgstr ""
-
 #: src/partials/profile.html
 msgid "Social Media Id"
-msgstr ""
-
-#: src/partials/profile.html
-msgid "State/Province/Region"
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -661,10 +541,6 @@ msgstr ""
 msgid "The Humanitarian ID team"
 msgstr ""
 
-#: src/js/app.js
-msgid "There is already an account associated with"
-msgstr ""
-
 #: src/partials/createAccount.html
 msgid "Title is required."
 msgstr ""
@@ -675,14 +551,6 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "URL"
-msgstr ""
-
-#: src/js/app.js
-msgid "Unassign key contact"
-msgstr ""
-
-#: src/js/app.js
-msgid "Unverify account"
 msgstr ""
 
 #: src/partials/profile.html
@@ -705,10 +573,6 @@ msgstr ""
 msgid "Verified User"
 msgstr ""
 
-#: src/js/app.js
-msgid "Verify account"
-msgstr ""
-
 #: src/partials/list.html
 msgid "View PDF"
 msgstr ""
@@ -721,10 +585,6 @@ msgstr ""
 msgid "Website/Social Media"
 msgstr ""
 
-#: src/js/app.js
-msgid "Websites & Social Media entry"
-msgstr ""
-
 #: src/partials/profile.html
 msgid "Websites &amp; Social Media"
 msgstr ""
@@ -735,10 +595,6 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "When you leave a country/emergency, remember that <em>you need to check-out</em>. By doing so, you will remove your details from the contact list."
-msgstr ""
-
-#: src/js/app.js
-msgid "Would you like to check them in?"
 msgstr ""
 
 #: src/partials/about.html
@@ -784,12 +640,4 @@ msgstr ""
 
 #: src/partials/contact.html
 msgid "verified"
-msgstr ""
-
-#: src/js/app.js
-msgid "will be added to the contact list.  They will not be able to claim their account."
-msgstr ""
-
-#: src/js/app.js
-msgid "will receive an email to claim their account."
 msgstr ""
