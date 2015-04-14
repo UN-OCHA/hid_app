@@ -1155,7 +1155,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         $scope.profile.phone[key].number = parts[0];
         $scope.profile.phone[key].ext = parts[1];
       }
-    });
+    } ;
   };
 
   // Add extension to phone number.
@@ -2724,11 +2724,10 @@ app.service("profileService", function(authService, $http, $q, $rootScope, $filt
     return (!isOwnProfile && hasRightRole);
   }
 
-    // Can create a ghost or orphan account.
+  // Can assign Organization Editor Role
   function canAssignOrganizationEditor() {
     return (hasRole('admin') || hasRole('manager'))
   }
-
 
   function handleError(response) {
     // The API response from the server should be returned in a
