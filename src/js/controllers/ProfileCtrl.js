@@ -88,6 +88,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       setOffices();
     }
     setPermissions();
+    setOrganizationEditor();
   }
   else if (!checkinFlow) {
     // If editing the global profile for the first time, add messaging.
