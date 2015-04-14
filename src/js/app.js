@@ -497,9 +497,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
   accountData = authService.getAccountData();
   $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
   $scope.selectedProtectedRoles = (profileData.contact && profileData.contact.protectedRoles && profileData.contact.protectedRoles.length) ? profileData.contact.protectedRoles : [];
-
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
-
+  $scope.orgEditorRoles = (profileData.profile && profileData.profile.orgEditorRoles && profileData.profile.orgEditorRoles.length) ? profileData.profile.orgEditorRoles : [];
   $scope.passwordUrl = contactsId.authBaseUrl + "/#forgotPass";
 
   // Setup scope variables from data injected by routeProvider resolve
@@ -569,6 +568,7 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       setOffices();
     }
     setPermissions();
+    setOrganizationEditor();
   }
   else if (!checkinFlow) {
     // If editing the global profile for the first time, add messaging.
@@ -1001,6 +1001,29 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
       }
 
       profile.verified = $scope.verified;
+      
+      //Organization Editor
+      if ($scope.userCanAssignOrganizationEditor){
+        //If organization editor is selected and location and organization are valid, add orgEditorRole
+        if ($scope.isOrganizationEditor && $scope.profile.locationId && $scope.profile.organization[0] && $scope.profile.organization[0].remote_id) {
+          var locationId = $scope.profile.locationId;
+          var organizationId = $scope.profile.organization[0].remote_id
+
+          //Verify the OrganizationEditor doesn't already exist
+          if (!findOrganizationEditor(locationId, organizationId)){
+            $scope.orgEditorRoles.push({'location': locationId, 'organization': organizationId});
+          }
+          //Set verified = true for all Organization editors
+          profile.verified = true;
+        }
+        else {
+          //Remove any existing OrgEditor role for current location
+          if ($scope.orgEditorRoles){
+            $scope.orgEditorRoles = $filter('filter')($scope.orgEditorRoles, {location: '!'+ $scope.profile.locationId}, true);
+          }
+        }
+        profile.orgEditorRoles = $scope.orgEditorRoles;
+      }
 
       profileService.saveContact(profile).then(function(data) {
         if (data && data.status && data.status === 'ok') {
@@ -1210,7 +1233,8 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
     $scope.userCanSendClaimEmail = !checkinFlow && contactNotEmpty && profileService.canSendClaimEmail(profileData.contact);
     $scope.userCanRequestDelete = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
     $scope.userCanRequestPassword = $scope.profile.type === 'global' && (typeof $routeParams.profileId === 'undefined' || userData.profile._id === profileData.profile._id);
-    $scope.userCanAssignOrganizationEditor  =  profileService.canAssignOrganizationEditor();
+    $scope.userCanAssignOrganizationEditor = $scope.profile.type === 'local' && profileService.canAssignOrganizationEditor();
+    
     // Determine what roles are available to assign to a user
     if ($scope.userCanEditRoles && hasRoleAdmin) {
       // You're an admin and can assign any role
@@ -1247,6 +1271,41 @@ app.controller("ProfileCtrl", function($scope, $location, $route, $routeParams, 
         }
       }
     }
+  }
+
+  function setOrganizationEditor(){
+    //Check to see if Organization Editor Role exists for this profile's locationand organization
+    if ($scope.profile.locationId && $scope.profile.organization[0] && $scope.profile.organization[0].remote_id){
+      var locationId = $scope.profile.locationId;
+      var organizationId = $scope.profile.organization[0].remote_id
+
+      $scope.isOrganizationEditor = findOrganizationEditor(locationId, organizationId);
+    }
+    else{
+      $scope.isOrganizationEditor = false;
+    }
+  }
+
+  function findOrganizationEditor(locationId, organizationId){
+    var found = false;
+
+    if ($scope.orgEditorRoles){
+      if (organizationId){
+        //Verify editor role exists for specified location and organization 
+        var orgEditorRole = $filter('filter')($scope.orgEditorRoles, {location: locationId, organization: organizationId}, true);
+        if (orgEditorRole.length){
+          found = true;
+        }
+      }
+      else {
+        //Verify editor role exists for specified location
+        var orgEditorRole = $filter('filter')($scope.orgEditorRoles, {location: locationId}, true);
+        if (orgEditorRole.length){
+          found = true;
+        }
+      }
+    }
+    return found;
   }
 
   // Helper for fetching role data.
