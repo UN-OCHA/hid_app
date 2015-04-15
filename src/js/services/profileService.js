@@ -127,6 +127,11 @@
       return getProfiles({_id: profileId});
     }
 
+    // Get a profile by a contact ID that it contains.
+    function getProfileByContactId(contactId) {
+      return getProfiles({contactId: contactId});
+    }
+
     // Get profiles that match specified parameters.
     function getProfiles(terms) {
       var request = $http({
@@ -168,14 +173,10 @@
           }
           else {
             // Contact is not for the current user
-            return getContacts({_id: contactId}).then(function(data) {
-              if (data && data.contacts && data.contacts[0] && data.contacts[0]._profile && data.contacts[0]._profile._id) {
-                  var cont = data.contacts[0];
-                  return getProfileById(data.contacts[0]._profile._id).then(function (data) {
-                    if (data && data.profile && data.contacts && data.contacts.length) {
-                      return prepProfileData(cont, data, false);
-                    }
-                  });
+            return getProfileByContactId(contactId).then(function (data) {
+              if (data && data.profile && data.contacts && data.contacts.length) {
+                var match = filter(data.contacts, function(d){return d._id === contactId;});
+                return prepProfileData(match[0], data, false);
               }
             });
           }
