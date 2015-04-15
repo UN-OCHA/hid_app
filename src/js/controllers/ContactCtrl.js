@@ -1,4 +1,5 @@
-function ContactCtrl($scope, $route, $routeParams, $filter, profileService, contact, gettextCatalog, userData, protectedRoles, profileData) {
+function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData) {
+  var contact = profileData.contact;
   $scope.contact = contact;
 
   // Permissions

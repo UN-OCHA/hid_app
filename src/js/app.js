@@ -48,7 +48,7 @@ app.run(function ($rootScope, $location, $window, authService) {
 });
 
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
-app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "contact", "gettextCatalog", "userData", "protectedRoles", "profileData", ContactCtrl]);
+app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", ContactCtrl]);
 app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", CreateAccountCtrl]);
 app.controller("DashboardCtrl", ["$scope", "$route", "profileService", "globalProfileId", "userData", DashboardCtrl]);
 app.controller("DefaultCtrl", ["$location", "authService", DefaultCtrl]);
@@ -243,14 +243,6 @@ app.config(function($routeProvider, $locationProvider) {
     controller: 'ContactCtrl',
     requireAuth: true,
     resolve: {
-      contact : function(profileService, $route) {
-        var query = {
-          '_id': $route.current.params.contactId || ''
-        };
-        return profileService.getContacts(query).then(function(data) {
-          return data.contacts[0] || {};
-        });
-      },
       protectedRoles : function(profileService) {
         return profileService.getProtectedRoles();
       },
