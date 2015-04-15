@@ -35,7 +35,8 @@
       canCheckIn: canCheckIn,
       canCheckOut: canCheckOut,
       canSendClaimEmail: canSendClaimEmail,
-      canDeleteAccount: canDeleteAccount
+      canDeleteAccount: canDeleteAccount,
+      canAssignOrganizationEditor: canAssignOrganizationEditor
     });
 
     // Get user data.
@@ -429,6 +430,12 @@
       return (!isOwnProfile && hasRightRole);
     }
 
+
+    // Can assign Organization Editor Role
+    function canAssignOrganizationEditor() {
+      return (hasRole('admin') || hasRole('manager'))
+    }
+    
     function handleError(response) {
       // The API response from the server should be returned in a
       // nomralized format. However, if the request was not handled by the
