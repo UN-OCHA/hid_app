@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-14T17:15:01.303Z\n"
+"Project-Id-Version: 2015-04-15T20:05:22.547Z\n"
 
 #: src/partials/list-print.html
 msgid "* Groups include clusters, sectors, working group or similar."
@@ -188,6 +188,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Email Addresses"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Estimated Departure Date"
 msgstr ""
 
 #: src/partials/contact.html
@@ -391,6 +395,10 @@ msgstr ""
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Organization"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Organization Editor"
 msgstr ""
 
 #: src/partials/createAccount.html

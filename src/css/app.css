@@ -9992,6 +9992,28 @@ table tr td:last-child {
   padding: 30px 30px 0;
 }
 
+.datepicker {
+  background-color: #F1F1F1;
+}
+.datepicker:after {
+  border-bottom-color: #F1F1F1;
+}
+.datepicker table thead {
+  background-color: #F1F1F1;
+  color: #767676;
+}
+.datepicker table tbody tr td.old, .datepicker table tbody tr td.new, .datepicker table tbody tr td.disabled {
+  color: #afafaf;
+}
+.datepicker table tbody tr td span.active.active, .datepicker table tbody tr td.active.active, .datepicker table tbody tr td.active {
+  background-color: #54b1c8;
+  border-color: #54b1c8;
+}
+.datepicker table tbody tr td span.active.active:hover, .datepicker table tbody tr td span.active.active.old, .datepicker table tbody tr td span.active.active.new, .datepicker table tbody tr td span.active.active.disabled, .datepicker table tbody tr td.active.active:hover, .datepicker table tbody tr td.active.active.old, .datepicker table tbody tr td.active.active.new, .datepicker table tbody tr td.active.active.disabled, .datepicker table tbody tr td.active:hover, .datepicker table tbody tr td.active.old, .datepicker table tbody tr td.active.new, .datepicker table tbody tr td.active.disabled {
+  background-color: #54b1c8;
+  border-color: #54b1c8;
+}
+
 .header {
   background-color: #fff;
   position: relative;

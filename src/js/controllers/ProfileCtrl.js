@@ -133,11 +133,28 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     return intlTelInputUtils.getExampleNumber(countryInfo.iso2, false, 0).replace(/[0-9]/g, "5");
   }
 
-  $scope.httpCheck = function () {
+  $scope.httpCheck = function() {
     var validObj = $scope.defaultValidObj('uri', this.$index);
     if (validObj.$invalid && validObj.$viewValue.search(/^http[s]?\:\/\//) === -1) {
       $scope.profile.uri[this.$index] = 'http://' + validObj.$viewValue;
     }
+  }
+
+  $scope.initDepartureDate = function() {
+    var today = new Date(),
+        dd = today.getDate(),
+        mm = today.getMonth()+1,
+        yyyy = today.getFullYear();
+
+    dd = (dd<10) ? '0' + dd : dd;
+    mm = (mm<10) ? '0' + mm : mm;
+
+    $scope.todaysDate = yyyy + "-" + mm + "-" + dd;
+
+    if ($scope.profile.departureDate) {
+      $scope.profile.departureDate = new Date($scope.profile.departureDate);
+    }
+
   }
 
   $scope.vaildFieldEntry = function(field, el) {
@@ -518,6 +535,10 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       }
       if (profile.image && profile.image[0] && profile.image[0].imageUrl) {
         profile.image[0].url = profile.image[0].imageUrl;
+      }
+
+      if (profile.departureDate && profile.type !== "local") {
+        delete profile.departureDate;
       }
 
       profile.verified = $scope.verified;
