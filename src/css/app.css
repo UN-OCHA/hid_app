@@ -9875,6 +9875,9 @@ table tr td:last-child {
   margin-bottom: 15px;
   font-size: 11px;
 }
+.right-sidebar-group a {
+  color: #2a5d81;
+}
 
 .same-height-wrap {
   display: table;

@@ -106,9 +106,26 @@
               <span class="group-label" translate>Groups</span>
               <span class="title"><strong>{{contact.bundle.join(', ')}}</strong></span>
             </div>
-            <div class="right-sidebar-group">
+            <div class="right-sidebar-group" ng-if="contact.type === 'local' && contact.disasters.length">
               <span class="group-label" translate>Disasters</span>
-              <span class="title"><strong>{{contact.disastersString}}</strong></span>
+              <span>
+                <ul>
+                  <li ng-repeat="dis in contact.disasters | orderBy: 'name'"><strong>{{dis.name}}</strong></li>
+                </ul>
+              </span>
+            </div>
+            <div class="right-sidebar-group" ng-if="contact.type === 'global'">
+              <span class="group-label" translate>Operations</span>
+              <span class="title" ng-repeat="pcon in profileContacts | orderBy: 'location'">
+                <strong><a href="#/contact/{{pcon._id}}">{{pcon.location}}</a></strong>
+                <ul ng-if="pcon.disasters.length">
+                  <li ng-repeat="dis in pcon.disasters | orderBy: 'name'">{{dis.name}}</li>
+                </ul>
+              </span>
+            </div>
+            <div class="right-sidebar-group" ng-if="contact.type === 'local'">
+              <span class="group-label" translate>Global Profile</span>
+              <span class="title"><strong><a href="#/contact/{{globalContactId}}">{{contact.nameGiven}} {{contact.nameFamily}} (<span translate>Global</span>)</a></strong></span>
             </div>
             <div class="right-sidebar-group">
               <span class="group-label" translate>Role</span>

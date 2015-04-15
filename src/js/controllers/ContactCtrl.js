@@ -1,6 +1,8 @@
 function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData) {
   var contact = profileData.contact;
   $scope.contact = contact;
+  $scope.profileContacts = profileData.contacts;
+  $scope.globalContactId = profileData.global._id;
 
   // Permissions
   var isOwnProfile = userData.profile._id === contact._profile._id;

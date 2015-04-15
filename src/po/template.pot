@@ -250,6 +250,10 @@ msgstr ""
 msgid "Given Name*"
 msgstr ""
 
+#: src/partials/contact.html
+msgid "Global"
+msgstr ""
+
 #: src/partials/profile.html
 msgid "Global Administration"
 msgstr ""
@@ -258,6 +262,7 @@ msgstr ""
 msgid "Global Contact List"
 msgstr ""
 
+#: src/partials/contact.html
 #: src/partials/dashboard.html
 msgid "Global Profile"
 msgstr ""
@@ -386,11 +391,19 @@ msgid "Number"
 msgstr ""
 
 #: src/partials/contact.html
+msgid "Operations"
+msgstr ""
+
+#: src/partials/contact.html
 #: src/partials/createAccount.html
 #: src/partials/list-print.html
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Organization"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Organization Editor"
 msgstr ""
 
 #: src/partials/createAccount.html
