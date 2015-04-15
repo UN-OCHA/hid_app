@@ -50,6 +50,13 @@
                 <span ng-repeat="(type, errors) in profileForm.nameFamily.$error">{{alertMsg(type)}}<br></span>
               </div>
             </div>
+            <div class="form-group" ng-if="profile.type === 'local'" ng-class="{'has-error': profileForm.$submitted && profileForm.departureDate.$invalid}">
+              <label class="control-label" for="departureDateDisplay" translate>Estimated Departure Date</label>
+              <input class="form-control" type="date" name="departureDate" ng-model="profile.departureDate" ng-init="initDepartureDate()" min="{{todaysDate}}"/>
+              <div class="help-block" ng-show="profileForm.$submitted && profileForm.departureDate.$invalid">
+                <span ng-repeat="(type, errors) in profileForm.departureDate.$error">{{alertMsg(type)}}<br></span>
+              </div>
+            </div>
           </div>
 
           <div class="section">
