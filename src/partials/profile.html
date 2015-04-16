@@ -354,14 +354,14 @@
         </div>
 
         <div class="col-sm-12 col-md-6" >
-          <div class="admin-area row" ng-if="userCanEditKeyContact || userCanEditProtectedRoles|| userCanEditRoles || userCanEditVerified">
+          <div class="admin-area row" ng-if="userCanEditKeyContact || userCanEditProtectedRoles|| userCanEditRoles || userCanEditVerified || userCanEditProtectedBundle">
             <div class="section col-sm-12" ng-show="userCanEditKeyContact || userCanEditProtectedRoles">
               <h4 translate>Local Administration</h4>
               <div class="form-group" ng-show="userCanEditProtectedRoles">
-                <label class="control-label" for="adminRoles" translate>Protected Roles</label>
+                <label class="control-label" for="selectedProtectedRoles" translate>Protected Roles</label>
                 <ui-select
                   multiple
-                  class="form-control"
+                  class="form-control form-control-light"
                   name="selectedProtectedRoles"
                   ng-model="selectedProtectedRoles"
                   reset-search-input
@@ -374,6 +374,25 @@
                   </ui-select-choices>
                 </ui-select>
               </div>
+
+              <div class="form-group" ng-show="userCanEditProtectedBundle">
+                <label class="control-label" for="protectedBundle" translate>Protected Groups</label>
+                <ui-select
+                  multiple
+                  class="form-control form-control-light"
+                  name="protectedBundle"
+                  ng-model="selectedProtectedBundles"
+                  reset-search-input
+                  theme="bootstrap"
+                  on-select="onProtectedBundleChange($item)"
+                  on-remove="onProtectedBundleChange($item)">
+                  <ui-select-match placeholder="{{'Protected Groups' |translate}}">{{$item.value.name}}</ui-select-match>
+                  <ui-select-choices repeat="protectedBundle.value.name as protectedBundle in protectedBundles | orderBy:'value.name' | filter: $select.search">
+                    <div ng-bind-html="protectedBundle.value.name | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+
               <div class="form-group" ng-show="userCanEditKeyContact">
                 <div class="checkbox">
                   <label for="keyContact" ng-click="profile.keyContact = !profile.keyContact"><input type="checkbox" name="keyContact" ng-model="profile.keyContact" ng-click="profile.keyContact = !profile.keyContact"/><span translate>Key Contact</span></label>
@@ -387,7 +406,7 @@
                 <label class="control-label" for="adminRoles" translate>Admin Privileges</label>
                 <ui-select
                   multiple
-                  class="form-control"
+                  class="form-control form-control-light"
                   name="adminRoles"
                   ng-model="adminRoles"
                   ng-disabled="!userCanEditRoles"

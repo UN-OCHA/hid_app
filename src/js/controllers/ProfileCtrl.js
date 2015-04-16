@@ -17,6 +17,8 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   accountData = authService.getAccountData();
   $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
   $scope.selectedProtectedRoles = (profileData.contact && profileData.contact.protectedRoles && profileData.contact.protectedRoles.length) ? profileData.contact.protectedRoles : [];
+  $scope.selectedProtectedBundles = (profileData.contact && profileData.contact.protectedBundles && profileData.contact.protectedBundles.length) ? profileData.contact.protectedBundles : [];
+
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
   $scope.orgEditorRoles = (profileData.profile && profileData.profile.orgEditorRoles && profileData.profile.orgEditorRoles.length) ? profileData.profile.orgEditorRoles : [];
   $scope.passwordUrl = contactsId.authBaseUrl + "/#forgotPass";
@@ -154,7 +156,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     if ($scope.profile.departureDate) {
       $scope.profile.departureDate = new Date($scope.profile.departureDate);
     }
-
   }
 
   $scope.vaildFieldEntry = function(field, el) {
@@ -465,6 +466,16 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     }
   }
 
+  $scope.onProtectedBundleChange = function(item) {
+    var i = $scope.selectedProtectedBundles.indexOf(item.value.name);
+    if (i > -1) {
+      $scope.selectedProtectedBundles.splice(i, 1);
+    }
+    else {
+      $scope.selectedProtectedBundles.push(item.value.name);
+    }
+  }
+
   $scope.submitProfile = function () {
     // Special treatment for voip.
     if ($scope.profile.voip[0] && !$scope.profile.voip[0].number) {
@@ -532,6 +543,9 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
       if ($scope.userCanEditProtectedRoles) {
         profile.newProtectedRoles = $scope.selectedProtectedRoles;
+      }
+      if ($scope.userCanEditProtectedBundle) {
+        profile.newProtectedBundles = $scope.selectedProtectedBundles;
       }
       if (profile.image && profile.image[0] && profile.image[0].imageUrl) {
         profile.image[0].url = profile.image[0].imageUrl;
@@ -709,8 +723,17 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   };
 
   function setBundles(){
-    var bundles = $scope.operations[$scope.selectedOperation].bundles;
-    $scope.bundles = listObjectToArray(bundles);
+    var allBundles = listObjectToArray($scope.operations[$scope.selectedOperation].bundles);
+    $scope.bundles = [];
+    $scope.protectedBundles = [];
+    angular.forEach(allBundles, function(bundle){
+      if (bundle.value.hid_access === "open") {
+        $scope.bundles.push(bundle);
+      }
+      else {
+        $scope.protectedBundles.push(bundle);
+      }
+    });
   }
 
   function setDisasters() {
@@ -767,6 +790,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     $scope.userCanEditRoles = profileService.canEditRoles(profileData.profile) && profileData.profile._id !== userData.profile._id;
     $scope.userCanEditKeyContact = profileService.canEditKeyContact($scope.selectedOperation);
     $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.selectedOperation);
+    $scope.userCanEditProtectedBundle = profileService.canEditProtectedBundle($scope.selectedOperation);
     $scope.userCanAddVerified = profileService.canAddVerified($scope.selectedOperation);
     $scope.userCanRemoveVerified = profileService.canRemoveVerified(profileData.contact, profileData.profile);
     $scope.userCanDeleteAccount = profileService.canDeleteAccount(profileData.profile);
@@ -821,7 +845,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     return (index > -1) ? roles[index] : false;
   }
 
-  
+
   function setOrganizationEditor(){
     //Check to see if Organization Editor Role exists for this profile's locationand organization
     if ($scope.profile.locationId && $scope.profile.organization[0] && $scope.profile.organization[0].remote_id){
@@ -840,7 +864,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
     if ($scope.orgEditorRoles){
       if (organizationId){
-        //Verify editor role exists for specified location and organization 
+        //Verify editor role exists for specified location and organization
         var orgEditorRole = $filter('filter')($scope.orgEditorRoles, {location: locationId, organization: organizationId}, true);
         if (orgEditorRole.length){
           found = true;

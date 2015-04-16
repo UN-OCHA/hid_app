@@ -28,6 +28,7 @@
       canEditProfile: canEditProfile,
       canEditRoles: canEditRoles,
       canEditProtectedRoles: canEditProtectedRoles,
+      canEditProtectedBundle: canEditProtectedBundle,
       canEditKeyContact: canEditKeyContact,
       canAddVerified: canAddVerified,
       canRemoveVerified: canRemoveVerified,
@@ -369,6 +370,10 @@
     function canEditProtectedRoles(locationId) {
       return hasRole('admin') || (locationId && (hasRole('manager', locationId) || hasRole('editor', locationId)));
     }
+    // Can edit other user's protected group.
+    function canEditProtectedBundle(locationId) {
+      return hasRole('admin') || (locationId && (hasRole('manager', locationId) || hasRole('editor', locationId)));
+    }
     // Can edit other user's key contact.
     function canEditKeyContact(locationId) {
       return hasRole('admin') || (locationId && (hasRole('manager', locationId)));
@@ -436,7 +441,7 @@
     function canAssignOrganizationEditor() {
       return (hasRole('admin') || hasRole('manager'))
     }
-    
+
     function handleError(response) {
       // The API response from the server should be returned in a
       // nomralized format. However, if the request was not handled by the
