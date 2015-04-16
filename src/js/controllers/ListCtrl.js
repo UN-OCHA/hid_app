@@ -1,5 +1,5 @@
 function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries) {
-  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'keyContact', 'organization.name', 'protectedRoles', 'role', 'text', 'verified'];
+  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'keyContact', 'organization.name', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'];
 
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
@@ -56,8 +56,20 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   if ($scope.locationId !== 'global') {
     // Create bundles and disasters array.
     if ($scope.operations.hasOwnProperty($scope.locationId)) {
+      var allBundles = listObjectToArray($scope.operations[$scope.locationId].bundles);
+      $scope.bundles = [];
+      $scope.protectedBundles = [];
+
+      angular.forEach(allBundles, function(bundle){
+        if (bundle.value.hid_access === "open") {
+          $scope.bundles.push(bundle);
+        }
+        else {
+          $scope.protectedBundles.push(bundle);
+        }
+      });
+
       $scope.location = $scope.operations[$scope.locationId].name;
-      $scope.bundles = listObjectToArray($scope.operations[$scope.locationId].bundles);
       $scope.disasterOptions = listObjectToArray($scope.operations[$scope.locationId].disasters);
     }
 
