@@ -27,10 +27,9 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   if (profileData.global.image && profileData.global.image[0] && profileData.global.image[0].url) {
     $scope.imageUrl = profileData.global.image[0].url;
   }
-  console.log('contact', contact)
+
   $scope.contact.disastersString = $scope.contact.disasters.reduce(function (last, val) { return last ? (last + ', ' + val.name) : val.name; }, '');
 
-  //$scope.contact.departureDate = $scope.contact.departureDate ? new Date($scope.profile.contact)
   if ($scope.contact.departureDate) {
     var date = new Date($scope.contact.departureDate),
         dd = date.getDate(),
