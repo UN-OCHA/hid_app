@@ -205,11 +205,24 @@
 
         <div class="form-group">
           <label class="control-label" for="verified"><i class="fa fa-check-circle"></i> <span translate>Verified User</span> <input type="checkbox" name="verified" ng-model="query.verified" /></label>
-
         </div>
 
         <div class="form-group" ng-if="query.locationId">
           <label class="control-label" for="keyContact"><span class="contact-item__key-contact key-contact-filter-use">*</span> <span translate>Key Contact</span> <input type="checkbox" name="keyContact" ng-model="query.keyContact" /></label>
+        </div>
+
+        <div ng-if="!query.locationId">
+
+          <div class="divider"></div>
+
+          <div class="form-group">
+            <label class="control-label" for="globalContacts"><span translate>Global Profiles</span> <input type="checkbox" name="globalContacts" ng-model="query.globalContacts" /></label>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label" for="localContacts"><span translate>Local Profiles</span> <input type="checkbox" name="localContacts" ng-model="query.localContacts" /></label>
+          </div>
+
         </div>
 
         <div class="divider"></div>
