@@ -63,7 +63,9 @@
                     <img class="fade" ng-src="{{imageUrl}}">
                   </div>
                 </div>
-
+                <div class="departure-date" ng-show="contact.displayDepartureDate">
+                  <div class="profile-view__item"><span translate>Departure Date:</span> {{contact.displayDepartureDate}}</div>
+                </div>
                 <div class="phone" ng-repeat="phone in contact.phone">
                   <div class="profile-view__item">{{phone.type | translate}}: <a href="tel:{{phone.number}}">{{phoneDisplay(phone.number)}}</a></div>
                 </div>
