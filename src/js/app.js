@@ -2,6 +2,13 @@
 // Initialize ng
 var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview']);
 
+webshims.setOptions({
+   waitReady: false,
+   basePath: './libraries/webshim/js-webshim/minified/shims/'
+});
+
+webshim.polyfill('forms forms-ext');
+
 app.value('cgBusyDefaults',{
   message:'Loading...',
   backdrop: true,
@@ -10,7 +17,7 @@ app.value('cgBusyDefaults',{
   minDuration: 300
 });
 
-app.run(function ($rootScope, $location, $window, authService) {
+app.run(function ($rootScope, $location, $window, $timeout, authService) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     $rootScope.bodyClasses = [];
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
@@ -44,6 +51,13 @@ app.run(function ($rootScope, $location, $window, authService) {
   // Google analytics page view tracking
   $rootScope.$on('$routeChangeSuccess', function() {
     $window.ga('send', 'pageview', { page: $location.url() });
+  });
+
+  //Polyfill needs update when dynamic view loads
+  $rootScope.$on('$viewContentLoaded', function() {
+    $timeout(function(){
+      $('body').updatePolyfill();
+    }, 100)
   });
 });
 
