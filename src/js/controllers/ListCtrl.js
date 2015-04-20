@@ -58,7 +58,20 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     $scope.printUrl = '#' + pathParams.join('/');
   }
 
-  if ($scope.locationId !== 'global') {
+  if ($scope.locationId === 'global') {
+    var allDisasters = {};
+    angular.forEach(operations, function (oper, opId) {
+      if (oper.disasters) {
+        angular.forEach(oper.disasters, function (dstr) {
+          if (dstr.remote_id && dstr.name && !allDisasters.hasOwnProperty(dstr.remote_id)) {
+            allDisasters[dstr.remote_id] = dstr;
+          }
+        });
+      }
+    });
+    $scope.disasterOptions = listObjectToArray(allDisasters);
+  }
+  else {
     // Create bundles and disasters array.
     if ($scope.operations.hasOwnProperty($scope.locationId)) {
       var allBundles = listObjectToArray($scope.operations[$scope.locationId].bundles);
