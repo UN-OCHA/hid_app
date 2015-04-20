@@ -1,5 +1,5 @@
 function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries) {
-  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'keyContact', 'organization.name', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'];
+  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'globalContacts', 'keyContact', 'localContacts', 'organization.name', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'];
 
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
@@ -21,6 +21,11 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
   $scope.listComplete = false;
   $scope.contactsCreated = false;
+
+  if ($scope.locationId === 'global' && !$scope.query.hasOwnProperty('globalContacts') && !$scope.query.hasOwnProperty('localContacts')) {
+    $scope.query.globalContacts = true;
+    $scope.query.localContacts = false;
+  }
 
   var pathParams = $location.url().split('/'),
       filter = $filter('filter');
@@ -332,6 +337,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   }
 
   createContactList();
+
   if ($scope.query['organization.name']) {
     $scope.refreshOrganization({search:$scope.query['organization.name']})
   }
@@ -400,13 +406,26 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   // Builds the list of contacts.
   function createContactList() {
     var query = $scope.query;
+
     if ($scope.locationId === 'global') {
-      query.type = 'global';
+      if (query.globalContacts && query.localContacts) {
+        delete query.type;
+      }
+      else if (query.globalContacts) {
+        query.type = 'global';
+      }
+      else if (query.localContacts) {
+        query.type = 'local';
+      }
+      else {
+        query.type = 'none';
+      }
     }
     else {
       query.type = 'local';
       query.locationId = $scope.locationId;
     }
+
     query.verified = query.verified ? true : null;
     query.keyContact = query.keyContact ? true : null;
     query.status = 1;
