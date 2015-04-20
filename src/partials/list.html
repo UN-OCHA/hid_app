@@ -160,7 +160,7 @@
             search-enabled="false"
             on-select="submitSearch()">
               <ui-select-match allow-clear placeholder="{{'Disaster'|translate}}">{{$select.selected.value.name}}</ui-select-match>
-              <ui-select-choices repeat="disaster.value.remote_id as disaster in disasterOptions | orderBy:'disaster.value.name'">
+              <ui-select-choices repeat="disaster.value.remote_id as disaster in disasterOptions | orderBy:'value.name'">
                 <div ng-bind-html="disaster.value.name"></div>
               </ui-select-choices>
           </ui-select>
