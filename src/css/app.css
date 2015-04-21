@@ -11877,6 +11877,20 @@ table tr td:last-child {
   -moz-animation: fa-spin 1s linear infinite;
   animation: fa-spin 1s linear infinite;
 }
+.ui-select-container.form-control-light {
+  -webkit-box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+.ui-select-container.form-control-light.open {
+  box-shadow: none;
+}
+.ui-select-container.form-control-light.open .ui-select-toggle {
+  box-shadow: none;
+}
+.ui-select-container.form-control-light .ui-select-toggle {
+  -webkit-box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
 .ui-select-container .form-control,
 .ui-select-container input.form-control {
   background-color: #54b1c8;
