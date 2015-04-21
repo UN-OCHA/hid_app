@@ -211,6 +211,32 @@
           <label class="control-label" for="keyContact"><span class="contact-item__key-contact key-contact-filter-use">*</span> <span translate>Key Contact</span> <input type="checkbox" name="keyContact" ng-model="query.keyContact" /></label>
         </div>
 
+        <div class="form-group" ng-if="userCanUseAdminFilters">
+          <div class="divider"></div>
+
+          <label class="control-label" for="orphan"><span translate>Orphan User</span> <input type="checkbox" name="orphan" ng-model="query.orphan" /></label>
+        </div>
+
+        <div class="form-group" ng-if="userCanUseAdminFilters">
+          <label class="control-label" for="ghost"><span translate>Ghost User</span> <input type="checkbox" name="ghost" ng-model="query.ghost" /></label>
+        </div>
+
+        <div class="form-group" ng-if="userCanUseAdminFilters">
+          <label class="control-label element-invisible" for="role" translate>Admin Role</label>
+          <ui-select
+            ng-model="query.role"
+            theme="bootstrap"
+            class="form-control"
+            name="bootstrap"
+            search-enabled="false"
+            on-select="submitSearch()">
+              <ui-select-match allow-clear placeholder="{{'Admin Role'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="role.id as role in adminRoleOptions | orderBy:'name' | filter: $select.search">
+                <div ng-bind-html="role.name | highlight: $select.search"></div>
+              </ui-select-choices>
+          </ui-select>
+        </div>
+
         <div ng-if="!query.locationId">
 
           <div class="divider"></div>

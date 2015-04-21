@@ -37,7 +37,8 @@
       canCheckOut: canCheckOut,
       canSendClaimEmail: canSendClaimEmail,
       canDeleteAccount: canDeleteAccount,
-      canAssignOrganizationEditor: canAssignOrganizationEditor
+      canAssignOrganizationEditor: canAssignOrganizationEditor,
+      canUseAdminFilters: canUseAdminFilters
     });
 
     // Get user data.
@@ -436,10 +437,14 @@
       return (!isOwnProfile && hasRightRole);
     }
 
-
     // Can assign Organization Editor Role
     function canAssignOrganizationEditor() {
-      return (hasRole('admin') || hasRole('manager'))
+      return (hasRole('admin') || hasRole('manager'));
+    }
+
+    // Can use administrative contact list filters (orphan, ghost, admin role)
+    function canUseAdminFilters() {
+      return hasRole('admin');
     }
 
     function handleError(response) {
