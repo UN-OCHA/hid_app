@@ -66,7 +66,7 @@
 
                 <ui-select
                   name="organization"
-                  class="form-control {{$select.searching ? 'searching' : ''}}"
+                  class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
                   ng-model="profile.organization[0]"
                   theme="bootstrap"
                   reset-search-input="true">
@@ -128,7 +128,7 @@
               <label class="control-label" for="address.country" translate>Country</label>
               <ui-select
                 name="address.country"
-                class="form-control"
+                class="form-control form-control-light"
                 autocomplete="off"
                 ng-model="profile.address[0].country"
                 theme="bootstrap"
@@ -147,7 +147,7 @@
                 <label class="control-label" for="address.administrative_area" translate>Region / State</label>
                 <ui-select
                   name="address.administrative_area"
-                  class="form-control"
+                  class="form-control form-control-light"
                   ng-model="profile.address[0].administrative_area"
                   theme="bootstrap"
                   search-enabled="false">
@@ -163,7 +163,7 @@
               <label class="control-label" for="office" translate>Coordination Office</label>
               <ui-select
                 name="office"
-                class="form-control"
+                class="form-control form-control-light"
                 ng-model="profile.office[0]"
                 theme="bootstrap"
                 search-enabled="false">
