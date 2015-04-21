@@ -94,6 +94,9 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
         adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
         locationName: $scope.locationText()
       };
+      if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
+        email.adminEmail = userData.global.email[0].address;
+      }
       contact.notifyEmail = email;
     }
 

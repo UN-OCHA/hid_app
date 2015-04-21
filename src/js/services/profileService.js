@@ -4,7 +4,8 @@
   angular.module("contactsId").service("profileService", function(authService, $http, $q, $rootScope, $filter) {
     var cacheUserData = false,
         cacheAppData = false,
-        promiseAppData = false;
+        promiseAppData = false,
+        filter = $filter('filter');
 
     // Return public API.
     return({
@@ -57,7 +58,11 @@
         })
         .then(handleSuccess, handleError).then(function(data) {
           if (data && data.profile && data.contacts) {
+            var globalMatch = filter(data.contacts, function(d){return d.type === 'global';});
             cacheUserData = data;
+            if (globalMatch.length) {
+              cacheUserData.global = globalMatch[0];
+            }
             $rootScope.$emit("appUserData", cacheUserData);
           }
 
@@ -157,8 +162,7 @@
     function getProfileData(contactId) {
       contactId = contactId || '';
 
-      var promise = getUserData(),
-          filter = $filter('filter');
+      var promise = getUserData();
 
       return getUserData().then(function(data){
         // Check if the contact is for the current user

@@ -162,7 +162,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
       //Determine if user being checked out is the same as the logged in user
       //If not, we need to add some properties to contact so profile service can send an email notifying the user
-      if (!contact.ql.isOwn && contact.email[0]){
+      if (!contact.ql.isOwn && contact.email[0]) {
         //Set email fields
         var userGlobal = filter(userData.contacts, function(d) {return d.type === 'global'}),
             email = {
@@ -173,6 +173,10 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
               adminName: userGlobal[0].nameGiven + " " + userGlobal[0].nameFamily,
               locationName: $scope.locationText()
             };
+
+        if (userGlobal.email && userGlobal.email[0] && userGlobal.email[0].address) {
+          email.adminEmail = userGlobal.email[0].address;
+        }
 
         cont.notifyEmail = email;
       }
