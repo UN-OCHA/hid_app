@@ -29,9 +29,9 @@
               <span class="contact-item__verified" title="Verified" ng-if="contact._profile.verified"><i class="fa fa-check-circle"></i></span>
             </div>
           </div>
-          <div class="contact-item contact-item--jobtitle col-xs-7 col-md-3"><span title="{{contact.jobtitle}}">{{contact.jobtitle}}</span></div>
-          <div class="contact-item contact-item--organization col-xs-5" ng-class="(contact.bundle.length) ? 'col-md-3' : 'col-md-6'"><span title="{{parseAcronym(contact.organization[0].name)}}">{{parseAcronym(contact.organization[0].name)}}</span></div>
-          <div class="contact-item contact-item--bundle col-md-3" ng-hide="!contact.bundle.length"><span title="{{contact.bundle.join(', ')}}">{{contact.bundle.join(', ')}}</span></div>
+          <div class="contact-item contact-item--jobtitle col-xs-7" ng-class="(contact.bundle.length) ? 'col-md-3' : 'col-md-7'"><span title="{{contact.jobtitle}}">{{contact.jobtitle}}</span></div>
+          <div class="contact-item contact-item--bundle col-md-4" ng-hide="!contact.bundle.length"><span title="{{contact.bundle.join(', ')}}">{{contact.bundle.join(', ')}}</span></div>
+          <div class="contact-item contact-item--organization col-xs-5 col-md-2"><span title="{{parseAcronym(contact.organization[0].name)}}">{{parseAcronym(contact.organization[0].name)}}</span></div>
         </div>
         <div class="quick-link" ng-if="showQuickLinks(contact)">
           <div class="dropdown" ng-class="{'ql-open': qlOpen === $index}">
