@@ -1,5 +1,5 @@
-function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries) {
-  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'globalContacts', 'keyContact', 'localContacts', 'organization.name', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'];
+function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries, roles) {
+  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'organization.name', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'];
 
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
@@ -12,6 +12,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.organizations = [];
   $scope.protectedRoles = [];
   $scope.countries = countries;
+  $scope.adminRoleOptions = roles;
 
   $scope.contactsPromise;
   $scope.query = $location.search();
@@ -21,6 +22,8 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
   $scope.listComplete = false;
   $scope.contactsCreated = false;
+
+  $scope.userCanUseAdminFilters = profileService.canUseAdminFilters();
 
   if ($scope.locationId === 'global' && !$scope.query.hasOwnProperty('globalContacts') && !$scope.query.hasOwnProperty('localContacts')) {
     $scope.query.globalContacts = true;
