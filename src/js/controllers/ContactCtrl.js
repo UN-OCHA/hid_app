@@ -3,6 +3,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   $scope.contact = contact;
   $scope.profileContacts = profileData.contacts;
   $scope.globalContactId = profileData.global._id;
+  $scope.profile = profileData.profile;
 
   // Permissions
   var isOwnProfile = userData.profile._id === contact._profile._id;
