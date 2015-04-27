@@ -1,5 +1,5 @@
-function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries) {
-  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'keyContact', 'organization.name', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'];
+function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries, roles) {
+  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'organization.name', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'];
 
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
@@ -12,6 +12,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.organizations = [];
   $scope.protectedRoles = [];
   $scope.countries = countries;
+  $scope.adminRoleOptions = roles;
 
   $scope.contactsPromise;
   $scope.query = $location.search();
@@ -21,6 +22,13 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
   $scope.listComplete = false;
   $scope.contactsCreated = false;
+
+  $scope.userCanUseAdminFilters = profileService.canUseAdminFilters();
+
+  if ($scope.locationId === 'global' && !$scope.query.hasOwnProperty('globalContacts') && !$scope.query.hasOwnProperty('localContacts')) {
+    $scope.query.globalContacts = true;
+    $scope.query.localContacts = false;
+  }
 
   var pathParams = $location.url().split('/'),
       filter = $filter('filter');
@@ -53,7 +61,20 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     $scope.printUrl = '#' + pathParams.join('/');
   }
 
-  if ($scope.locationId !== 'global') {
+  if ($scope.locationId === 'global') {
+    var allDisasters = {};
+    angular.forEach(operations, function (oper, opId) {
+      if (oper.disasters) {
+        angular.forEach(oper.disasters, function (dstr) {
+          if (dstr.remote_id && dstr.name && !allDisasters.hasOwnProperty(dstr.remote_id)) {
+            allDisasters[dstr.remote_id] = dstr;
+          }
+        });
+      }
+    });
+    $scope.disasterOptions = listObjectToArray(allDisasters);
+  }
+  else {
     // Create bundles and disasters array.
     if ($scope.operations.hasOwnProperty($scope.locationId)) {
       var allBundles = listObjectToArray($scope.operations[$scope.locationId].bundles);
@@ -144,7 +165,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
       //Determine if user being checked out is the same as the logged in user
       //If not, we need to add some properties to contact so profile service can send an email notifying the user
-      if (!contact.ql.isOwn && contact.email[0]){
+      if (!contact.ql.isOwn && contact.email[0]) {
         //Set email fields
         var userGlobal = filter(userData.contacts, function(d) {return d.type === 'global'}),
             email = {
@@ -155,6 +176,10 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
               adminName: userGlobal[0].nameGiven + " " + userGlobal[0].nameFamily,
               locationName: $scope.locationText()
             };
+
+        if (userGlobal.email && userGlobal.email[0] && userGlobal.email[0].address) {
+          email.adminEmail = userGlobal.email[0].address;
+        }
 
         cont.notifyEmail = email;
       }
@@ -180,7 +205,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
         stateKey = field + 'State';
     if (access) {
       if (contact.ql[stateKey] === 'confirm') {
-        contact.userid = contact._profile._userid;
+        contact.userid = contact._profile._userid || contact._profile.userid;
         contact._profile = contact._profile._id;
 
         contact[field] = contact.ql[field];
@@ -295,6 +320,11 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     var helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
         emptyOption = {action:'clear', name:"", alt: gettextCatalog.getString('No results found.'), disable: true};
 
+    // If search is an array, only act on first item.
+    if ( Object.prototype.toString.call( select.search ) === '[object Array]' ) {
+      select.search = select.search[0];
+    }
+
     // Remove text in parentheses.
     select.search = select.search.replace(/ *\([^)]*\) */g, "");
 
@@ -332,6 +362,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   }
 
   createContactList();
+
   if ($scope.query['organization.name']) {
     $scope.refreshOrganization({search:$scope.query['organization.name']})
   }
@@ -400,13 +431,30 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   // Builds the list of contacts.
   function createContactList() {
     var query = $scope.query;
+
     if ($scope.locationId === 'global') {
-      query.type = 'global';
+      if ((!query.hasOwnProperty('localContacts') || !query.localContacts) && query.hasOwnProperty('disasters.remote_id') && query['disasters.remote_id']) {
+        query.localContacts = true;
+      }
+
+      if (query.globalContacts && query.localContacts) {
+        delete query.type;
+      }
+      else if (query.globalContacts) {
+        query.type = 'global';
+      }
+      else if (query.localContacts) {
+        query.type = 'local';
+      }
+      else {
+        query.type = 'none';
+      }
     }
     else {
       query.type = 'local';
       query.locationId = $scope.locationId;
     }
+
     query.verified = query.verified ? true : null;
     query.keyContact = query.keyContact ? true : null;
     query.status = 1;

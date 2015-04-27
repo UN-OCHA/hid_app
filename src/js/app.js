@@ -2,6 +2,13 @@
 // Initialize ng
 var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview']);
 
+webshims.setOptions({
+   waitReady: false,
+   basePath: './libraries/webshim/js-webshim/minified/shims/'
+});
+
+webshim.polyfill('forms forms-ext');
+
 app.value('cgBusyDefaults',{
   message:'Loading...',
   backdrop: true,
@@ -10,7 +17,7 @@ app.value('cgBusyDefaults',{
   minDuration: 300
 });
 
-app.run(function ($rootScope, $location, $window, authService) {
+app.run(function ($rootScope, $location, $window, $timeout, authService) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     $rootScope.bodyClasses = [];
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
@@ -45,6 +52,13 @@ app.run(function ($rootScope, $location, $window, authService) {
   $rootScope.$on('$routeChangeSuccess', function() {
     $window.ga('send', 'pageview', { page: $location.url() });
   });
+
+  //Polyfill needs update when dynamic view loads
+  $rootScope.$on('$viewContentLoaded', function() {
+    $timeout(function(){
+      $('body').updatePolyfill();
+    }, 100)
+  });
 });
 
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
@@ -54,7 +68,7 @@ app.controller("DashboardCtrl", ["$scope", "$route", "profileService", "globalPr
 app.controller("DefaultCtrl", ["$location", "authService", DefaultCtrl]);
 app.controller("404Ctrl", ["$scope", FourZeroFourCtrl]);
 app.controller("HeaderCtrl", ["$scope", "$rootScope", "$location", "profileService", "gettextCatalog", HeaderCtrl]);
-app.controller("ListCtrl", ["$scope", "$route", "$routeParams", "$location", "$http", "$filter", "authService", "profileService", "userData", "operations", "gettextCatalog", "protectedRoles", "countries", ListCtrl]);
+app.controller("ListCtrl", ["$scope", "$route", "$routeParams", "$location", "$http", "$filter", "authService", "profileService", "userData", "operations", "gettextCatalog", "protectedRoles", "countries", "roles", ListCtrl]);
 app.controller("LoginCtrl", ["$scope", "$location", "$routeParams", "authService", "profileService", LoginCtrl]);
 app.controller("LogoutCtrl", ["$scope", "authService", LogoutCtrl]);
 app.controller("ProfileCtrl", ["$scope", "$location", "$route", "$routeParams", "$filter", "$timeout", "$http", "profileService", "authService", "operations", "profileData", "countries", "roles", "protectedRoles", "gettextCatalog", "userData", ProfileCtrl]);
@@ -282,6 +296,9 @@ app.config(function($routeProvider, $locationProvider) {
     resolve: {
       countries : function(profileService) {
         return profileService.getCountries();
+      },
+      roles : function(profileService) {
+        return profileService.getRoles();
       },
       userData : function(profileService) {
         return profileService.getUserData().then(function(data) {

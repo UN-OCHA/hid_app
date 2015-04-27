@@ -4,7 +4,8 @@
   angular.module("contactsId").service("profileService", function(authService, $http, $q, $rootScope, $filter) {
     var cacheUserData = false,
         cacheAppData = false,
-        promiseAppData = false;
+        promiseAppData = false,
+        filter = $filter('filter');
 
     // Return public API.
     return({
@@ -39,6 +40,7 @@
       canDeleteAccount: canDeleteAccount,
       canAssignOrganizationEditor: canAssignOrganizationEditor,
       isOrganizationEditor: isOrganizationEditor
+      canUseAdminFilters: canUseAdminFilters
     });
 
     // Get user data.
@@ -58,7 +60,11 @@
         })
         .then(handleSuccess, handleError).then(function(data) {
           if (data && data.profile && data.contacts) {
+            var globalMatch = filter(data.contacts, function(d){return d.type === 'global';});
             cacheUserData = data;
+            if (globalMatch.length) {
+              cacheUserData.global = globalMatch[0];
+            }
             $rootScope.$emit("appUserData", cacheUserData);
           }
 
@@ -158,8 +164,7 @@
     function getProfileData(contactId) {
       contactId = contactId || '';
 
-      var promise = getUserData(),
-          filter = $filter('filter');
+      var promise = getUserData();
 
       return getUserData().then(function(data){
         // Check if the contact is for the current user
@@ -437,10 +442,14 @@
       return (!isOwnProfile && hasRightRole);
     }
 
-
     // Can assign Organization Editor Role
     function canAssignOrganizationEditor() {
-      return (hasRole('admin') || hasRole('manager'))
+      return (hasRole('admin') || hasRole('manager'));
+    }
+
+    // Can use administrative contact list filters (orphan, ghost, admin role)
+    function canUseAdminFilters() {
+      return hasRole('admin');
     }
 
     //Verify editor role exists for specified location and organization

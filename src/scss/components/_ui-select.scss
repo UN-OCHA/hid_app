@@ -208,6 +208,20 @@
     -moz-animation:fa-spin 1s linear infinite;
     animation:fa-spin 1s linear infinite;
   }
+  &.form-control-light {
+    -webkit-box-shadow: inset 1px 1px 5px rgba(0,0,0,.3);
+    box-shadow: inset 1px 1px 5px rgba(0,0,0,.3);
+    &.open {
+      box-shadow: none;
+      .ui-select-toggle {
+        box-shadow: none;
+      }
+    }
+    .ui-select-toggle {
+      -webkit-box-shadow: inset 1px 1px 5px rgba(0,0,0,.3);
+      box-shadow: inset 1px 1px 5px rgba(0,0,0,.3);
+    }
+  }
   .form-control,
   input.form-control {
     background-color: $primary-color-1;

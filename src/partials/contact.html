@@ -1,8 +1,4 @@
 <div class="masthead">
-  <!--<div class="back-link" ng-show="!isRouteLoading"><a class="btn btn-warning btn-sm" href ng-click="back();"><i
-      class="fa fa-arrow-circle-left"></i> Back</a></div>
-    </div>-->
-
   <div class="main row page-contact" ng-show="!isRouteLoading" ng-class="{'show-options': sidebarOptions}">
 
     <div class="sidebar-left">
@@ -56,13 +52,13 @@
                 <h1 class="profile-view__name">{{contact.nameGiven}} {{contact.nameFamily}} ({{locationText()}})</h1>
 
                 <div class="profile-view__markers">
-                  <div class="contact-item__key-contact key-contact-profile-use" ng-if="contact.keyContact">*</div>
-                  <div class="contact-item__verified verified-profile-use" ng-if="contact._profile.verified"><i
-                      class="fa fa-check-circle"></i></div>
+                  <div class="contact-item__key-contact key-contact-profile-use" title="{{'key contact' | translate}}" ng-if="contact.keyContact">*</div>
+                  <div class="contact-item__verified verified-profile-use" ng-if="profile.verified"><i
+                      class="fa fa-check-circle" title="{{'verified' | translate}}"></i></div>
 
-                  <span ng-if="contact._profile.verified || contact.keyContact" class="profile-view__key-contact-verified">
-                    (<span ng-if="contact.keyContact" translate>key contact</span><span ng-if="contact._profile.verified && contact.keyContact">/</span><span
-                        ng-if="contact._profile.verified" translate>verified</span>)
+                  <span ng-if="profile.verified || contact.keyContact" class="profile-view__key-contact-verified">
+                    (<span ng-if="contact.keyContact" translate>key contact</span><span ng-if="profile.verified && contact.keyContact">/</span><span
+                        ng-if="profile.verified" translate>verified</span>)
                   </span>
                 </div>
               </div>
@@ -76,7 +72,6 @@
                     <img class="fade" ng-src="{{imageUrl}}">
                   </div>
                 </div>
-
                 <div class="phone" ng-repeat="phone in contact.phone">
                   <div class="profile-view__item">{{phone.type | translate}}: <a href="tel:{{phone.number}}">{{phoneDisplay(phone.number)}}</a></div>
                 </div>
@@ -93,6 +88,11 @@
               </div>
 
               <div class="notes">
+
+                <div class="departure-date" ng-show="contact.displayDepartureDate">
+                  <div class="profile-view__item"><span translate>Departure from</span> {{locationText()}}: {{contact.displayDepartureDate}}</div>
+                </div>
+
                 <span translate>Notes</span>:
                 <div class="notes">{{contact.notes}}</div>
               </div>

@@ -64,6 +64,18 @@ module.exports = function(grunt) {
         src: '**',
         dest: 'dist/fonts/'
       },
+      shims: {
+        expand: true,
+        cwd: 'src/libraries/webshim/js-webshim/minified/shims',
+        src: '**',
+        dest: 'dist/libraries/webshim/js-webshim/minified/shims/'
+      },
+      touchIcons: {
+        expand: true,
+        cwd: 'src/',
+        src: ['**.{png,ico}'],
+        dest: 'dist/'
+      }
     },
     nggettext_extract: {
       pot: {
@@ -132,6 +144,7 @@ module.exports = function(grunt) {
             'src/libraries/angular-inview/angular-inview.js',
             'src/libraries/intl-tel-input/build/js/intlTelInput.js',
             'src/libraries/intl-tel-input/lib/libphonenumber/build/utils.js',
+            'src/libraries/webshim/js-webshim/minified/polyfiller.js',
             'src/js/libraries/angularjs-breakpoint/breakpoint-0.0.1.js',
             'src/js/directives/international-phone-number.js',
             'src/js/jso.js',

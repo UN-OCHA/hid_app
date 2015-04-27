@@ -10673,6 +10673,10 @@ table tr td:last-child {
 .page-contact .col-fill-inner {
   padding: 20px 10px;
 }
+.page-contact .contact-item__verified i.fa {
+  font-size: 27px;
+  line-height: 40px;
+}
 
 .profile-view__name {
   float: left;
@@ -10745,6 +10749,10 @@ table tr td:last-child {
   position: relative;
 }
 
+h2.profile-title {
+  color: #54b1c8;
+}
+
 .page-list .profile-item {
   overflow: visible;
 }
@@ -10793,6 +10801,9 @@ table tr td:last-child {
 }
 .quick-link .dropdown .dropdown-menu {
   margin-top: -10px;
+}
+.quick-link .dropdown .dropdown-menu.dropdown-menu-right {
+  left: auto;
 }
 .quick-link .dropdown.ql-open > .dropdown-menu {
   display: block;
@@ -11613,7 +11624,7 @@ table tr td:last-child {
 }
 
 /* Three bounce spinner */
-.three-bounce-spinner {
+.spinner .three-bounce-spinner {
   margin: 10px auto 0;
   width: 70px;
   text-align: center;
@@ -11621,7 +11632,7 @@ table tr td:last-child {
   transition: opacity 1s;
   opacity: 1;
 }
-.three-bounce-spinner > div {
+.spinner .three-bounce-spinner > div {
   width: 15px;
   height: 15px;
   background-color: #e4e4e4;
@@ -11631,11 +11642,11 @@ table tr td:last-child {
   -webkit-animation: bouncedelay 1s infinite ease-in-out both;
   animation: bouncedelay 1s infinite ease-in-out both;
 }
-.three-bounce-spinner .bounce1 {
+.spinner .three-bounce-spinner .bounce1 {
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
-.three-bounce-spinner .bounce2 {
+.spinner .three-bounce-spinner .bounce2 {
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }
@@ -11876,6 +11887,20 @@ table tr td:last-child {
   -webkit-animation: fa-spin 1s linear infinite;
   -moz-animation: fa-spin 1s linear infinite;
   animation: fa-spin 1s linear infinite;
+}
+.ui-select-container.form-control-light {
+  -webkit-box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+.ui-select-container.form-control-light.open {
+  box-shadow: none;
+}
+.ui-select-container.form-control-light.open .ui-select-toggle {
+  box-shadow: none;
+}
+.ui-select-container.form-control-light .ui-select-toggle {
+  -webkit-box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
 }
 .ui-select-container .form-control,
 .ui-select-container input.form-control {

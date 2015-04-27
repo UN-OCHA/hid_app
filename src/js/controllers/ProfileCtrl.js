@@ -10,14 +10,15 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
   $scope.imageTypes = ['URL', 'Facebook', 'Google+'];
-  var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': [], 'disasters': ['remote_id']};
 
-  var pathParams = $location.path().split('/'),
-  checkinFlow = pathParams[1] === 'checkin',
-  accountData = authService.getAccountData();
+  var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': [], 'disasters': ['remote_id']},
+      pathParams = $location.path().split('/'),
+      checkinFlow = pathParams[1] === 'checkin',
+      accountData = authService.getAccountData();
+
   $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
-  $scope.selectedProtectedRoles = (profileData.contact && profileData.contact.protectedRoles && profileData.contact.protectedRoles.length) ? profileData.contact.protectedRoles : [];
-  $scope.selectedProtectedBundles = (profileData.contact && profileData.contact.protectedBundles && profileData.contact.protectedBundles.length) ? profileData.contact.protectedBundles : [];
+  $scope.selectedProtectedRoles = (profileData.contact && profileData.contact.protectedRoles && profileData.contact.protectedRoles.length) ? angular.copy(profileData.contact.protectedRoles) : [];
+  $scope.selectedProtectedBundles = (profileData.contact && profileData.contact.protectedBundles && profileData.contact.protectedBundles.length) ? angular.copy(profileData.contact.protectedBundles) : [];
 
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
   $scope.orgEditorRoles = (profileData.profile && profileData.profile.orgEditorRoles && profileData.profile.orgEditorRoles.length) ? profileData.profile.orgEditorRoles : [];
@@ -82,7 +83,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
   // If loading an existing contact profile by ID, find it in the user's data.
   if (!checkinFlow && $scope.profileId.length) {
-    $scope.profile = profileData.contact || {};
+    $scope.profile = angular.copy(profileData.contact) || {};
     if ($scope.profile.locationId && $scope.operations.hasOwnProperty($scope.profile.locationId)) {
       $scope.selectedOperation = $scope.profile.locationId;
       setBundles();
@@ -516,21 +517,29 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       if (checkinFlow) {
         profile.locationId = $scope.selectedOperation;
         profile.location = $scope.operations[$scope.selectedOperation].name;
+      }
 
-        //Determine if user being checked in is the same as the logged in user
-        //If not, we need to add some properties to contact so profile service can send an email notifying the user
-        if (userData.profile.userid != profile.userid  && profile.email[0]){
-          //Set email fields
-          var email = {
-            type: 'notify_checkin',
-            recipientFirstName: profile.nameGiven,
-            recipientLastName: profile.nameFamily,
-            recipientEmail: profile.email[0].address,
-            adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-            locationName: profile.location
-          };
-          profile.notifyEmail = email;
+      // Determine if user being checked in is the same as the logged in user
+      // If not, we need to add some properties to contact so profile service can send an email notifying the user
+      if (userData.profile.userid != profile.userid  && profile.email[0]) {
+        //Set email fields
+        var email = {
+          type: checkinFlow ? 'notify_checkin' : 'notify_edit',
+          recipientFirstName: profile.nameGiven,
+          recipientLastName: profile.nameFamily,
+          recipientEmail: profile.email[0].address,
+          adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
+          locationName: profile.location,
+          addedGroups: bundlesAdded(),
+          removedGroups: bundlesRemove()
+        };
+        if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
+          email.adminEmail = userData.global.email[0].address;
         }
+        if (profile.disasters && profile.disasters[0] && profile.disasters[0].name) {
+          email.locationName += '/' + profile.disasters[0].name;
+        }
+        profile.notifyEmail = email;
       }
 
       if ($scope.profileId.length) {
@@ -631,6 +640,26 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         userid:  profileData.profile.userid,
         status: 0
       };
+
+      if (userData.profile.userid != profileData.profile.userid  && profile.email[0]) {
+        //Set email fields
+        var email = {
+          type: 'notify_checkout',
+          recipientFirstName: profileData.contact.nameGiven,
+          recipientLastName: profileData.contact.nameFamily,
+          recipientEmail: profileData.contact.email[0].address,
+          adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
+          locationName: profileData.contact.location
+        };
+        if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
+          email.adminEmail = userData.global.email[0].address;
+        }
+        if (profileData.contact.disasters && profileData.contact.disasters[0] && profileData.contact.disasters[0].name) {
+          email.locationName += '/' + profileData.contact.disasters[0].name;
+        }
+        contact.notifyEmail = email;
+      }
+
       profileService.saveContact(contact).then(function(data) {
         if (data && data.status && data.status === 'ok') {
           profileService.clearData();
@@ -721,6 +750,58 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       }
     });
   };
+
+  // Bundles afted form is edited.
+  function postEditBundles() {
+    var bundles = [];
+    if ($scope.profile.bundle && $scope.profile.bundle.length) {
+      bundles = bundles.concat($scope.profile.bundle);
+    }
+    if ($scope.selectedProtectedBundles && $scope.selectedProtectedBundles.length) {
+      bundles = bundles.concat($scope.selectedProtectedBundles);
+    }
+    return bundles;
+  }
+
+  // Bundles before form is edited.
+  function preEditBundles() {
+    var bundles = [];
+    if (profileData.contact.bundle && profileData.contact.bundle.length) {
+      bundles = bundles.concat(profileData.contact.bundle);
+    }
+    if (profileData.contact.protectedBundles && profileData.contact.protectedBundles.length) {
+      bundles = bundles.concat(profileData.contact.protectedBundles);
+    }
+    return bundles;
+  }
+
+  // Array of bundles being in cantactA, but not in contactB.
+  function bundlesDiffernce(contactA, contactB) {
+    var bundlesArr = [];
+    if(contactA.length) {
+      if(contactB.length) {
+        angular.forEach(contactA, function(value) {
+          if (contactB.indexOf(value) === -1) {
+            bundlesArr.push(value);
+          };
+        });
+      }
+      else {
+        return contactA;
+      }
+    }
+    return bundlesArr;
+  }
+
+  // Array of bundles added durring edit.
+  function bundlesAdded() {
+    return bundlesDiffernce(postEditBundles(), preEditBundles());
+  }
+
+  // Array of bundles removed durring edit.
+  function bundlesRemove() {
+    return bundlesDiffernce(preEditBundles(), postEditBundles());
+  }
 
   function setBundles(){
     var allBundles = listObjectToArray($scope.operations[$scope.selectedOperation].bundles);

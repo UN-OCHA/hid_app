@@ -29,9 +29,9 @@
               <span class="contact-item__verified" title="Verified" ng-if="contact._profile.verified"><i class="fa fa-check-circle"></i></span>
             </div>
           </div>
-          <div class="contact-item contact-item--jobtitle col-xs-7 col-md-3"><span title="{{contact.jobtitle}}">{{contact.jobtitle}}</span></div>
-          <div class="contact-item contact-item--organization col-xs-5" ng-class="(contact.bundle.length) ? 'col-md-3' : 'col-md-6'"><span title="{{parseAcronym(contact.organization[0].name)}}">{{parseAcronym(contact.organization[0].name)}}</span></div>
-          <div class="contact-item contact-item--bundle col-md-3" ng-hide="!contact.bundle.length"><span title="{{contact.bundle.join(', ')}}">{{contact.bundle.join(', ')}}</span></div>
+          <div class="contact-item contact-item--jobtitle col-xs-7" ng-class="(contact.bundle.length) ? 'col-md-3' : 'col-md-7'"><span title="{{contact.jobtitle}}">{{contact.jobtitle}}</span></div>
+          <div class="contact-item contact-item--bundle col-md-4" ng-hide="!contact.bundle.length"><span title="{{contact.bundle.join(', ')}}">{{contact.bundle.join(', ')}}</span></div>
+          <div class="contact-item contact-item--organization col-xs-5 col-md-2"><span title="{{parseAcronym(contact.organization[0].name)}}">{{parseAcronym(contact.organization[0].name)}}</span></div>
         </div>
         <div class="quick-link" ng-if="showQuickLinks(contact)">
           <div class="dropdown" ng-class="{'ql-open': qlOpen === $index}">
@@ -41,7 +41,7 @@
                 <a role="menuitem" tabindex="-1" href="#/profile/{{contact._id}}" translate>Edit</a>
               </li>
               <li ng-if="contact.ql.userCanCheckIn">
-                <a role="menuitem" tabindex="-1" href="#/checkin{{contact.ql.isOwn ? '' : '/' + contact._id}}" translate>Check-in</a>
+                <a role="menuitem" tabindex="-1" href="#/checkin{{contact.ql.isOwn ? '' : '/' + contact._profile._id}}" translate>Check-in</a>
               </li>
               <li ng-if="contact.ql.userCanCheckOut" ng-class="{'disabled':contact.ql.checkOutState === 'inProgress'}">
                 <button role="menuitem" tabindex="-1" class="btn btn-link" ng-class="{'btn-warning': contact.ql.checkOutState === 'confirm'}" ng-click="checkOut(contact)" ng-bind="checkOutText(contact)"></button>
@@ -160,14 +160,14 @@
             search-enabled="false"
             on-select="submitSearch()">
               <ui-select-match allow-clear placeholder="{{'Disaster'|translate}}">{{$select.selected.value.name}}</ui-select-match>
-              <ui-select-choices repeat="disaster.value.remote_id as disaster in disasterOptions | orderBy:'disaster.value.name'">
+              <ui-select-choices repeat="disaster.value.remote_id as disaster in disasterOptions | orderBy:'value.name'">
                 <div ng-bind-html="disaster.value.name"></div>
               </ui-select-choices>
           </ui-select>
         </div>
 
         <div class="location-filters">
-          <div class="form-group" ng-if="locationId === 'global'">
+          <div class="form-group">
             <label class="control-label element-invisible" for="country" translate>Country</label>
             <ui-select
               ng-model="query['address.country']"
@@ -205,11 +205,50 @@
 
         <div class="form-group">
           <label class="control-label" for="verified"><i class="fa fa-check-circle"></i> <span translate>Verified User</span> <input type="checkbox" name="verified" ng-model="query.verified" /></label>
-
         </div>
 
         <div class="form-group" ng-if="query.locationId">
           <label class="control-label" for="keyContact"><span class="contact-item__key-contact key-contact-filter-use">*</span> <span translate>Key Contact</span> <input type="checkbox" name="keyContact" ng-model="query.keyContact" /></label>
+        </div>
+
+        <div class="form-group" ng-if="userCanUseAdminFilters">
+          <div class="divider"></div>
+
+          <label class="control-label" for="orphan"><span translate>Orphan User</span> <input type="checkbox" name="orphan" ng-model="query.orphan" /></label>
+        </div>
+
+        <div class="form-group" ng-if="userCanUseAdminFilters">
+          <label class="control-label" for="ghost"><span translate>Ghost User</span> <input type="checkbox" name="ghost" ng-model="query.ghost" /></label>
+        </div>
+
+        <div class="form-group" ng-if="userCanUseAdminFilters">
+          <label class="control-label element-invisible" for="role" translate>Admin Role</label>
+          <ui-select
+            ng-model="query.role"
+            theme="bootstrap"
+            class="form-control"
+            name="bootstrap"
+            search-enabled="false"
+            on-select="submitSearch()">
+              <ui-select-match allow-clear placeholder="{{'Admin Role'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="role.id as role in adminRoleOptions | orderBy:'name' | filter: $select.search">
+                <div ng-bind-html="role.name | highlight: $select.search"></div>
+              </ui-select-choices>
+          </ui-select>
+        </div>
+
+        <div ng-if="!query.locationId">
+
+          <div class="divider"></div>
+
+          <div class="form-group">
+            <label class="control-label" for="globalContacts"><span translate>Global Profiles</span> <input type="checkbox" name="globalContacts" ng-model="query.globalContacts" /></label>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label" for="localContacts"><span translate>Local Profiles</span> <input type="checkbox" name="localContacts" ng-model="query.localContacts" /></label>
+          </div>
+
         </div>
 
         <div class="divider"></div>

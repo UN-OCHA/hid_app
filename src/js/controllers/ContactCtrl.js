@@ -3,6 +3,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   $scope.contact = contact;
   $scope.profileContacts = profileData.contacts;
   $scope.globalContactId = profileData.global._id;
+  $scope.profile = profileData.profile;
 
   // Permissions
   var isOwnProfile = userData.profile._id === contact._profile._id;
@@ -32,6 +33,18 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
 
   $scope.isOrganizationEditor = profileService.isOrganizationEditor(userData.profile, profileData);
   setEditorOrganizations();
+
+  if ($scope.contact.departureDate) {
+    var date = new Date($scope.contact.departureDate),
+        dd = date.getDate(),
+        mm = date.getMonth()+1,
+        yyyy = date.getFullYear();
+
+    dd = (dd<10) ? '0' + dd : dd;
+    mm = (mm<10) ? '0' + mm : mm;
+
+    $scope.contact.displayDepartureDate = yyyy + "-" + mm + "-" + dd;
+  }
 
   $scope.locationText = function() {
     return $scope.contact.location || gettextCatalog.getString('Global');
@@ -85,6 +98,9 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
         adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
         locationName: $scope.locationText()
       };
+      if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
+        email.adminEmail = userData.global.email[0].address;
+      }
       contact.notifyEmail = email;
     }
 
@@ -178,8 +194,6 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
       var removeOrg = {organizationName: 'No Organization', organizationId: 0 };
       editorOrgs.push(removeOrg);
       $scope.organizationOptions = editorOrgs ;
-
-
      }
   }
 
