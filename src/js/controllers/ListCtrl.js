@@ -320,6 +320,11 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     var helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
         emptyOption = {action:'clear', name:"", alt: gettextCatalog.getString('No results found.'), disable: true};
 
+    // If search is an array, only act on first item.
+    if ( Object.prototype.toString.call( select.search ) === '[object Array]' ) {
+      select.search = select.search[0];
+    }
+
     // Remove text in parentheses.
     select.search = select.search.replace(/ *\([^)]*\) */g, "");
 
