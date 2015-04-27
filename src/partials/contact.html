@@ -106,6 +106,10 @@
               <span class="group-label" translate>Groups</span>
               <span class="title"><strong>{{contact.bundle.join(', ')}}</strong></span>
             </div>
+            <div class="right-sidebar-group">
+              <span class="group-label" translate>Protected Groups</span>
+              <span class="title"><strong>{{contact.protectedBundles.join(', ')}}</strong></span>
+            </div>
             <div class="right-sidebar-group" ng-if="contact.type === 'local' && contact.disasters.length">
               <span class="group-label" translate>Disasters</span>
               <span>
