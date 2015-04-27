@@ -142,6 +142,25 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     }
   }
 
+  $scope.updateOrganization = function (cid) {
+    var contact = {
+      _id: $scope.contact._id,
+      _profile: $scope.contact._profile._id,
+      userid: $scope.contact._profile.userid
+    };
+
+    profileService.saveContact(contact).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        profileService.clearData();
+        $scope.back();
+      }
+      else {
+        alert('error');
+      }
+    });
+  }
+  
+
   function setEditorOrganizations() { 
     var editorOrgs = [];
     var profile;
@@ -151,26 +170,17 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
       locationId = profileData.contact.locationId;
       var orgEditorRole = $filter('filter')(userData.profile.orgEditorRoles, {locationId: locationId}, true);
       if (orgEditorRole){
-       // var editorOrg =  [{name: orgEditorRole[0].organizationId, remote_id: orgEditorRole[0].organizationName}];
         editorOrgs.push(orgEditorRole[0]); 
       }
 
-    //   //profile = ;
-
-     }
-    //Add the contacts current org
-    // if (profileData.contact.organization[0]){
-    //   editorOrgs.push(profileData.contact.organization[0]);
-    // }
-    // else{
+      //If the contact is currently a member of the editors organization, add a 'No Organization' item 
+      //which gives them the ability to remove the contact from their organization
       var removeOrg = {organizationName: 'No Organization', organizationId: 0 };
       editorOrgs.push(removeOrg);
-     // }
+      $scope.organizationOptions = editorOrgs ;
 
-    $scope.organizationOptions = editorOrgs ;
 
-    // var disasterOptions = $scope.operations[$scope.selectedOperation].disasters;
-    // $scope.disasterOptions = listObjectToArray(disasterOptions);
+     }
   }
 
 
