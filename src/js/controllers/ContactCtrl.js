@@ -199,7 +199,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
       //Add a 'No Organization' item 
       var removeOrg = {organizationName: 'No Organization', organizationId: 0 };
       editorOrgs.push(removeOrg);
-      $scope.organizationOptions = editorOrgs ;
+      $scope.organizationOptions = editorOrgs;
      }
   }
 }
