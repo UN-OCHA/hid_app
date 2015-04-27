@@ -39,7 +39,7 @@
       canSendClaimEmail: canSendClaimEmail,
       canDeleteAccount: canDeleteAccount,
       canAssignOrganizationEditor: canAssignOrganizationEditor,
-      isOrganizationEditor: isOrganizationEditor
+      isOrganizationEditor: isOrganizationEditor,
       canUseAdminFilters: canUseAdminFilters
     });
 

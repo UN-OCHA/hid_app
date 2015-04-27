@@ -7,8 +7,8 @@
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url(../fonts/font-awesome/fontawesome-webfont.eot?1424885649);
-  src: url(../fonts/font-awesome/fontawesome-webfont.eot?&1424885649#iefix) format("embedded-opentype"), url(../fonts/font-awesome/fontawesome-webfont.woff?1424885649) format("woff"), url(../fonts/font-awesome/fontawesome-webfont.ttf?1424885649) format("truetype"), url(../fonts/font-awesome/fontawesome-webfont.svg?1424885649#fontawesomeregular) format("svg");
+  src: url(../fonts/font-awesome/fontawesome-webfont.eot?1429298822);
+  src: url(../fonts/font-awesome/fontawesome-webfont.eot?&1429298822#iefix) format("embedded-opentype"), url(../fonts/font-awesome/fontawesome-webfont.woff?1429298822) format("woff"), url(../fonts/font-awesome/fontawesome-webfont.ttf?1429298822) format("truetype"), url(../fonts/font-awesome/fontawesome-webfont.svg?1429298822#fontawesomeregular) format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -9893,6 +9893,13 @@ table tr td:last-child {
   text-align: center;
   margin-top: -30px;
   color: #afafaf;
+}
+
+.org-editor-area {
+  background-color: #e4e4e4;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
 }
 
 #contactsid-app-view .account-create {
