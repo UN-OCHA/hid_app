@@ -205,7 +205,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
         stateKey = field + 'State';
     if (access) {
       if (contact.ql[stateKey] === 'confirm') {
-        contact.userid = contact._profile._userid;
+        contact.userid = contact._profile._userid || contact._profile.userid;
         contact._profile = contact._profile._id;
 
         contact[field] = contact.ql[field];
