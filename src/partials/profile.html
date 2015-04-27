@@ -404,7 +404,7 @@
               </div>
             </div>
 
-            <div class="section col-sm-12" ng-show="userCanEditRoles || userCanEditVerified">
+            <div class="section col-sm-12" ng-show="userCanEditRoles || userCanAddVerified || userCanRemoveVerified">
               <h4 translate>Global Administration</h4>
               <div class="form-group" ng-show="userCanEditRoles">
                 <label class="control-label" for="adminRoles" translate>Admin Privileges</label>
@@ -425,7 +425,7 @@
                 </ui-select>
               </div>
 
-              <div class="checkbox" ng-show="userCanAddVerified">
+              <div class="checkbox" ng-show="userCanAddVerified || userCanRemoveVerified">
                 <label for="verified" ng-click="setVerified()"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="verified && !userCanRemoveVerified" ng-click="setVerified()" ng-value="verified"/><span translate>Verified Responder</span></label>
               </div>
             </div>

@@ -872,7 +872,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     $scope.userCanEditKeyContact = profileService.canEditKeyContact($scope.selectedOperation);
     $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.selectedOperation);
     $scope.userCanEditProtectedBundle = profileService.canEditProtectedBundle($scope.selectedOperation);
-    $scope.userCanAddVerified = profileService.canAddVerified($scope.selectedOperation);
+    $scope.userCanAddVerified = profileService.canAddVerified();
     $scope.userCanRemoveVerified = profileService.canRemoveVerified(profileData.contact, profileData.profile);
     $scope.userCanDeleteAccount = profileService.canDeleteAccount(profileData.profile);
     $scope.userCanCheckOut = !checkinFlow && contactNotEmpty && profileService.canCheckOut(profileData.contact);
