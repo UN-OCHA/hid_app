@@ -69,6 +69,12 @@ module.exports = function(grunt) {
         cwd: 'src/libraries/webshim/js-webshim/minified/shims',
         src: '**',
         dest: 'dist/libraries/webshim/js-webshim/minified/shims/'
+      },
+      touchIcons: {
+        expand: true,
+        cwd: 'src/',
+        src: ['**.{png,ico}'],
+        dest: 'dist/'
       }
     },
     nggettext_extract: {
