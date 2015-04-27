@@ -20,8 +20,8 @@
 
   <form name="profileForm" autocomplete="off" class="update-profile profile-form row" ng-show="selectedOperation.length" ng-class="{'show-options': profileOptions}" novalidate ng-submit="submitProfile()">
     <div class="form-content col-xs-12 col-sm-8 col-md-9 pull-right" >
-      <h3>{{profileName()}} <span translate>Profile</span></h3>
-      <p class="help-block">* <em>Required field</em></p>
+      <h2 class="profile-title">{{profileName()}} <span translate>Profile</span></h2>
+      <p class="help-block">* <span translate>Enter your local contact details. Changes made to this profile will not affect your global profile.</span><br>* <em>Required field</em></p>
       <div class="row alert-wrapper">
         <browser-alert></browser-alert>
         <div class="alert alert-danger col-xs-12" ng-show="profileForm.$submitted && profileForm.$invalid">
@@ -116,7 +116,7 @@
           </div>
 
           <div class="section">
-            <h4 translate>Location</h4>
+            <h4 translate>Current Location</h4>
             <div class="form-group">
               <label class="control-label" for="address.country" translate>Country</label>
               <ui-select
