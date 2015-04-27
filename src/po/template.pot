@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-27T15:03:23.580Z\n"
+"Project-Id-Version: 2015-04-27T18:55:34.422Z\n"
 
 #: src/partials/list-print.html
 msgid "* Groups include clusters, sectors, working group or similar."
@@ -139,6 +139,10 @@ msgid "Dashboard Options"
 msgstr ""
 
 #: src/partials/profile.html
+msgid "Date"
+msgstr ""
+
+#: src/partials/profile.html
 msgid "Delete Account"
 msgstr ""
 
@@ -148,6 +152,10 @@ msgstr ""
 
 #: src/partials/contact.html
 msgid "Departure Date:"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Departure from"
 msgstr ""
 
 #: src/partials/list.html
@@ -196,10 +204,6 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Email Addresses"
-msgstr ""
-
-#: src/partials/profile.html
-msgid "Estimated Departure Date"
 msgstr ""
 
 #: src/partials/contact.html
