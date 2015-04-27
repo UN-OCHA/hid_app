@@ -10794,6 +10794,9 @@ table tr td:last-child {
 .quick-link .dropdown .dropdown-menu {
   margin-top: -10px;
 }
+.quick-link .dropdown .dropdown-menu.dropdown-menu-right {
+  left: auto;
+}
 .quick-link .dropdown.ql-open > .dropdown-menu {
   display: block;
 }
