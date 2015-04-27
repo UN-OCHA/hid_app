@@ -50,6 +50,9 @@
 
     .dropdown-menu {
       margin-top: -10px;
+      &.dropdown-menu-right {
+        left: auto;
+      }
     }
     &.ql-open {
       & > .dropdown-menu {
