@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-27T18:55:34.422Z\n"
+"Project-Id-Version: 2015-04-27T19:39:11.257Z\n"
 
 #: src/partials/list-print.html
 msgid "* Groups include clusters, sectors, working group or similar."
@@ -129,6 +129,10 @@ msgstr ""
 msgid "Crisis is required."
 msgstr ""
 
+#: src/partials/profile.html
+msgid "Current Location"
+msgstr ""
+
 #: src/partials/createAccount.html
 #: src/partials/header.html
 msgid "Dashboard"
@@ -151,9 +155,6 @@ msgid "Delete My Account"
 msgstr ""
 
 #: src/partials/contact.html
-msgid "Departure Date:"
-msgstr ""
-
 #: src/partials/profile.html
 msgid "Departure from"
 msgstr ""
@@ -204,6 +205,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Email Addresses"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Enter your local contact details. Changes made to this profile will not affect your global profile."
 msgstr ""
 
 #: src/partials/contact.html
@@ -363,7 +368,6 @@ msgstr ""
 
 #: src/partials/contact.html
 #: src/partials/list-print.html
-#: src/partials/profile.html
 msgid "Location"
 msgstr ""
 

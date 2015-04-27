@@ -10749,6 +10749,10 @@ table tr td:last-child {
   position: relative;
 }
 
+h2.profile-title {
+  color: #54b1c8;
+}
+
 .page-list .profile-item {
   overflow: visible;
 }
