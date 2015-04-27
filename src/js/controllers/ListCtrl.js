@@ -428,6 +428,10 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     var query = $scope.query;
 
     if ($scope.locationId === 'global') {
+      if ((!query.hasOwnProperty('localContacts') || !query.localContacts) && query.hasOwnProperty('disasters.remote_id') && query['disasters.remote_id']) {
+        query.localContacts = true;
+      }
+
       if (query.globalContacts && query.localContacts) {
         delete query.type;
       }
