@@ -11624,7 +11624,7 @@ h2.profile-title {
 }
 
 /* Three bounce spinner */
-.three-bounce-spinner {
+.spinner .three-bounce-spinner {
   margin: 10px auto 0;
   width: 70px;
   text-align: center;
@@ -11632,7 +11632,7 @@ h2.profile-title {
   transition: opacity 1s;
   opacity: 1;
 }
-.three-bounce-spinner > div {
+.spinner .three-bounce-spinner > div {
   width: 15px;
   height: 15px;
   background-color: #e4e4e4;
@@ -11642,11 +11642,11 @@ h2.profile-title {
   -webkit-animation: bouncedelay 1s infinite ease-in-out both;
   animation: bouncedelay 1s infinite ease-in-out both;
 }
-.three-bounce-spinner .bounce1 {
+.spinner .three-bounce-spinner .bounce1 {
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
-.three-bounce-spinner .bounce2 {
+.spinner .three-bounce-spinner .bounce2 {
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }
