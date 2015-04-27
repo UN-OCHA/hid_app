@@ -33,6 +33,16 @@
           <a class="btn btn-primary btn-lg btn-block" ng-show="userCanSendClaimEmail" ng-click="confirmSendEmail = !confirmSendEmail" translate>Send Claim Email</a>
           <a ng-show="confirmSendEmail" ng-disabled="sendingClaimEmail" class="fade btn btn-warning btn-lg btn-block" ng-click="sendClaimEmail()" translate>Confirm Send Claim Email</a>
         </div>
+
+        <div class="org-editor-area" ng-show="isOrganizationEditor">
+       
+          <label class="control-label" for="organizations" translate>Edit Organization</label>
+          <select class="form-control" ng-model="selectedOrg" ng-options="organization.organizationName for organization in organizationOptions">
+          </select>
+          <p>selected org is : {{selectedOrg}}</p>
+          <p> id of selected item is : {{selectedOrg.organizationId}} </p>
+        </div>
+
       </div>
     </div>
     <div class="col-xs-12 col-sm-8 col-md-9">

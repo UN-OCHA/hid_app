@@ -30,6 +30,9 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
 
   $scope.contact.disastersString = $scope.contact.disasters.reduce(function (last, val) { return last ? (last + ', ' + val.name) : val.name; }, '');
 
+  $scope.isOrganizationEditor = profileService.isOrganizationEditor(userData.profile, profileData);
+  setEditorOrganizations();
+
   $scope.locationText = function() {
     return $scope.contact.location || gettextCatalog.getString('Global');
   }
@@ -138,4 +141,38 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
       });
     }
   }
+
+  function setEditorOrganizations() { 
+    var editorOrgs = [];
+    var profile;
+    var locationId;
+
+    if ($scope.isOrganizationEditor){
+      locationId = profileData.contact.locationId;
+      var orgEditorRole = $filter('filter')(userData.profile.orgEditorRoles, {locationId: locationId}, true);
+      if (orgEditorRole){
+       // var editorOrg =  [{name: orgEditorRole[0].organizationId, remote_id: orgEditorRole[0].organizationName}];
+        editorOrgs.push(orgEditorRole[0]); 
+      }
+
+    //   //profile = ;
+
+     }
+    //Add the contacts current org
+    // if (profileData.contact.organization[0]){
+    //   editorOrgs.push(profileData.contact.organization[0]);
+    // }
+    // else{
+      var removeOrg = {organizationName: 'No Organization', organizationId: 0 };
+      editorOrgs.push(removeOrg);
+     // }
+
+    $scope.organizationOptions = editorOrgs ;
+
+    // var disasterOptions = $scope.operations[$scope.selectedOperation].disasters;
+    // $scope.disasterOptions = listObjectToArray(disasterOptions);
+  }
+
+
+
 }

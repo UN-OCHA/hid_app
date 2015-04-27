@@ -37,7 +37,8 @@
       canCheckOut: canCheckOut,
       canSendClaimEmail: canSendClaimEmail,
       canDeleteAccount: canDeleteAccount,
-      canAssignOrganizationEditor: canAssignOrganizationEditor
+      canAssignOrganizationEditor: canAssignOrganizationEditor,
+      isOrganizationEditor: isOrganizationEditor
     });
 
     // Get user data.
@@ -442,6 +443,41 @@
       return (hasRole('admin') || hasRole('manager'))
     }
 
+    //Verify editor role exists for specified location and organization
+    function isOrganizationEditor(adminProfile, userProfile){
+      var found = false;
+      var locationId = null;
+      var organizationId = null;
+
+      // if (userProfile && userProfile.contact && userProfile.contact.locationId && userProfile.contact.organization){
+      //   locationId = userProfile.contact.locationId;
+
+      //   if (userProfile.contact.organization[0] && userProfile.contact.organization[0].remote_id){
+      //     organizationId = userProfile.contact.organization[0].remote_id;
+      //   }
+      // }
+
+      // if (adminProfile && adminProfile.orgEditorRoles && organizationId && locationId){
+      //  var orgEditorRole = $filter('filter')(adminProfile.orgEditorRoles, {location: locationId, organization: organizationId}, true);
+      //   if (orgEditorRole.length){
+      //     found = true;
+      //   }
+      // }
+
+      if (userProfile && userProfile.contact && userProfile.contact.locationId){
+        locationId = userProfile.contact.locationId;
+      }
+
+      if (adminProfile && adminProfile.orgEditorRoles && locationId){
+       var orgEditorRole = $filter('filter')(adminProfile.orgEditorRoles, {locationId: locationId}, true);
+        if (orgEditorRole.length){
+          found = true;
+        }
+      }
+
+      return found;
+    }
+    
     function handleError(response) {
       // The API response from the server should be returned in a
       // nomralized format. However, if the request was not handled by the
