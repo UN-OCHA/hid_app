@@ -1,0 +1,332 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Nepali\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-18 15:10+0000\n"
+"PO-Revision-Date: 2015-04-26 20:32+0100\n"
+"Last-Translator: yaelle link\n"
+"Language-Team: yaelle link\n"
+"Language: ne\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Loco https://localise.biz\n"
+"X-Loco-Source-Locale: en_GB\n"
+"X-Loco-Target-Locale: ne_NP\n"
+"X-Loco-Project-Id: 6248\n"
+"X-Loco-Api-Version: 1.0.9"
+
+#: src/partials/header.html
+#: src/partials/index.html loco:5509959914d725436b8b4567
+msgid "About"
+msgstr "यस बारेमा"
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:5509959914d725436b8b4568
+msgid "Back"
+msgstr "अघिल्लो (फिर्ता)"
+
+#: src/js/app.js
+#: src/partials/dashboard.html loco:5509959914d725436b8b4569
+msgid "Check-in"
+msgstr "चेक ईन"
+
+#: src/partials/dashboard.html loco:5509959914d725436b8b456a
+msgid "Checkout"
+msgstr "चेक अाउट"
+
+#: src/partials/profile.html loco:5509959914d725436b8b456b
+msgid "City"
+msgstr "शहर\n"
+
+#: src/partials/contact.html loco:5509959914d725436b8b456c
+msgid "Clusters"
+msgstr "क्लस्टर (विषयगत क्षेत्र)"
+
+#: src/partials/profile.html loco:5509959914d725436b8b456d
+msgid "Country"
+msgstr "देश"
+
+#: src/partials/header.html loco:5509959914d725436b8b456e
+msgid "Dashboard"
+msgstr "ड्यासबोर्ड"
+
+#: src/partials/profile.html loco:5509959914d725436b8b456f
+msgid "Email"
+msgstr "इमेल"
+
+#: src/js/app.js loco:5509959914d725436b8b4570
+msgid "Global"
+msgstr "ग्लोबल (विश्वव्यापी)"
+
+#: src/partials/list.html
+#: src/partials/profile.html loco:5509959914d725436b8b4571
+msgid "Group"
+msgstr "समूह"
+
+#: src/partials/header.html loco:5509959914d725436b8b4572
+msgid "Home"
+msgstr "गृहपृष्ठ"
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:5509959914d725436b8b4573
+msgid "Location"
+msgstr "स्थान"
+
+#: src/partials/header.html
+#: src/partials/index.html loco:5509959914d725436b8b4574
+msgid "Login"
+msgstr "लगिन"
+
+#: src/partials/dashboard.html
+#: src/partials/header.html loco:5509959914d725436b8b4575
+msgid "Logout"
+msgstr "लग आउट"
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:5509959914d725436b8b4576
+msgid "Notes"
+msgstr "नोट्स (टिप्पणीहरू)"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4577
+msgid "Number"
+msgstr "संख्या"
+
+#: src/partials/contact.html
+#: src/partials/profile.html loco:5509959914d725436b8b4578
+msgid "Organization"
+msgstr "संगठन/कार्यालय/संस्था"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4579
+msgid "Profile"
+msgstr "प्रोफाइल"
+
+#: src/partials/index.html loco:5509959914d725436b8b457a
+msgid "Register"
+msgstr "दर्ता को लागि"
+
+#: src/partials/list.html loco:5509959914d725436b8b457b
+msgid "Search"
+msgstr "खोजी\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b457c
+msgid "Searching..."
+msgstr "खोजी....."
+
+#: src/partials/profile.html loco:5509959914d725436b8b457d
+msgid "Title"
+msgstr "शीर्षक"
+
+#: src/partials/profile.html loco:5509959914d725436b8b457e
+msgid "Type"
+msgstr "प्रकार\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b457f
+msgid "URL"
+msgstr "वेबसाइट\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4580
+msgid "VOIP"
+msgstr "VOIP\n"
+
+#: src/partials/header.html loco:5509959914d725436b8b4581
+msgid "Welcome"
+msgstr "स्वागत\n"
+
+#: src/partials/about.html loco:5509959914d725436b8b4582
+msgid "About Humanitarian.ID"
+msgstr "मानवीयता सम्बन्धी परिचयपत्रकाे बारेमा\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4583
+msgid "Admin Privileges"
+msgstr "व्यवस्थापककाे विशेषाधिकार\n"
+
+#: src/partials/contact.html loco:5509959914d725436b8b4584
+msgid "Check-in User"
+msgstr "चेक ईन प्रयोगकर्ता\n"
+
+#: src/partials/contact.html loco:5509959914d725436b8b4585
+msgid "Check-out User"
+msgstr "चेक अाउट प्रयोगकर्ता\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4586
+msgid "Choose Type"
+msgstr "प्रकार छान्नुहोस्\n"
+
+#: src/partials/contact.html loco:5509959914d725436b8b4587
+msgid "Confirm User Checkout"
+msgstr "प्रयोगकर्ता चेकआउट पुष्टि गर्नुहोस्\n"
+
+#: src/partials/list.html loco:5509959914d725436b8b4588
+msgid "Contact List"
+msgstr "संपर्क सूची\n"
+
+#: src/partials/list.html loco:5509959914d725436b8b4589
+msgid "Contact List Filters"
+msgstr "संपर्क सूची छनौट\n"
+
+#: src/partials/dashboard.html loco:5509959914d725436b8b458a
+msgid "Edit Global Profile"
+msgstr "ग्लोबल प्रोफाइल सम्पादन \n"
+
+#: src/partials/contact.html loco:5509959914d725436b8b458b
+msgid "Edit Profile"
+msgstr "प्रोफाइल सम्पादन \n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b458c
+msgid "Email Addresses"
+msgstr "इमेल ठेगाना\n"
+
+#: src/partials/header.html loco:5509959914d725436b8b458d
+msgid "External Links"
+msgstr "बाहिरी लिंक\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b458e
+msgid "Family Name"
+msgstr "थर\n"
+
+#: src/partials/dashboard.html loco:5509959914d725436b8b458f
+msgid "General List"
+msgstr "सामान्य सूची\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4590
+msgid "Given Name"
+msgstr "नाम\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4591
+msgid "Global Administration"
+msgstr "ग्लोबल व्यवस्थापन\n"
+
+#: src/partials/dashboard.html loco:5509959914d725436b8b4592
+msgid "Global Contact List"
+msgstr "ग्लोबल संपर्क सूची\n"
+
+#: src/partials/dashboard.html loco:5509959914d725436b8b4593
+msgid "Global Profile"
+msgstr "ग्लोबल प्रोफाइल\n"
+
+#: src/partials/dashboard.html
+#: src/partials/profile.html loco:5509959914d725436b8b4594
+msgid "Humanitarian ID"
+msgstr "मानवीयता सम्बन्धी परिचयपत्र\n"
+
+#: src/partials/index.html loco:5509959914d725436b8b4595
+msgid "Humanitarian.ID: Responders"
+msgstr "मानवीयता सम्बन्धी परिचयपत्र: प्रतिकार्य गर्ने व्यक्तिहरू\n"
+
+#: src/partials/contact.html loco:5509959914d725436b8b4596
+msgid "Job Title"
+msgstr "कार्य शीर्षक\n"
+
+#: src/partials/list.html
+#: src/partials/profile.html loco:5509959914d725436b8b4597
+msgid "Key Contact"
+msgstr "प्रमुख संपर्क व्यक्ति\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b4599
+msgid "Local Administration"
+msgstr "स्थानीय व्यवस्थापन\n"
+
+#: src/partials/index.html loco:5509959914d725436b8b459a
+msgid ""
+"Manage your details on global and emergency-level humanitarian contact lists. "
+"Find and be found by other responders when needed. Check-in. Connect. Respond."
+msgstr ""
+"\"ग्लोबल (विश्वव्यापी) र आकस्मिक विपत्तिको मानवीय सम्पर्क सूची मा आफ्नो विवरण "
+"व्यवस्थापन गर्नुहोस। अरुलाई ‍र्खोज्नुहोस् र चाहिएको बेला अन्य प्रतिकार्य गर्ने "
+"व्यक्ति द्वारा सम्पर्कमा आउनुहोस।\nचेक ईनको लागी, सम्पर्कको लागी,विपद् प्रतिका"
+"र्यको लागी\"\n"
+
+#: src/partials/dashboard.html loco:5509959914d725436b8b459b
+msgid "My checked-in lists"
+msgstr "मेरो चेक ईन सूचीहरू\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b459c
+msgid "No active operations found."
+msgstr "कुनै सक्रिय सञ्चालनहरू पाइएन।\n"
+
+#: src/partials/list.html loco:5509959914d725436b8b459d
+msgid "No contacts found"
+msgstr "कुनै सम्पर्कहरू फेला परेन\n"
+
+#: src/partials/dashboard.html loco:5509959914d725436b8b459e
+msgid "No profiles found."
+msgstr "कुनै प्रोफाइल पाइएन।\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b459f
+msgid "No results found."
+msgstr "कुनै परिणाम फेला परेन।\n"
+
+#: src/partials/404.html loco:5509959914d725436b8b45a0
+msgid "Not Found"
+msgstr "फेला परेन\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45a1
+msgid "Organizational Information"
+msgstr "संगठनात्मक सूचना\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45a2
+msgid "Phone Numbers"
+msgstr "फोन नम्बरहरू\n"
+
+#: src/partials/list.html loco:5509959914d725436b8b45a3
+msgid "Reset Filters"
+msgstr "पहिलेको चयन सूची रिसेट गर्नु\n"
+
+#: src/partials/list.html loco:5509959914d725436b8b45a4
+msgid "Search by name, title, or organization"
+msgstr "नाम, शीर्षक वा संगठन/संस्थाको खोजी\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45a5
+msgid "Search for countries"
+msgstr "देशहरुको लागि खोजी\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45a6
+msgid "Search for organizations"
+msgstr "संगठन/कार्यालय/संस्थाहरुको लागि खोजी\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45a7
+msgid "Select a country"
+msgstr "देशको नाम चयन गर्नुहोस्\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45a8
+msgid "Select an operation"
+msgstr "सञ्चालन विधि चयन गर्नुहोस्\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45a9
+msgid "State/Province/Region"
+msgstr "क्षेत्र\n"
+
+#: src/js/app.js loco:5509959914d725436b8b45aa
+msgid "Update Profile"
+msgstr "प्रोफाइल अद्यावधिक गर्नु\n"
+
+#: src/partials/contact.html loco:5509959914d725436b8b45ab
+msgid "verified"
+msgstr "रुजु गरेको\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45ac
+msgid "Verified Responder"
+msgstr "रुजु गरेको प्रतिकार्य गर्ने व्यक्ति\n"
+
+#: src/partials/list.html loco:5509959914d725436b8b45ad
+msgid "Verified User"
+msgstr "रुजु गरेको प्रयोगकर्ता\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45ae
+msgid ""
+"We are not currently taking note of administrative areas or localities in "
+"this country."
+msgstr ""
+"अहिले हामी यस देशकाे प्रशासनिक क्षेत्र वा स्थानीय क्षेत्र (इलाका)को नाेट लिएका"
+"छैनाै।\n"
+
+#: src/partials/contact.html loco:5509959914d725436b8b45af
+msgid "Website/Social Media"
+msgstr "वेबसाइटह/सामाजिक मिडिया\n"
+
+#: src/partials/profile.html loco:5509959914d725436b8b45b0
+msgid "Websites &amp; Social Media"
+msgstr "वेबसाइटहरु र सामाजिक मिडिया\n"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-16T20:11:34.967Z\n"
+"Project-Id-Version: 2015-04-27T15:03:23.580Z\n"
 
 #: src/partials/list-print.html
 msgid "* Groups include clusters, sectors, working group or similar."
@@ -22,6 +22,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Admin Privileges"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Admin Role"
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -142,6 +146,10 @@ msgstr ""
 msgid "Delete My Account"
 msgstr ""
 
+#: src/partials/contact.html
+msgid "Departure Date:"
+msgstr ""
+
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Disaster"
@@ -242,6 +250,10 @@ msgstr ""
 msgid "General List"
 msgstr ""
 
+#: src/partials/list.html
+msgid "Ghost User"
+msgstr ""
+
 #: src/partials/createAccount.html
 msgid "Given Name"
 msgstr ""
@@ -269,6 +281,10 @@ msgstr ""
 #: src/partials/contact.html
 #: src/partials/dashboard.html
 msgid "Global Profile"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Global Profiles"
 msgstr ""
 
 #: src/partials/list.html
@@ -335,6 +351,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Local Administration"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Local Profiles"
 msgstr ""
 
 #: src/partials/contact.html
@@ -418,6 +438,10 @@ msgstr ""
 msgid "Organizational Information"
 msgstr ""
 
+#: src/partials/list.html
+msgid "Orphan User"
+msgstr ""
+
 #: src/partials/createAccount.html
 #: src/partials/list-print.html
 msgid "Phone"
@@ -465,6 +489,10 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "Protected Group"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Protected Groups"
 msgstr ""
 
 #: src/partials/profile.html
