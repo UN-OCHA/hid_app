@@ -115,6 +115,26 @@ module.exports = function(grunt) {
         tasks: ['concat:js', 'ngAnnotate', "uglify"]
       }
     },
+    ngtemplates: {
+      app: {
+        cwd: 'src',
+        src: 'partials/*.html',
+        dest: 'src/js/partials.js',
+        options: {
+          module: 'contactsId',
+          htmlmin: {
+            collapseBooleanAttributes:      true,
+            collapseWhitespace:             true,
+            removeAttributeQuotes:          true,
+            removeComments:                 true,
+            removeEmptyAttributes:          true,
+            removeRedundantAttributes:      true,
+            removeScriptTypeAttributes:     true,
+            removeStyleLinkTypeAttributes:  true
+          }
+        }
+      }
+    },
     concat: {
       // Concatenates css files.
       css: {
@@ -163,6 +183,7 @@ module.exports = function(grunt) {
             'src/js/controllers/ProfileCtrl.js',
             'src/js/controllers/RegisterCtrl.js',
             'src/js/app.js',
+            'src/js/partials.js',
             'src/js/directives/activeLink.js',
             'src/js/directives/browserAlert.js',
             'src/js/directives/focusField.js',
@@ -241,10 +262,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-ng-annotate");
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-cache-bust");
+  grunt.loadNpmTasks("grunt-angular-templates");
   grunt.loadNpmTasks("grunt-usemin");
 
   // Default task(s).
-  grunt.registerTask('default', ['clean:dist', 'bower-install-simple', 'nggettext_extract', 'nggettext_compile', 'compass', 'useminPrepare', 'copy', 'concat', 'ngAnnotate', 'uglify', 'cssmin', 'usemin', 'cacheBust', 'clean:tmp']);
+  grunt.registerTask('default', ['clean:dist', 'bower-install-simple', 'nggettext_extract', 'nggettext_compile', 'compass', 'useminPrepare', 'copy', 'ngtemplates', 'concat', 'ngAnnotate', 'uglify', 'cssmin', 'usemin', 'cacheBust', 'clean:tmp']);
   // Build task
-  grunt.registerTask('build', ['clean:dist', 'bower-install-simple', 'useminPrepare', 'copy', 'concat', 'ngAnnotate', 'uglify', 'cssmin', 'usemin', 'cacheBust', 'clean:tmp']);
+  grunt.registerTask('build', ['clean:dist', 'bower-install-simple', 'useminPrepare', 'copy', 'ngtemplates', 'concat', 'ngAnnotate', 'uglify', 'cssmin', 'usemin', 'cacheBust', 'clean:tmp']);
 };
