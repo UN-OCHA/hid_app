@@ -1,0 +1,11 @@
+body .ngdialog.ngdialog-theme-default .ngdialog-content {
+  background: url(../images/bg.png);
+  width: 700px;
+  h2 {
+    margin-top: 0;
+    color: $primary-color-1;
+  }
+  textarea {
+    border: 1px solid $neutral-color-3;
+  }
+}

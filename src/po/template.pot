@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-28T20:47:53.127Z\n"
+"Project-Id-Version: 2015-04-28T22:09:17.719Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
@@ -121,6 +121,11 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Coordination Office"
+msgstr ""
+
+#: src/partials/emailExport.html
+#: src/partials/list.html
+msgid "Copy Email Addresses"
 msgstr ""
 
 #: src/partials/list.html
@@ -495,6 +500,10 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "Please create a"
+msgstr ""
+
+#: src/partials/emailExport.html
+msgid "Please do not spam Humanitarian.ID users."
 msgstr ""
 
 #: src/partials/profile.html

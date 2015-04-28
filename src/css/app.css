@@ -10469,6 +10469,18 @@ table tr td:last-child {
   }
 }
 
+body .ngdialog.ngdialog-theme-default .ngdialog-content {
+  background: url(../images/bg.png);
+  width: 700px;
+}
+body .ngdialog.ngdialog-theme-default .ngdialog-content h2 {
+  margin-top: 0;
+  color: #54b1c8;
+}
+body .ngdialog.ngdialog-theme-default .ngdialog-content textarea {
+  border: 1px solid #e4e4e4;
+}
+
 .profile-image.empty .profile-image-actions, .profile-image:hover .profile-image-actions {
   opacity: 1;
 }

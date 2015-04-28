@@ -1,4 +1,4 @@
-function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries, roles) {
+function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries, roles, ngDialog) {
   var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'organization.name', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'];
 
   $scope.location = '';
@@ -20,6 +20,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.contactsCount = 0;
 
   $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
+  $scope.emailExportTpl = contactsId.sourcePath + '/partials/emailExport.html';
   $scope.listComplete = false;
   $scope.contactsCreated = false;
 
@@ -302,6 +303,37 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppCSV');
   }
 
+  $scope.exportEmail = function() {
+    var query = $scope.query;
+    query.access_token = authService.getAccessToken();
+    query.export = 'email';
+    query.limit = 0;
+    query.skip = 0;
+    console.log('ngDialog', ngDialog)
+
+    $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        data.contacts = data.contacts || [];
+        $scope.exportEmails = data.contacts;
+        var emailExportString = "";
+
+        angular.forEach(data.contacts, function(value, key) {
+          if (key) {
+            emailExportString += ", ";
+          }
+          emailExportString += value.name + " <" + value.email + ">";
+        });
+
+        ngDialog.open({
+          template: $scope.emailExportTpl,
+          controller: ['$scope', function($scope) {
+              $scope.emails = emailExportString;
+          }],
+        });
+      }
+    });
+  }
+
   $scope.openPrint = function() {
     window.open($scope.printUrl, $location.path(), 'width=1000, height=600, menubar=1, resizable=1, scrollbars=1, status=1, toolbar=1');
   }
@@ -463,6 +495,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
     $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
       if (data && data.status && data.status === 'ok') {
+        console.log('data.contacts', data.contacts);
         data.contacts = data.contacts || [];
         $scope.contacts = $scope.contacts.concat(data.contacts);
         $scope.contactsCreated = true;
