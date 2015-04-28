@@ -31,6 +31,9 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
 
   $scope.contact.disastersString = $scope.contact.disasters.reduce(function (last, val) { return last ? (last + ', ' + val.name) : val.name; }, '');
 
+  $scope.isOrganizationEditor = profileService.isOrganizationEditor(userData.profile, profileData);
+  setEditorOrganizations();
+
   if ($scope.contact.departureDate) {
     var date = new Date($scope.contact.departureDate),
         dd = date.getDate(),
@@ -153,5 +156,50 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
         }
       });
     }
+  }
+
+  $scope.updateOrganization = function () {
+    var newOrg = [];
+    var contact = {
+      _id: $scope.contact._id,
+      _profile: $scope.contact._profile,
+      userid: $scope.contact._profile
+    };
+
+    if ($scope.selectedOrg){
+      if ($scope.selectedOrg.organizationId != 0){
+        newOrg = [{name: $scope.selectedOrg.organizationName, remote_id: $scope.selectedOrg.organizationId}];
+      }
+      contact.organization = newOrg;
+    } 
+    
+    profileService.saveContact(contact).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        profileService.clearData();
+        $scope.back();
+      }
+      else {
+        alert('error');
+      }
+    });
+  }
+  
+  function setEditorOrganizations() { 
+    var editorOrgs = [];
+    var profile;
+    var locationId;
+
+    if ($scope.isOrganizationEditor){
+      locationId = profileData.contact.locationId;
+      var orgEditorRole = $filter('filter')(userData.profile.orgEditorRoles, {locationId: locationId}, true);
+      if (orgEditorRole){
+        editorOrgs.push(orgEditorRole[0]); 
+      }
+
+      //Add a 'No Organization' item 
+      var removeOrg = {organizationName: 'No Organization', organizationId: 0 };
+      editorOrgs.push(removeOrg);
+      $scope.organizationOptions = editorOrgs;
+     }
   }
 }

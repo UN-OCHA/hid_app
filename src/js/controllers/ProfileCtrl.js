@@ -568,23 +568,23 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
       //Organization Editor
       if ($scope.userCanAssignOrganizationEditor){
+        //Remove any existing OrgEditor role for current location
+        if ($scope.orgEditorRoles){
+          $scope.orgEditorRoles = $filter('filter')($scope.orgEditorRoles, {locationId: '!'+ $scope.profile.locationId}, true);
+        }
+        
         //If organization editor is selected and location and organization are valid, add orgEditorRole
         if ($scope.isOrganizationEditor && $scope.profile.locationId && $scope.profile.organization[0] && $scope.profile.organization[0].remote_id) {
           var locationId = $scope.profile.locationId;
-          var organizationId = $scope.profile.organization[0].remote_id
+          var organizationId = $scope.profile.organization[0].remote_id;
+          var organizationName = $scope.profile.organization[0].name;
 
           //Verify the OrganizationEditor doesn't already exist
           if (!findOrganizationEditor(locationId, organizationId)){
-            $scope.orgEditorRoles.push({'location': locationId, 'organization': organizationId});
+            $scope.orgEditorRoles.push({'locationId': locationId, 'organizationId': organizationId, 'organizationName': organizationName});
           }
           //Set verified = true for all Organization editors
           profile.verified = true;
-        }
-        else {
-          //Remove any existing OrgEditor role for current location
-          if ($scope.orgEditorRoles){
-            $scope.orgEditorRoles = $filter('filter')($scope.orgEditorRoles, {location: '!'+ $scope.profile.locationId}, true);
-          }
         }
         profile.orgEditorRoles = $scope.orgEditorRoles;
       }
@@ -946,14 +946,14 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     if ($scope.orgEditorRoles){
       if (organizationId){
         //Verify editor role exists for specified location and organization
-        var orgEditorRole = $filter('filter')($scope.orgEditorRoles, {location: locationId, organization: organizationId}, true);
+        var orgEditorRole = $filter('filter')($scope.orgEditorRoles, {locationId: locationId, organizationId: organizationId}, true);
         if (orgEditorRole.length){
           found = true;
         }
       }
       else {
         //Verify editor role exists for specified location
-        var orgEditorRole = $filter('filter')($scope.orgEditorRoles, {location: locationId}, true);
+        var orgEditorRole = $filter('filter')($scope.orgEditorRoles, {locationId: locationId}, true);
         if (orgEditorRole.length){
           found = true;
         }
