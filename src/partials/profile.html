@@ -21,7 +21,8 @@
   <form name="profileForm" autocomplete="off" class="update-profile profile-form row" ng-show="selectedOperation.length" ng-class="{'show-options': profileOptions}" novalidate ng-submit="submitProfile()">
     <div class="form-content col-xs-12 col-sm-8 col-md-9 pull-right" >
       <h2 class="profile-title">{{profileName()}} <span translate>Profile</span></h2>
-      <p class="help-block">* <span translate>Enter your local contact details. Changes made to this profile will not affect your global profile.</span><br>* <em>Required field</em></p>
+      <p class="help-block" ng-if="profile.type === 'local'" translate>* Enter your local contact details. Changes made to this profile will not affect your global profile.</p>
+      <p class="help-block">* <em translate>Required field</em></p>
       <div class="row alert-wrapper">
         <browser-alert></browser-alert>
         <div class="alert alert-danger col-xs-12" ng-show="profileForm.$submitted && profileForm.$invalid">
@@ -403,7 +404,7 @@
               </div>
             </div>
 
-            <div class="section col-sm-12" ng-show="userCanEditRoles || userCanEditVerified">
+            <div class="section col-sm-12" ng-show="userCanEditRoles || userCanAddVerified || userCanRemoveVerified">
               <h4 translate>Global Administration</h4>
               <div class="form-group" ng-show="userCanEditRoles">
                 <label class="control-label" for="adminRoles" translate>Admin Privileges</label>
@@ -424,7 +425,7 @@
                 </ui-select>
               </div>
 
-              <div class="checkbox" ng-show="userCanAddVerified">
+              <div class="checkbox" ng-show="userCanAddVerified || userCanRemoveVerified">
                 <label for="verified" ng-click="setVerified()"><input type="checkbox" name="verified" ng-model="verified" ng-disabled="verified && !userCanRemoveVerified" ng-click="setVerified()" ng-value="verified"/><span translate>Verified Responder</span></label>
               </div>
             </div>

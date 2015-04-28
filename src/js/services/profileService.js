@@ -385,16 +385,14 @@
       return hasRole('admin') || (locationId && (hasRole('manager', locationId)));
     }
     // Can verify other user.
-    function canAddVerified(locationId) {
-      return hasRole('admin') || (locationId && (hasRole('manager', locationId) || hasRole('editor', locationId)));
+    function canAddVerified() {
+      return hasRole('admin') || hasRole('manager') || hasRole('editor');
     }
     // Can remove verified status other user.
     function canRemoveVerified(contact, profile) {
       var pHasRole = hasRole('admin', null, profile) || hasRole('manager', null, profile) || hasRole('editor', null, profile),
-          pHasProtectedRole = (contact && contact.protectedRoles && contact.protectedRoles.length),
-          locationId = contact ? contact.locationId : null;
-
-      return (!pHasRole && !pHasProtectedRole && canAddVerified(locationId));
+          pHasProtectedRole = (contact && contact.protectedRoles && contact.protectedRoles.length);
+      return (!pHasRole && !pHasProtectedRole && canAddVerified());
     }
     // Can check-in other user.
     function canCheckIn(profile, user) {
