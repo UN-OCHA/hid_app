@@ -521,7 +521,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
       // Determine if user being checked in is the same as the logged in user
       // If not, we need to add some properties to contact so profile service can send an email notifying the user
-      if (userData.profile.userid != profile.userid  && profile.email[0]) {
+      if (userData.profile && userData.profile.userid && userData.profile.userid != profile.userid && profile.email[0]) {
         //Set email fields
         var email = {
           type: checkinFlow ? 'notify_checkin' : 'notify_edit',
