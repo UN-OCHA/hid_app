@@ -124,6 +124,8 @@ module.exports = function(grunt) {
           'src/libraries/angular-busy/angular-busy.css',
           'src/libraries/angular-spinkit/build/angular-spinkit.min.css',
           'src/libraries/intl-tel-input/build/css/intlTelInput.css',
+          'src/libraries/ngDialog/css/ngDialog.css',
+          'src/libraries/ngDialog/css/ngDialog-theme-default.css',
         ],
       },
       // Concatenates js files.
@@ -144,6 +146,7 @@ module.exports = function(grunt) {
             'src/libraries/angular-inview/angular-inview.js',
             'src/libraries/intl-tel-input/build/js/intlTelInput.js',
             'src/libraries/intl-tel-input/lib/libphonenumber/build/utils.js',
+            'src/libraries/ngDialog/js/ngDialog.js',
             'src/libraries/webshim/js-webshim/minified/polyfiller.js',
             'src/js/libraries/angularjs-breakpoint/breakpoint-0.0.1.js',
             'src/js/directives/international-phone-number.js',
@@ -228,5 +231,5 @@ module.exports = function(grunt) {
   // Default task(s).
   grunt.registerTask('default', ['bower-install-simple', 'nggettext_extract', 'nggettext_compile', 'compass', 'useminPrepare', 'copy', 'concat', 'ngAnnotate', 'uglify', 'cssmin', 'usemin', 'clean']);
   // Build task
-  grunt.registerTask('build', ['bower-install-simple', 'useminPrepare', 'copy', 'concat', 'ngAnnotate', 'uglify', 'cssmin', 'usemin', 'clean']);
+  grunt.registerTask('build', ['bower-install-simple', 'useminPrepare', 'copy:html', 'copy:partials', 'copy:po', 'copy:images', 'copy:fonts', 'copy:shims', 'copy:touchIcons', 'concat', 'ngAnnotate', 'uglify', 'cssmin', 'usemin', 'clean']);
 };
