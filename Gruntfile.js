@@ -123,6 +123,7 @@ module.exports = function(grunt) {
         dest: 'src/js/partials.js',
         options: {
           module: 'contactsId',
+          prefix: '/',
           htmlmin: {
             collapseBooleanAttributes:      true,
             collapseWhitespace:             true,
