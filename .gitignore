@@ -3,6 +3,7 @@
 /dist
 /node_modules
 /src/js/config.js
+/src/js/partials.js
 /src/libraries
 
 # IDE artifacts

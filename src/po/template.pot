@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-28T21:36:00.992Z\n"
+"Project-Id-Version: 2015-04-28T22:09:17.719Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
@@ -34,6 +34,10 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "Again, thanks for helping to make humanitarian contact lists accurate."
+msgstr ""
+
+#: src/partials/contact.html
+msgid "Apply Update"
 msgstr ""
 
 #: src/partials/createAccount.html
@@ -134,8 +138,11 @@ msgid "Create Account"
 msgstr ""
 
 #: src/partials/createAccount.html
-#: src/partials/dashboard.html
 msgid "Create New Account"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Create a Responder"
 msgstr ""
 
 #: src/partials/createAccount.html
@@ -334,6 +341,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
+#: src/index.html
 #: src/partials/about.html
 #: src/partials/dashboard.html
 #: src/partials/profile.html
@@ -460,6 +468,7 @@ msgstr ""
 msgid "Organization"
 msgstr ""
 
+#: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Organization Editor"
 msgstr ""

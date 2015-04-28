@@ -28,7 +28,14 @@
           <a class="btn btn-primary btn-lg btn-block" ng-click="generateVcard()" translate>Export Contact Info</a>
           <a class="btn btn-primary btn-lg btn-block" ng-show="userCanSendClaimEmail" ng-click="confirmSendEmail = !confirmSendEmail" translate>Send Claim Email</a>
           <a ng-show="confirmSendEmail" ng-disabled="sendingClaimEmail" class="fade btn btn-warning btn-lg btn-block" ng-click="sendClaimEmail()" translate>Confirm Send Claim Email</a>
+          <div class="org-editor-area" ng-show="isOrganizationEditor">
+            <label class="control-label" for="organizations" translate>Organization Editor</label>
+            <select class="form-control" ng-model="selectedOrg" ng-options="organization.organizationName for organization in organizationOptions">
+            </select>
+            <a class="btn btn-primary btn-lg btn-block" ng-click="updateOrganization()" translate>Apply Update</a>
+          </div>
         </div>
+
       </div>
     </div>
     <div class="col-xs-12 col-sm-8 col-md-9">
