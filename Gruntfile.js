@@ -203,8 +203,25 @@ module.exports = function(grunt) {
     usemin: {
       html: ['dist/index.html']
     },
+    // Cache bust
+    cacheBust: {
+      options: {
+        encoding: 'utf8',
+        algorithm: 'md5',
+        length: 16,
+        rename: false
+      },
+      assets: {
+        files: [{
+          src: ['dist/index.html']
+        }]
+      }
+    },
     // Removes tmp dir.
     clean: {
+      dist: {
+        src: ['dist/**/*']
+      },
       tmp: {
         src: ['.tmp']
       }
@@ -223,10 +240,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-ng-annotate");
   grunt.loadNpmTasks("grunt-contrib-clean");
+  grunt.loadNpmTasks("grunt-cache-bust");
   grunt.loadNpmTasks("grunt-usemin");
 
   // Default task(s).
-  grunt.registerTask('default', ['bower-install-simple', 'nggettext_extract', 'nggettext_compile', 'compass', 'useminPrepare', 'copy', 'concat', 'ngAnnotate', 'uglify', 'cssmin', 'usemin', 'clean']);
+  grunt.registerTask('default', ['clean:dist', 'bower-install-simple', 'nggettext_extract', 'nggettext_compile', 'compass', 'useminPrepare', 'copy', 'concat', 'ngAnnotate', 'uglify', 'cssmin', 'usemin', 'cacheBust', 'clean:tmp']);
   // Build task
-  grunt.registerTask('build', ['bower-install-simple', 'useminPrepare', 'copy', 'concat', 'ngAnnotate', 'uglify', 'cssmin', 'usemin', 'clean']);
+  grunt.registerTask('build', ['clean:dist', 'bower-install-simple', 'useminPrepare', 'copy', 'concat', 'ngAnnotate', 'uglify', 'cssmin', 'usemin', 'cacheBust', 'clean:tmp']);
 };
