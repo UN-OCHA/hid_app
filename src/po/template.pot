@@ -1,7 +1,11 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-27T19:39:11.257Z\n"
+"Project-Id-Version: 2015-04-28T15:53:32.826Z\n"
+
+#: src/partials/profile.html
+msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
+msgstr ""
 
 #: src/partials/list-print.html
 msgid "* Groups include clusters, sectors, working group or similar."
@@ -45,6 +49,10 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+#: src/partials/about.html
+msgid "Check out our animation,"
+msgstr ""
+
 #: src/partials/dashboard.html
 #: src/partials/list.html
 msgid "Check-in"
@@ -76,6 +84,10 @@ msgstr ""
 
 #: src/partials/list-print.html
 msgid "Close"
+msgstr ""
+
+#: src/partials/about.html
+msgid "Code of Conduct"
 msgstr ""
 
 #: src/partials/profile.html
@@ -117,8 +129,11 @@ msgid "Create Account"
 msgstr ""
 
 #: src/partials/createAccount.html
-#: src/partials/dashboard.html
 msgid "Create New Account"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Create a Responder"
 msgstr ""
 
 #: src/partials/createAccount.html
@@ -207,10 +222,6 @@ msgstr ""
 msgid "Email Addresses"
 msgstr ""
 
-#: src/partials/profile.html
-msgid "Enter your local contact details. Changes made to this profile will not affect your global profile."
-msgstr ""
-
 #: src/partials/contact.html
 msgid "Export Contact Info"
 msgstr ""
@@ -229,6 +240,10 @@ msgstr ""
 
 #: src/partials/header.html
 msgid "External Links"
+msgstr ""
+
+#: src/partials/about.html
+msgid "FAQ page"
 msgstr ""
 
 #: src/partials/createAccount.html
@@ -317,9 +332,14 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
+#: src/partials/about.html
 #: src/partials/dashboard.html
 #: src/partials/profile.html
 msgid "Humanitarian ID"
+msgstr ""
+
+#: src/partials/about.html
+msgid "Humanitarian ID is a way to help humanitarian responders find, connect, and collaborate at the time of a humanitarian crisis (protracted or sudden onset). By making this process faster and smoother, the responders have more time to focus on what is needed most: saving lives and alleviating suffering."
 msgstr ""
 
 #: src/partials/index.html
@@ -331,7 +351,7 @@ msgid "If a person does not have an email address associated with their informat
 msgstr ""
 
 #: src/partials/about.html
-msgid "If you would like to find out more about the project, understand the objectives and benefits, join our mailing list, or simply contact us, visit"
+msgid "If you would like to find out more about the project,"
 msgstr ""
 
 #: src/partials/profile.html
@@ -422,6 +442,10 @@ msgstr ""
 msgid "Number"
 msgstr ""
 
+#: src/partials/about.html
+msgid "Once registered, simply check into a country / emergency and specify your contact details for the contact list. You are always in control. You choose what details are available. When you are no longer responding, simply check out and your details will automatically be removed."
+msgstr ""
+
 #: src/partials/contact.html
 msgid "Operations"
 msgstr ""
@@ -499,6 +523,7 @@ msgstr ""
 msgid "Protected Group"
 msgstr ""
 
+#: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Protected Groups"
 msgstr ""
@@ -530,6 +555,10 @@ msgstr ""
 
 #: src/partials/createAccount.html
 msgid "Required Field"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Required field"
 msgstr ""
 
 #: src/partials/list.html
@@ -591,7 +620,7 @@ msgid "Thank you for registering on Humanitarian ID. With your help, we will ens
 msgstr ""
 
 #: src/partials/about.html
-msgid "The Humanitarian ID contact management solution, currently in alpha, is aimed at building accurate contact lists, enabling rapid connections during emergencies and discovering your appropriate network of responders."
+msgid "The Humanitarian ID solution has been created and is maintained by the United Nations Office for the Coordination of Humanitarian Affairs (OCHA). OCHA freely provides the solution to the humanitarian community."
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -638,6 +667,14 @@ msgstr ""
 msgid "View Printable"
 msgstr ""
 
+#: src/partials/about.html
+msgid "We guess that if you have landed on this page you may have questions. Rest assured, we have an <a href=\"http://humanitarian.id/faqs/\">FAQ page</a> that addresses the most common questions that we receive. Ranging from checking into multiple emergencies to explaining verified users to detailing how to have a missing organization added to requesting one's information be removed, we hope that the"
+msgstr ""
+
+#: src/partials/about.html
+msgid "We require that all of those who register and make use of the solution behave according our"
+msgstr ""
+
 #: src/partials/contact.html
 msgid "Website/Social Media"
 msgstr ""
@@ -655,7 +692,7 @@ msgid "When you leave a country/emergency, remember that <em>you need to check-o
 msgstr ""
 
 #: src/partials/about.html
-msgid "You are welcome to register and test the application on our"
+msgid "YouTube channel"
 msgstr ""
 
 #: src/partials/profile.html
@@ -668,7 +705,7 @@ msgid "add a missing organization"
 msgstr ""
 
 #: src/partials/about.html
-msgid "and"
+msgid "and subscribe to our"
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -676,19 +713,35 @@ msgid "before checking-in to a country/emergency."
 msgstr ""
 
 #: src/partials/about.html
-msgid "development server"
+msgid "contact us"
 msgstr ""
 
 #: src/partials/about.html
 msgid "follow us on Twitter"
 msgstr ""
 
+#: src/partials/about.html
+msgid "join our mailing list"
+msgstr ""
+
 #: src/partials/contact.html
 msgid "key contact"
 msgstr ""
 
+#: src/partials/about.html
+msgid "or simply"
+msgstr ""
+
+#: src/partials/about.html
+msgid "our FAQs"
+msgstr ""
+
 #: src/partials/dashboard.html
 msgid "profile"
+msgstr ""
+
+#: src/partials/about.html
+msgid "read"
 msgstr ""
 
 #: src/partials/list-print.html
@@ -697,4 +750,8 @@ msgstr ""
 
 #: src/partials/contact.html
 msgid "verified"
+msgstr ""
+
+#: src/partials/about.html
+msgid "will answer your question. If not, do not be afraid to"
 msgstr ""
