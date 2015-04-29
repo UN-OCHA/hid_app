@@ -10,7 +10,7 @@
         scope.loadingMessage = gettextCatalog.getString('Loading...');
         $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
           var nextPath = nextRoute.$$route.originalPath;
-          if(nextPath !== currentRoute.$$route.originalPath) {
+          if (!currentRoute || nextPath !== currentRoute.$$route.originalPath) {
             if (nextPath === '/login' || nextPath === '/login/:redirectPath*' || nextPath === '/logout' || nextPath === '/register') {
               scope.loadingMessage = gettextCatalog.getString('Redirecting to authentication system...');
             }
