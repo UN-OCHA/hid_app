@@ -48,7 +48,7 @@
       </ul>
       <div class="mobile-checkin visible-xs">
         <a class="btn btn-primary btn-lg btn-block" href="#/checkin">
-          <i class="entypo chevron-thin-right"></i> <span translate>Check-in</span>
+          <span class="fa fa-angle-right"></span> <span translate>Check-in</span>
         </a>
       </div>
     </div>
@@ -74,14 +74,14 @@
       <div class="actions">
         <span ng-repeat="profile in userData.contacts" ng-if="profile.type == 'global'">
           <a class="btn btn-default btn-lg btn-block" href="#/profile/{{profile._id}}">
-            <i class="entypo chevron-thin-right"></i> <span translate>Edit Global Profile</span>
+            <span class="fa fa-angle-right"></span> <span translate>Edit Global Profile</span>
           </a>
         </span>
         <a class="btn btn-primary btn-lg btn-block" href="#/checkin" ng-show="globalProfileId.length">
-          <i class="entypo chevron-thin-right"></i> <span translate>Check-in</span>
+          <span class="fa fa-angle-right"></span> <span translate>Check-in</span>
         </a>
         <a class="btn btn-primary btn-lg btn-block" href="#/createaccount" ng-show="userCanCreateAccount">
-          <i class="entypo chevron-thin-right"></i> <span translate>Create a Responder</span>
+          <span class="fa fa-angle-right"></span> <span translate>Create a Responder</span>
         </a>
         <a class="btn btn-primary btn-lg btn-block" ng-show="!globalProfileId.length" href="#/profile/{{globalProfileId}}">
           <i class="entypo user"></i> <span translate>Global Profile</span>
