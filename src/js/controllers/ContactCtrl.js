@@ -201,5 +201,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
       editorOrgs.push(removeOrg);
       $scope.organizationOptions = editorOrgs;
      }
+
+     $scope.selectedOrg = editorOrgs[0];
   }
 }
