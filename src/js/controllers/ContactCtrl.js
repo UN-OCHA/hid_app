@@ -163,7 +163,8 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     var contact = {
       _id: $scope.contact._id,
       _profile: $scope.contact._profile,
-      userid: $scope.contact._profile
+      userid: $scope.contact._profile,
+      isOrganizationEditor: true
     };
 
     if ($scope.selectedOrg){
@@ -181,6 +182,8 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
       else {
         alert('error');
       }
+    }, function(reason) {
+        alert('error: ' + reason);
     });
   }
   
