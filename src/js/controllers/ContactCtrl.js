@@ -31,7 +31,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
 
   $scope.contact.disastersString = $scope.contact.disasters.reduce(function (last, val) { return last ? (last + ', ' + val.name) : val.name; }, '');
 
-  $scope.isOrganizationEditor = profileService.isOrganizationEditor(userData.profile, profileData);
+  $scope.isOrganizationEditor = false;//profileService.isOrganizationEditor(userData.profile, profileData);
   setEditorOrganizations();
 
   if ($scope.contact.departureDate) {
