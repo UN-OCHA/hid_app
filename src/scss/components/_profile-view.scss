@@ -23,7 +23,10 @@
 
   .contact-item__verified i.fa {
     font-size: 27px;
-    line-height: 40px;
+    margin-top: 8px;
+    @media (min-width: 768px) {
+      margin-top: 6px;
+    }
   }
 }
 

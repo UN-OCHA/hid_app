@@ -42,6 +42,7 @@
 .btn.btn-block {
   line-height: 2.2;
   font-size: 12px;
+  //position: relative;
 
   @media (min-width: 768px) {
     line-height: 16px;
@@ -51,10 +52,26 @@
     @media (min-width: 768px) {
       margin-top: -2px;
     }
-
-    &.entypo:before {
-      @extend %rounded-icon;
-      color: $primary-color-1;
+  }
+  span.fa {
+    float: left;
+    font-size: 20px;
+    font-style: normal;
+    text-transform: none;
+    background-color: $white;
+    border-radius: 50%;
+    color: white;
+    border-radius: 25px;
+    height: 20px;
+    width: 20px;
+    margin-top: 3px;
+    color: $primary-color-1;
+    @media (min-width: 768px) {
+      margin-top: -2px;
+    }
+    &:before {
+      line-height: .9;
+      margin-left: 3px;
     }
   }
 }

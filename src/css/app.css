@@ -9034,29 +9034,6 @@ button.close {
     display: none !important;
   }
 }
-.btn.btn-block i.entypo:before {
-  float: left;
-  font-size: 25px;
-  font-style: normal;
-  text-transform: none;
-  line-height: 24px;
-  background: #fff;
-  color: #767676;
-  border-radius: 25px;
-  height: 24px;
-  width: 24px;
-  text-align: center;
-  overflow: hidden;
-}
-@media (min-width: 768px) {
-  .btn.btn-block i.entypo:before {
-    padding-bottom: inherit;
-    line-height: 21px;
-    height: 20px;
-    width: 20px;
-  }
-}
-
 /* Functions */
 /* Mixins */
 /* Color Variables */
@@ -9240,8 +9217,28 @@ label[for=keyContact] .fa {
     margin-top: -2px;
   }
 }
-.btn.btn-block i.entypo:before {
+.btn.btn-block span.fa {
+  float: left;
+  font-size: 20px;
+  font-style: normal;
+  text-transform: none;
+  background-color: #fff;
+  border-radius: 50%;
+  color: white;
+  border-radius: 25px;
+  height: 20px;
+  width: 20px;
+  margin-top: 3px;
   color: #54b1c8;
+}
+@media (min-width: 768px) {
+  .btn.btn-block span.fa {
+    margin-top: -2px;
+  }
+}
+.btn.btn-block span.fa:before {
+  line-height: .9;
+  margin-left: 3px;
 }
 
 .btn-danger {
@@ -9427,7 +9424,7 @@ label[for=keyContact] .fa {
 }
 
 .intl-tel-input .flag {
-  background-image: url("../libraries/intl-tel-input/build/img/flags.png") !important;
+  background-image: url("../images/flags.png") !important;
 }
 
 .h1, h2, .h2, h3, .h3 {
@@ -9790,11 +9787,10 @@ table tr td:last-child {
   float: left;
   background-color: #54b1c8;
   border-radius: 50%;
-  width: 17px;
-  height: 17px;
+  width: 18px;
+  height: 18px;
   color: white;
-  font-size: 30px;
-  line-height: 36px;
+  line-height: 18px;
   font-weight: normal;
   padding-left: 2px;
   font-family: helvetica;
@@ -9806,25 +9802,34 @@ table tr td:last-child {
     margin: 0;
   }
 }
+.contact-item__key-contact i.fa {
+  color: #fff;
+  font-size: 14px;
+}
 
 .key-contact-filter-use {
   float: left;
   margin: 2px 10px 0 0;
   width: 12px;
   height: 12px;
-  font-size: 19px;
-  line-height: 24px;
-  padding-left: 2px;
+  font-size: 12px;
+  line-height: 8px;
+  padding-top: 1px;
+}
+.key-contact-filter-use i.fa {
+  font-size: 8px;
 }
 
 .key-contact-profile-use {
   float: left;
   width: 24px;
   height: 24px;
-  font-size: 52px;
-  line-height: 56px;
-  padding-left: 1px;
+  line-height: 29px;
+  padding-left: 2px;
   margin-right: 6px;
+}
+.key-contact-profile-use i.fa {
+  font-size: 20px;
 }
 
 .sidebar-left .fa-check-circle {
@@ -10243,17 +10248,10 @@ table tr td:last-child {
   color: #2a5d81;
 }
 .homepage .homepage-wrapper .btn-arrow .fa {
-  position: absolute;
-  left: 9px;
-  top: 7px;
   background-color: #51adc6;
-  border-radius: 50%;
   color: white;
-  width: 19px;
-  height: 19px;
 }
 .homepage .homepage-wrapper .btn-arrow .fa:before {
-  font-size: 19px;
   line-height: .9;
   margin-left: 3px;
 }
@@ -10709,7 +10707,12 @@ body .ngdialog.ngdialog-theme-default .ngdialog-content textarea {
 }
 .page-contact .contact-item__verified i.fa {
   font-size: 27px;
-  line-height: 40px;
+  margin-top: 8px;
+}
+@media (min-width: 768px) {
+  .page-contact .contact-item__verified i.fa {
+    margin-top: 6px;
+  }
 }
 
 .profile-view__name {
