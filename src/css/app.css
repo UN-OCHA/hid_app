@@ -9864,7 +9864,6 @@ table tr td:last-child {
 .right-sidebar-group {
   padding: 0 10px 10px 0;
   border-bottom: 1px dotted #D5D5D5;
-  color: #54b1c8;
   margin-bottom: 10px;
 }
 .right-sidebar-group .profile-view__item, .right-sidebar-group strong {
@@ -9879,9 +9878,6 @@ table tr td:last-child {
   color: #A8A8A8;
   margin-bottom: 15px;
   font-size: 11px;
-}
-.right-sidebar-group a {
-  color: #2a5d81;
 }
 
 .same-height-wrap {
