@@ -46,7 +46,7 @@
                 <h1 class="profile-view__name">{{contact.nameGiven}} {{contact.nameFamily}} ({{locationText()}})</h1>
 
                 <div class="profile-view__markers">
-                  <div class="contact-item__key-contact key-contact-profile-use" title="{{'key contact' | translate}}" ng-if="contact.keyContact">*</div>
+                  <div class="contact-item__key-contact key-contact-profile-use" title="{{'key contact' | translate}}" ng-if="contact.keyContact"><i class="fa fa-asterisk"></i></div>
                   <div class="contact-item__verified verified-profile-use" ng-if="profile.verified"><i
                       class="fa fa-check-circle" title="{{'verified' | translate}}"></i></div>
 
