@@ -18,6 +18,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.query = $location.search();
   $scope.loadLimit = 30;
   $scope.contactsCount = 0;
+  $scope.showResetBtn = Object.keys($scope.query).length;
 
   $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
   $scope.emailExportTpl = contactsId.sourcePath + '/partials/emailExport.html';
@@ -309,7 +310,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     query.export = 'email';
     query.limit = 0;
     query.skip = 0;
-    console.log('ngDialog', ngDialog)
 
     $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
       if (data && data.status && data.status === 'ok') {
@@ -495,7 +495,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
     $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
       if (data && data.status && data.status === 'ok') {
-        console.log('data.contacts', data.contacts);
+
         data.contacts = data.contacts || [];
         $scope.contacts = $scope.contacts.concat(data.contacts);
         $scope.contactsCreated = true;
