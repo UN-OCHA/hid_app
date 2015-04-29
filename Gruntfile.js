@@ -271,7 +271,43 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-usemin");
 
   // Default task(s).
-  grunt.registerTask('default', ['clean:dist', 'bower-install-simple', 'nggettext_extract', 'nggettext_compile', 'compass', 'useminPrepare', 'copy', 'ngtemplates', 'concat', 'ngAnnotate', 'uglify', 'cssmin', 'usemin', 'cacheBust', 'clean:tmp']);
-  // Build task
-  grunt.registerTask('build', ['clean:dist', 'bower-install-simple', 'useminPrepare', 'copy:html', 'copy:partials', 'copy:po', 'copy:images', 'copy:fonts', 'copy:shims', 'copy:touchIcons', 'ngtemplates', 'concat', 'ngAnnotate', 'uglify', 'cssmin', 'usemin', 'cacheBust', 'clean:tmp']);
+  grunt.registerTask('default', [
+    'clean:dist',
+    'bower-install-simple',
+    'nggettext_extract',
+    'nggettext_compile',
+    'compass',
+    'useminPrepare',
+    'copy',
+    'ngtemplates',
+    'concat',
+    'ngAnnotate',
+    'uglify',
+    'cssmin',
+    'usemin',
+    'cacheBust',
+    'clean:tmp'
+  ]);
+
+  // Build task (excludes compass, nggettext, and copy:config)
+  grunt.registerTask('build', [
+    'clean:dist',
+    'bower-install-simple',
+    'useminPrepare',
+    'copy:html',
+    'copy:partials',
+    'copy:po',
+    'copy:images',
+    'copy:fonts',
+    'copy:shims',
+    'copy:touchIcons',
+    'ngtemplates',
+    'concat',
+    'ngAnnotate',
+    'uglify',
+    'cssmin',
+    'usemin',
+    'cacheBust',
+    'clean:tmp'
+  ]);
 };
