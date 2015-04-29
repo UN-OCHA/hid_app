@@ -7,9 +7,9 @@
       replace: true,
       link: function(scope, elem, attrs) {
         scope.isRouteLoading = false;
-        scope.loadingMessage = gettextCatalog.getString('Loading...');
         $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
           var nextPath = nextRoute.$$route.originalPath;
+          scope.loadingMessage = gettextCatalog.getString('Loading...');
           if (!currentRoute || nextPath !== currentRoute.$$route.originalPath) {
             if (nextPath === '/login' || nextPath === '/login/:redirectPath*' || nextPath === '/logout' || nextPath === '/register') {
               scope.loadingMessage = gettextCatalog.getString('Redirecting to authentication system...');
