@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-28T22:09:17.719Z\n"
+"Project-Id-Version: 2015-04-29T17:30:22.085Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
@@ -86,6 +86,10 @@ msgstr ""
 msgid "Choose Type"
 msgstr ""
 
+#: src/partials/list.html
+msgid "Clear All"
+msgstr ""
+
 #: src/partials/list-print.html
 msgid "Close"
 msgstr ""
@@ -109,10 +113,6 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "Contact List Filters"
-msgstr ""
-
-#: src/partials/contact.html
-msgid "Contact Options"
 msgstr ""
 
 #: src/partials/list.html
@@ -160,10 +160,6 @@ msgstr ""
 #: src/partials/createAccount.html
 #: src/partials/header.html
 msgid "Dashboard"
-msgstr ""
-
-#: src/partials/dashboard.html
-msgid "Dashboard Options"
 msgstr ""
 
 #: src/partials/profile.html
@@ -269,6 +265,10 @@ msgstr ""
 
 #: src/partials/list-print.html
 msgid "Filter Criteria"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Filter Results"
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -461,6 +461,12 @@ msgid "Operations"
 msgstr ""
 
 #: src/partials/contact.html
+#: src/partials/dashboard.html
+#: src/partials/profile.html
+msgid "Options"
+msgstr ""
+
+#: src/partials/contact.html
 #: src/partials/createAccount.html
 #: src/partials/list-print.html
 #: src/partials/list.html
@@ -530,10 +536,6 @@ msgstr ""
 msgid "Profile Image"
 msgstr ""
 
-#: src/partials/profile.html
-msgid "Profile Options"
-msgstr ""
-
 #: src/partials/list.html
 msgid "Protected Group"
 msgstr ""
@@ -574,10 +576,6 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Required field"
-msgstr ""
-
-#: src/partials/list.html
-msgid "Reset Filters"
 msgstr ""
 
 #: src/partials/profile.html

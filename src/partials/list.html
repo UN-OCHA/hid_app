@@ -85,7 +85,12 @@
 
     <div class="actions-wrapper col-xs-12 col-sm-4 col-md-3">
       <form class="filter-form actions">
-
+        <div class="form-group form-group-reset">
+          <h2>
+            <small class="control-label " translate>Filter Results</small>
+          </h2>
+          <input class="btn btn-warning btn-lg btn-reset" type="button" ng-if="showResetBtn" ng-click="resetSearch()" value="{{'Clear All'|translate}}"/>
+        </div>
         <div class="form-group" ng-show="bundles.length">
           <label class="control-label element-invisible" for="bundle" translate>Group</label>
           <ui-select
@@ -96,7 +101,7 @@
             search-enabled="false"
             on-select="submitSearch()">
               <ui-select-match allow-clear placeholder="{{'Group'|translate}}">{{$select.selected.value.name}}</ui-select-match>
-              <ui-select-choices repeat="bundle.value.name as bundle in bundles | orderBy:'bundle.value.name'">
+              <ui-select-choices repeat="bundle.value.name as bundle in bundles | orderBy:'value.name'">
                 <div ng-bind-html="bundle.value.name"></div>
               </ui-select-choices>
           </ui-select>
@@ -112,7 +117,7 @@
             search-enabled="false"
             on-select="submitSearch()">
               <ui-select-match allow-clear placeholder="{{'Protected Group'|translate}}">{{$select.selected.value.name}}</ui-select-match>
-              <ui-select-choices repeat="protectedBundle.value.name as protectedBundle in protectedBundles | orderBy:'protectedBundle.value.name'">
+              <ui-select-choices repeat="protectedBundle.value.name as protectedBundle in protectedBundles | orderBy:'value.name'">
                 <div ng-bind-html="protectedBundle.value.name"></div>
               </ui-select-choices>
           </ui-select>
@@ -150,22 +155,6 @@
           </ui-select>
         </div>
 
-        <div class="form-group" ng-show="disasterOptions.length">
-          <label class="control-label element-invisible" for="disaster" translate>Disasters</label>
-          <ui-select
-            ng-model="query['disasters.remote_id']"
-            theme="bootstrap"
-            class="form-control"
-            name="disaster"
-            search-enabled="false"
-            on-select="submitSearch()">
-              <ui-select-match allow-clear placeholder="{{'Disaster'|translate}}">{{$select.selected.value.name}}</ui-select-match>
-              <ui-select-choices repeat="disaster.value.remote_id as disaster in disasterOptions | orderBy:'value.name'">
-                <div ng-bind-html="disaster.value.name"></div>
-              </ui-select-choices>
-          </ui-select>
-        </div>
-
         <div class="location-filters">
           <div class="form-group">
             <label class="control-label element-invisible" for="country" translate>Country</label>
@@ -199,6 +188,22 @@
             </ui-select>
           </div>
 
+        </div>
+
+        <div class="form-group" ng-show="disasterOptions.length">
+          <label class="control-label element-invisible" for="disaster" translate>Disasters</label>
+          <ui-select
+            ng-model="query['disasters.remote_id']"
+            theme="bootstrap"
+            class="form-control"
+            name="disaster"
+            search-enabled="false"
+            on-select="submitSearch()">
+              <ui-select-match allow-clear placeholder="{{'Disaster'|translate}}">{{$select.selected.value.name}}</ui-select-match>
+              <ui-select-choices repeat="disaster.value.remote_id as disaster in disasterOptions | orderBy:'value.name'">
+                <div ng-bind-html="disaster.value.name"></div>
+              </ui-select-choices>
+          </ui-select>
         </div>
 
         <div class="divider"></div>
@@ -255,11 +260,17 @@
 
         <div class="form-group">
           <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitSearch()" value="{{'Search'|translate}}"/>
+        </div>
+        <div class="divider"></div>
+        <div class="form-group">
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportEmail()" value="{{'Copy Email Addresses'|translate}}"/>
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" value="{{'Export Results'|translate}}"/>
+
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openPrint()" value="{{'View Printable'|translate}}"/>
+
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openPDF()" value="{{'View PDF'|translate}}"/>
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="resetSearch()" value="{{'Reset Filters'|translate}}"/>
+
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" value="{{'Export Results'|translate}}"/>
+
         </div>
       </form>
     </div>

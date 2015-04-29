@@ -196,3 +196,20 @@
   margin-bottom: 20px;
   padding: 10px;
 }
+
+.filter-form {
+  .form-group-reset {
+    position: relative;
+    h2 {
+      margin-top: 0;
+      small {
+        padding: 10px 0 16px 3px;
+      }
+    }
+  }
+  .btn-reset {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
