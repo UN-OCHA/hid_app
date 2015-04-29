@@ -29,7 +29,7 @@
           <h4>
               <span class="profile-item-name">
                 <a href="#/list/{{profile.locationId}}">{{profile.location}}</a>
-                <span class="profile-item-disasters" ng-show="profile.disasters.length">
+                <span class="profile-item-disasters" ng-show="profile.disasters.length" ng-if="0">
                   <span class="profile-item-disaster-spacer">/</span>
                   <span class="profile-item-disaster" ng-repeat="disaster in profile.disasters | orderBy: 'name'">
                     <a href="#/list/{{profile.locationId}}?disasters.remote_id={{disaster.remote_id}}">{{disaster.name}}</a>
