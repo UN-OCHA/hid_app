@@ -479,6 +479,15 @@
         return ($q.reject("An unknown error occurred."));
       }
 
+      // If a 403 status code is received from the profile service, then
+      // set the user status to logged out and reload the page to trigger the
+      // sign in process.
+      if (response.status == 403) {
+        authService.logout(true);
+        location.reload();
+        return $q.defer();
+      }
+
       // Otherwise, use expected error message.
       return ($q.reject(response.data.message));
     }

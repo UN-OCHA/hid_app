@@ -302,6 +302,14 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
         });
       }
     });
+  };
+
+  // If the page loads with the email export attribute set, then remove its
+  // query parameter before the contact list is built, and also open the
+  // email dialog.
+  if ($scope.query.export == 'email') {
+    delete $scope.query.export;
+    $scope.exportEmail();
   }
 
   $scope.openPDF = function() {
@@ -453,8 +461,18 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
       query.locationId = $scope.locationId;
     }
 
-    query.verified = query.verified ? true : null;
-    query.keyContact = query.keyContact ? true : null;
+    if (query.verified) {
+      query.verified = true;
+    }
+    else {
+      delete query.verified;
+    }
+    if (query.keyContact) {
+      query.keyContact = true;
+    }
+    else {
+      delete query.keyContact;
+    }
     query.status = 1;
     query.limit = $scope.loadLimit;
     query.skip = $scope.contactsCount;
