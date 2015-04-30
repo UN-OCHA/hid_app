@@ -337,9 +337,9 @@
             </div>
           </div>
 
-          <div class="section">
+          <div class="section" ng-if="profile.type === 'local'">
             <h4><span translate>Departure from</span> {{profileName()}}</h4>
-            <div class="form-group" ng-if="profile.type === 'local'" ng-class="{'has-error': profileForm.$submitted && profileForm.departureDate.$invalid}">
+            <div class="form-group" ng-class="{'has-error': profileForm.$submitted && profileForm.departureDate.$invalid}">
               <label class="control-label" for="departureDateDisplay" translate>Date</label>
               <input class="form-control" type="date" name="departureDate" ng-model="profile.departureDate" ng-init="initDepartureDate()" min="{{todaysDate}}"/>
               <div class="help-block" ng-show="profileForm.$submitted && profileForm.departureDate.$invalid">
