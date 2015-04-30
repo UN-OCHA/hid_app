@@ -606,7 +606,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
           profileService.clearData();
         }
         else {
-          alert('error');
+          alert('An error occurred while updating this profile. Please reload and try the change again.');
         }
       });
     }
