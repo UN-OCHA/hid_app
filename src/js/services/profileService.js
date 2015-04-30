@@ -185,6 +185,9 @@
                 var match = filter(data.contacts, function(d){return d._id === contactId;});
                 return prepProfileData(match[0], data, false);
               }
+              else {
+                return {};
+              }
             });
           }
         }
@@ -469,7 +472,7 @@
 
       return found;
     }
-    
+
     function handleError(response) {
       // The API response from the server should be returned in a
       // nomralized format. However, if the request was not handled by the
@@ -477,6 +480,15 @@
       // may have to normalize it on our end, as best we can.
       if (!angular.isObject(response.data) || !response.data.message) {
         return ($q.reject("An unknown error occurred."));
+      }
+
+      // If a 403 status code is received from the profile service, then
+      // set the user status to logged out and reload the page to trigger the
+      // sign in process.
+      if (response.status == 403) {
+        authService.logout(true);
+        location.reload();
+        return $q.defer();
       }
 
       // Otherwise, use expected error message.

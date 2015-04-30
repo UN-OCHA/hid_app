@@ -20,6 +20,7 @@ app.value('cgBusyDefaults',{
 app.run(function ($rootScope, $location, $window, $timeout, authService) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     $rootScope.bodyClasses = [];
+
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
       event.preventDefault();
       $location.search('redirectPath', $location.path());
@@ -29,11 +30,9 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
       $rootScope.bodyClasses = nextRoute.bodyClasses;
     }
   });
-
   $rootScope.$on("$routeChangeSuccess", function(event, nextRoute, currentRoute) {
     // Ensure your on the top of the page.
     window.scrollTo(0,0);
-
     // Check if route has access control.
     if (nextRoute.locals.hasOwnProperty('routeAccess')) {
       // If access check requires resovle to complete a function is passed.
@@ -41,7 +40,6 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
       var access = (typeof nextRoute.locals.routeAccess !== 'function') ? nextRoute.locals.routeAccess : nextRoute.locals.routeAccess(nextRoute.locals),
           // Allow routeAccess to send a redirect if needed.
           redirect = (typeof access !== 'boolean') ? access : '/dashboard';
-
       if (!access || typeof access !== 'boolean') {
         $location.path(redirect).replace();
       };
@@ -243,6 +241,9 @@ app.config(function($routeProvider, $locationProvider) {
             });
             return redirect || true;
           }
+          else if (!locals.profileData.profile) {
+            return false;
+          }
           var profile = locals.profileData.contact,
               hasRole = profileService.canEditProfile((profile ? profile.locationId : null)),
               isOwnProfile = profile._profile === locals.userData.profile._id;
@@ -286,6 +287,11 @@ app.config(function($routeProvider, $locationProvider) {
       },
       profileData : function(profileService, $route) {
         return profileService.getProfileData($route.current.params.contactId);
+      },
+      routeAccess : function(profileService) {
+        return function(locals) {
+          return !!locals.profileData.contact;
+        };
       }
     }
   }).
@@ -299,30 +305,6 @@ app.config(function($routeProvider, $locationProvider) {
       },
       roles : function(profileService) {
         return profileService.getRoles();
-      },
-      userData : function(profileService) {
-        return profileService.getUserData().then(function(data) {
-          return data;
-        });
-      },
-      operations : function(profileService) {
-        return profileService.getOperationsData().then(function(data) {
-          return data;
-        });
-      },
-      protectedRoles : function(profileService) {
-        return profileService.getProtectedRoles();
-      }
-    }
-  }).
-  when('/list/print/:locationId', {
-    templateUrl: contactsId.sourcePath + '/partials/list-print.html',
-    controller: 'ListCtrl',
-    bodyClasses: ['print'],
-    requireAuth: true,
-    resolve: {
-      countries : function(profileService) {
-        return profileService.getCountries();
       },
       userData : function(profileService) {
         return profileService.getUserData().then(function(data) {
