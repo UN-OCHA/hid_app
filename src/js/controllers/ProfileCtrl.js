@@ -662,7 +662,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         status: 0
       };
 
-      if (userData.profile.userid != profileData.profile.userid  && profile.email[0]) {
+      if (userData.profile.userid != profileData.profile.userid && profileData.contact.email[0]) {
         //Set email fields
         var email = {
           type: 'notify_checkout',
