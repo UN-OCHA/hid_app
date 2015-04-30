@@ -1,14 +1,10 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-30T16:42:09.965Z\n"
+"Project-Id-Version: 2015-04-30T17:20:14.814Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
-msgstr ""
-
-#: src/partials/list-print.html
-msgid "* Groups include clusters, sectors, working group or similar."
 msgstr ""
 
 #: src/partials/header.html
@@ -88,10 +84,6 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "Clear All"
-msgstr ""
-
-#: src/partials/list-print.html
-msgid "Close"
 msgstr ""
 
 #: src/partials/about.html
@@ -215,7 +207,6 @@ msgid "Edit my"
 msgstr ""
 
 #: src/partials/createAccount.html
-#: src/partials/list-print.html
 #: src/partials/profile.html
 msgid "Email"
 msgstr ""
@@ -262,10 +253,6 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Family Name*"
-msgstr ""
-
-#: src/partials/list-print.html
-msgid "Filter Criteria"
 msgstr ""
 
 #: src/partials/list.html
@@ -326,10 +313,6 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
-#: src/partials/list-print.html
-msgid "Group*"
-msgstr ""
-
 #: src/partials/contact.html
 msgid "Groups"
 msgstr ""
@@ -379,7 +362,6 @@ msgstr ""
 
 #: src/partials/contact.html
 #: src/partials/createAccount.html
-#: src/partials/list-print.html
 #: src/partials/profile.html
 msgid "Job Title"
 msgstr ""
@@ -402,7 +384,6 @@ msgid "Local Profiles"
 msgstr ""
 
 #: src/partials/contact.html
-#: src/partials/list-print.html
 msgid "Location"
 msgstr ""
 
@@ -427,15 +408,10 @@ msgstr ""
 msgid "My checked-in lists"
 msgstr ""
 
-#: src/partials/list-print.html
-msgid "Name"
-msgstr ""
-
 #: src/partials/profile.html
 msgid "No active operations found."
 msgstr ""
 
-#: src/partials/list-print.html
 #: src/partials/list.html
 msgid "No contacts found"
 msgstr ""
@@ -473,7 +449,6 @@ msgstr ""
 
 #: src/partials/contact.html
 #: src/partials/createAccount.html
-#: src/partials/list-print.html
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Organization"
@@ -497,7 +472,6 @@ msgid "Orphan User"
 msgstr ""
 
 #: src/partials/createAccount.html
-#: src/partials/list-print.html
 msgid "Phone"
 msgstr ""
 
@@ -523,14 +497,6 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Please update your {{profileName()}} profile."
-msgstr ""
-
-#: src/partials/list-print.html
-msgid "Powered by"
-msgstr ""
-
-#: src/partials/list-print.html
-msgid "Print"
 msgstr ""
 
 #: src/partials/profile.html
@@ -693,10 +659,6 @@ msgstr ""
 msgid "View PDF"
 msgstr ""
 
-#: src/partials/list.html
-msgid "View Printable"
-msgstr ""
-
 #: src/partials/about.html
 msgid "We guess that if you have landed on this page you may have questions. Rest assured, we have an <a href=\"http://humanitarian.id/faqs/\">FAQ page</a> that addresses the most common questions that we receive. Ranging from checking into multiple emergencies to explaining verified users to detailing how to have a missing organization added to requesting one's information be removed, we hope that the"
 msgstr ""
@@ -772,10 +734,6 @@ msgstr ""
 
 #: src/partials/about.html
 msgid "read"
-msgstr ""
-
-#: src/partials/list-print.html
-msgid "to update your information, check in to"
 msgstr ""
 
 #: src/partials/contact.html

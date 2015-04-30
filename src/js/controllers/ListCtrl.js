@@ -1,5 +1,6 @@
 function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries, roles, ngDialog) {
-  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'organization.name', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'];
+  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'organization.name', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'],
+      filter = $filter('filter');
 
   $scope.location = '';
   $scope.locationId = $routeParams.locationId || '';
@@ -30,37 +31,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   if ($scope.locationId === 'global' && !$scope.query.hasOwnProperty('globalContacts') && !$scope.query.hasOwnProperty('localContacts')) {
     $scope.query.globalContacts = true;
     $scope.query.localContacts = false;
-  }
-
-  var pathParams = $location.url().split('/'),
-      filter = $filter('filter');
-
-  if (pathParams[2] === 'print') {
-    $scope.date = moment().format('MMM Do YYYY');
-    $scope.loadLimit = 0;
-    $scope.filtersParams = [];
-
-    angular.forEach(searchKeys, function(paramKey){
-      if ($scope.query.hasOwnProperty(paramKey)) {
-        switch (paramKey) {
-          case 'keyContact':
-            this.push('Key Contact');
-            break;
-          case 'protectedRoles':
-            this.push(filter(protectedRoles,function(d) { return d.id === $scope.query[paramKey];})[0].name);
-            break;
-          case 'verified':
-            this.push('Verified User');
-            break;
-          default:
-            this.push($scope.query[paramKey])
-        }
-      }
-    }, $scope.filtersParams);
-  }
-  else {
-    pathParams.splice(2, 0, "print")
-    $scope.printUrl = '#' + pathParams.join('/');
   }
 
   if ($scope.locationId === 'global') {
@@ -332,10 +302,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
         });
       }
     });
-  }
-
-  $scope.openPrint = function() {
-    window.open($scope.printUrl, $location.path(), 'width=1000, height=600, menubar=1, resizable=1, scrollbars=1, status=1, toolbar=1');
   }
 
   $scope.openPDF = function() {
