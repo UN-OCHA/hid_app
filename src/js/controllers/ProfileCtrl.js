@@ -1,9 +1,4 @@
 function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout, $http, profileService, authService, operations, profileData, countries, roles, protectedRoles, gettextCatalog, userData) {
-  if(!profileData.profile){
-    // No profile data
-    return false;
-  }
-
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
@@ -123,13 +118,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   // Split ext into own field.
   phoneSplit();
   // Show image if field is populated.
-  if ($scope.profile.type === 'local' && profileData.global) {
-    setImage(profileData.global);
-  }
-  else {
-    setImage();
-  }
-
+  setImage();
 
   // Toggle logic for verified field.
   $scope.setVerified = function() {
@@ -590,7 +579,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         if ($scope.orgEditorRoles){
           $scope.orgEditorRoles = $filter('filter')($scope.orgEditorRoles, {locationId: '!'+ $scope.profile.locationId}, true);
         }
-
+        
         //If organization editor is selected and location and organization are valid, add orgEditorRole
         if ($scope.isOrganizationEditor && $scope.profile.locationId && $scope.profile.organization[0] && $scope.profile.organization[0].remote_id) {
           var locationId = $scope.profile.locationId;
@@ -614,7 +603,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
           profileService.clearData();
         }
         else {
-          alert('An error occurred while updating this profile. Please reload and try the change again.');
+          alert('error');
         }
       }).finally(function(){
           //set the flag to false
@@ -852,35 +841,33 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   }
 
   // Shows image url.
-  function setImage(profile) {
-    profile = profile || $scope.profile;
-
-    if (!profile.image || !profile.image[0]) {
+  function setImage() {
+    if (!$scope.profile.image || !$scope.profile.image[0]) {
       return
     }
-    if (profile.image[0].type === 'URL') {
-      $scope.imageUrl = profile.image[0].imageUrl = profile.image[0].url;
+    if ($scope.profile.image[0].type === 'URL') {
+      $scope.profile.image[0].imageUrl = $scope.profile.image[0].url;
     }
-    else if (typeof profile.image[0].type !== 'undefined') {
+    else if (typeof $scope.profile.image[0].type !== 'undefined') {
       var defaultWidth = 325,
           request = {method:"get"},
           cb;
 
-      if (profile.image[0].type === 'Facebook') {
-        request.url = "https://graph.facebook.com/" + profile.image[0].socialMediaId + "/picture";
+      if ($scope.profile.image[0].type === 'Facebook') {
+        request.url = "https://graph.facebook.com/" + $scope.profile.image[0].socialMediaId + "/picture";
         request.params = {type: "square", redirect: false, width: defaultWidth};
         cb = function(response) {
           if (response.data && response.data.data) {
-            $scope.imageUrl = profile.image[0].imageUrl = response.data.data.url;
+            $scope.profile.image[0].imageUrl = response.data.data.url;
           }
         }
       }
       else {
-        request.url = "https://www.googleapis.com/plus/v1/people/" + profile.image[0].socialMediaId;
+        request.url = "https://www.googleapis.com/plus/v1/people/" + $scope.profile.image[0].socialMediaId;
         request.params = {type: "image", key: contactsId.googlePlusApiKey};
         cb = function(response) {
           if (response.data && response.data.image) {
-            $scope.imageUrl = profile.image[0].imageUrl = response.data.image.url.replace('?sz=50', ('?sz=' +defaultWidth));
+            $scope.profile.image[0].imageUrl = response.data.image.url.replace('?sz=50', ('?sz=' +defaultWidth));
           }
         }
       }
