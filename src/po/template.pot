@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-30T17:20:14.814Z\n"
+"Project-Id-Version: 2015-04-30T20:53:20.109Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
@@ -641,6 +641,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Username"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Usual Location"
 msgstr ""
 
 #: src/partials/createAccount.html
