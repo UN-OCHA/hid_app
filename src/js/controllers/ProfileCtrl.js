@@ -29,6 +29,9 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   $scope.profileData = profileData;
   $scope.countries = countries;
 
+  $scope.submitProcessing = false;
+  $scope.submitButtonText = "Save";
+
   // Exclude operations for which the user is already checked in.
   var availOperations = angular.copy(operations);
   if (profileData && profileData.contacts && profileData.contacts.length) {
@@ -478,6 +481,10 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   }
 
   $scope.submitProfile = function () {
+    if ($scope.submitProcessing){
+      return;
+    }
+    
     // Special treatment for voip.
     if ($scope.profile.voip[0] && !$scope.profile.voip[0].number) {
       // Remove Default Skype entry before save if blank.
@@ -589,6 +596,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         profile.orgEditorRoles = $scope.orgEditorRoles;
       }
 
+      $scope.submitProcessing = true;
       profileService.saveContact(profile).then(function(data) {
         if (data && data.status && data.status === 'ok') {
           $scope.back();
@@ -597,6 +605,9 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         else {
           alert('error');
         }
+      }).finally(function(){
+          //set the flag to false
+          $scope.submitProcessing = false;
       });
     }
   };

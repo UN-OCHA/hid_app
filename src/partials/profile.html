@@ -488,12 +488,12 @@
       <div class="row bottom-submit">
         <div class="col-sm-12 col-md-6">
           <div class="form-group">
-            <input class="btn btn-primary btn-lg btn-block" type="submit" ng-value="submitText()" />
+            <input class="btn btn-primary btn-lg btn-block" ng-disabled="submitProcessing" type="submit" ng-value="{{submitButtonText}}" />
           </div>
         </div>
         <div class="col-sm-12 col-md-6">
           <div class="form-group">
-            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="back()" translate>Cancel</button>
+            <button type="button" class="btn btn-default btn-lg btn-block" ng-disabled="submitProcessing" ng-click="back()" translate>Cancel</button>
           </div>
         </div>
       </div>
@@ -509,12 +509,12 @@
       </div>
       <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
         <div class="actions">
-          <input class="btn btn-primary btn-lg btn-block" type="submit" ng-value="submitText()"/>
-          <button type="button" class="btn btn-default btn-lg btn-block" ng-click="back()" translate>Cancel</button>
-          <button type="button" class="btn btn-default btn-lg btn-block" ng-if="userCanCheckOut" ng-click="checkOut()" translate>Check-out</button>
-          <a class="btn btn-default btn-lg btn-block" ng-if="userCanRequestDelete" href="http://humanitarian.id/removal_request/" translate>Delete My Account</a>
-          <a class="btn btn-default btn-lg btn-block" ng-if="userCanRequestPassword" href="{{passwordUrl}}" translate>Reset My Password</a>
-          <a class="btn btn-lg btn-primary btn-block btn-danger" ng-if="userCanDeleteAccount" ng-click="profile.confirmDelete = !profile.confirmDelete" translate>Delete Account</a>
+          <input class="btn btn-primary btn-lg btn-block" type="submit" ng-disabled="submitProcessing" ng-value="submitText()"/>
+          <button type="button" class="btn btn-default btn-lg btn-block"  ng-disabled="submitProcessing" ng-click="back()" translate>Cancel</button>
+          <button type="button" class="btn btn-default btn-lg btn-block" ng-disabled="submitProcessing" ng-if="userCanCheckOut" ng-click="checkOut()" translate>Check-out</button>
+          <a class="btn btn-default btn-lg btn-block" ng-disabled="submitProcessing" ng-if="userCanRequestDelete" href="http://humanitarian.id/removal_request/" translate>Delete My Account</a>
+          <a class="btn btn-default btn-lg btn-block" ng-disabled="submitProcessing" ng-if="userCanRequestPassword" href="{{passwordUrl}}" translate>Reset My Password</a>
+          <a class="btn btn-lg btn-primary btn-block btn-danger" ng-disabled="submitProcessing" ng-if="userCanDeleteAccount" ng-click="profile.confirmDelete = !profile.confirmDelete" translate>Delete Account</a>
           <a ng-show="profile.confirmDelete" class="fade btn btn-warning btn-lg btn-block" ng-click="deleteAccount()" translate>Confirm Delete Account</a>
         </div>
       </div>
