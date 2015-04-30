@@ -136,7 +136,7 @@
             </div>
             <div class="right-sidebar-group" ng-if="contact.type === 'local'">
               <span class="group-label" translate>Global Profile</span>
-              <span class="title"><strong><a href="#/contact/{{globalContactId}}">{{contact.nameGiven}} {{contact.nameFamily}} (<span translate>Global</span>)</a></strong></span>
+              <span class="title"><strong><a href="#/contact/{{globalContactId}}" ng-if="globalContactId">{{contact.nameGiven}} {{contact.nameFamily}} (<span translate>Global</span>)</a></strong></span>
             </div>
             <div class="right-sidebar-group">
               <span class="group-label" translate>Role</span>
