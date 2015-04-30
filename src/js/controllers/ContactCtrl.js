@@ -1,4 +1,9 @@
 function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData) {
+  if(!profileData.contact){
+    // No contact data
+    return false;
+  }
+
   var contact = profileData.contact;
   $scope.contact = contact;
   $scope.profileContacts = profileData.contacts;
@@ -171,8 +176,8 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
         newOrg = [{name: $scope.selectedOrg.organizationName, remote_id: $scope.selectedOrg.organizationId}];
       }
       contact.organization = newOrg;
-    } 
-    
+    }
+
     profileService.saveContact(contact).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         profileService.clearData();
@@ -185,8 +190,8 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
         alert('error: ' + reason);
     });
   }
-  
-  function setEditorOrganizations() { 
+
+  function setEditorOrganizations() {
     var editorOrgs = [];
     var profile;
     var locationId;
@@ -195,10 +200,10 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
       locationId = profileData.contact.locationId;
       var orgEditorRole = $filter('filter')(userData.profile.orgEditorRoles, {locationId: locationId}, true);
       if (orgEditorRole){
-        editorOrgs.push(orgEditorRole[0]); 
+        editorOrgs.push(orgEditorRole[0]);
       }
 
-      //Add a 'No Organization' item 
+      //Add a 'No Organization' item
       var removeOrg = {organizationName: 'No Organization', organizationId: 0 };
       editorOrgs.push(removeOrg);
       $scope.organizationOptions = editorOrgs;

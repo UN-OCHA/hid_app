@@ -1,4 +1,9 @@
 function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout, $http, profileService, authService, operations, profileData, countries, roles, protectedRoles, gettextCatalog, userData) {
+  if(!profileData.profile){
+    // No profile data
+    return false;
+  }
+
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
@@ -572,7 +577,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         if ($scope.orgEditorRoles){
           $scope.orgEditorRoles = $filter('filter')($scope.orgEditorRoles, {locationId: '!'+ $scope.profile.locationId}, true);
         }
-        
+
         //If organization editor is selected and location and organization are valid, add orgEditorRole
         if ($scope.isOrganizationEditor && $scope.profile.locationId && $scope.profile.organization[0] && $scope.profile.organization[0].remote_id) {
           var locationId = $scope.profile.locationId;
