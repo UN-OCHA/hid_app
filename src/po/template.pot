@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-29T21:35:36.646Z\n"
+"Project-Id-Version: 2015-04-30T16:42:09.965Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
@@ -390,6 +390,10 @@ msgid "Key Contact"
 msgstr ""
 
 #: src/partials/profile.html
+msgid "Link to a photo you've already uploaded to the internet. The URL must end in .JPG, .PNG, or .GIF."
+msgstr ""
+
+#: src/partials/profile.html
 msgid "Local Administration"
 msgstr ""
 
@@ -641,8 +645,20 @@ msgstr ""
 msgid "The Humanitarian ID team"
 msgstr ""
 
+#: src/partials/profile.html
+msgid "The name which appears in your Facebook URL. For example: https://www.facebook.com/[use_this_name]"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "The name which appears in your Google+ profile URL. For example: https://plus.google.com/[use_this_name]/posts"
+msgstr ""
+
 #: src/partials/createAccount.html
 msgid "Title is required."
+msgstr ""
+
+#: src/partials/profile.html
+msgid "To update your photo, edit your global profile."
 msgstr ""
 
 #: src/partials/profile.html

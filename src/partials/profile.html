@@ -437,12 +437,13 @@
 
           </div>
 
-          <div class="section profile-image" ng-class="{'open': updatingImage, 'empty': !profile.image[0].imageUrl}" ng-if="profile.type === 'global'">
+          <div class="section profile-image" ng-class="{'open': updatingImage, 'empty': !profile.image[0].imageUrl}">
             <h4 translate>Profile Image</h4>
             <div class="form-group">
+              <p class="help-block" ng-if="profile.type === 'local'" translate>To update your photo, edit your global profile.</p>
               <div class="profile-image-wrapper">
                 <span class="helper"></span>
-                <img class="fade" ng-show="profile.image[0].imageUrl" ng-src="{{profile.image[0].imageUrl}}">
+                <img class="fade" ng-show="imageUrl" ng-src="{{imageUrl}}">
               </div>
             </div>
             <div class="form-elements-profile-image fade" ng-show="updatingImage">
@@ -467,10 +468,15 @@
                 </div>
               </div>
             </div>
-            <div class="profile-image-actions">
+            <div class="profile-image-actions" ng-if="profile.type === 'global'">
               <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="updateImage();" translate>Update Image</button>
               <button type="button" class="btn btn-default btn-lg btn-block" ng-click="profile.image[0] = {}; updatingImage = 0;" translate>Remove Image</button>
             </div>
+          </div>
+          <div class="form-group">
+            <p class="help-block" ng-if="profile.type === 'global'" ng-show="updatingImage && profile.image[0].type === 'Facebook'" translate>The name which appears in your Facebook URL. For example: https://www.facebook.com/[use_this_name]</p>
+            <p class="help-block" ng-if="profile.type === 'global'" ng-show="updatingImage && profile.image[0].type === 'Google+'" translate>The name which appears in your Google+ profile URL. For example: https://plus.google.com/[use_this_name]/posts</p>
+            <p class="help-block" ng-if="profile.type === 'global'" ng-show="updatingImage && profile.image[0].type === 'URL'" translate>Link to a photo you've already uploaded to the internet. The URL must end in .JPG, .PNG, or .GIF.</p>
           </div>
 
         </div>
