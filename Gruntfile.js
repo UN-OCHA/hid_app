@@ -156,7 +156,6 @@ module.exports = function(grunt) {
           dest: '.tmp/concat/js/app.js',
           src: [
             'src/libraries/jquery/dist/jquery.min.js',
-            'src/libraries/moment/min/moment.min.js',
             'src/libraries/angular/angular.js',
             'src/libraries/angular-route/angular-route.js',
             'src/libraries/angular-animate/angular-animate.js',

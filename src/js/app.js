@@ -315,30 +315,6 @@ app.config(function($routeProvider, $locationProvider) {
       }
     }
   }).
-  when('/list/print/:locationId', {
-    templateUrl: contactsId.sourcePath + '/partials/list-print.html',
-    controller: 'ListCtrl',
-    bodyClasses: ['print'],
-    requireAuth: true,
-    resolve: {
-      countries : function(profileService) {
-        return profileService.getCountries();
-      },
-      userData : function(profileService) {
-        return profileService.getUserData().then(function(data) {
-          return data;
-        });
-      },
-      operations : function(profileService) {
-        return profileService.getOperationsData().then(function(data) {
-          return data;
-        });
-      },
-      protectedRoles : function(profileService) {
-        return profileService.getProtectedRoles();
-      }
-    }
-  }).
   when('/createaccount', {
     templateUrl: contactsId.sourcePath + '/partials/createAccount.html',
     controller: 'CreateAccountCtrl',
