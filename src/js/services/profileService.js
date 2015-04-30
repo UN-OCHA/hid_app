@@ -456,21 +456,6 @@
       var locationId = null;
       var organizationId = null;
 
-      // if (userProfile && userProfile.contact && userProfile.contact.locationId && userProfile.contact.organization){
-      //   locationId = userProfile.contact.locationId;
-
-      //   if (userProfile.contact.organization[0] && userProfile.contact.organization[0].remote_id){
-      //     organizationId = userProfile.contact.organization[0].remote_id;
-      //   }
-      // }
-
-      // if (adminProfile && adminProfile.orgEditorRoles && organizationId && locationId){
-      //  var orgEditorRole = $filter('filter')(adminProfile.orgEditorRoles, {location: locationId, organization: organizationId}, true);
-      //   if (orgEditorRole.length){
-      //     found = true;
-      //   }
-      // }
-
       if (userProfile && userProfile.contact && userProfile.contact.locationId){
         locationId = userProfile.contact.locationId;
       }
