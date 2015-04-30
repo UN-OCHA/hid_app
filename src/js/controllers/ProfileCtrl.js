@@ -1,4 +1,9 @@
 function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout, $http, profileService, authService, operations, profileData, countries, roles, protectedRoles, gettextCatalog, userData) {
+  if(!profileData.profile){
+    // No profile data
+    return false;
+  }
+
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 

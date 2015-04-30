@@ -185,6 +185,9 @@
                 var match = filter(data.contacts, function(d){return d._id === contactId;});
                 return prepProfileData(match[0], data, false);
               }
+              else {
+                return {};
+              }
             });
           }
         }
@@ -469,7 +472,7 @@
 
       return found;
     }
-    
+
     function handleError(response) {
       // The API response from the server should be returned in a
       // nomralized format. However, if the request was not handled by the
