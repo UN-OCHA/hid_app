@@ -117,7 +117,8 @@
           </div>
 
           <div class="section">
-            <h4 translate>Current Location</h4>
+            <h4 ng-if="profile.type === 'local'" translate>Current Location</h4>
+            <h4 ng-if="profile.type === 'global'" translate>Usual Location</h4>
             <div class="form-group">
               <label class="control-label" for="address.country" translate>Country</label>
               <ui-select
