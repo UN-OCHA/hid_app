@@ -115,7 +115,13 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   // Split ext into own field.
   phoneSplit();
   // Show image if field is populated.
-  setImage();
+  if ($scope.profile.type === 'local' && profileData.global) {
+    setImage(profileData.global);
+  }
+  else {
+    setImage();
+  }
+
 
   // Toggle logic for verified field.
   $scope.setVerified = function() {
@@ -572,7 +578,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         if ($scope.orgEditorRoles){
           $scope.orgEditorRoles = $filter('filter')($scope.orgEditorRoles, {locationId: '!'+ $scope.profile.locationId}, true);
         }
-        
+
         //If organization editor is selected and location and organization are valid, add orgEditorRole
         if ($scope.isOrganizationEditor && $scope.profile.locationId && $scope.profile.organization[0] && $scope.profile.organization[0].remote_id) {
           var locationId = $scope.profile.locationId;
@@ -830,33 +836,35 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   }
 
   // Shows image url.
-  function setImage() {
-    if (!$scope.profile.image || !$scope.profile.image[0]) {
+  function setImage(profile) {
+    profile = profile || $scope.profile;
+
+    if (!profile.image || !profile.image[0]) {
       return
     }
-    if ($scope.profile.image[0].type === 'URL') {
-      $scope.profile.image[0].imageUrl = $scope.profile.image[0].url;
+    if (profile.image[0].type === 'URL') {
+      $scope.imageUrl = profile.image[0].imageUrl = profile.image[0].url;
     }
-    else if (typeof $scope.profile.image[0].type !== 'undefined') {
+    else if (typeof profile.image[0].type !== 'undefined') {
       var defaultWidth = 325,
           request = {method:"get"},
           cb;
 
-      if ($scope.profile.image[0].type === 'Facebook') {
-        request.url = "https://graph.facebook.com/" + $scope.profile.image[0].socialMediaId + "/picture";
+      if (profile.image[0].type === 'Facebook') {
+        request.url = "https://graph.facebook.com/" + profile.image[0].socialMediaId + "/picture";
         request.params = {type: "square", redirect: false, width: defaultWidth};
         cb = function(response) {
           if (response.data && response.data.data) {
-            $scope.profile.image[0].imageUrl = response.data.data.url;
+            $scope.imageUrl = profile.image[0].imageUrl = response.data.data.url;
           }
         }
       }
       else {
-        request.url = "https://www.googleapis.com/plus/v1/people/" + $scope.profile.image[0].socialMediaId;
+        request.url = "https://www.googleapis.com/plus/v1/people/" + profile.image[0].socialMediaId;
         request.params = {type: "image", key: contactsId.googlePlusApiKey};
         cb = function(response) {
           if (response.data && response.data.image) {
-            $scope.profile.image[0].imageUrl = response.data.image.url.replace('?sz=50', ('?sz=' +defaultWidth));
+            $scope.imageUrl = profile.image[0].imageUrl = response.data.image.url.replace('?sz=50', ('?sz=' +defaultWidth));
           }
         }
       }
