@@ -18,7 +18,7 @@ app.value('cgBusyDefaults',{
 });
 
 app.run(function ($rootScope, $location, $window, $timeout, authService) {
-  $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute, rejection) {
+  $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     $rootScope.bodyClasses = [];
 
     if (nextRoute && nextRoute.requireAuth && !authService.isAuthenticated()) {
