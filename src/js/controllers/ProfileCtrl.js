@@ -1,5 +1,5 @@
 function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout, $http, profileService, authService, operations, profileData, countries, roles, protectedRoles, gettextCatalog, userData) {
-  if(!profileData.profile){
+  if($routeParams.profileId && !profileData.profile){
     // No profile data
     return false;
   }
