@@ -83,8 +83,8 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   $scope.checkout = function (cid) {
     var contact = {
       _id: $scope.contact._id,
-      _profile: $scope.contact._profile._id,
-      userid: $scope.contact._profile.userid,
+      _profile: $scope.contact._profile,
+      userid: $scope.contact._profile,
       status: 0
     };
     if (!$scope.userCanCheckOut) {
