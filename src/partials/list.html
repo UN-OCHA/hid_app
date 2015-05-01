@@ -85,11 +85,10 @@
 
     <div class="actions-wrapper col-xs-12 col-sm-4 col-md-3">
       <form class="filter-form actions">
-        <div class="form-group form-group-reset">
+        <div class="form-group form-group-reset clearfix">
           <h2>
-            <small class="control-label " translate>Filter Results</small>
+            <small class="control-label"><span class='title' translate>Filter Results</span> <input class="btn btn-warning btn-lg btn-reset" type="button" ng-if="showResetBtn" ng-click="resetSearch()" value="{{'Clear All'|translate}}"/></small>
           </h2>
-          <input class="btn btn-warning btn-lg btn-reset" type="button" ng-if="showResetBtn" ng-click="resetSearch()" value="{{'Clear All'|translate}}"/>
         </div>
         <div class="form-group" ng-show="bundles.length">
           <label class="control-label element-invisible" for="bundle" translate>Group</label>

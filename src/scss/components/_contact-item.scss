@@ -206,14 +206,16 @@
     position: relative;
     h2 {
       margin-top: 0;
-      small {
-        padding: 10px 0 16px 3px;
+      .title {
+        padding: 10px 10px 16px 3px;
+        display: inline-block;
       }
     }
   }
   .btn-reset {
-    position: absolute;
-    top: 0;
-    right: 0;
+    //position: absolute;
+    //top: 0;
+    //right: 0;
+    float: right;
   }
 }
