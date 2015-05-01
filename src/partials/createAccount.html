@@ -40,10 +40,9 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label-light" for="organization">* <span translate>Organization</span></label>
+          <label class="control-label-light" for="organization" translate>Organization</label>
 
           <ui-select
-            required
             class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
             name="organization"
             ng-model="profile.organization[0].name"
