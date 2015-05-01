@@ -83,8 +83,8 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   $scope.checkout = function (cid) {
     var contact = {
       _id: $scope.contact._id,
-      _profile: $scope.contact.profile._id,
-      userid: $scope.contact.profile._id,
+      _profile: profileData.profile._id,
+      userid: profileData.profile.userid,
       status: 0
     };
     if (!$scope.userCanCheckOut) {
@@ -93,7 +93,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
 
     //Determine if user being checked out is the same as the logged in user
     //If not, we need to add some properties to contact so profile service can send an email notifying the user
-    if (userData.profile.userid != $scope.contact._profile.userid && $scope.contact.email[0]){
+    if (userData.profile.userid != profileData.profile.userid && $scope.contact.email[0]){
       //Set email fields
       var email = {
         type: 'notify_checkout',
