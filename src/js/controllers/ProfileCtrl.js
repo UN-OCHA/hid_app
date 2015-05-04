@@ -494,7 +494,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     if ($scope.submitProcessing){
       return;
     }
-    
+
     // Special treatment for voip.
     if ($scope.profile.voip[0] && !$scope.profile.voip[0].number) {
       // Remove Default Skype entry before save if blank.
@@ -536,28 +536,46 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         profile.location = $scope.operations[$scope.selectedOperation].name;
       }
 
+      var email = {};
+      if ( (!userData.profile || !userData.profile.userid || userData.profile.userid === profile.userid)
+          && (profile.organization && profile.organization[0] && profile.organization[0].hasOwnProperty('remote_id'))
+          && (!profileData.contact || !profileData.contact.organization || !profileData.contact.organization[0] || profile.organization[0].remote_id != profileData.contact.organization[0].remote_id)) {
+
+        email = angular.extend(email, {
+            newOrg: true,
+            recipientFirstName: profile.nameGiven,
+            recipientLastName: profile.nameFamily,
+            locationId: profile.locationId,
+            locationName: profile.location,
+            organization: profile.organization[0].name,
+            organizationId: profile.organization[0].remote_id
+          });
+      }
+
       // Determine if user being checked in is the same as the logged in user
       // If not, we need to add some properties to contact so profile service can send an email notifying the user
       if (userData.profile && userData.profile.userid && userData.profile.userid != profile.userid && profile.email[0]) {
         //Set email fields
-        var email = {
-          type: checkinFlow ? 'notify_checkin' : 'notify_edit',
-          recipientFirstName: profile.nameGiven,
-          recipientLastName: profile.nameFamily,
-          recipientEmail: profile.email[0].address,
-          adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-          locationName: profile.location,
-          addedGroups: bundlesAdded(),
-          removedGroups: bundlesRemove()
-        };
+        email = angular.extend(email, {
+            type: checkinFlow ? 'notify_checkin' : 'notify_edit',
+            recipientFirstName: profile.nameGiven,
+            recipientLastName: profile.nameFamily,
+            recipientEmail: profile.email[0].address,
+            adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
+            locationName: profile.location,
+            addedGroups: bundlesAdded(),
+            removedGroups: bundlesRemove()
+          });
+
         if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
           email.adminEmail = userData.global.email[0].address;
         }
         if (profile.disasters && profile.disasters[0] && profile.disasters[0].name) {
           email.locationName += '/' + profile.disasters[0].name;
         }
-        profile.notifyEmail = email;
       }
+
+      profile.notifyEmail = email;
 
       if ($scope.profileId.length) {
         profile._contact = $scope.profileId;
