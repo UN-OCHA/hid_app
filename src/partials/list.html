@@ -189,6 +189,22 @@
 
         </div>
 
+        <div class="form-group" ng-show="offices.length">
+          <label class="control-label element-invisible" for="office" translate>Coordination Office</label>
+          <ui-select
+            name="office"
+            class="form-control"
+            ng-model="query['office.name']"
+            theme="bootstrap"
+            search-enabled="false"
+            on-select="submitSearch()">
+              <ui-select-match allow-clear placeholder="{{'Office'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="office.name as office in offices | orderBy:'name'">
+                <div ng-bind-html="office.name"></div>
+              </ui-select-choices>
+          </ui-select>
+        </div>
+
         <div class="form-group" ng-show="disasterOptions.length">
           <label class="control-label element-invisible" for="disaster" translate>Disasters</label>
           <ui-select

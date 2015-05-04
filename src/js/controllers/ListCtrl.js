@@ -1,5 +1,5 @@
 function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries, roles, ngDialog) {
-  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'organization.name', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'],
+  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'office.name', 'organization.name', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'],
       filter = $filter('filter');
 
   $scope.location = '';
@@ -52,6 +52,11 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
       var allBundles = listObjectToArray($scope.operations[$scope.locationId].bundles);
       $scope.bundles = [];
       $scope.protectedBundles = [];
+      $scope.offices = [];
+
+      angular.forEach($scope.operations[$scope.locationId].offices, function(value) {
+        $scope.offices.push(value);
+      }, $scope.offices);
 
       angular.forEach(allBundles, function(bundle){
         if (bundle.value.hid_access === "open") {
