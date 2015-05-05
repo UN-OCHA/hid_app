@@ -252,14 +252,12 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   };
 
   $scope.submitBundle = function() {
-    console.log('submitBundle', this)
     var bundle = this.displayBundle,
         match = filter($scope.protectedBundles, function(d) {return d === bundle;});
 
     $scope.query.bundle = match.length ? null : bundle;
     $scope.query.protectedBundles = match.length ? bundle : null;
 
-    console.log(bundle, match, $scope.query);
     $scope.submitSearch();
   }
   // Sets sets url params thru $location.search().
