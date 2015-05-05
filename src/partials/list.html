@@ -93,31 +93,15 @@
         <div class="form-group" ng-show="bundles.length">
           <label class="control-label element-invisible" for="bundle" translate>Group</label>
           <ui-select
-            ng-model="query.bundle"
+            ng-model="displayBundle"
             theme="bootstrap"
             class="form-control"
             name="bundle"
-            search-enabled="false"
-            on-select="submitSearch()">
+            reset-search-input="true"
+            on-select="submitBundle()">
               <ui-select-match allow-clear placeholder="{{'Group'|translate}}">{{$select.selected.value.name}}</ui-select-match>
-              <ui-select-choices repeat="bundle.value.name as bundle in bundles | orderBy:'value.name'">
-                <div ng-bind-html="bundle.value.name"></div>
-              </ui-select-choices>
-          </ui-select>
-        </div>
-
-        <div class="form-group" ng-show="protectedBundles.length">
-          <label class="control-label element-invisible" for="protectedBundle" translate>Protected Group</label>
-          <ui-select
-            ng-model="query.protectedBundles"
-            theme="bootstrap"
-            class="form-control"
-            name="protectedBundle"
-            search-enabled="false"
-            on-select="submitSearch()">
-              <ui-select-match allow-clear placeholder="{{'Protected Group'|translate}}">{{$select.selected.value.name}}</ui-select-match>
-              <ui-select-choices repeat="protectedBundle.value.name as protectedBundle in protectedBundles | orderBy:'value.name'">
-                <div ng-bind-html="protectedBundle.value.name"></div>
+              <ui-select-choices repeat="bundle.value.name as bundle in bundles | orderBy:'value.name' | filter: $select.search">
+                <div ng-bind-html="bundle.value.name | highlight: $select.search"></div>
               </ui-select-choices>
           </ui-select>
         </div>
