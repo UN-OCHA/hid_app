@@ -77,12 +77,6 @@
                 <div class="help-block"><span translate>Request to</span> <a href="http://www.humanitarianresponse.info/help/webform/add-new-organization-form" target="_blank" translate>add a missing organization</a>.</div>
               </div>
 
-              <div class="form-group" ng-show="userCanAssignOrganizationEditor && profile.organization[0]">
-                <div class="checkbox">
-                  <label for="organizationEditor" ng-click="isOrganizationEditor = !isOrganizationEditor"><input type="checkbox" name="organizationEditor" ng-model="isOrganizationEditor" ng-click="isOrganizationEditor = !isOrganizationEditor"/><span translate>Organization Editor</span></label>
-                </div>
-              </div>
-
               <div class="form-group">
                 <label class="control-label" for="jobtitle" translate>Job Title</label>
                 <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" />
@@ -359,8 +353,8 @@
         </div>
 
         <div class="col-sm-12 col-md-6" >
-          <div class="admin-area row" ng-if="userCanEditKeyContact || userCanEditProtectedRoles|| userCanEditRoles || userCanEditVerified || userCanEditProtectedBundle">
-            <div class="section col-sm-12" ng-show="userCanEditKeyContact || userCanEditProtectedRoles">
+          <div class="admin-area row" ng-if="userCanEditKeyContact || userCanEditProtectedRoles|| userCanEditRoles || userCanEditVerified || userCanEditProtectedBundle || userCanAssignOrganizationEditor">
+            <div class="section col-sm-12" ng-show="userCanEditKeyContact || userCanEditProtectedRoles || userCanAssignOrganizationEditor">
               <h4 translate>Local Administration</h4>
               <div class="form-group" ng-show="userCanEditProtectedRoles">
                 <label class="control-label" for="selectedProtectedRoles" translate>Protected Roles</label>
@@ -403,6 +397,12 @@
                   <label for="keyContact" ng-click="profile.keyContact = !profile.keyContact"><input type="checkbox" name="keyContact" ng-model="profile.keyContact" ng-click="profile.keyContact = !profile.keyContact"/><span translate>Key Contact</span></label>
                 </div>
               </div>
+
+              <div class="form-group" ng-show="userCanAssignOrganizationEditor && profile.organization[0]">
+                <div class="checkbox">
+                  <label for="organizationEditor" ng-click="toggleOrganizationEditor()"><input type="checkbox" name="organizationEditor" ng-model="isOrganizationEditor" ng-click="toggleOrganizationEditor()"/><span translate>Organization Editor for {{profile.organization[0].name}}</span></label>
+                </div>
+              </div>
             </div>
 
             <div class="section col-sm-12" ng-show="userCanEditRoles || userCanAddVerified || userCanRemoveVerified">
@@ -438,6 +438,8 @@
 
           </div>
 
+
+              
           <div class="section profile-image" ng-class="{'open': updatingImage, 'empty': !profile.image[0].imageUrl}">
             <h4 translate>Profile Image</h4>
             <div class="form-group">

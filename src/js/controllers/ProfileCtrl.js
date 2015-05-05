@@ -34,7 +34,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   $scope.profileData = profileData;
   $scope.countries = countries;
 
-  $scope.submitProcessing = false;;
+  $scope.submitProcessing = false;
 
   // Exclude operations for which the user is already checked in.
   var availOperations = angular.copy(operations);
@@ -711,6 +711,10 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     }
   };
 
+  $scope.toggleOrganizationEditor = function () {
+    $scope.isOrganizationEditor = !$scope.isOrganizationEditor;
+  }
+  
   // If profile is local, set preferred county code to checkin location.
   function setPreferedCountries() {
     var address, match, countryMatch, iso2Codes;
