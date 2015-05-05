@@ -105,6 +105,10 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     $scope.profile.type = 'global';
     // Set permissions at same time.
     setPermissions();
+
+    // Insure fields get instantiated as array, not objects.
+    $scope.profile.organization = [];
+    $scope.profile.image = [];
   }
 
   // Add the given and family name from the auth service as a default value.
@@ -714,7 +718,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   $scope.toggleOrganizationEditor = function () {
     $scope.isOrganizationEditor = !$scope.isOrganizationEditor;
   }
-  
+
   // If profile is local, set preferred county code to checkin location.
   function setPreferedCountries() {
     var address, match, countryMatch, iso2Codes;
