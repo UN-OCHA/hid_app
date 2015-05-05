@@ -352,6 +352,10 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     }
   };
 
+  $scope.updateOrganization = function(){
+    $scope.isOrganizationEditor = false;
+  }
+
   $scope.selectCountry = function(item, isInit) {
     if (item && item.hasOwnProperty('remote_id')) {
       $scope.regionsPromise = profileService.getAdminArea(item.remote_id).then(function(data) {
