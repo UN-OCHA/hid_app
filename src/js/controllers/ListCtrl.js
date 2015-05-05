@@ -49,24 +49,21 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   else {
     // Create bundles and disasters array.
     if ($scope.operations.hasOwnProperty($scope.locationId)) {
-      var allBundles = listObjectToArray($scope.operations[$scope.locationId].bundles);
-      $scope.bundles = [];
-      $scope.protectedBundles = [];
       $scope.offices = [];
+      $scope.protectedBundles = [];
+      $scope.bundles = listObjectToArray($scope.operations[$scope.locationId].bundles);
 
       angular.forEach($scope.operations[$scope.locationId].offices, function(value) {
         $scope.offices.push(value);
       }, $scope.offices);
 
-      angular.forEach(allBundles, function(bundle){
-        if (bundle.value.hid_access === "open") {
-          $scope.bundles.push(bundle);
-        }
-        else {
-          $scope.protectedBundles.push(bundle);
+      angular.forEach($scope.bundles, function(bundle){
+        if (bundle.value.hid_access !== "open") {
+          $scope.protectedBundles.push(bundle.value.name);
         }
       });
 
+      $scope.displayBundle = $scope.query.protectedBundles || $scope.query.bundle || null;
       $scope.location = $scope.operations[$scope.locationId].name;
       $scope.disasterOptions = listObjectToArray($scope.operations[$scope.locationId].disasters);
     }
@@ -254,6 +251,17 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     $scope.submitSearch();
   };
 
+  $scope.submitBundle = function() {
+    console.log('submitBundle', this)
+    var bundle = this.displayBundle,
+        match = filter($scope.protectedBundles, function(d) {return d === bundle;});
+
+    $scope.query.bundle = match.length ? null : bundle;
+    $scope.query.protectedBundles = match.length ? bundle : null;
+
+    console.log(bundle, match, $scope.query);
+    $scope.submitSearch();
+  }
   // Sets sets url params thru $location.search().
   $scope.submitSearch = function() {
     var query = $scope.query,
