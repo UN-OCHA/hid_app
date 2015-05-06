@@ -29,7 +29,7 @@
           <a class="btn btn-primary btn-lg btn-block" ng-show="userCanSendClaimEmail" ng-click="confirmSendEmail = !confirmSendEmail" translate>Send Claim Email</a>
           <a ng-show="confirmSendEmail" ng-disabled="sendingClaimEmail" class="fade btn btn-warning btn-lg btn-block" ng-click="sendClaimEmail()" translate>Confirm Send Claim Email</a>
           <div class="org-editor-area" ng-show="isOrganizationEditor">
-           <h4 translate>Organizational Information</h4>
+           <h4 translate>Organization Administration</h4>
             <label class="control-label" for="organizations" translate>Affiliation</label>
             <select class="form-control" ng-model="selectedOrg" ng-options="organization.organizationName for organization in organizationOptions">
             </select>

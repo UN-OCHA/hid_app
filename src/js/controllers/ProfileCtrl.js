@@ -610,27 +610,25 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       profile.verified = $scope.verified;
 
       //Organization Editor
-      if ($scope.userCanAssignOrganizationEditor){
-        //Remove any existing OrgEditor role for current location
-        if ($scope.orgEditorRoles){
-          $scope.orgEditorRoles = $filter('filter')($scope.orgEditorRoles, {locationId: '!'+ $scope.profile.locationId}, true);
-        }
-
-        //If organization editor is selected and location and organization are valid, add orgEditorRole
-        if ($scope.isOrganizationEditor && $scope.profile.locationId && $scope.profile.organization[0] && $scope.profile.organization[0].remote_id) {
-          var locationId = $scope.profile.locationId;
-          var organizationId = $scope.profile.organization[0].remote_id;
-          var organizationName = $scope.profile.organization[0].name;
-
-          //Verify the OrganizationEditor doesn't already exist
-          if (!findOrganizationEditor(locationId, organizationId)){
-            $scope.orgEditorRoles.push({'locationId': locationId, 'organizationId': organizationId, 'organizationName': organizationName});
-          }
-          //Set verified = true for all Organization editors
-          profile.verified = true;
-        }
-        profile.orgEditorRoles = $scope.orgEditorRoles;
+      //Remove any existing OrgEditor role for current location
+      if ($scope.orgEditorRoles){
+        $scope.orgEditorRoles = $filter('filter')($scope.orgEditorRoles, {locationId: '!'+ $scope.profile.locationId}, true);
       }
+
+      //If organization editor is true and location and organization are valid, add orgEditorRole
+      if ($scope.isOrganizationEditor && $scope.profile.locationId && $scope.profile.organization[0] && $scope.profile.organization[0].remote_id) {
+        var locationId = $scope.profile.locationId;
+        var organizationId = $scope.profile.organization[0].remote_id;
+        var organizationName = $scope.profile.organization[0].name;
+
+        //Verify the OrganizationEditor doesn't already exist
+        if (!findOrganizationEditor(locationId, organizationId)){
+          $scope.orgEditorRoles.push({'locationId': locationId, 'organizationId': organizationId, 'organizationName': organizationName});
+        }
+        //Set verified = true for all Organization editors
+        profile.verified = true;
+      }
+      profile.orgEditorRoles = $scope.orgEditorRoles;
 
       $scope.submitProcessing = true;
       profileService.saveContact(profile).then(function(data) {
