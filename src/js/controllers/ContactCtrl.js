@@ -4,7 +4,9 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     return false;
   }
 
-  var contact = profileData.contact;
+  var contact = profileData.contact,
+      filter = $filter('filter');
+
   $scope.contact = contact;
   $scope.profileContacts = profileData.contacts;
   $scope.globalContactId = profileData.global._id;
@@ -20,10 +22,9 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   // is an admin or a manager/editor in the location of this contact.
   $scope.userCanSendClaimEmail = profileService.canSendClaimEmail(contact);
 
-  var roleFilter = $filter('filter');
   $scope.contact.protectedRolesByName = [];
   angular.forEach($scope.contact.protectedRoles, function(value, key) {
-    var role = roleFilter(protectedRoles,function(d) { return d.id === value;});
+    var role = filter(protectedRoles,function(d) { return d.id === value;});
     if (role && role[0] && role[0].name){
       var roleName = role[0].name;
       this.push(roleName);
@@ -39,6 +40,17 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   $scope.isOrganizationEditor = profileService.isOrganizationEditor(userData.profile, profileData);
   setEditorOrganizations();
 
+  $scope.addedToContacts = false;
+  // Check if contact is added to My Contacts.
+  if (userData.profile.contactLists && userData.profile.contactLists.length) {
+    var listMatch = filter(userData.profile.contactLists, function(d) {return d.name === "My Contacts"});
+    if (listMatch.length && listMatch[0].contacts && listMatch[0].contacts.length) {
+      if (listMatch[0].contacts.indexOf(contact._id) !== -1) {
+        $scope.addedToContacts = true;
+      }
+    }
+  }
+
   if ($scope.contact.departureDate) {
     var date = new Date($scope.contact.departureDate),
         dd = date.getDate(),
@@ -53,6 +65,10 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
 
   $scope.locationText = function() {
     return $scope.contact.location || gettextCatalog.getString('Global');
+  }
+
+  $scope.contactListText = function() {
+    return $scope.addedToContacts ? gettextCatalog.getString('Remove from My Contacts') : gettextCatalog.getString('Add to My Contacts');
   }
 
   $scope.setHttp = function (uri) {
@@ -78,6 +94,18 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     else {
       $location.path('/dashboard');
     }
+  }
+
+  $scope.updateContactList = function () {
+    profileService.saveToContactList(contact._id, $scope.addedToContacts).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        profileService.clearData();
+        $route.reload();
+      }
+      else {
+        alert('error');
+      }
+    });
   }
 
   $scope.checkout = function (cid) {

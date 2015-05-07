@@ -22,6 +22,7 @@
           <a class="btn btn-warning btn-lg btn-block" href ng-click="back();"><i
           class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a>
           <a class="btn btn-primary btn-lg btn-block" ng-show="userCanEditProfile" href="#/profile/{{contact._id}}" translate>Edit Profile</a>
+          <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="updateContactList()" ng-bind="contactListText()"></button>
           <a class="btn btn-primary btn-lg btn-block" ng-show="userCanCheckIn" href="#/checkin/{{profile._id}}" translate>Check-in User</a>
           <a class="btn btn-primary btn-lg btn-checkout btn-block" ng-if="contact.type === 'local'" ng-show="userCanCheckOut" ng-click="contact.confirmDelete = !contact.confirmDelete" translate>Check-out User</a>
           <a ng-show="contact.confirmDelete" class="fade btn btn-warning btn-lg btn-block" ng-click="checkout(contact._id)" translate>Confirm User Checkout</a>

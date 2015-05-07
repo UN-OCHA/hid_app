@@ -40,6 +40,9 @@
               <li ng-if="contact.ql.userCanEditProfile">
                 <a role="menuitem" tabindex="-1" href="#/profile/{{contact._id}}" translate>Edit</a>
               </li>
+              <li ng-class="{'disabled':contact.ql.contactListState === 'inProgress'}">
+                <button role="menuitem" tabindex="-1" class="btn btn-link" ng-click="updateContactList(contact)" ng-class="{'btn-warning': contact.ql.contactListState === 'confirm'}" ng-bind="contactListText(contact)"></button>
+              </li>
               <li ng-if="contact.ql.userCanCheckIn">
                 <a role="menuitem" tabindex="-1" href="#/checkin{{contact.ql.isOwn ? '' : '/' + contact._profile._id}}" translate>Check-in</a>
               </li>
