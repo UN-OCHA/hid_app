@@ -20,6 +20,7 @@
       saveProfile: saveProfile,
       deleteProfile: deleteProfile,
       saveContact: saveContact,
+      saveToContactList: saveToContactList,
       requestClaimEmail: requestClaimEmail,
       hasRole: hasRole,
       getCountries: getCountries,
@@ -243,6 +244,24 @@
         url: contactsId.profilesBaseUrl + "/v0/contact/save",
         params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
         data: contact
+      });
+      return(request.then(handleSuccess, handleError));
+    }
+
+    // Save a contact to personal (create or update existing).
+    function saveToContactList(contactId, remove) {
+      var request;
+      request = $http({
+        method: "post",
+        url: contactsId.profilesBaseUrl + "/v0/profile/save",
+        params: {
+          access_token: authService.getAccessToken(),
+          field: "contactLists",
+          name: "My Contacts",
+          action: !!remove ? 'remove' : 'add',
+          contactId: contactId
+        },
+        data: cacheUserData.profile
       });
       return(request.then(handleSuccess, handleError));
     }
