@@ -100,13 +100,23 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     return acronymMatch ? acronymMatch[1] : orgName;
   };
 
+  var myContacts = [];
+  if (userData.profile.contactLists && userData.profile.contactLists.length) {
+    var listMatch = filter(userData.profile.contactLists, function(d){return d.name === "My Contacts"});
+    if (listMatch.length && listMatch[0].contacts) {
+      myContacts = listMatch[0].contacts;
+    }
+  }
+
   $scope.contactInit = function() {
     var isOwn = userData.profile._id === this.contact._profile._id;
+
     // Create an obj for quicklink vars.
     this.contact.ql = {
       isOwn:                  isOwn,
       keyContact:             this.contact.keyContact,
       verified:               this.contact._profile.verified,
+      myContact:              (myContacts.indexOf(this.contact._id) !== -1),
       userCanEditProfile:     isOwn || profileService.canEditProfile($scope.locationId),
       userCanCheckIn:         profileService.canCheckIn(this.contact._profile, userData),
       userCanCheckOut:        profileService.canCheckOut(this.contact, userData),
@@ -173,6 +183,24 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
       contact.ql.checkOutState = "confirm";
     }
   };
+
+  $scope.updateContactList = function (contact) {
+    if (contact.ql.contactListState === "confirm") {
+      contact.ql.contactListState = 'inProgress';
+      profileService.saveToContactList(contact._id, contact.ql.myContact).then(function(data) {
+        if (data && data.status && data.status === 'ok') {
+          profileService.clearData();
+          $route.reload();
+        }
+        else {
+          alert('error');
+        }
+      });
+    }
+    else if (typeof contact.ql.contactListState === "undefined") {
+      contact.ql.contactListState = "confirm";
+    }
+  }
 
   $scope.updateProfile = function (contact, field) {
     var access = field === 'verified' ?  contact.ql.userCanEditVerified : contact.ql.userCanEditKeyContact,
@@ -442,6 +470,17 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
         return gettextCatalog.getString("Deleting...");
       default:
         return gettextCatalog.getString("Delete account");
+    }
+  }
+
+  $scope.contactListText = function(contact) {
+    switch (contact.ql.contactListState) {
+      case "confirm":
+        return gettextCatalog.getString("Are you sure?");
+      case "inProgress":
+        return contact.ql.myContact ? gettextCatalog.getString("Removing...") : gettextCatalog.getString("Adding...");
+      default:
+        return contact.ql.myContact ? gettextCatalog.getString('Remove from My Contacts') : gettextCatalog.getString('Add from My Contacts');
     }
   }
 
