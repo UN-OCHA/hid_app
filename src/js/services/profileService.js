@@ -41,7 +41,8 @@
       canDeleteAccount: canDeleteAccount,
       canAssignOrganizationEditor: canAssignOrganizationEditor,
       isOrganizationEditor: isOrganizationEditor,
-      canUseAdminFilters: canUseAdminFilters
+      canUseAdminFilters: canUseAdminFilters,
+      sendNotificationEmail: sendNotificationEmail
     });
 
     // Get user data.
@@ -268,6 +269,38 @@
 
     // Request a claim account email.
     function requestClaimEmail(email, adminName) {
+      var request,
+        data = {
+          email: email,
+          emailFlag: "claim",
+          adminName: adminName
+        };
+      request = $http({
+        method: "post",
+        url: contactsId.profilesBaseUrl + "/v0/contact/resetpw",
+        params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
+        data: data
+      });
+      return(request.then(handleSuccess, handleError));
+    }
+
+    // Send notification Email
+    function sendNotificationEmail(email) {
+      var request,
+        data = {
+          notifyEmail: email
+        };
+      request = $http({
+        method: "post",
+        url: contactsId.profilesBaseUrl + "/v0/contact/notifyContact",
+        params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
+        data: data
+      });
+      return(request.then(handleSuccess, handleError));
+    }
+
+    // Request a claim account email.
+    function send(email, adminName) {
       var request,
         data = {
           email: email,
