@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-05-08T18:29:38.739Z\n"
+"Project-Id-Version: 2015-05-08T19:39:17.001Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
@@ -270,6 +270,10 @@ msgstr ""
 
 #: src/partials/browser-alert.html
 msgid "For security and performance, this is built to run in Internet Explorer 10 and above, Apple Safari, Google Chrome, or Mozilla Firefox."
+msgstr ""
+
+#: src/partials/list.html
+msgid "Frequent Searches"
 msgstr ""
 
 #: src/partials/dashboard.html

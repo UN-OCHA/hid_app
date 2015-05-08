@@ -16,6 +16,14 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.countries = countries;
   $scope.adminRoleOptions = roles;
 
+  $scope.shortcuts = [
+    {title: "Humanitarian Coordinator", path: "/list/global?localContacts&protectedRoles=56026"},
+    {title: "Head of Agencies", path: "/list/global?localContacts&protectedRoles=2377"},
+    {title: "Cluster Coordinators", path: "/list/global?localContacts&protectedRoles=2381"},
+    {title: "Information Management Officers", path: "/list/global?localContacts&protectedRoles=2387"},
+    {title: "Donors", path: "/list/global?localContacts&protectedRoles=56025"},
+  ];
+
   $scope.contactsPromise;
   $scope.query = $location.search();
   $scope.loadLimit = 30;
@@ -277,6 +285,10 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     // Submit search after clearing query to show all.
     $scope.submitSearch();
   };
+
+  $scope.selectShortcut = function() {
+    var url = $location.url(this.shortcut.path);
+  }
 
   $scope.submitBundle = function() {
     var bundle = this.displayBundle,
