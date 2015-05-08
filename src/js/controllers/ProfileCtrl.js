@@ -468,7 +468,12 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
   $scope.back = function () {
     if (history.length) {
-      history.back();
+      // Avoid IE 11 issue that causes "10 $digest() iterations reached" if
+      // history.back() happens in digest.
+      // http://stackoverflow.com/questions/13853844/angular-js-ie-error-10-digest-iterations-reached-aborting/23915946#23915946
+      setTimeout(function () {
+        history.back();
+      }, 1);
     }
     else {
       $location.path('/dashboard');
