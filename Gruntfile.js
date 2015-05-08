@@ -81,7 +81,7 @@ module.exports = function(grunt) {
       pot: {
         files: {
           'src/po/template.pot': [
-            'src/js/app.js',
+            'src/js/**/*.js',
             'src/index.html',
             'src/partials/*.html'
           ]
