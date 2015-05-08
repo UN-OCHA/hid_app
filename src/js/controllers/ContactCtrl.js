@@ -43,7 +43,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   $scope.addedToContacts = false;
   // Check if contact is added to My Contacts.
   if (userData.profile.contactLists && userData.profile.contactLists.length) {
-    var listMatch = filter(userData.profile.contactLists, function(d) {return d.name === "My Contacts"});
+    var listMatch = filter(userData.profile.contactLists, function(d) {return d.name === "contacts"});
     if (listMatch.length && listMatch[0].contacts && listMatch[0].contacts.length) {
       if (listMatch[0].contacts.indexOf(contact._id) !== -1) {
         $scope.addedToContacts = true;
