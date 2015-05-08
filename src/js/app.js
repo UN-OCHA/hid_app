@@ -62,7 +62,7 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
 app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", ContactCtrl]);
 app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", CreateAccountCtrl]);
-app.controller("DashboardCtrl", ["$scope", "$route", "profileService", "globalProfileId", "userData", DashboardCtrl]);
+app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "profileService", "globalProfileId", "userData", DashboardCtrl]);
 app.controller("DefaultCtrl", ["$location", "authService", DefaultCtrl]);
 app.controller("404Ctrl", ["$scope", FourZeroFourCtrl]);
 app.controller("HeaderCtrl", ["$scope", "$rootScope", "$location", "profileService", "gettextCatalog", HeaderCtrl]);
