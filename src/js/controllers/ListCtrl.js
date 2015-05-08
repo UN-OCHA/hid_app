@@ -496,7 +496,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
       case "inProgress":
         return contact.ql.myContact ? gettextCatalog.getString("Removing...") : gettextCatalog.getString("Adding...");
       default:
-        return contact.ql.myContact ? gettextCatalog.getString('Remove from My Contacts') : gettextCatalog.getString('Add from My Contacts');
+        return contact.ql.myContact ? gettextCatalog.getString('Remove from My Contacts') : gettextCatalog.getString('Add to My Contacts');
     }
   }
 
