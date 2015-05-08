@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-04-30T20:53:20.109Z\n"
+"Project-Id-Version: 2015-05-08T18:29:38.739Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
@@ -28,12 +28,12 @@ msgstr ""
 msgid "Admin Role"
 msgstr ""
 
-#: src/partials/dashboard.html
-msgid "Again, thanks for helping to make humanitarian contact lists accurate."
+#: src/partials/contact.html
+msgid "Affiliation"
 msgstr ""
 
-#: src/partials/contact.html
-msgid "Apply Update"
+#: src/partials/dashboard.html
+msgid "Again, thanks for helping to make humanitarian contact lists accurate."
 msgstr ""
 
 #: src/partials/createAccount.html
@@ -112,6 +112,7 @@ msgstr ""
 msgid "Contacts"
 msgstr ""
 
+#: src/partials/list.html
 #: src/partials/profile.html
 msgid "Coordination Office"
 msgstr ""
@@ -136,6 +137,10 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "Create a Responder"
+msgstr ""
+
+#: src/partials/contact.html
+msgid "Created"
 msgstr ""
 
 #: src/partials/createAccount.html
@@ -371,6 +376,10 @@ msgstr ""
 msgid "Key Contact"
 msgstr ""
 
+#: src/partials/contact.html
+msgid "Last Updated"
+msgstr ""
+
 #: src/partials/profile.html
 msgid "Link to a photo you've already uploaded to the internet. The URL must end in .JPG, .PNG, or .GIF."
 msgstr ""
@@ -405,6 +414,10 @@ msgid "Manage your details on global and emergency-level humanitarian contact li
 msgstr ""
 
 #: src/partials/dashboard.html
+msgid "My Contacts"
+msgstr ""
+
+#: src/partials/dashboard.html
 msgid "My checked-in lists"
 msgstr ""
 
@@ -433,6 +446,10 @@ msgstr ""
 msgid "Number"
 msgstr ""
 
+#: src/partials/list.html
+msgid "Office"
+msgstr ""
+
 #: src/partials/about.html
 msgid "Once registered, simply check into a country / emergency and specify your contact details for the contact list. You are always in control. You choose what details are available. When you are no longer responding, simply check out and your details will automatically be removed."
 msgstr ""
@@ -455,12 +472,15 @@ msgid "Organization"
 msgstr ""
 
 #: src/partials/contact.html
-#: src/partials/profile.html
-msgid "Organization Editor"
+msgid "Organization Administration"
 msgstr ""
 
-#: src/partials/createAccount.html
-msgid "Organization is required."
+#: src/partials/profile.html
+msgid "Organization Editor for {{profile.organization[0].name}}"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Organization Type"
 msgstr ""
 
 #: src/partials/profile.html
@@ -507,10 +527,6 @@ msgstr ""
 msgid "Profile Image"
 msgstr ""
 
-#: src/partials/list.html
-msgid "Protected Group"
-msgstr ""
-
 #: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Protected Groups"
@@ -536,6 +552,10 @@ msgstr ""
 msgid "Remove Image"
 msgstr ""
 
+#: src/partials/profile.html
+msgid "Report a Problem"
+msgstr ""
+
 #: src/partials/createAccount.html
 #: src/partials/profile.html
 msgid "Request to"
@@ -556,6 +576,10 @@ msgstr ""
 #: src/partials/contact.html
 #: src/partials/list.html
 msgid "Role"
+msgstr ""
+
+#: src/partials/contact.html
+msgid "Save Verification"
 msgstr ""
 
 #: src/partials/list.html
@@ -593,6 +617,10 @@ msgstr ""
 #: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Send Claim Email"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Send Notification"
 msgstr ""
 
 #: src/partials/profile.html
