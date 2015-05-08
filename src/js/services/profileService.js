@@ -27,6 +27,7 @@
       getAdminArea: getAdminArea,
       getRoles: getRoles,
       getProtectedRoles: getProtectedRoles,
+      getOrgTypes: getOrgTypes,
       canEditProfile: canEditProfile,
       canEditRoles: canEditRoles,
       canEditProtectedRoles: canEditProtectedRoles,
@@ -389,6 +390,23 @@
         promise = getAppData()
         .then(function(data) {
           return (data && data.protectedRoles) ? data.protectedRoles : false;
+        });
+        return promise;
+      }
+    }
+
+    function getOrgTypes() {
+      var promise;
+
+      if (cacheAppData) {
+        promise = $q.defer();
+        promise.resolve(cacheAppData.orgTypes);
+        return promise.promise;
+      }
+      else {
+        promise = getAppData()
+        .then(function(data) {
+          return (data && data.orgTypes) ? data.orgTypes : false;
         });
         return promise;
       }

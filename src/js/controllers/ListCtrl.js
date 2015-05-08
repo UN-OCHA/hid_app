@@ -1,5 +1,5 @@
-function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries, roles, ngDialog) {
-  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'office.name', 'organization.name', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'],
+function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, orgTypes, countries, roles, ngDialog) {
+  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'office.name', 'organization.name', 'organization.org_type_remote_id', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'],
       filter = $filter('filter');
 
   $scope.location = '';
@@ -11,7 +11,8 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.bundles = [];
   $scope.disasterOptions = [];
   $scope.organizations = [];
-  $scope.protectedRoles = [];
+  $scope.orgTypes = orgTypes;
+  $scope.protectedRoles = protectedRoles;
   $scope.countries = countries;
   $scope.adminRoleOptions = roles;
 
@@ -88,9 +89,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
       });
     }
   }
-
-  // Create protected roles array.
-  $scope.protectedRoles = protectedRoles;
 
   $scope.parseAcronym = function (orgName) {
     if (!orgName || !orgName.length) {
