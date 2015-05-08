@@ -1,9 +1,11 @@
-function DashboardCtrl($scope, $route, profileService, globalProfileId, userData) {
+function DashboardCtrl($scope, $route, $filter, profileService, globalProfileId, userData) {
+  var filter = $filter('filter');
+
   $scope.logoutPath = '/#logout';
   $scope.globalProfileId = globalProfileId;
   $scope.userData = userData;
-
   $scope.userCanCreateAccount = profileService.canCreateAccount();
+  $scope.localContacts = filter(userData.contacts, function(d){ return d.type === "local"})
 
   $scope.checkout = function (cid) {
     var contact = {
