@@ -88,11 +88,28 @@
 
     <div class="actions-wrapper col-xs-12 col-sm-4 col-md-3">
       <form class="filter-form actions">
+        <div class="form-group" ng-show="locationId === 'global'">
+          <label class="control-label element-invisible" for="shortcuts" translate>Frequent Searches</label>
+          <ui-select
+            ng-model="shortcut"
+            theme="bootstrap"
+            class="form-control"
+            name="shortcuts"
+            search-enabled="false"
+            on-select="selectShortcut()">
+              <ui-select-match allow-clear placeholder="{{'Frequent Searches'|translate}}">{{$select.selected.title}}</ui-select-match>
+              <ui-select-choices repeat="shortcut in shortcuts">
+                <div ng-bind-html="shortcut.title"></div>
+              </ui-select-choices>
+          </ui-select>
+        </div>
+
         <div class="form-group form-group-reset clearfix">
           <h2>
             <small class="control-label"><span class='title' translate>Filter Results</span> <input class="btn btn-warning btn-lg btn-reset" type="button" ng-if="showResetBtn" ng-click="resetSearch()" value="{{'Clear All'|translate}}"/></small>
           </h2>
         </div>
+
         <div class="form-group" ng-show="bundles.length">
           <label class="control-label element-invisible" for="bundle" translate>Group</label>
           <ui-select
@@ -121,6 +138,22 @@
               <ui-select-match allow-clear placeholder="{{'Organization'|translate}}">{{$select.selected.name}}</ui-select-match>
               <ui-select-choices repeat="org.name as org in organizations | orderBy:'name'" refresh="refreshOrganization($select, 2)" ui-disable-choice="org.disable">
                 <div ng-bind-html="org.alt || (org.name | highlight: $select.search) "></div>
+              </ui-select-choices>
+          </ui-select>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label element-invisible" for="orgType" translate>Organization Type</label>
+          <ui-select
+            ng-model="query['organization.org_type_remote_id']"
+            theme="bootstrap"
+            class="form-control"
+            name="bootstrap"
+            search-enabled="false"
+            on-select="submitSearch()">
+              <ui-select-match allow-clear placeholder="{{'Organization Type'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="orgType.id as orgType in orgTypes | orderBy:'name'">
+                <div ng-bind-html="orgType.name"></div>
               </ui-select-choices>
           </ui-select>
         </div>

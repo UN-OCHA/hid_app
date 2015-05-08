@@ -144,6 +144,14 @@
               <span class="group-label" translate>Role</span>
               <span class="title"><strong>{{contact.protectedRolesByName.join(', ')}}</strong></span>
             </div>
+            <div class="right-sidebar-group" ng-if="contact.displayRevisedDate" >
+              <span class="group-label" translate>Last Updated</span>
+              <span class="title"><strong>{{contact.displayRevisedDate}}</strong></span>
+            </div>
+            <div class="right-sidebar-group" ng-if="contact.displayCreatedDate">
+              <span class="group-label" translate>Created</span>
+              <span class="title"><strong>{{contact.displayCreatedDate}}</strong></span>
+            </div>
           </div>
         </div>
       </div>

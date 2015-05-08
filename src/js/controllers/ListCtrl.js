@@ -1,5 +1,5 @@
-function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, countries, roles, ngDialog) {
-  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'office.name', 'organization.name', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'],
+function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, orgTypes, countries, roles, ngDialog) {
+  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'office.name', 'organization.name', 'organization.org_type_remote_id', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'],
       filter = $filter('filter');
 
   $scope.location = '';
@@ -11,15 +11,25 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.bundles = [];
   $scope.disasterOptions = [];
   $scope.organizations = [];
-  $scope.protectedRoles = [];
+  $scope.orgTypes = orgTypes;
+  $scope.protectedRoles = protectedRoles;
   $scope.countries = countries;
   $scope.adminRoleOptions = roles;
+
+  $scope.shortcuts = [
+    {title: "Humanitarian Coordinator", path: "/list/global?localContacts&protectedRoles=56026"},
+    {title: "Head of Agencies", path: "/list/global?localContacts&protectedRoles=2377"},
+    {title: "Cluster Coordinators", path: "/list/global?localContacts&protectedRoles=2381"},
+    {title: "Information Management Officers", path: "/list/global?localContacts&protectedRoles=2387"},
+    {title: "Donors", path: "/list/global?localContacts&protectedRoles=56025"},
+  ];
 
   $scope.contactsPromise;
   $scope.query = $location.search();
   $scope.loadLimit = 30;
   $scope.contactsCount = 0;
   $scope.showResetBtn = Object.keys($scope.query).length;
+  $scope.isContactList = ($scope.locationId !== 'global' && !$scope.locationId.match(/hrinfo:/));
 
   $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
   $scope.emailExportTpl = contactsId.sourcePath + '/partials/emailExport.html';
@@ -33,7 +43,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     $scope.query.localContacts = false;
   }
 
-  if ($scope.locationId === 'global') {
+  if ($scope.locationId === 'global' || $scope.isContactList) {
     var allDisasters = {};
     angular.forEach(operations, function (oper, opId) {
       if (oper.disasters) {
@@ -89,9 +99,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     }
   }
 
-  // Create protected roles array.
-  $scope.protectedRoles = protectedRoles;
-
   $scope.parseAcronym = function (orgName) {
     if (!orgName || !orgName.length) {
       return '';
@@ -102,7 +109,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
   var myContacts = [];
   if (userData.profile.contactLists && userData.profile.contactLists.length) {
-    var listMatch = filter(userData.profile.contactLists, function(d){return d.name === "My Contacts"});
+    var listMatch = filter(userData.profile.contactLists, function(d){return d.name === "contacts"});
     if (listMatch.length && listMatch[0].contacts) {
       myContacts = listMatch[0].contacts;
     }
@@ -279,6 +286,10 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     $scope.submitSearch();
   };
 
+  $scope.selectShortcut = function() {
+    var url = $location.url(this.shortcut.path);
+  }
+
   $scope.submitBundle = function() {
     var bundle = this.displayBundle,
         match = filter($scope.protectedBundles, function(d) {return d === bundle;});
@@ -413,7 +424,12 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   }
 
   $scope.locationText = function() {
-    return $scope.location || gettextCatalog.getString('Global Contact List');
+    if ($scope.isContactList) {
+      return gettextCatalog.getString('My Contact List');
+    }
+    else {
+      return $scope.location || gettextCatalog.getString('Global Contact List');
+    }
   }
 
   $scope.orphanText = function(contact) {
@@ -523,6 +539,12 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     else {
       delete query.keyContact;
     }
+
+    if ($scope.isContactList) {
+      query.contactList = true;
+      delete query.type;
+    }
+
     query.status = 1;
     query.limit = $scope.loadLimit;
     query.skip = $scope.contactsCount;

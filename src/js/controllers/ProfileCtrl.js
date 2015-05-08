@@ -337,12 +337,17 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     if (select.search.length > (lengthReq || 0)) {
       select.searching = true;
 
-      $http.get($scope.hrinfoBaseUrl + '/hid/organizations/autocomplete/' + encodeURIComponent(select.search))
+      $http.get($scope.hrinfoBaseUrl + '/hid/organizations/extended/autocomplete/' + encodeURIComponent(select.search))
         .then(function(response) {
           select.searching = false;
           $scope.organizations = [];
           angular.forEach(response.data, function(value, key) {
-            this.push({'name': value, 'remote_id': key});
+            this.push({
+              'name': value.name,
+              'org_type_name': value.org_type_name,
+              'org_type_remote_id': value.org_type_id,
+              'remote_id': key
+            });
           }, $scope.organizations);
 
           if (!$scope.organizations.length) {
