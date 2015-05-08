@@ -52,15 +52,15 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   }
 
   if ($scope.contact.departureDate) {
-    var date = new Date($scope.contact.departureDate),
-        dd = date.getDate(),
-        mm = date.getMonth()+1,
-        yyyy = date.getFullYear();
+    $scope.contact.displayDepartureDate =  formatDate($scope.contact.departureDate);
+  }
 
-    dd = (dd<10) ? '0' + dd : dd;
-    mm = (mm<10) ? '0' + mm : mm;
+  if ($scope.contact.revised){
+    $scope.contact.displayRevisedDate = formatDateTime($scope.contact.revised);
+  }
 
-    $scope.contact.displayDepartureDate = yyyy + "-" + mm + "-" + dd;
+  if ($scope.contact.created){
+    $scope.contact.displayCreatedDate = formatDateTime($scope.contact.created);
   }
 
   $scope.locationText = function() {
@@ -240,5 +240,37 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     if (editorOrgs[0]){
       $scope.selectedOrg = editorOrgs[0];
     }
+  }
+
+  function formatDate(dateValue){
+    var date = new Date(dateValue),
+    dd = date.getDate(),
+    mm = date.getMonth()+1,
+    yyyy = date.getFullYear(),
+    dateString = '';
+
+    dd = (dd<10) ? '0' + dd : dd;
+    mm = (mm<10) ? '0' + mm : mm;
+
+    dateString = yyyy + "-" + mm + "-" + dd;
+    return dateString;
+  }
+
+  function formatDateTime(dateTimeValue){
+    var date = new Date(dateTimeValue),
+    dd = date.getDate(),
+    mm = date.getMonth()+1,
+    yyyy = date.getFullYear(),
+    hh = date.getHours(),
+    mmm = date.getMinutes(),
+    dateString = '';
+
+    dd = (dd<10) ? '0' + dd : dd;
+    mm = (mm<10) ? '0' + mm : mm;
+    hh = (hh<10) ? '0' + hh : hh;
+    mmm = (mmm<10) ? '0' + mmm : mmm;
+
+    dateString = yyyy + "-" + mm + "-" + dd + '  ' + hh + ':' + mmm;
+    return dateString;
   }
 }
