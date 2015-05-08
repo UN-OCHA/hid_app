@@ -126,6 +126,22 @@
         </div>
 
         <div class="form-group">
+          <label class="control-label element-invisible" for="orgType" translate>Organization Type</label>
+          <ui-select
+            ng-model="query['organization.org_type_remote_id']"
+            theme="bootstrap"
+            class="form-control"
+            name="bootstrap"
+            search-enabled="false"
+            on-select="submitSearch()">
+              <ui-select-match allow-clear placeholder="{{'Organization Type'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="orgType.id as orgType in orgTypes | orderBy:'name'">
+                <div ng-bind-html="orgType.name"></div>
+              </ui-select-choices>
+          </ui-select>
+        </div>
+
+        <div class="form-group">
           <label class="control-label element-invisible" for="protectedRole" translate>Role</label>
           <ui-select
             ng-model="query.protectedRoles"

@@ -66,7 +66,7 @@ app.controller("DashboardCtrl", ["$scope", "$route", "profileService", "globalPr
 app.controller("DefaultCtrl", ["$location", "authService", DefaultCtrl]);
 app.controller("404Ctrl", ["$scope", FourZeroFourCtrl]);
 app.controller("HeaderCtrl", ["$scope", "$rootScope", "$location", "profileService", "gettextCatalog", HeaderCtrl]);
-app.controller("ListCtrl", ["$scope", "$route", "$routeParams", "$location", "$http", "$filter", "authService", "profileService", "userData", "operations", "gettextCatalog", "protectedRoles", "countries", "roles", "ngDialog", ListCtrl]);
+app.controller("ListCtrl", ["$scope", "$route", "$routeParams", "$location", "$http", "$filter", "authService", "profileService", "userData", "operations", "gettextCatalog", "protectedRoles", "orgTypes", "countries", "roles", "ngDialog", ListCtrl]);
 app.controller("LoginCtrl", ["$scope", "$location", "$routeParams", "authService", "profileService", LoginCtrl]);
 app.controller("LogoutCtrl", ["$scope", "authService", LogoutCtrl]);
 app.controller("ProfileCtrl", ["$scope", "$location", "$route", "$routeParams", "$filter", "$timeout", "$http", "profileService", "authService", "operations", "profileData", "countries", "roles", "protectedRoles", "gettextCatalog", "userData", ProfileCtrl]);
@@ -318,6 +318,9 @@ app.config(function($routeProvider, $locationProvider) {
       },
       protectedRoles : function(profileService) {
         return profileService.getProtectedRoles();
+      },
+      orgTypes : function(profileService) {
+        return profileService.getOrgTypes();
       }
     }
   }).
