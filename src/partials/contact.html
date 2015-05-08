@@ -29,6 +29,8 @@
           <a class="btn btn-primary btn-lg btn-block" ng-click="generateVcard()" translate>Export Contact Info</a>
           <a class="btn btn-primary btn-lg btn-block" ng-show="userCanSendClaimEmail" ng-click="confirmSendEmail = !confirmSendEmail" translate>Send Claim Email</a>
           <a ng-show="confirmSendEmail" ng-disabled="sendingClaimEmail" class="fade btn btn-warning btn-lg btn-block" ng-click="sendClaimEmail()" translate>Confirm Send Claim Email</a>
+          <a class="btn btn-lg btn-primary btn-block" ng-disabled="submitProcessing" ng-click="contact.confirmNotify = !contact.confirmNotify" translate>Report a Problem</a>
+          <a ng-show="contact.confirmNotify" ng-disabled="sendingNotifyEmail" class="fade btn btn-warning btn-lg btn-block" ng-click="reportProblem()" translate>Send Notification</a> 
           <div class="org-editor-area" ng-show="isOrganizationEditor">
            <h4 translate>Organization Administration</h4>
             <label class="control-label" for="organizations" translate>Affiliation</label>

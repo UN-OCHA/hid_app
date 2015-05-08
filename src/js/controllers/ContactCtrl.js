@@ -219,6 +219,41 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     });
   }
 
+  $scope.reportProblem = function () {
+    var recipientEmail = null;
+
+    if (contact.email && contact.email[0] && contact.email[0].address && String(contact.email[0].address).length) {
+      recipientEmail = contact.email[0].address
+    }
+    
+    var email = {
+      type: 'notify_problem',
+      recipientFirstName: contact.nameGiven,
+      recipientLastName: contact.nameFamily,
+      recipientEmail: recipientEmail,
+      adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
+      locationName: contact.location
+    };
+    if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
+      email.adminEmail = userData.global.email[0].address;
+    }
+
+    if (contact.email && contact.email[0] && contact.email[0].address && String(contact.email[0].address).length) {
+      $scope.sendingNotifyEmail = true;
+      var adminName = userData.global.nameGiven + " " + userData.global.nameFamily;
+      profileService.sendNotificationEmail(email).then(function(data) {
+        $scope.sendingNotifyEmail = false;
+        $scope.contact.confirmNotify = false;
+        if (data.status === 'ok') {
+          alert('Email sent successfully.');
+        }
+        else {
+          alert('An error occurred while attempting to send the report problem email. Please try again or contact an administrator.');
+        }
+      });
+    }
+  };
+
   function setEditorOrganizations() {
     var editorOrgs = [];
     var profile;
