@@ -9908,6 +9908,7 @@ table tr td:last-child {
 }
 .filter-form .form-group-reset h2 {
   margin-top: 0;
+  margin-bottom: 0;
 }
 .filter-form .form-group-reset h2 .title {
   padding: 10px 10px 16px 3px;
