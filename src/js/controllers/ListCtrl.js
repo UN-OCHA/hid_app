@@ -21,6 +21,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.loadLimit = 30;
   $scope.contactsCount = 0;
   $scope.showResetBtn = Object.keys($scope.query).length;
+  $scope.isContactList = ($scope.locationId !== 'global' && !$scope.locationId.match(/hrinfo:/));
 
   $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
   $scope.emailExportTpl = contactsId.sourcePath + '/partials/emailExport.html';
@@ -34,7 +35,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     $scope.query.localContacts = false;
   }
 
-  if ($scope.locationId === 'global') {
+  if ($scope.locationId === 'global' || $scope.isContactList) {
     var allDisasters = {};
     angular.forEach(operations, function (oper, opId) {
       if (oper.disasters) {
@@ -100,7 +101,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
   var myContacts = [];
   if (userData.profile.contactLists && userData.profile.contactLists.length) {
-    var listMatch = filter(userData.profile.contactLists, function(d){return d.name === "My Contacts"});
+    var listMatch = filter(userData.profile.contactLists, function(d){return d.name === "contacts"});
     if (listMatch.length && listMatch[0].contacts) {
       myContacts = listMatch[0].contacts;
     }
@@ -411,7 +412,12 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   }
 
   $scope.locationText = function() {
-    return $scope.location || gettextCatalog.getString('Global Contact List');
+    if ($scope.isContactList) {
+      return gettextCatalog.getString('My Contact List');
+    }
+    else {
+      return $scope.location || gettextCatalog.getString('Global Contact List');
+    }
   }
 
   $scope.orphanText = function(contact) {
@@ -521,6 +527,12 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     else {
       delete query.keyContact;
     }
+
+    if ($scope.isContactList) {
+      query.contactList = true;
+      delete query.type;
+    }
+
     query.status = 1;
     query.limit = $scope.loadLimit;
     query.skip = $scope.contactsCount;
