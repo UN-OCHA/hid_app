@@ -259,7 +259,7 @@
         params: {
           access_token: authService.getAccessToken(),
           field: "contactLists",
-          name: "My Contacts",
+          name: "contacts",
           action: !!remove ? 'remove' : 'add',
           contactId: contactId
         },
