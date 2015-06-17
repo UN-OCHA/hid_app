@@ -4,23 +4,29 @@
   "private": true,
   "description": "Humanitarian ID Web App",
   "devDependencies": {
-    "grunt": "~0.4.5",
+    "async": "~0.2.9",
     "bower": "^1.3.12",
-    "grunt-contrib-jshint": "~0.10.0",
+    "casperjs": "^1.1.0-beta3",
+    "grunt": "~0.4.5",
+    "grunt-angular-gettext": "~0.2.15",
+    "grunt-angular-templates": "~0.5.7",
     "grunt-bower-install-simple": "^1.1.0",
+    "grunt-cache-bust": "~0.4.13",
+    "grunt-contrib-clean": "~0.6.0",
     "grunt-contrib-compass": "^1.0.1",
     "grunt-contrib-concat": "~0.5.0",
     "grunt-contrib-copy": "~0.7.0",
-    "grunt-contrib-symlink": "~0.3.0",
-    "grunt-contrib-watch"  : "~0.4.3",
-    "grunt-angular-gettext": "~0.2.15",
     "grunt-contrib-cssmin": "~0.12.2",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-symlink": "~0.3.0",
     "grunt-contrib-uglify": "~0.9.1",
-    "grunt-contrib-clean": "~0.6.0",
-    "grunt-cache-bust": "~0.4.13",
-    "grunt-angular-templates": "~0.5.7",
-    "grunt-usemin": "~3.0.0",
+    "grunt-contrib-watch": "~0.4.3",
     "grunt-ng-annotate": "~0.10.0",
-    "casperjs": "*"
+    "grunt-usemin": "~3.0.0",
+    "process": "~0.5.1",
+    "yadda": "^0.11.6"
+  },
+  "scripts": {
+    "test": "node_modules/casperjs/bin/casperjs test yadda_tests/test.js"
   }
 }
