@@ -565,6 +565,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
             recipientLastName: profile.nameFamily,
             locationId: profile.locationId,
             locationName: profile.location,
+            locationType: profile.type,
             organization: profile.organization[0].name,
             organizationId: profile.organization[0].remote_id
           });
@@ -581,6 +582,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
             recipientEmail: profile.email[0].address,
             adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
             locationName: profile.location,
+            locationType: profile.type,
             addedGroups: bundlesAdded(),
             removedGroups: bundlesRemove()
           });
@@ -683,7 +685,9 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       recipientLastName: profileData.contact.nameFamily,
       recipientEmail: recipientEmail,
       adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-      locationName: profileData.contact.location
+      locationName: profileData.contact.location,
+      locationType: profileData.contact.type
+
     };
     if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
       email.adminEmail = userData.global.email[0].address;
