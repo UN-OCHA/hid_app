@@ -119,9 +119,9 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
       return;
     }
 
-    //Determine if user being checked out is the same as the logged in user
-    //If not, we need to add some properties to contact so profile service can send an email notifying the user
-    if (userData.profile.userid != profileData.profile.userid && $scope.contact.email[0]){
+    // Determine if user being checked in is the same as the logged in user and it is not an orphan account
+    // If neither are true, we need to add some properties to contact so profile service can send an email notifying the user
+    if (userData.profile.userid != profileData.profile.userid && $scope.contact.email[0] && profileData.profile.firstUpdate){
       //Set email fields
       var email = {
         type: 'notify_checkout',
@@ -232,7 +232,8 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
       recipientLastName: contact.nameFamily,
       recipientEmail: recipientEmail,
       adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-      locationName: contact.location
+      locationName: contact.location,
+      locationType: contact.type
     };
     if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
       email.adminEmail = userData.global.email[0].address;
