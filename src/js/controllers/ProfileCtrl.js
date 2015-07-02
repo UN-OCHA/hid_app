@@ -574,7 +574,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
           });
       }
 
-      // Determine if user being checked in is the same as the logged in user, it is not an orphan account and sendUpdateEmail checkbox is set to true
+      // Determine if user being checked in is the same as the logged in user. Also verify that it is not an orphan account and sendUpdateEmail checkbox is set to true
       // If neither are true, we need to add some properties to contact so profile service can send an email notifying the user
       if (userData.profile && userData.profile.userid && userData.profile.userid != profile.userid && profile.email[0] && profileData.profile.firstUpdate && $scope.email.send) {
         //Set email fields
@@ -663,7 +663,26 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
   $scope.deleteAccount = function () {
     var userid = profileData.profile.userid || profileData.profile._userid;
-    profileService.deleteProfile(userid).then(function(data) {
+    var profile = $scope.profile;
+    var email = {};
+
+    email = angular.extend(email, {
+      type: 'notify_delete',
+      recipientFirstName: profile.nameGiven,
+      recipientLastName: profile.nameFamily,
+      recipientEmail: profile.email[0].address,
+      adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
+      locationName: profile.location,
+      locationType: profile.type,
+      addedGroups: bundlesAdded(),
+      removedGroups: bundlesRemove()
+    });
+
+    if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
+      email.adminEmail = userData.global.email[0].address;
+    }
+
+    profileService.deleteProfile(userid, email).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         profileService.clearData();
         // Unreliable to know where user was so try to send them back.
