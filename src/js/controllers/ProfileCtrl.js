@@ -35,6 +35,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   $scope.countries = countries;
 
   $scope.submitProcessing = false;
+  $scope.email = [];
 
   // Exclude operations for which the user is already checked in.
   var availOperations = angular.copy(operations);
@@ -133,6 +134,8 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     setImage();
   }
 
+  //Set update email flag to true during form load
+  setUpdateEmail();
 
   // Toggle logic for verified field.
   $scope.setVerified = function() {
@@ -571,9 +574,9 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
           });
       }
 
-      // Determine if user being checked in is the same as the logged in user
-      // If not, we need to add some properties to contact so profile service can send an email notifying the user
-      if (userData.profile && userData.profile.userid && userData.profile.userid != profile.userid && profile.email[0]) {
+      // Determine if user being checked in is the same as the logged in user, it is not an orphan account and sendUpdateEmail checkbox is set to true
+      // If neither are true, we need to add some properties to contact so profile service can send an email notifying the user
+      if (userData.profile && userData.profile.userid && userData.profile.userid != profile.userid && profile.email[0] && profileData.profile.firstUpdate && $scope.email.send) {
         //Set email fields
         email = angular.extend(email, {
             type: checkinFlow ? 'notify_checkin' : 'notify_edit',
@@ -736,7 +739,9 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         status: 0
       };
 
-      if (userData.profile.userid != profileData.profile.userid && profileData.contact.email[0]) {
+       // Determine if user being checked in is the same as the logged in user, it is not an orphan account and sendUpdateEmail checkbox is set to true
+      // If neither are true, we need to add some properties to contact so profile service can send an email notifying the user
+      if (userData.profile.userid != profileData.profile.userid && profileData.contact.email[0] && profileData.profile.firstUpdate && $scope.email.send) {
         //Set email fields
         var email = {
           type: 'notify_checkout',
@@ -770,6 +775,14 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   $scope.toggleOrganizationEditor = function () {
     $scope.isOrganizationEditor = !$scope.isOrganizationEditor;
   }
+
+  $scope.toggleUpdateEmail = function () {
+    $scope.email.send = !$scope.email.send;
+  }
+
+  function setUpdateEmail() {
+    $scope.email.send = true;
+  }  
 
   // If profile is local, set preferred county code to checkin location.
   function setPreferedCountries() {
@@ -1029,7 +1042,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
 
   function setOrganizationEditor(){
-    //Check to see if Organization Editor Role exists for this profile's locationand organization
+    //Check to see if Organization Editor Role exists for this profile's location and organization
     if ($scope.profile.locationId && $scope.profile.organization[0] && $scope.profile.organization[0].remote_id){
       var locationId = $scope.profile.locationId;
       var organizationId = $scope.profile.organization[0].remote_id
