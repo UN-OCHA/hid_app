@@ -237,10 +237,28 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   }
 
   $scope.deleteAccount = function (contact) {
+    var email = {};
+    var profile = contact._profile;
+    
     if (contact.ql.deleteState === "confirm") {
       var userid = contact._profile.userid || contact._profile._userid;
       contact.ql.deleteState = "inProgress";
-      profileService.deleteProfile(userid).then(function(data) {
+
+      email = {
+        type: 'notify_delete',
+        recipientFirstName: contact.nameGiven,
+        recipientLastName: contact.nameFamily,
+        recipientEmail: contact.email[0].address,
+        adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
+        locationName: contact.location,
+        locationType: contact.type
+      };
+
+      if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
+        email.adminEmail = userData.global.email[0].address;
+      }
+
+      profileService.deleteProfile(userid, email).then(function(data) {
         if (data && data.status && data.status === 'ok') {
           profileService.clearData();
           $route.reload();
