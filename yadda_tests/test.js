@@ -1,5 +1,3 @@
-// The following code requires casper 1.1 after the following commit
-// https://github.com/n1k0/casperjs/commit/2378537a716a492533a279b8e3bc560ae3deca5a
 
 /* jslint node: true */
 /* global casper */
@@ -25,6 +23,7 @@ new Yadda.FeatureFileSearch('./yadda_tests/features').each(function(file) {
   casper.test.begin(feature.title, function suite(test) {
     async.eachSeries(feature.scenarios, function(scenario, next) {
       // TODO: Add this to config.
+      casper.options.viewportSize = {width: 1600, height: 950};
       casper.start("http://hid:dev@dev.app.568elmp02.blackmesh.com/#login");
       casper.setHttpAuth('hid', 'dev');
       casper.test.info(scenario.title);
@@ -34,6 +33,15 @@ new Yadda.FeatureFileSearch('./yadda_tests/features').each(function(file) {
       });
     }, function(err) {
       casper.test.done();
+    });
+  });
+
+  casper.test.on('fail', function captureFail() {
+    var d = new Date();
+    var filename = d.toUTCString();
+    casper.capture('./yadda_tests/failures/' + filename + '.jpg', undefined, {
+      format: 'jpg',
+      quality: 75
     });
   });
 
