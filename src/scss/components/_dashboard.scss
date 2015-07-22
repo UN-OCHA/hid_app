@@ -36,12 +36,18 @@
   .mobile-checkin {
     padding: 30px 30px 0;
   }
-
-  .contact-inline-form {
-    @media (min-width: $screen-md-min) {
-      text-align: right;
-      label, input {
-        margin-right: 5px;
+  .custom-contacts-container {
+    .profile-item .btn-group .btn {
+      background-color: $primary-color-1;
+      padding: 6px 12px;
+      @include border-radius($border-radius-base);
+    }
+    .contact-inline-form {
+      @media (min-width: $screen-md-min) {
+        text-align: right;
+        label, input {
+          margin-right: 5px;
+        }
       }
     }
   }
