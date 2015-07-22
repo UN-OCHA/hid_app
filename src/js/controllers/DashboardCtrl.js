@@ -8,8 +8,8 @@ function DashboardCtrl($scope, $route, $filter, profileService, globalProfileId,
   $scope.localContacts = filter(userData.contacts, function(d){ return d.type === "local"})
 
   $scope.customContactsPromise = profileService.getLists().then(function(data) {
-    if (data) {
-      $scope.customContacts = data;
+    if (data && data.status && data.status === 'ok') {
+      $scope.customContacts = data.lists;
     }
   });
 

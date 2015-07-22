@@ -55,6 +55,9 @@
               <span class="profile-item-name" translate>{{list.name}}</span>
             </a>
           </h4>
+          <div class="btn-group">
+            <a href="" class="btn btn-primary" role="button" ng-if="userData.profile.userid == list.userid">List Settings</a>
+          </div>
         </li>
         <li class="profile-item list-group-item clearfix">
           <form name="contactInline" class="form-inline">

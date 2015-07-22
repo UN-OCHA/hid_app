@@ -10017,15 +10017,19 @@ table tr td:last-child {
 #contactsid-app-view .mobile-checkin {
   padding: 30px 30px 0;
 }
+#contactsid-app-view .custom-contacts-container .profile-item .btn-group .btn {
+  background-color: #54b1c8;
+  padding: 6px 12px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
 @media (min-width: 992px) {
-  #contactsid-app-view .contact-inline-form {
+  #contactsid-app-view .custom-contacts-container .contact-inline-form {
     text-align: right;
   }
-  #contactsid-app-view .contact-inline-form label {
+  #contactsid-app-view .custom-contacts-container .contact-inline-form label, #contactsid-app-view .custom-contacts-container .contact-inline-form input {
     margin-right: 5px;
-  }
-  #contactsid-app-view .contact-inline-form button {
-    margin-left: 5px;
   }
 }
 
