@@ -49,6 +49,33 @@
 
       <h3><span translate>My Contacts lists</span> :</h3>
       <ul class="custom-contacts-container list-group">
+        <li class="profile-item list-group-item" ng-repeat="list in customContacts">
+          <h4>
+            <a href="">
+              <span class="profile-item-name" translate>{{list.name}}</span>
+            </a>
+          </h4>
+        </li>
+        <li class="profile-item list-group-item clearfix">
+          <form name="contactInline" class="form-inline">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <p class="form-control-static"><strong>Make new list</strong></p>
+              </div>
+            </div>
+            <div class="col-md-9 contact-inline-form">
+              <div class="form-group">
+                <label for="listName">List Name: </label>
+                <input type="text" class="form-control" id="listName" ng-model="list.name" required>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" ng-disabled="contactInline.$invalid" ng-click="addCustomContactList(list)">Create List</button>
+              </div>
+            </div>
+          </div>
+          </form>
+        </li>
       </ul>
 
       <div class="alert alert-info" role="alert" ng-show="!localContacts.length && globalProfileId.length"><strong translate>Are you responding to a humanitarian situation?</strong> <a href="#/checkin" translate>Check into</a> <span translate>the relevant country to add your skills and contact details added to the appropriate contact list(s).</span></div>
