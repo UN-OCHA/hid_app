@@ -40,6 +40,9 @@
   .contact-inline-form {
     @media (min-width: $screen-md-min) {
       text-align: right;
+      label, input {
+        margin-right: 5px;
+      }
     }
   }
 }
