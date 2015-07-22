@@ -18,6 +18,7 @@ function DashboardCtrl($scope, $route, $filter, profileService, globalProfileId,
     profileService.saveList(list).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         // Add the newly created list to the model then clear it.
+        list.userid = $scope.userData.profile.userid;
         $scope.customContacts.push(list);
         $scope.list = {};
       }
