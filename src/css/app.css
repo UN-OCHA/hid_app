@@ -7,8 +7,8 @@
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url(../fonts/font-awesome/fontawesome-webfont.eot?1435069997);
-  src: url(../fonts/font-awesome/fontawesome-webfont.eot?&1435069997#iefix) format("embedded-opentype"), url(../fonts/font-awesome/fontawesome-webfont.woff?1435069997) format("woff"), url(../fonts/font-awesome/fontawesome-webfont.ttf?1435069997) format("truetype"), url(../fonts/font-awesome/fontawesome-webfont.svg?1435069997#fontawesomeregular) format("svg");
+  src: url(../fonts/font-awesome/fontawesome-webfont.eot?1437540778);
+  src: url(../fonts/font-awesome/fontawesome-webfont.eot?&1437540778#iefix) format("embedded-opentype"), url(../fonts/font-awesome/fontawesome-webfont.woff?1437540778) format("woff"), url(../fonts/font-awesome/fontawesome-webfont.ttf?1437540778) format("truetype"), url(../fonts/font-awesome/fontawesome-webfont.svg?1437540778#fontawesomeregular) format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -10020,6 +10020,12 @@ table tr td:last-child {
 @media (min-width: 992px) {
   #contactsid-app-view .contact-inline-form {
     text-align: right;
+  }
+  #contactsid-app-view .contact-inline-form label {
+    margin-right: 5px;
+  }
+  #contactsid-app-view .contact-inline-form button {
+    margin-left: 5px;
   }
 }
 
