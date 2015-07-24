@@ -7,6 +7,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.operations = operations;
 
+  $scope.list = {};
   $scope.contacts = [];
   $scope.bundles = [];
   $scope.disasterOptions = [];
@@ -25,6 +26,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   ];
 
   $scope.contactsPromise;
+  $scope.listPromise;
   $scope.query = $location.search();
   $scope.loadLimit = 30;
   $scope.contactsCount = 0;
@@ -96,6 +98,13 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
       }()).then(function(data) {
         $scope.regions = data;
       });
+    }
+  }
+
+  // Custom contact list.
+  if ($scope.locationId !== 'global' || $scope.isContactList) {
+    if ($routeParams.id) {
+      setCustomList($routeParams.id);
     }
   }
 
@@ -239,7 +248,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.deleteAccount = function (contact) {
     var email = {};
     var profile = contact._profile;
-    
+
     if (contact.ql.deleteState === "confirm") {
       var userid = contact._profile.userid || contact._profile._userid;
       contact.ql.deleteState = "inProgress";
@@ -443,7 +452,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
   $scope.locationText = function() {
     if ($scope.isContactList) {
-      return gettextCatalog.getString('My Contact List');
+      return $scope.list.name;
     }
     else {
       return $scope.location || gettextCatalog.getString('Global Contact List');
@@ -578,6 +587,15 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
       }
     });
   }
+
+  function setCustomList(id) {
+    var terms = {id: id};
+    $scope.listPromise = profileService.getLists(terms).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        $scope.list = data.lists;
+      }
+    });
+  };
 
   // Converts object to a sortable array.
   function listObjectToArray(obj) {

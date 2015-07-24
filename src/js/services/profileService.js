@@ -167,8 +167,11 @@
     }
 
     // Get custom contact lists that match specified parameters.
-    function getLists() {
-      var terms = new Object();
+    function getLists(terms) {
+      if (!terms) {
+        var terms = {};
+      }
+
       terms.access_token = authService.getAccessToken();
       var request = $http({
         method: "get",
