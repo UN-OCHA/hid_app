@@ -49,13 +49,14 @@
 
       <h3><span translate>My Contacts lists</span> :</h3>
       <ul class="custom-contacts-container list-group">
-        <li class="profile-item list-group-item" ng-repeat="list in customContacts">
+        <li class="profile-item list-group-item" ng-repeat="(index, list) in customContacts">
           <h4>
             <a href="">
               <span class="profile-item-name" translate>{{list.name}}</span>
             </a>
           </h4>
           <div class="btn-group">
+            <a class="btn btn-primary" role="button" ng-if="userData.profile.userid != list.userid" ng-click="unfollowContactList(list, index)">Unfollow List</a>
             <a href="" class="btn btn-primary" role="button" ng-if="userData.profile.userid == list.userid">List Settings</a>
           </div>
         </li>

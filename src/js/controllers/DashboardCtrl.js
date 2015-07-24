@@ -13,6 +13,27 @@ function DashboardCtrl($scope, $route, $filter, profileService, globalProfileId,
     }
   });
 
+  $scope.unfollowContactList = function(list, index) {
+    var updatedUsers = [];
+    angular.forEach(list.users, function(user, key) {
+      if (user != $scope.userData.profile.userid) {
+        this.push(user);
+      }
+    }, updatedUsers);
+
+    list.users = updatedUsers;
+
+    profileService.saveList(list).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        list.users = updatedUsers;
+        $scope.customContacts.splice(index, 1);
+      }
+      else {
+        alert('An error occurred while unfollowing this contact list. Please reload and try the change again.');
+      }
+    });
+  }
+
   // TODO: Handle validation in a later ticket.
   $scope.addCustomContactList = function(list) {
     profileService.saveList(list).then(function(data) {
@@ -23,7 +44,7 @@ function DashboardCtrl($scope, $route, $filter, profileService, globalProfileId,
         $scope.list = {};
       }
       else {
-        alert('An error occurred while saving this contact. Please reload and try the change again.');
+        alert('An error occurred while saving this contact list. Please reload and try the change again.');
       }
     });
   }
