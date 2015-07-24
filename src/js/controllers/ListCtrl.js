@@ -593,6 +593,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     $scope.listPromise = profileService.getLists(terms).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         $scope.list = data.lists;
+        $scope.queryCount = data.lists.contacts.length;
       }
     });
   };
