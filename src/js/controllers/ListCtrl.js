@@ -594,6 +594,9 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
       if (data && data.status && data.status === 'ok') {
         $scope.list = data.lists;
         $scope.queryCount = data.lists.contacts.length;
+        $scope.userData = userData;
+        //console.log(userData.profile.userid);
+        //console.log($scope.list.userid);
       }
     });
   };
