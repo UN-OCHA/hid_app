@@ -47,6 +47,9 @@
         </li>
       </ul>
 
+      <div class="alert alert-info" role="alert" ng-show="!localContacts.length && globalProfileId.length"><strong translate>Are you responding to a humanitarian situation?</strong> <a href="#/checkin" translate>Check into</a> <span translate>the relevant country to add your skills and contact details added to the appropriate contact list(s).</span></div>
+      <div class="alert alert-info" role="alert" ng-show="localContacts.length"><strong translate>Are you still responding to the humanitarian situation(s) above?</strong> <span translate>Click the X next to "checkout" of any contact lists you are no longer responding to.</span></div>
+
       <h3><span translate>My Contacts lists</span> :</h3>
       <ul class="custom-contacts-container list-group">
         <li class="profile-item list-group-item" ng-repeat="(index, list) in customContacts">
@@ -82,8 +85,6 @@
         </li>
       </ul>
 
-      <div class="alert alert-info" role="alert" ng-show="!localContacts.length && globalProfileId.length"><strong translate>Are you responding to a humanitarian situation?</strong> <a href="#/checkin" translate>Check into</a> <span translate>the relevant country to add your skills and contact details added to the appropriate contact list(s).</span></div>
-      <div class="alert alert-info" role="alert" ng-show="localContacts.length"><strong translate>Are you still responding to the humanitarian situation(s) above?</strong> <span translate>Click the X next to "checkout" of any contact lists you are no longer responding to.</span></div>
       <div class="mobile-checkin visible-xs">
         <a class="btn btn-primary btn-lg btn-block" href="#/checkin">
           <span class="fa fa-angle-right"></span> <span translate>Check-in</span>

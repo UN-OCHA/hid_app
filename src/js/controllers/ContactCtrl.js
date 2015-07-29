@@ -1,4 +1,4 @@
-function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData) {
+function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, ngDialog) {
   if(!profileData.contact){
     // No contact data
     return false;
@@ -68,7 +68,8 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   }
 
   $scope.contactListText = function() {
-    return $scope.addedToContacts ? gettextCatalog.getString('Remove from My Contacts') : gettextCatalog.getString('Add to My Contacts');
+    return gettextCatalog.getString('Add to List');
+    //return $scope.addedToContacts ? gettextCatalog.getString('Remove from My Contacts') : gettextCatalog.getString('Add to My Contacts');
   }
 
   $scope.setHttp = function (uri) {
@@ -225,7 +226,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     if (contact.email && contact.email[0] && contact.email[0].address && String(contact.email[0].address).length) {
       recipientEmail = contact.email[0].address
     }
-    
+
     var email = {
       type: 'notify_problem',
       recipientFirstName: contact.nameGiven,
@@ -254,6 +255,18 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
       });
     }
   };
+
+  // Add contact to the custom list.
+  $scope.addContact = function(index) {
+    $scope.contact = $scope.contact;
+
+    ngDialog.open({
+      template: 'partials/addToCustomList.html',
+      showClose: false,
+      scope: $scope,
+      controller: 'AddToCustomListCtrl',
+    });
+  }
 
   function setEditorOrganizations() {
     var editorOrgs = [];
