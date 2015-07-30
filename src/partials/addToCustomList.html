@@ -1,0 +1,10 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">Add to list:</div>
+  <ul class="list-group">
+    <a class="list-group-item" ng-click="addToList(index)" ng-repeat="(index, list) in customContacts">
+      {{list.name}}
+      <i ng-if="list.addToList" class="fa fa-check-circle"></i>
+    </a>
+  </ul>
+</div>
+<button class="btn btn-primary btn-lg btn-block" ng-click="saveList()" type="button">Save</button>

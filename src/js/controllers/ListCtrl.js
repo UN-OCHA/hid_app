@@ -527,6 +527,62 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     }
   }
 
+  // Remove contact from the custom list.
+  $scope.removeContact = function(index) {
+    var list = $scope.list;
+    list.contacts.splice(index, 1);
+
+    profileService.saveList(list).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        $scope.contacts.splice(index, 1);
+      }
+      else {
+        alert('An error occurred while unfollowing this contact list. Please reload and try the change again.');
+      }
+    });
+  }
+
+  // Add contact to the custom list.
+  $scope.addContact = function(index) {
+    $scope.contact = $scope.list.contacts[index];
+
+    ngDialog.open({
+      template: 'partials/addToCustomList.html',
+      showClose: false,
+      scope: $scope,
+      controller: 'AddToCustomListCtrl',
+    });
+  }
+
+  $scope.toggleFollow = function() {
+    var list = $scope.list;
+    if ($scope.toggleFollowButton === 'Follow') {
+      list.users.push($scope.userData.profile.userid);
+    } else {
+      var index = list.users.indexOf($scope.userData.profile.userid);
+      if (index > -1) {
+        list.users.splice(index, 1);
+      }
+    }
+
+    // Rebuild contacts since it now contains the full objects.
+    var contacts = [];
+    angular.forEach(list.contacts, function(value, key) {
+      this.push(value._id);
+    }, contacts);
+    list.contacts = contacts;
+
+    profileService.saveList(list).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        console.log('updated');
+        $scope.toggleFollowButton = $scope.toggleFollowButton === 'Follow' ? 'Unfollow': 'Follow';
+      }
+      else {
+        alert('An error occurred while unfollowing this contact list. Please reload and try the change again.');
+      }
+    });
+  }
+
   // Builds the list of contacts.
   function createContactList() {
     var query = $scope.query;
@@ -578,7 +634,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
     $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
       if (data && data.status && data.status === 'ok') {
-
         data.contacts = data.contacts || [];
         $scope.contacts = $scope.contacts.concat(data.contacts);
         $scope.contactsCreated = true;
@@ -593,7 +648,15 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     $scope.listPromise = profileService.getLists(terms).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         $scope.list = data.lists;
-        $scope.queryCount = data.lists.contacts.length;
+        $scope.listCount = data.lists.length;
+        $scope.userData = userData;
+        $scope.contacts = $scope.list.contacts;
+        // TODO: Fix issue with query count.
+        $scope.queryCount = $scope.contacts.length;
+        $scope.toggleFollowButton = 'Follow';
+        if ($scope.list.users.indexOf($scope.userData.profile.userid) != -1) {
+          $scope.toggleFollowButton = 'Unfollow';
+        }
       }
     });
   };

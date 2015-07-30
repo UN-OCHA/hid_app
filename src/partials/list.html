@@ -1,6 +1,10 @@
 <div class="masthead row" ng-show='!isRouteLoading'>
   <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 pull-right">
-    <h2 class="heading-contact-list">{{locationText()}} <small>(<span translate>Contacts</span> {{queryCount}})</small></h2>
+    <h2 class="heading-contact-list">
+      {{locationText()}} <small>(<span translate>Contacts</span> {{queryCount}})</small>
+      <a href="" class="btn btn-primary pull-right" ng-if="locationId !== 'global' && userData.profile.userid == list.userid" role="button">List Settings</a>
+      <button ng-click="toggleFollow()" class="btn btn-primary pull-right" ng-if="locationId !== 'global' && userData.profile.userid != list.userid" >{{toggleFollowButton}}</button>
+    </h2>
   </div>
 </div>
 
@@ -32,6 +36,19 @@
           <div class="contact-item contact-item--jobtitle col-xs-7" ng-class="(contact.bundle.length) ? 'col-md-3' : 'col-md-7'"><span title="{{contact.jobtitle}}">{{contact.jobtitle}}</span></div>
           <div class="contact-item contact-item--bundle col-md-4" ng-hide="!contact.bundle.length"><span title="{{contact.bundle.join(', ')}}">{{contact.bundle.join(', ')}}</span></div>
           <div class="contact-item contact-item--organization col-xs-5 col-md-2"><span title="{{parseAcronym(contact.organization[0].name)}}">{{parseAcronym(contact.organization[0].name)}}</span></div>
+        </div>
+        <div class="quick-link">
+          <div class="dropdown" ng-class="{'ql-open': qlOpen === $index}">
+            <button class="dropdown-toggle" data-toggle="dropdown" type="button" ng-click="qlClick()"><span class="quick-link-dots"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+              <li>
+                <a role="menuitem" tabindex="-1" ng-click="removeContact($index)" ng-if="userData.profile.userid == list.userid" translate>Remove from list</a>
+              </li>
+              <li>
+                <a role="menuitem" tabindex="-1" ng-click="addContact($index)" translate>Add to new list</a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="quick-link" ng-if="showQuickLinks(contact)">
           <div class="dropdown" ng-class="{'ql-open': qlOpen === $index}">

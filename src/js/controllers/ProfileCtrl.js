@@ -700,7 +700,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     if (profileData.contact.email && profileData.contact.email[0] && profileData.contact.email[0].address && String(profileData.contact.email[0].address).length) {
       recipientEmail = profileData.contact.email[0].address
     }
-    
+
     var email = {
       type: 'notify_problem',
       recipientFirstName: profileData.contact.nameGiven,
@@ -801,7 +801,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
   function setUpdateEmail() {
     $scope.email.send = true;
-  }  
+  }
 
   // If profile is local, set preferred county code to checkin location.
   function setPreferedCountries() {
