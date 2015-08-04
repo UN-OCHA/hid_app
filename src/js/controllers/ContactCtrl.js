@@ -129,7 +129,8 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
         recipientLastName: $scope.contact.nameFamily,
         recipientEmail: $scope.contact.email[0].address,
         adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-        locationName: $scope.locationText()
+        locationName: $scope.locationText(),
+        locationType: $scope.contact.type
       };
       if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
         email.adminEmail = userData.global.email[0].address;
