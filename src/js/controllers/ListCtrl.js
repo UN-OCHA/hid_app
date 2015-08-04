@@ -165,7 +165,8 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
               recipientLastName: contact.nameFamily,
               recipientEmail: contact.email[0].address,
               adminName: userGlobal[0].nameGiven + " " + userGlobal[0].nameFamily,
-              locationName: $scope.locationText()
+              locationName: $scope.locationText(),
+              locationType: contact.type
             };
 
         if (userGlobal.email && userGlobal.email[0] && userGlobal.email[0].address) {
