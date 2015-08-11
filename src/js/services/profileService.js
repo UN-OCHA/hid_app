@@ -287,10 +287,10 @@
     }
 
     // Send notification Email
-    function sendNotificationEmail(email) {
+    function sendNotificationEmail(contactId) {
       var request,
         data = {
-          notifyEmail: email
+          contactId: contactId
         };
       request = $http({
         method: "post",

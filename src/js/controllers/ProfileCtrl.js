@@ -652,41 +652,18 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   };
 
   $scope.reportProblem = function () {
-    var recipientEmail = null;
-
-    if (profileData.contact.email && profileData.contact.email[0] && profileData.contact.email[0].address && String(profileData.contact.email[0].address).length) {
-      recipientEmail = profileData.contact.email[0].address
-    }
-    
-    var email = {
-      type: 'notify_problem',
-      recipientFirstName: profileData.contact.nameGiven,
-      recipientLastName: profileData.contact.nameFamily,
-      recipientEmail: recipientEmail,
-      adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-      locationName: profileData.contact.location,
-      locationType: profileData.contact.type
-
-    };
-    if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
-      email.adminEmail = userData.global.email[0].address;
-    }
-
-    if (profileData.contact.email && profileData.contact.email[0] && profileData.contact.email[0].address && String(profileData.contact.email[0].address).length) {
-      $scope.sendingClaimEmail = true;
-      var adminName = userData.global.nameGiven + " " + userData.global.nameFamily;
-      profileService.sendNotificationEmail(email).then(function(data) {
-        $scope.sendingClaimEmail = false;
-        $scope.confirmSendEmail = false;
-        $scope.profile.confirmNotify = false;
-        if (data.status === 'ok') {
-          alert('Email sent successfully.');
-        }
-        else {
-          alert('An error occurred while attempting to send the report problem email. Please try again or contact an administrator.');
-        }
-      });
-    }
+    $scope.sendingClaimEmail = true;
+    profileService.sendNotificationEmail(profileData.contact._id).then(function(data) {
+      $scope.sendingClaimEmail = false;
+      $scope.confirmSendEmail = false;
+      $scope.profile.confirmNotify = false;
+      if (data.status === 'ok') {
+        alert('Email sent successfully.');
+      }
+      else {
+        alert('An error occurred while attempting to send the report problem email. Please try again or contact an administrator.');
+      }
+    });
   };
 
   $scope.sendClaimEmail = function () {
