@@ -30,6 +30,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.query = $location.search();
   $scope.loadLimit = 30;
   $scope.contactsCount = 0;
+
   $scope.showResetBtn = Object.keys($scope.query).length;
   $scope.isContactList = ($scope.locationId !== 'global' && !$scope.locationId.match(/hrinfo:/));
 
@@ -104,6 +105,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   // Custom contact list.
   if ($scope.locationId !== 'global' || $scope.isContactList) {
     if ($routeParams.id) {
+      $scope.showResetBtn = Object.keys($scope.query).length - 1;
       setCustomList($routeParams.id);
     }
   }
@@ -530,7 +532,15 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   // Remove contact from the custom list.
   $scope.removeContact = function(index) {
     var list = $scope.list;
-    list.contacts.splice(index, 1);
+
+    // Create an array of ids so that mongoose can save the contacts reference.
+    var contacts = [];
+    angular.forEach(list.contacts, function(contact, key) {
+      if (key !== index) {
+        this.push(contact._id);
+      }
+    }, contacts);
+    list.contacts = contacts;
 
     profileService.saveList(list).then(function(data) {
       if (data && data.status && data.status === 'ok') {
@@ -544,9 +554,10 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
   // Add contact to the custom list.
   $scope.addContact = function(index) {
-    $scope.contact = $scope.list.contacts[index];
+    $scope.contact = $scope.contacts[index];
 
     ngDialog.open({
+      name: 'AddContact',
       template: 'partials/addToCustomList.html',
       showClose: false,
       scope: $scope,
