@@ -620,26 +620,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
   $scope.deleteAccount = function () {
     var userid = profileData.profile.userid || profileData.profile._userid;
-    var profile = $scope.profile;
-    var email = {};
-
-    email = angular.extend(email, {
-      type: 'notify_delete',
-      recipientFirstName: profile.nameGiven,
-      recipientLastName: profile.nameFamily,
-      recipientEmail: profile.email[0].address,
-      adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-      locationName: profile.location,
-      locationType: profile.type,
-      addedGroups: bundlesAdded(),
-      removedGroups: bundlesRemove()
-    });
-
-    if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
-      email.adminEmail = userData.global.email[0].address;
-    }
-
-    profileService.deleteProfile(userid, email).then(function(data) {
+    profileService.deleteProfile(userid).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         profileService.clearData();
         // Unreliable to know where user was so try to send them back.
