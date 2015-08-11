@@ -557,49 +557,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         profile.location = $scope.operations[$scope.selectedOperation].name;
       }
 
-      var email = {};
-      if ( (!userData.profile || !userData.profile.userid || userData.profile.userid === profile.userid)
-          && (profile.organization && profile.organization[0] && profile.organization[0].hasOwnProperty('remote_id'))
-          && (!profileData.contact || !profileData.contact.organization || !profileData.contact.organization[0] || profile.organization[0].remote_id != profileData.contact.organization[0].remote_id)) {
-
-        email = angular.extend(email, {
-            newOrg: true,
-            recipientFirstName: profile.nameGiven,
-            recipientLastName: profile.nameFamily,
-            locationId: profile.locationId,
-            locationName: profile.location,
-            locationType: profile.type,
-            organization: profile.organization[0].name,
-            organizationId: profile.organization[0].remote_id
-          });
-      }
-
-      // Determine if user being checked in is the same as the logged in user. Also verify that it is not an orphan account and sendUpdateEmail checkbox is set to true
-      // If neither are true, we need to add some properties to contact so profile service can send an email notifying the user
-      if (userData.profile && userData.profile.userid && userData.profile.userid != profile.userid && profile.email[0] && profileData.profile.firstUpdate && $scope.email.send) {
-        //Set email fields
-        email = angular.extend(email, {
-            type: checkinFlow ? 'notify_checkin' : 'notify_edit',
-            recipientFirstName: profile.nameGiven,
-            recipientLastName: profile.nameFamily,
-            recipientEmail: profile.email[0].address,
-            adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-            locationName: profile.location,
-            locationType: profile.type,
-            addedGroups: bundlesAdded(),
-            removedGroups: bundlesRemove()
-          });
-
-        if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
-          email.adminEmail = userData.global.email[0].address;
-        }
-        if (profile.disasters && profile.disasters[0] && profile.disasters[0].name) {
-          email.locationName += '/' + profile.disasters[0].name;
-        }
-      }
-
-      profile.notifyEmail = email;
-
       if ($scope.profileId.length) {
         profile._contact = $scope.profileId;
       }
@@ -757,28 +714,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         userid:  profileData.profile.userid,
         status: 0
       };
-
-       // Determine if user being checked in is the same as the logged in user, it is not an orphan account and sendUpdateEmail checkbox is set to true
-      // If neither are true, we need to add some properties to contact so profile service can send an email notifying the user
-      if (userData.profile.userid != profileData.profile.userid && profileData.contact.email[0] && profileData.profile.firstUpdate && $scope.email.send) {
-        //Set email fields
-        var email = {
-          type: 'notify_checkout',
-          recipientFirstName: profileData.contact.nameGiven,
-          recipientLastName: profileData.contact.nameFamily,
-          recipientEmail: profileData.contact.email[0].address,
-          adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-          locationName: profileData.contact.location,
-          locationType: profileData.contact.type
-        };
-        if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
-          email.adminEmail = userData.global.email[0].address;
-        }
-        if (profileData.contact.disasters && profileData.contact.disasters[0] && profileData.contact.disasters[0].name) {
-          email.locationName += '/' + profileData.contact.disasters[0].name;
-        }
-        contact.notifyEmail = email;
-      }
 
       profileService.saveContact(contact).then(function(data) {
         if (data && data.status && data.status === 'ok') {
