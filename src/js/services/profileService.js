@@ -18,6 +18,7 @@
       getContacts: getContacts,
       getLists: getLists,
       saveList: saveList,
+      deleteList: deleteList,
       getProfileData: getProfileData,
       saveProfile: saveProfile,
       deleteProfile: deleteProfile,
@@ -187,6 +188,17 @@
       request = $http({
         method: "post",
         url: contactsId.profilesBaseUrl + "/v0/list/save",
+        params: {access_token: authService.getAccessToken()},
+        data: list
+      });
+      return(request.then(handleSuccess, handleError));
+    }
+
+    function deleteList(list) {
+      var request;
+      request = $http({
+        method: "post",
+        url: contactsId.profilesBaseUrl + "/v0/list/delete",
         params: {access_token: authService.getAccessToken()},
         data: list
       });
