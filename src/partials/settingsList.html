@@ -1,0 +1,35 @@
+<h2 class="heading-custom-contacts-list">
+  {{::list.name}} <small>(<span translate>Contacts</span> {{contactsCount}})</small>
+</h2>
+
+<div ng-show='!isRouteLoading' class="main row page-dashboard" ng-class="{'show-options': sidebarOptions}">
+  <div class="main-content col-xs-12 col-sm-8 col-md-9 pull-right" cg-busy="dashboardDataTracker">
+    <div class="custom-contacts-wrapper">
+      <h2 class="heading-custom-contacts-list">List Settings</h2>
+      <i translate>* Required Field</i>
+
+      <form name="profileForm" autocomplete="off">
+        <div class="form-group">
+          <label class="control-label" for="name" translate>List Name*</label>
+          <input class="form-control" type="text" name="name" ng-model="list.name" required/>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="sidebar-left">
+    <div class="col-xs-12 col-sm-4 col-md-3">
+      <div class="actions">
+        <a class="btn btn-primary btn-lg btn-block" ng-click="saveList()">
+          <span translate>Save</span>
+        </a>
+        <a class="btn btn-default btn-lg btn-block" href="#/list/contacts?id={{list._id}}">
+          </span> <span translate>Cancel</span>
+        </a>
+        <a class="btn btn-default btn-lg btn-block" ng-click="deleteList()">
+          <span translate>Delete My List</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

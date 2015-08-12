@@ -60,7 +60,7 @@
           </h4>
           <div class="btn-group">
             <a class="btn btn-primary" role="button" ng-if="userData.profile.userid != list.userid" ng-click="unfollowContactList(list, index)">Unfollow List</a>
-            <a href="" class="btn btn-primary" role="button" ng-if="userData.profile.userid == list.userid">List Settings</a>
+            <a href="#/settings/list/{{list._id}}" class="btn btn-primary" role="button" ng-if="userData.profile.userid == list.userid">List Settings</a>
           </div>
         </li>
         <li class="profile-item list-group-item clearfix">
