@@ -38,6 +38,8 @@
               </span>
           </h4>
           <div class="btn-group">
+            <a class="btn btn-sm" ng-click="share(profile.location,'linkedin')" title="Share my check-in on Linkedin"><i class="fa fa-linkedin"></i></a>
+            <a class="btn btn-sm" ng-click="share(profile.location,'facebook')" title="Share my check-in on Facebook"><i class="fa fa-facebook"></i></a>
             <a class="btn btn-sm" href="#/profile/{{profile._id}}" title="{{'Edit my' | translate}} {{profile.location}} {{'profile' | translate}}"><i class="fa fa-pencil"></i></a>
             <a class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="{{'Check-out from' | translate}} {{profile.location}}"><i class="fa fa-times"></i></a>
           </div>
