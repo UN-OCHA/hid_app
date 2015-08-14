@@ -167,7 +167,12 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
           alert('Account claim email sent successfully.');
         }
         else {
-          alert('An error occurred while attempting to send the account claim email. Please try again or contact an administrator.');
+          if (data.message) {
+            alert(data.message);
+          }
+          else {
+            alert('An error occurred while attempting to send the account claim email. Please try again or contact an administrator.');
+          }
         }
       });
     }
