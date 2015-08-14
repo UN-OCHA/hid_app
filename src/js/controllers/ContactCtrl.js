@@ -119,25 +119,6 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
       return;
     }
 
-    // Determine if user being checked in is the same as the logged in user and it is not an orphan account
-    // If neither are true, we need to add some properties to contact so profile service can send an email notifying the user
-    if (userData.profile.userid != profileData.profile.userid && $scope.contact.email[0] && profileData.profile.firstUpdate){
-      //Set email fields
-      var email = {
-        type: 'notify_checkout',
-        recipientFirstName: $scope.contact.nameGiven,
-        recipientLastName: $scope.contact.nameFamily,
-        recipientEmail: $scope.contact.email[0].address,
-        adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-        locationName: $scope.locationText(),
-        locationType: $scope.contact.type
-      };
-      if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
-        email.adminEmail = userData.global.email[0].address;
-      }
-      contact.notifyEmail = email;
-    }
-
     profileService.saveContact(contact).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         profileService.clearData();
@@ -186,7 +167,12 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
           alert('Account claim email sent successfully.');
         }
         else {
-          alert('An error occurred while attempting to send the account claim email. Please try again or contact an administrator.');
+          if (data.message) {
+            alert(data.message);
+          }
+          else {
+            alert('An error occurred while attempting to send the account claim email. Please try again or contact an administrator.');
+          }
         }
       });
     }
@@ -221,39 +207,17 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   }
 
   $scope.reportProblem = function () {
-    var recipientEmail = null;
-
-    if (contact.email && contact.email[0] && contact.email[0].address && String(contact.email[0].address).length) {
-      recipientEmail = contact.email[0].address
-    }
-    
-    var email = {
-      type: 'notify_problem',
-      recipientFirstName: contact.nameGiven,
-      recipientLastName: contact.nameFamily,
-      recipientEmail: recipientEmail,
-      adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-      locationName: contact.location,
-      locationType: contact.type
-    };
-    if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
-      email.adminEmail = userData.global.email[0].address;
-    }
-
-    if (contact.email && contact.email[0] && contact.email[0].address && String(contact.email[0].address).length) {
-      $scope.sendingNotifyEmail = true;
-      var adminName = userData.global.nameGiven + " " + userData.global.nameFamily;
-      profileService.sendNotificationEmail(email).then(function(data) {
-        $scope.sendingNotifyEmail = false;
-        $scope.contact.confirmNotify = false;
-        if (data.status === 'ok') {
-          alert('Email sent successfully.');
-        }
-        else {
-          alert('An error occurred while attempting to send the report problem email. Please try again or contact an administrator.');
-        }
-      });
-    }
+    $scope.sendingNotifyEmail = true;
+    profileService.sendNotificationEmail(contact._id).then(function(data) {
+      $scope.sendingNotifyEmail = false;
+      $scope.contact.confirmNotify = false;
+      if (data.status === 'ok') {
+        alert('Email sent successfully.');
+      }
+      else {
+        alert('An error occurred while attempting to send the report problem email. Please try again or contact an administrator.');
+      }
+    });
   };
 
   function setEditorOrganizations() {
