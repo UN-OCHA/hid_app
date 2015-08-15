@@ -24,7 +24,7 @@ new Yadda.FeatureFileSearch('./yadda_tests/features').each(function(file) {
     async.eachSeries(feature.scenarios, function(scenario, next) {
       // TODO: Add this to config.
       casper.options.viewportSize = {width: 1600, height: 950};
-      casper.start("http://hid:dev@dev.app.568elmp02.blackmesh.com/#login");
+      casper.start("http://hid:dev@app.dev.humanitarian.id/#login");
       casper.setHttpAuth('hid', 'dev');
       casper.test.info(scenario.title);
       casper.yadda(scenario.steps);
