@@ -148,6 +148,8 @@ module.exports = function(grunt) {
           'src/libraries/intl-tel-input/build/css/intlTelInput.css',
           'src/libraries/ngDialog/css/ngDialog.css',
           'src/libraries/ngDialog/css/ngDialog-theme-default.css',
+          'src/libraries/offline/themes/offline-theme-slide.css',
+          'src/libraries/offline/themes/offline-language-english.css'
         ],
       },
       // Concatenates js files.
@@ -169,6 +171,7 @@ module.exports = function(grunt) {
             'src/libraries/intl-tel-input/lib/libphonenumber/build/utils.js',
             'src/libraries/ngDialog/js/ngDialog.js',
             'src/libraries/webshim/js-webshim/minified/polyfiller.js',
+            'src/libraries/offline/offline.min.js',
             'src/js/libraries/angularjs-breakpoint/breakpoint-0.0.1.js',
             'src/js/directives/international-phone-number.js',
             'src/js/jso.js',

@@ -9,6 +9,15 @@ webshims.setOptions({
 
 webshim.polyfill('forms forms-ext');
 
+Offline.options = {
+  interceptRequests: true,
+  reconnect: {
+    initialDelay: 10,
+    delay: 20
+  },
+  requests: false //record ajax requests and re-make on connection restore
+}
+
 app.value('cgBusyDefaults',{
   message:'Loading...',
   backdrop: true,
