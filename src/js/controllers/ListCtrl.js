@@ -1,5 +1,5 @@
 function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, orgTypes, countries, roles, ngDialog) {
-  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'office.name', 'organization.name', 'organization.org_type_remote_id', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'],
+  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'office.name', 'organization.name', 'organization.org_type_remote_id', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified', 'id'],
       filter = $filter('filter');
 
   $scope.location = '';
