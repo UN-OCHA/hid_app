@@ -28,6 +28,7 @@
     "intl-tel-input": "~3.7.1",
     "ngDialog": "~0.3.12",
     "selectize": "~0.8.5",
-    "webshim": "~1.15.7"
+    "webshim": "~1.15.7",
+    "offline": "0.7.13"
   }
 }
