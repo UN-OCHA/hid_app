@@ -8,6 +8,7 @@ module.exports = function(grunt) {
     'bower-install-simple': {
       'default': {}
     },
+    cacheHash : {},
     compass: {
       sass: {
         options: {
@@ -238,7 +239,7 @@ module.exports = function(grunt) {
         algorithm: 'md5',
         length: 16,
         rename: false,
-        jsonOutput: 'cachebust.json'
+        jsonOutput: '../.tmp/cachebust.json'
       },
       assets: {
         files: [{
@@ -299,7 +300,7 @@ module.exports = function(grunt) {
 
   //load cache buster json and generate manifest
   grunt.registerTask('manifest-gen','Generate manifest from cache buster output', function(){
-    grunt.config.set('cacheHash',grunt.file.readJSON('undefined/cachebust.json'));
+    grunt.config.set('cacheHash',grunt.file.readJSON('.tmp/cachebust.json'));
     grunt.log.write('Read cacheBust output');
     grunt.task.run(['manifest']);
   });
