@@ -237,7 +237,8 @@ module.exports = function(grunt) {
         encoding: 'utf8',
         algorithm: 'md5',
         length: 16,
-        rename: false
+        rename: false,
+        jsonOutput: 'cachebust.json'
       },
       assets: {
         files: [{
@@ -250,7 +251,7 @@ module.exports = function(grunt) {
       generate: {
         options: {
           basePath: 'dist/',
-          cache: ['js/app.min.js', 'css/app.min.css'],
+          cache: ['<%= cacheHash["/js/app.min.js"] %>', '<%= cacheHash["/css/app.min.css"] %>'],
           // network: ['*'],
           // fallback: ['/ /offline.html'],
           // exclude: ['']
@@ -296,6 +297,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-usemin");
   grunt.loadNpmTasks("grunt-manifest");
 
+  //load cache buster json and generate manifest
+  grunt.registerTask('manifest-gen','Generate manifest from cache buster output', function(){
+    grunt.config.set('cacheHash',grunt.file.readJSON('undefined/cachebust.json'));
+    grunt.log.write('Read cacheBust output');
+    grunt.task.run(['manifest']);
+  });
+
   // Default task(s).
   grunt.registerTask('default', [
     'clean:dist',
@@ -311,8 +319,8 @@ module.exports = function(grunt) {
     'uglify',
     'cssmin',
     'usemin',
-    'manifest',
     'cacheBust',
+    'manifest-gen',
     'clean:tmp'
   ]);
 
@@ -334,8 +342,8 @@ module.exports = function(grunt) {
     'uglify',
     'cssmin',
     'usemin',
-    'manifest',
     'cacheBust',
+    'manifest-gen',
     'clean:tmp'
   ]);
 };
