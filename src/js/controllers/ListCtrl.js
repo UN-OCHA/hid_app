@@ -531,8 +531,10 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   }
 
   // Remove contact from the custom list.
-  $scope.removeContact = function(index) {
+  $scope.removeContact = function(contact) {
     var list = $scope.list;
+
+    index = list.contacts.indexOf(contact);
 
     // Create an array of ids so that mongoose can save the contacts reference.
     var contacts = [];
@@ -554,8 +556,9 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   }
 
   // Add contact to the custom list.
-  $scope.addContact = function(index) {
-    $scope.contact = $scope.contacts[index];
+  $scope.addContact = function(contact) {
+    $scope.contact = contact;
+    $scope.userid = userData.profile.userid;
 
     ngDialog.open({
       name: 'AddContact',
@@ -649,7 +652,12 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
         data.contacts = data.contacts || [];
         $scope.contacts = $scope.contacts.concat(data.contacts);
         $scope.contactsCreated = true;
-        $scope.queryCount = data.count;
+        if ($scope.locationId !== 'global' && $scope.list) {
+          $scope.queryCount = $scope.contacts.length;
+        } else {
+          $scope.queryCount = data.count;
+        }
+
         $scope.contactsCount = $scope.contacts.length;
       }
     });
@@ -663,8 +671,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
         $scope.listCount = data.lists.length;
         $scope.userData = userData;
         $scope.contacts = $scope.list.contacts;
-        // TODO: Fix issue with query count.
-        $scope.queryCount = $scope.contacts.length;
         $scope.toggleFollowButton = 'Follow';
         if ($scope.list.users.indexOf($scope.userData.profile.userid) != -1) {
           $scope.toggleFollowButton = 'Unfollow';
