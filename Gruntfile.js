@@ -241,8 +241,31 @@ module.exports = function(grunt) {
       },
       assets: {
         files: [{
-          src: ['dist/index.html']
+          src: ['dist/index.html','dist/offline.manifest']
         }]
+      }
+    },
+    // Build cache manifest
+    manifest: {
+      generate: {
+        options: {
+          basePath: 'dist/',
+          cache: ['js/app.min.js', 'css/app.min.css'],
+          // network: ['*'],
+          // fallback: ['/ /offline.html'],
+          // exclude: ['']
+          preferOnline: true,
+          // timestamp: true,
+          hash: true,
+        },
+        src: [
+          // 'js/app.min.js',
+          // 'css/app.min.css',
+          'libraries/webshim/js-webshim/minified/shims/styles/shim.css',
+          'images/*.png',
+          'index.html'
+        ],
+        dest: 'dist/offline.manifest'
       }
     },
     // Removes tmp dir.
@@ -271,6 +294,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-cache-bust");
   grunt.loadNpmTasks("grunt-angular-templates");
   grunt.loadNpmTasks("grunt-usemin");
+  grunt.loadNpmTasks("grunt-manifest");
 
   // Default task(s).
   grunt.registerTask('default', [
@@ -287,6 +311,7 @@ module.exports = function(grunt) {
     'uglify',
     'cssmin',
     'usemin',
+    'manifest',
     'cacheBust',
     'clean:tmp'
   ]);
@@ -309,6 +334,7 @@ module.exports = function(grunt) {
     'uglify',
     'cssmin',
     'usemin',
+    'manifest',
     'cacheBust',
     'clean:tmp'
   ]);
