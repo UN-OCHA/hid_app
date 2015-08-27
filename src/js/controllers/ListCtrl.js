@@ -647,7 +647,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     query.skip = $scope.contactsCount;
 
     // Custom contact list.
-    if ($scope.locationId !== 'global' && $routeParams.id) {
+    if ($routeParams.id) {
       setCustomList($routeParams.id, query);
     } else {
       $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
@@ -656,6 +656,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
           $scope.contacts = $scope.contacts.concat(data.contacts);
           $scope.contactsCreated = true;
           $scope.queryCount = data.count;
+          $scope.contactsCount = data.contacts.length;
         }
       });
     }
