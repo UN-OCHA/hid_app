@@ -19,7 +19,7 @@
   </div>
 
   <form name="profileForm" autocomplete="off" class="update-profile profile-form row" ng-show="selectedOperation.length" ng-class="{'show-options': profileOptions}" novalidate ng-submit="submitProfile()">
-    <div class="form-content col-xs-12 col-sm-8 col-md-9 pull-right" >
+    <div class="form-content col-xs-12 col-sm-8 col-md-9 pull-right-hard">
       <h2 class="profile-title">{{profileName()}} <span translate>Profile</span></h2>
       <p class="help-block" ng-if="profile.type === 'local'" translate>* Enter your local contact details. Changes made to this profile will not affect your global profile.</p>
       <p class="help-block">* <em translate>Required field</em></p>
@@ -443,7 +443,7 @@
               </div>
             </div>
           </div>
-  
+
           <div class="section profile-image" ng-class="{'open': updatingImage, 'empty': !profile.image[0].imageUrl}">
             <h4 translate>Profile Image</h4>
             <div class="form-group">

@@ -9064,6 +9064,14 @@ body.pdf .logo {
   margin-right: 150px;
 }
 
+.pull-right-hard {
+  float: right !important;
+}
+
+.pull-left-hard {
+  float: left !important;
+}
+
 .contactsid-app p {
   margin: 0 0 9px;
 }
