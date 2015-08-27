@@ -1,15 +1,15 @@
 <div class="masthead row" ng-show='!isRouteLoading'>
-  <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 pull-right">
+  <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 pull-right-hard">
     <h2 class="heading-contact-list">
       {{locationText()}} <small>(<span translate>Contacts</span> {{queryCount}})</small>
-      <a href="#/settings/list/{{list._id}}" class="btn btn-primary pull-right" ng-if="locationId !== 'global' && userData.profile.userid == list.userid && list._id" role="button">List Settings</a>
-      <button ng-click="toggleFollow()" class="btn btn-primary pull-right" ng-if="locationId !== 'global' && userData.profile.userid != list.userid && list._id" >{{toggleFollowButton}}</button>
+      <a href="#/settings/list/{{list._id}}" class="btn btn-primary pull-right-hard" ng-if="locationId !== 'global' && userData.profile.userid == list.userid && list._id" role="button">List Settings</a>
+      <button ng-click="toggleFollow()" class="btn btn-primary pull-right-hard" ng-if="locationId !== 'global' && userData.profile.userid != list.userid && list._id" >{{toggleFollowButton}}</button>
     </h2>
   </div>
 </div>
 
 <div class="main row page-list" ng-show='!isRouteLoading' ng-class="{'show-options': sidebarOptions}">
-  <div class="active-contacts col-xs-12 col-sm-8 col-md-9 pull-right">
+  <div class="active-contacts col-xs-12 col-sm-8 col-md-9 pull-right-hard">
     <browser-alert></browser-alert>
 
     <form class="search-form">
