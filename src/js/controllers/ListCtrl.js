@@ -103,11 +103,8 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   }
 
   // Custom contact list.
-  if ($scope.locationId !== 'global' || $scope.isContactList) {
-    if ($routeParams.id) {
-      $scope.showResetBtn = Object.keys($scope.query).length - 1;
-      setCustomList($routeParams.id);
-    }
+  if ($scope.locationId !== 'global' && $routeParams.id) {
+    $scope.showResetBtn = Object.keys($scope.query).length - 1;
   }
 
   $scope.parseAcronym = function (orgName) {
@@ -310,7 +307,9 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
   $scope.resetSearch = function () {
     for (var i in searchKeys) {
-      $scope.query[searchKeys[i]] = null;
+      if (searchKeys[i] != 'id') {
+        $scope.query[searchKeys[i]] = null;
+      }
     }
     // Submit search after clearing query to show all.
     $scope.submitSearch();
@@ -647,34 +646,104 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     query.limit = $scope.loadLimit;
     query.skip = $scope.contactsCount;
 
-    $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
-      if (data && data.status && data.status === 'ok') {
-        data.contacts = data.contacts || [];
-        $scope.contacts = $scope.contacts.concat(data.contacts);
-        $scope.contactsCreated = true;
-        if ($scope.locationId !== 'global' && $scope.list) {
-          $scope.queryCount = $scope.contacts.length;
-        } else {
+    // Custom contact list.
+    if ($scope.locationId !== 'global' && $routeParams.id) {
+      setCustomList($routeParams.id, query);
+    } else {
+      $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
+        if (data && data.status && data.status === 'ok') {
+          data.contacts = data.contacts || [];
+          $scope.contacts = $scope.contacts.concat(data.contacts);
+          $scope.contactsCreated = true;
           $scope.queryCount = data.count;
         }
-
-        $scope.contactsCount = $scope.contacts.length;
-      }
-    });
+      });
+    }
   }
 
-  function setCustomList(id) {
+  function setCustomList(id, query) {
     var terms = {id: id};
     $scope.listPromise = profileService.getLists(terms).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         $scope.list = data.lists;
         $scope.listCount = data.lists.length;
         $scope.userData = userData;
-        $scope.contacts = $scope.list.contacts;
+
+        $scope.queryCount = $scope.list.contacts.length;
+
         $scope.toggleFollowButton = 'Follow';
         if ($scope.list.users.indexOf($scope.userData.profile.userid) != -1) {
           $scope.toggleFollowButton = 'Unfollow';
         }
+
+        //TODO: Mongoose does not allow querying of embedded object references
+        // so instead we need to filter the results after the query is made.
+        var contacts = data.lists.contacts;
+        if (query.hasOwnProperty('address.country')) {
+          contacts = $scope.list.contacts.filter(function(contact){
+            if (contact.address.length > 0) {
+              return contact.address.map(function(c) { return c.country; }).indexOf(query['address.country']) != -1;
+            } else {
+              return false;
+            }
+          });
+        }
+
+        if (query.hasOwnProperty('organization.name')) {
+          contacts = $scope.list.contacts.filter(function(contact){
+            if (contact.organization.length > 0) {
+              return contact.organization.map(function(c) { return c.name; }).indexOf(query['organization.name']) != -1;
+            } else {
+              return false;
+            }
+          });
+        }
+
+        if (query.hasOwnProperty('organization.org_type_remote_id')) {
+          contacts = $scope.list.contacts.filter(function(contact){
+            if (contact.organization.length > 0) {
+              return contact.organization.map(function(c) { return c.org_type_remote_id; }).indexOf(query['organization.org_type_remote_id']) != -1;
+            } else {
+              return false;
+            }
+          });
+        }
+
+        if (query.hasOwnProperty('disasters.remote_id')) {
+          contacts = $scope.list.contacts.filter(function(contact){
+            if (contact.disasters.length > 0) {
+              return contact.disasters.map(function(c) { return c.remote_id; }).indexOf(query['disasters.remote_id']) != -1;
+            } else {
+              return false;
+            }
+          });
+        }
+
+        if (query.hasOwnProperty('protectedRoles')) {
+          contacts = $scope.list.contacts.filter(function(contact){
+            if (contact.protectedRoles.length > 0) {
+              return contact.protectedRoles.indexOf(query['organization.org_type_remote_id']) != 1;
+            } else {
+              return false;
+            }
+          });
+        }
+
+        if (query.hasOwnProperty('keyContact')) {
+          contacts = $scope.list.contacts.filter(function(contact){
+            return contact.keyContact == query['keyContact'];
+          });
+        }
+
+        if (query.hasOwnProperty('verified')) {
+          contacts = $scope.list.contacts.filter(function(contact){
+            return contact.verified == query['verified'];
+          });
+        }
+
+        $scope.contactsCreated = true;
+        $scope.contacts = contacts;
+        $scope.contactsCount = contacts.length;
       }
     });
   };
