@@ -69,7 +69,7 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
 });
 
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
-app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", ContactCtrl]);
+app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", ContactCtrl]);
 app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", CreateAccountCtrl]);
 app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "profileService", "globalProfileId", "userData", DashboardCtrl]);
 app.controller("DefaultCtrl", ["$location", "authService", DefaultCtrl]);
@@ -80,6 +80,8 @@ app.controller("LoginCtrl", ["$scope", "$location", "$routeParams", "authService
 app.controller("LogoutCtrl", ["$scope", "authService", LogoutCtrl]);
 app.controller("ProfileCtrl", ["$scope", "$location", "$route", "$routeParams", "$filter", "$timeout", "$http", "profileService", "authService", "operations", "profileData", "countries", "roles", "protectedRoles", "gettextCatalog", "userData", ProfileCtrl]);
 app.controller("RegisterCtrl", ["$scope", RegisterCtrl]);
+app.controller("AddToCustomListCtrl", ["$scope", "profileService", AddToCustomListCtrl]);
+app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "profileService", "list", "ngDialog", CustomListSettingsCtrl]);
 
 
 app.config(function($routeProvider, $locationProvider) {
@@ -385,6 +387,32 @@ app.config(function($routeProvider, $locationProvider) {
   when('/about', {
     templateUrl: contactsId.sourcePath + '/partials/about.html',
     controller: 'AboutCtrl'
+  }).
+  when('/settings/list/:listId', {
+    templateUrl: contactsId.sourcePath + '/partials/settingsList.html',
+    controller: 'CustomListSettingsCtrl',
+    requireAuth: true,
+    resolve: {
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          return data;
+        });
+      },
+      list : function(profileService, $route) {
+        return profileService.getLists({id: $route.current.params.listId}).then(function(data) {
+          if (data && data.lists && data.status === 'ok') {
+            return data.lists;
+          } else {
+            throw new Error('The custom contact list could not be found.');
+          }
+        });
+      },
+      routeAccess : function() {
+        return function(locals) {
+          return locals.userData.profile.userid === locals.list.userid;
+        };
+      }
+    }
   }).
   otherwise({
     templateUrl: contactsId.sourcePath + '/partials/404.html',

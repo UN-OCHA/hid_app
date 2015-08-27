@@ -700,7 +700,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
   function setUpdateEmail() {
     $scope.email.send = true;
-  }  
+  }
 
   // If profile is local, set preferred county code to checkin location.
   function setPreferedCountries() {

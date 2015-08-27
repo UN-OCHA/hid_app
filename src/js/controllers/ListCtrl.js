@@ -1,5 +1,5 @@
 function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, orgTypes, countries, roles, ngDialog) {
-  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'office.name', 'organization.name', 'organization.org_type_remote_id', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified'],
+  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'office.name', 'organization.name', 'organization.org_type_remote_id', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified', 'id'],
       filter = $filter('filter');
 
   $scope.location = '';
@@ -7,6 +7,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.operations = operations;
 
+  $scope.list = {};
   $scope.contacts = [];
   $scope.bundles = [];
   $scope.disasterOptions = [];
@@ -25,9 +26,11 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   ];
 
   $scope.contactsPromise;
+  $scope.listPromise;
   $scope.query = $location.search();
   $scope.loadLimit = 30;
   $scope.contactsCount = 0;
+
   $scope.showResetBtn = Object.keys($scope.query).length;
   $scope.isContactList = ($scope.locationId !== 'global' && !$scope.locationId.match(/hrinfo:/));
 
@@ -97,6 +100,11 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
         $scope.regions = data;
       });
     }
+  }
+
+  // Custom contact list.
+  if ($scope.locationId !== 'global' && $routeParams.id) {
+    $scope.showResetBtn = Object.keys($scope.query).length - 1;
   }
 
   $scope.parseAcronym = function (orgName) {
@@ -282,7 +290,9 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
   $scope.resetSearch = function () {
     for (var i in searchKeys) {
-      $scope.query[searchKeys[i]] = null;
+      if (searchKeys[i] != 'id') {
+        $scope.query[searchKeys[i]] = null;
+      }
     }
     // Submit search after clearing query to show all.
     $scope.submitSearch();
@@ -427,7 +437,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
   $scope.locationText = function() {
     if ($scope.isContactList) {
-      return gettextCatalog.getString('My Contact List');
+      return $scope.list.name;
     }
     else {
       return $scope.location || gettextCatalog.getString('Global Contact List');
@@ -502,6 +512,74 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     }
   }
 
+  // Remove contact from the custom list.
+  $scope.removeContact = function(contact) {
+    var list = $scope.list;
+
+    index = list.contacts.indexOf(contact);
+
+    // Create an array of ids so that mongoose can save the contacts reference.
+    var contacts = [];
+    angular.forEach(list.contacts, function(contact, key) {
+      if (key !== index) {
+        this.push(contact._id);
+      }
+    }, contacts);
+    list.contacts = contacts;
+
+    profileService.saveList(list).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        $scope.contacts.splice(index, 1);
+      }
+      else {
+        alert('An error occurred while unfollowing this contact list. Please reload and try the change again.');
+      }
+    });
+  }
+
+  // Add contact to the custom list.
+  $scope.addContact = function(contact) {
+    $scope.contact = contact;
+    $scope.userid = userData.profile.userid;
+
+    ngDialog.open({
+      name: 'AddContact',
+      template: 'partials/addToCustomList.html',
+      showClose: false,
+      scope: $scope,
+      controller: 'AddToCustomListCtrl',
+    });
+  }
+
+  $scope.toggleFollow = function() {
+    var list = $scope.list;
+    if ($scope.toggleFollowButton === 'Follow') {
+      list.users.push($scope.userData.profile.userid);
+    } else {
+      var index = list.users.indexOf($scope.userData.profile.userid);
+      if (index > -1) {
+        list.users.splice(index, 1);
+      }
+    }
+
+    // Rebuild contacts since it now contains the full objects.
+    var contacts = [];
+    angular.forEach(list.contacts, function(value, key) {
+      this.push(value._id);
+    }, contacts);
+    list.contacts = contacts;
+
+    profileService.saveList(list).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        console.log('updated');
+        $scope.toggleFollowButton = $scope.toggleFollowButton === 'Follow' ? 'Unfollow': 'Follow';
+      }
+      else {
+        alert('An error occurred while unfollowing this contact list. Please reload and try the change again.');
+      }
+    });
+  }
+
   // Builds the list of contacts.
   function createContactList() {
     var query = $scope.query;
@@ -551,17 +629,108 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     query.limit = $scope.loadLimit;
     query.skip = $scope.contactsCount;
 
-    $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
-      if (data && data.status && data.status === 'ok') {
+    // Custom contact list.
+    if ($routeParams.id) {
+      setCustomList($routeParams.id, query);
+    } else {
+      $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
+        if (data && data.status && data.status === 'ok') {
+          data.contacts = data.contacts || [];
+          $scope.contacts = $scope.contacts.concat(data.contacts);
+          $scope.contactsCreated = true;
+          $scope.queryCount = data.count;
+          $scope.contactsCount = data.contacts.length;
+        }
+      });
+    }
+  }
 
-        data.contacts = data.contacts || [];
-        $scope.contacts = $scope.contacts.concat(data.contacts);
+  function setCustomList(id, query) {
+    var terms = {id: id};
+    $scope.listPromise = profileService.getLists(terms).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        $scope.list = data.lists;
+        $scope.listCount = data.lists.length;
+        $scope.userData = userData;
+
+        $scope.queryCount = $scope.list.contacts.length;
+
+        $scope.toggleFollowButton = 'Follow';
+        if ($scope.list.users.indexOf($scope.userData.profile.userid) != -1) {
+          $scope.toggleFollowButton = 'Unfollow';
+        }
+
+        //TODO: Mongoose does not allow querying of embedded object references
+        // so instead we need to filter the results after the query is made.
+        var contacts = data.lists.contacts;
+        if (query.hasOwnProperty('address.country')) {
+          contacts = $scope.list.contacts.filter(function(contact){
+            if (contact.address.length > 0) {
+              return contact.address.map(function(c) { return c.country; }).indexOf(query['address.country']) != -1;
+            } else {
+              return false;
+            }
+          });
+        }
+
+        if (query.hasOwnProperty('organization.name')) {
+          contacts = $scope.list.contacts.filter(function(contact){
+            if (contact.organization.length > 0) {
+              return contact.organization.map(function(c) { return c.name; }).indexOf(query['organization.name']) != -1;
+            } else {
+              return false;
+            }
+          });
+        }
+
+        if (query.hasOwnProperty('organization.org_type_remote_id')) {
+          contacts = $scope.list.contacts.filter(function(contact){
+            if (contact.organization.length > 0) {
+              return contact.organization.map(function(c) { return c.org_type_remote_id; }).indexOf(query['organization.org_type_remote_id']) != -1;
+            } else {
+              return false;
+            }
+          });
+        }
+
+        if (query.hasOwnProperty('disasters.remote_id')) {
+          contacts = $scope.list.contacts.filter(function(contact){
+            if (contact.disasters.length > 0) {
+              return contact.disasters.map(function(c) { return c.remote_id; }).indexOf(query['disasters.remote_id']) != -1;
+            } else {
+              return false;
+            }
+          });
+        }
+
+        if (query.hasOwnProperty('protectedRoles')) {
+          contacts = $scope.list.contacts.filter(function(contact){
+            if (contact.protectedRoles.length > 0) {
+              return contact.protectedRoles.indexOf(query['organization.org_type_remote_id']) != 1;
+            } else {
+              return false;
+            }
+          });
+        }
+
+        if (query.hasOwnProperty('keyContact')) {
+          contacts = $scope.list.contacts.filter(function(contact){
+            return contact.keyContact == query['keyContact'];
+          });
+        }
+
+        if (query.hasOwnProperty('verified')) {
+          contacts = $scope.list.contacts.filter(function(contact){
+            return contact.verified == query['verified'];
+          });
+        }
+
         $scope.contactsCreated = true;
-        $scope.queryCount = data.count;
-        $scope.contactsCount = $scope.contacts.length;
+        $scope.contacts = contacts;
+        $scope.contactsCount = contacts.length;
       }
     });
-  }
+  };
 
   // Converts object to a sortable array.
   function listObjectToArray(obj) {

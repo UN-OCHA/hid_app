@@ -16,6 +16,9 @@
       getProfileByUser: getProfileByUser,
       getProfiles: getProfiles,
       getContacts: getContacts,
+      getLists: getLists,
+      saveList: saveList,
+      deleteList: deleteList,
       getProfileData: getProfileData,
       saveProfile: saveProfile,
       deleteProfile: deleteProfile,
@@ -160,6 +163,44 @@
         method: "get",
         url: contactsId.profilesBaseUrl + "/v0/contact/view",
         params: terms
+      });
+      return(request.then(handleSuccess, handleError));
+    }
+
+    // Get custom contact lists that match specified parameters.
+    function getLists(terms) {
+      if (!terms) {
+        var terms = {};
+      }
+
+      terms.access_token = authService.getAccessToken();
+      var request = $http({
+        method: "get",
+        url: contactsId.profilesBaseUrl + "/v0/list/view",
+        params: terms
+      });
+      return(request.then(handleSuccess, handleError));
+    }
+
+    // Save a profile (create or update existing).
+    function saveList(list) {
+      var request;
+      request = $http({
+        method: "post",
+        url: contactsId.profilesBaseUrl + "/v0/list/save",
+        params: {access_token: authService.getAccessToken()},
+        data: list
+      });
+      return(request.then(handleSuccess, handleError));
+    }
+
+    function deleteList(list) {
+      var request;
+      request = $http({
+        method: "post",
+        url: contactsId.profilesBaseUrl + "/v0/list/delete",
+        params: {access_token: authService.getAccessToken()},
+        data: list
       });
       return(request.then(handleSuccess, handleError));
     }
