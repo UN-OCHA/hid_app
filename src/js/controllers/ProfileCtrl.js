@@ -557,49 +557,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         profile.location = $scope.operations[$scope.selectedOperation].name;
       }
 
-      var email = {};
-      if ( (!userData.profile || !userData.profile.userid || userData.profile.userid === profile.userid)
-          && (profile.organization && profile.organization[0] && profile.organization[0].hasOwnProperty('remote_id'))
-          && (!profileData.contact || !profileData.contact.organization || !profileData.contact.organization[0] || profile.organization[0].remote_id != profileData.contact.organization[0].remote_id)) {
-
-        email = angular.extend(email, {
-            newOrg: true,
-            recipientFirstName: profile.nameGiven,
-            recipientLastName: profile.nameFamily,
-            locationId: profile.locationId,
-            locationName: profile.location,
-            locationType: profile.type,
-            organization: profile.organization[0].name,
-            organizationId: profile.organization[0].remote_id
-          });
-      }
-
-      // Determine if user being checked in is the same as the logged in user. Also verify that it is not an orphan account and sendUpdateEmail checkbox is set to true
-      // If neither are true, we need to add some properties to contact so profile service can send an email notifying the user
-      if (userData.profile && userData.profile.userid && userData.profile.userid != profile.userid && profile.email[0] && profileData.profile.firstUpdate && $scope.email.send) {
-        //Set email fields
-        email = angular.extend(email, {
-            type: checkinFlow ? 'notify_checkin' : 'notify_edit',
-            recipientFirstName: profile.nameGiven,
-            recipientLastName: profile.nameFamily,
-            recipientEmail: profile.email[0].address,
-            adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-            locationName: profile.location,
-            locationType: profile.type,
-            addedGroups: bundlesAdded(),
-            removedGroups: bundlesRemove()
-          });
-
-        if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
-          email.adminEmail = userData.global.email[0].address;
-        }
-        if (profile.disasters && profile.disasters[0] && profile.disasters[0].name) {
-          email.locationName += '/' + profile.disasters[0].name;
-        }
-      }
-
-      profile.notifyEmail = email;
-
       if ($scope.profileId.length) {
         profile._contact = $scope.profileId;
       }
@@ -663,26 +620,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
   $scope.deleteAccount = function () {
     var userid = profileData.profile.userid || profileData.profile._userid;
-    var profile = $scope.profile;
-    var email = {};
-
-    email = angular.extend(email, {
-      type: 'notify_delete',
-      recipientFirstName: profile.nameGiven,
-      recipientLastName: profile.nameFamily,
-      recipientEmail: profile.email[0].address,
-      adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-      locationName: profile.location,
-      locationType: profile.type,
-      addedGroups: bundlesAdded(),
-      removedGroups: bundlesRemove()
-    });
-
-    if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
-      email.adminEmail = userData.global.email[0].address;
-    }
-
-    profileService.deleteProfile(userid, email).then(function(data) {
+    profileService.deleteProfile(userid).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         profileService.clearData();
         // Unreliable to know where user was so try to send them back.
@@ -695,41 +633,18 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   };
 
   $scope.reportProblem = function () {
-    var recipientEmail = null;
-
-    if (profileData.contact.email && profileData.contact.email[0] && profileData.contact.email[0].address && String(profileData.contact.email[0].address).length) {
-      recipientEmail = profileData.contact.email[0].address
-    }
-
-    var email = {
-      type: 'notify_problem',
-      recipientFirstName: profileData.contact.nameGiven,
-      recipientLastName: profileData.contact.nameFamily,
-      recipientEmail: recipientEmail,
-      adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-      locationName: profileData.contact.location,
-      locationType: profileData.contact.type
-
-    };
-    if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
-      email.adminEmail = userData.global.email[0].address;
-    }
-
-    if (profileData.contact.email && profileData.contact.email[0] && profileData.contact.email[0].address && String(profileData.contact.email[0].address).length) {
-      $scope.sendingClaimEmail = true;
-      var adminName = userData.global.nameGiven + " " + userData.global.nameFamily;
-      profileService.sendNotificationEmail(email).then(function(data) {
-        $scope.sendingClaimEmail = false;
-        $scope.confirmSendEmail = false;
-        $scope.profile.confirmNotify = false;
-        if (data.status === 'ok') {
-          alert('Email sent successfully.');
-        }
-        else {
-          alert('An error occurred while attempting to send the report problem email. Please try again or contact an administrator.');
-        }
-      });
-    }
+    $scope.sendingClaimEmail = true;
+    profileService.sendNotificationEmail(profileData.contact._id).then(function(data) {
+      $scope.sendingClaimEmail = false;
+      $scope.confirmSendEmail = false;
+      $scope.profile.confirmNotify = false;
+      if (data.status === 'ok') {
+        alert('Email sent successfully.');
+      }
+      else {
+        alert('An error occurred while attempting to send the report problem email. Please try again or contact an administrator.');
+      }
+    });
   };
 
   $scope.sendClaimEmail = function () {
@@ -743,7 +658,12 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
           alert('Account claim email sent successfully.');
         }
         else {
-          alert('An error occurred while attempting to send the account claim email. Please try again or contact an administrator.');
+          if (data.message) {
+            alert(data.message);
+          }
+          else {
+            alert('An error occurred while attempting to send the account claim email. Please try again or contact an administrator.');
+          }
         }
       });
     }
@@ -757,28 +677,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         userid:  profileData.profile.userid,
         status: 0
       };
-
-       // Determine if user being checked in is the same as the logged in user, it is not an orphan account and sendUpdateEmail checkbox is set to true
-      // If neither are true, we need to add some properties to contact so profile service can send an email notifying the user
-      if (userData.profile.userid != profileData.profile.userid && profileData.contact.email[0] && profileData.profile.firstUpdate && $scope.email.send) {
-        //Set email fields
-        var email = {
-          type: 'notify_checkout',
-          recipientFirstName: profileData.contact.nameGiven,
-          recipientLastName: profileData.contact.nameFamily,
-          recipientEmail: profileData.contact.email[0].address,
-          adminName: userData.global.nameGiven + " " + userData.global.nameFamily,
-          locationName: profileData.contact.location,
-          locationType: profileData.contact.type
-        };
-        if (userData.global.email && userData.global.email[0] && userData.global.email[0].address) {
-          email.adminEmail = userData.global.email[0].address;
-        }
-        if (profileData.contact.disasters && profileData.contact.disasters[0] && profileData.contact.disasters[0].name) {
-          email.locationName += '/' + profileData.contact.disasters[0].name;
-        }
-        contact.notifyEmail = email;
-      }
 
       profileService.saveContact(contact).then(function(data) {
         if (data && data.status && data.status === 'ok') {

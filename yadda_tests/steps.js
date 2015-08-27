@@ -67,7 +67,7 @@ module.exports.init = function() {
     })
 
     .then("I should be logged in", function() {
-      casper.waitForUrl('http://dev.app.568elmp02.blackmesh.com/#/dashboard', function() {
+      casper.waitForUrl('http://app.dev.humanitarian.id/#/dashboard', function() {
         casper.test.assertTextExists('Welcome,', "user is logged in to app");
         casper.test.assertSelectorHasText('.actions a', 'Edit Global Profile', "user has Edit Global Profile link");
       });

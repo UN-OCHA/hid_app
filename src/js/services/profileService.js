@@ -265,11 +265,10 @@
     }
 
     // Delete (disable) a profile
-    function deleteProfile(userId, email) {
+    function deleteProfile(userId) {
       var request,
         data = {
           userId: userId,
-          notifyEmail: email,
         };
       request = $http({
         method: "post",
@@ -328,10 +327,10 @@
     }
 
     // Send notification Email
-    function sendNotificationEmail(email) {
+    function sendNotificationEmail(contactId) {
       var request,
         data = {
-          notifyEmail: email
+          contactId: contactId
         };
       request = $http({
         method: "post",

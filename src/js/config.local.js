@@ -4,9 +4,9 @@ var contactsId = {
     "appBaseUrl": "http://app.contactsid.vm",
 // The following lines configure HID App to use the *dev* auth, profiles, and
 // HR.info instance.
-    "authBaseUrl": "http://dev.auth.568elmp02.blackmesh.com",
-    "profilesBaseUrl": "http://dev.profiles.568elmp02.blackmesh.com",
-    "hrinfoBaseUrl": "http://hid.hrinfo.568elmp02.blackmesh.com",
+    "authBaseUrl": "http://auth.dev.humanitarian.id",
+    "profilesBaseUrl": "http://profiles.dev.humanitarian.id",
+    "hrinfoBaseUrl": "https://www.humanitarianresponse.info",
 // The following lines configure HID App to use the local auth, profiles, and
 // HR.info instance.
 //    "authBaseUrl": "http://auth.contactsid.vm",
