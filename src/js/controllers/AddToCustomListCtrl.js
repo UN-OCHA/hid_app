@@ -4,7 +4,7 @@ function AddToCustomListCtrl($scope, profileService) {
       $scope.customContacts = [];
       // Only allow contacts to be added to lists that they aren't already part of.
       angular.forEach(data.lists, function(value, key) {
-        if (value.contacts.indexOf($scope.contact._id) == -1) {
+        if ((value.contacts.indexOf($scope.contact._id) == -1) && ($scope.userid == value.userid)) {
           var list = value;
           list.addToList = false;
           this.push(list);
