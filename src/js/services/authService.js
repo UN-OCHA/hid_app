@@ -50,21 +50,53 @@
           oauthToken = token.access_token;
 
           // Request the account data from the auth system.
-          $.ajax({
-            success: function (data) {
-              accountData = JSON.parse(data);
-              $rootScope.$emit("appLoginSuccess", accountData);
-              return cb();
-            },
-            error: function (err) {
-              console.log("Error encountered while verifying user account data: ", err);
-              return cb(err);
-            },
-            data: {
+          var deferred = $q.defer();
+
+          $http({
+            method: 'get',
+            cache: true,
+            url: contactsId.authBaseUrl + "/account.json",
+            params: {
               "access_token": token.access_token
-            },
-            url: contactsId.authBaseUrl + "/account.json"
+            }
+          }).then(function(data){
+            deferred.resolve(data);
+            // console.log(data.data);
+            accountData = data.data;
+            $rootScope.$emit("appLoginSuccess", accountData);
+            return cb(); 
+          },function(err){
+            console.log("Error encountered while verifying user account data: ", err);
+            return cb(err);
           });
+          // }).then(function(data){
+          //   console.log(data);
+             
+          // });
+            
+          //   cache: true
+          // }).success(function(data){
+            
+          // }).then(function(data){
+            
+          // })
+          // $.ajax({
+          //   success: function (data) {
+          //     // deferred.resolve(data);
+          //     accountData = JSON.parse(data);
+          //     $rootScope.$emit("appLoginSuccess", accountData);
+          //     return cb();
+          //   },
+          //   error: function (err) {
+          //     console.log("Error encountered while verifying user account data: ", err);
+          //     return cb(err);
+          //   },
+          //   data: {
+          //     "access_token": token.access_token
+          //   },
+          //   url: contactsId.authBaseUrl + "/account.json",
+          //   cache: true
+          // });
         }
       }, {});
     };
