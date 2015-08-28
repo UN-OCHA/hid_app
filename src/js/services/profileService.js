@@ -56,12 +56,15 @@
         return promise.promise;
       }
       else {
+        var defer = $q.defer();
         promise = $http({
           method: "get",
+          cache: true,
           url: contactsId.profilesBaseUrl + "/v0/profile/view",
           params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()}
         })
         .then(handleSuccess, handleError).then(function(data) {
+          defer.resolve(data);
           if (data && data.profile && data.contacts) {
             var globalMatch = filter(data.contacts, function(d){return d.type === 'global';});
             cacheUserData = data;
@@ -89,12 +92,15 @@
         return promiseAppData;
       }
       else {
+        var defer = $q.defer();
         promiseAppData = $http({
           method: "get",
+          cache: true,
           url: contactsId.profilesBaseUrl + "/v0/app/data",
           params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
         })
         .then(handleSuccess, handleError).then(function(data) {
+          defer.resolve(data);
           if (data) {
             cacheAppData = data;
           }
@@ -145,12 +151,16 @@
 
     // Get profiles that match specified parameters.
     function getProfiles(terms) {
+      var defer = $q.defer();
       var request = $http({
         method: "get",
+        cache: true,
         url: contactsId.profilesBaseUrl + "/v0/profile/view",
         params: $.extend({}, terms, {access_token: authService.getAccessToken()})
       });
-      return(request.then(handleSuccess, handleError));
+      return(request.then(handleSuccess, handleError).then(function(data){
+        defer.resolve(data);
+      }));
     }
 
     // Get contacts that match specified parameters.
@@ -158,6 +168,7 @@
       terms.access_token = authService.getAccessToken();
       var request = $http({
         method: "get",
+        cache: true,
         url: contactsId.profilesBaseUrl + "/v0/contact/view",
         params: terms
       });
@@ -321,6 +332,7 @@
       var promise;
       promise = $http({
         method: "get",
+        cache: true,
         url: contactsId.hrinfoBaseUrl + "/hid/locations/countries"
       })
       .then(handleSuccess, handleError).then(function(data) {
@@ -346,6 +358,7 @@
       }
       promise = $http({
         method: "get",
+        cache: true,
         url: contactsId.hrinfoBaseUrl + "/hid/locations/" + country_id
       })
       .then(handleSuccess, handleError).then(function(data) {

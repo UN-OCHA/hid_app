@@ -1,6 +1,6 @@
 (function($, angular, contactsId) {
 // Initialize ng
-var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog']);
+var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-cache', 'LocalForageModule']);
 
 webshims.setOptions({
    waitReady: false,
@@ -10,10 +10,10 @@ webshims.setOptions({
 webshim.polyfill('forms forms-ext');
 
 Offline.options = {
-  interceptRequests: true,
+  // interceptRequests: true,
   reconnect: {
-    initialDelay: 10,
-    delay: 20
+    initialDelay: 30,
+    delay: 60
   },
   requests: false //record ajax requests and re-make on connection restore
 }
@@ -26,7 +26,9 @@ app.value('cgBusyDefaults',{
   minDuration: 300
 });
 
-app.run(function ($rootScope, $location, $window, $timeout, authService) {
+app.run(function ($rootScope, $location, $window, $timeout, authService, $http, localForageCache) {
+  $http.defaults.cache = localForageCache.getCacheFactory();
+
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     $rootScope.bodyClasses = [];
 
@@ -391,6 +393,7 @@ app.config(function($routeProvider, $locationProvider) {
     controller: '404Ctrl'
   });
 });
+
 
 /**
  * Regular Expresion IndexOf for Arrays
