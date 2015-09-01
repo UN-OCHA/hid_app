@@ -259,7 +259,7 @@ module.exports = function(grunt) {
           basePath: 'dist/',
           cache: ['<%= cacheHash["/js/app.min.js"] %>', '<%= cacheHash["/css/app.min.css"] %>'],
           // network: ['*'],
-          // fallback: ['/ /offline.html'],
+          fallback: ['/ partials/offline.html'],
           // exclude: ['']
           preferOnline: true,
           // timestamp: true,

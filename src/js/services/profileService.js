@@ -612,6 +612,9 @@
       // server (or what not handles properly - ex. server error), then we
       // may have to normalize it on our end, as best we can.
       if (!angular.isObject(response.data) || !response.data.message) {
+        if (response.status == 0) {
+          location.replace('#/offline'); //redirect to offline
+        }
         return ($q.reject("An unknown error occurred."));
       }
 
