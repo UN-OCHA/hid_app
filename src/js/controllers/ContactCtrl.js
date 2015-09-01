@@ -222,10 +222,12 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   };
 
   // Add contact to the custom list.
-  $scope.addContact = function(index) {
+  $scope.addContact = function() {
     $scope.contact = $scope.contact;
+    $scope.userid = userData.profile.userid;
 
     ngDialog.open({
+      name: 'AddContact',
       template: 'partials/addToCustomList.html',
       showClose: false,
       scope: $scope,
