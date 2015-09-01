@@ -149,7 +149,7 @@ module.exports = function(grunt) {
           'src/libraries/intl-tel-input/build/css/intlTelInput.css',
           'src/libraries/ngDialog/css/ngDialog.css',
           'src/libraries/ngDialog/css/ngDialog-theme-default.css',
-          'src/libraries/offline/themes/offline-theme-slide.css',
+          'src/libraries/offline/themes/offline-theme-default-indicator.css',
           'src/libraries/offline/themes/offline-language-english.css'
         ],
       },

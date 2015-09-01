@@ -11,10 +11,11 @@ webshim.polyfill('forms forms-ext');
 
 Offline.options = {
   // interceptRequests: true,
-  reconnect: {
-    initialDelay: 30,
-    delay: 60
-  },
+  reconnect: false,
+  // reconnect: {
+  //   initialDelay: 30,
+  //   delay: 60
+  // },
   requests: false //record ajax requests and re-make on connection restore
 }
 
