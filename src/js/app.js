@@ -1,6 +1,6 @@
 (function($, angular, contactsId) {
 // Initialize ng
-var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-cache', 'LocalForageModule']);
+var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-cache']);
 
 webshims.setOptions({
    waitReady: false,
@@ -26,8 +26,8 @@ app.value('cgBusyDefaults',{
   minDuration: 300
 });
 
-app.run(function ($rootScope, $location, $window, $timeout, authService, $http, localForageCache) {
-  $http.defaults.cache = localForageCache.getCacheFactory();
+app.run(function ($rootScope, $location, $window, $timeout, authService, $http, offlineCache) {
+  $http.defaults.cache = offlineCache.getCacheFactory();
 
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     $rootScope.bodyClasses = [];
