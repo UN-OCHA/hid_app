@@ -425,6 +425,9 @@ app.config(function($routeProvider, $locationProvider) {
   when('/offline', {
     templateUrl: contactsId.sourcePath + '/partials/offline.html'
   }).
+  when('/offline', {
+    templateUrl: contactsId.sourcePath + '/partials/offline.html'
+  }).
   otherwise({
     templateUrl: contactsId.sourcePath + '/partials/404.html',
     controller: '404Ctrl'
