@@ -1,0 +1,39 @@
+#holder {
+left:0;
+position:relative;
+max-width: 18%;
+min-width:320px;
+margin:90px auto;
+transform:translate(0%,90%);
+text-align:center
+}
+#div2 {
+width: 210px;
+height: 200px;
+color: #54b1c8;
+font-size: 160%;
+position:absolute;
+top: 40; 
+left: 20;
+
+font-family: 'exo2';
+-ms-transform: rotate(-66deg); /* IE 9 */
+-webkit-transform: rotate(-66deg); /* Chrome, Safari, Opera */
+transform: rotate(-66deg);
+}
+#huge {     
+top: 1%;
+left: 40%;
+color: #54b1c8;
+font-family: 'exo2';
+font-size: 960%;
+ }
+#h2 {
+padding:0px;
+margin:0px;
+position:absolute;
+bottom:-25px;
+left:35px;
+font-family: 'exo2';
+font-size: 360%;
+}
