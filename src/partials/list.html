@@ -45,7 +45,7 @@
                 <a role="menuitem" tabindex="-1" ng-click="removeContact(contact)" ng-if="userData.profile.userid == list.userid && list._id" translate>Remove from list</a>
               </li>
               <li>
-                <a role="menuitem" tabindex="-1" ng-click="addContact(contact)" translate>Add to new list</a>
+                <a role="menuitem" tabindex="-1" ng-click="addContact(contact)" translate>Select a list</a>
               </li>
             </ul>
           </div>
@@ -61,7 +61,7 @@
                 <a role="menuitem" tabindex="-1" ng-click="removeContact(contact)" ng-if="userData.profile.userid == list.userid && list._id" translate>Remove from list</a>
               </li>
               <li ng-class="{'disabled':contact.ql.contactListState === 'inProgress'}">
-                <a role="menuitem" tabindex="-1" ng-click="addContact(contact)" translate>Add to new list</a>
+                <a role="menuitem" tabindex="-1" ng-click="addContact(contact)" translate>Select a list</a>
               </li>
               <li ng-if="contact.ql.userCanCheckIn">
                 <a role="menuitem" tabindex="-1" href="#/checkin{{contact.ql.isOwn ? '' : '/' + contact._profile._id}}" translate>Check-in</a>
