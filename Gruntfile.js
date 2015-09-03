@@ -20,7 +20,7 @@ module.exports = function(grunt) {
       html: 'src/index.html',
       options: {
         dest: 'dist',
-        // Override defaults allowing me to defind my own flow.
+        // Override defaults allowing me to define my own flow.
         flow: {
           steps: {
             js: [],

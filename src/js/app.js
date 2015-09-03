@@ -10,7 +10,8 @@ webshims.setOptions({
 webshim.polyfill('forms forms-ext');
 
 Offline.options = {
-  // interceptRequests: true,
+  checkOnLoad: true,
+  interceptRequests: true,
   reconnect: false,
   // reconnect: {
   //   initialDelay: 30,
@@ -27,8 +28,8 @@ app.value('cgBusyDefaults',{
   minDuration: 300
 });
 
-app.run(function ($rootScope, $location, $window, $timeout, authService, $http, offlineCache) {
-  $http.defaults.cache = offlineCache.getCacheFactory();
+app.run(function ($rootScope, $location, $window, $timeout, authService, $http) {
+  // $http.defaults.cache = offlineCache.getCacheFactory();
 
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     $rootScope.bodyClasses = [];
