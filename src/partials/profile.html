@@ -65,7 +65,7 @@
                   theme="bootstrap"
                   on-select="updateOrganization()"
                   reset-search-input="true">
-                    <ui-select-match allow-clear placeholder="{{'Please select from the list'|translate}}">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-match allow-clear placeholder="{{'Please search for your organization'|translate}}">{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices
                       ng-class="{'not-empty': organizations.length}"
                       repeat="org in organizations | orderBy:'name'"
