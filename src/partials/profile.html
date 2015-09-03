@@ -354,8 +354,8 @@
         </div>
 
         <div class="col-sm-12 col-md-6" >
-          <div class="admin-area row" ng-if="userCanEditKeyContact || userCanEditProtectedRoles|| userCanEditRoles || userCanEditVerified || userCanEditProtectedBundle || userCanAssignOrganizationEditor">
-            <div class="section col-sm-12" ng-show="userCanEditKeyContact || userCanEditProtectedRoles || userCanAssignOrganizationEditor">
+          <div class="admin-area row" ng-if="userCanEditProtectedRoles|| userCanEditRoles || userCanEditVerified || userCanEditProtectedBundle || userCanAssignOrganizationEditor">
+            <div class="section col-sm-12" ng-show="userCanEditProtectedRoles || userCanAssignOrganizationEditor">
               <h4 translate>Local Administration</h4>
               <div class="form-group" ng-show="userCanEditProtectedRoles">
                 <label class="control-label" for="selectedProtectedRoles" translate>Protected Roles</label>
@@ -391,12 +391,6 @@
                     <div ng-bind-html="protectedBundle.value.name | highlight: $select.search"></div>
                   </ui-select-choices>
                 </ui-select>
-              </div>
-
-              <div class="form-group" ng-show="userCanEditKeyContact">
-                <div class="checkbox">
-                  <label for="keyContact" ng-click="profile.keyContact = !profile.keyContact"><input type="checkbox" name="keyContact" ng-model="profile.keyContact" ng-click="profile.keyContact = !profile.keyContact"/><span translate>Key Contact</span></label>
-                </div>
               </div>
 
               <div class="form-group" ng-show="userCanAssignOrganizationEditor && profile.organization[0]">

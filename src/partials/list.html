@@ -28,8 +28,7 @@
         <div class="row">
           <div class="contact-item contact-item--name col-xs-12 col-md-3" >
             <a href="#/contact/{{contact._id}}" title="{{contact.nameGiven}} {{contact.nameFamily}}">{{contact.nameGiven}} {{contact.nameFamily}}</a>
-            <div class="contact-item__markers" ng-if="contact.keyContact || contact._profile.verified">
-              <div class="contact-item__key-contact" title="Key Contact" ng-if="contact.keyContact"><i class="fa fa-asterisk"></i></span></div>
+            <div class="contact-item__markers" ng-if="contact._profile.verified">
               <span class="contact-item__verified" title="Verified" ng-if="contact._profile.verified"><i class="fa fa-check-circle"></i></span>
             </div>
           </div>
@@ -75,10 +74,7 @@
               <li ng-if="contact.ql.userCanDeleteAccount" ng-class="{'disabled':contact.ql.deleteState === 'inProgress'}">
                 <button role="menuitem" tabindex="-1" class="btn btn-link" ng-class="{'btn-warning': contact.ql.deleteState === 'confirm'}" ng-click="deleteAccount(contact)" ng-bind="deleteText(contact)"></button>
               </li>
-              <li ng-if="contact.ql.userCanEditKeyContact || contact.ql.userCanEditVerified" class="divider"></li>
-              <li ng-if="contact.ql.userCanEditKeyContact" ng-class="{'disabled': contact.ql.keyContactState === 'inProgress'}">
-                <button role="menuitem" tabindex="-1" class="btn btn-link" ng-class="{'btn-warning': contact.ql.keyContactState === 'confirm'}" ng-click="updateProfile(contact,'keyContact')" ng-bind="keyContactText(contact)"></button>
-              </li>
+              <li ng-if="contact.ql.userCanEditVerified" class="divider"></li>
               <li ng-if="contact.ql.userCanEditVerified" ng-class="{'disabled': contact.ql.verifiedState === 'inProgress'}">
                 <button role="menuitem" tabindex="-1" class="btn btn-link" ng-class="{'btn-warning': contact.ql.verifiedState === 'confirm'}" ng-click="updateProfile(contact,'verified')" ng-bind="verifiedText(contact)"></button>
               </li>
@@ -265,10 +261,6 @@
 
         <div class="form-group">
           <label class="control-label" for="verified"><i class="fa fa-check-circle"></i> <span translate>Verified User</span> <input type="checkbox" name="verified" ng-model="query.verified" /></label>
-        </div>
-
-        <div class="form-group" ng-if="query.locationId">
-          <label class="control-label" for="keyContact"><span class="contact-item__key-contact key-contact-filter-use"><i class="fa fa-asterisk"></i></span><span translate>Key Contact</span> <input type="checkbox" name="keyContact" ng-model="query.keyContact" /></label>
         </div>
 
         <div class="form-group" ng-if="userCanUseAdminFilters">
