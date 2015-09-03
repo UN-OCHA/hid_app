@@ -127,6 +127,9 @@
         <a class="btn btn-primary btn-lg btn-block" ng-show="!globalProfileId.length" href="#/profile/{{globalProfileId}}">
           <i class="entypo user"></i> <span translate>Global Profile</span>
         </a>
+        <h3><span translate>View Country</span> :</h3>
+        <select class="form-control form-control-light" ng-options="operation as operation.name for operation in availOperations" ng-model="item" ng-change="toOperation()">
+        </select>
       </div>
     </div>
   </div>
