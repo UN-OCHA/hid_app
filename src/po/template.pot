@@ -1,10 +1,14 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-05-08T21:00:03.798Z\n"
+"Project-Id-Version: 2015-09-03T08:21:01.481Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "* Required Field"
 msgstr ""
 
 #: src/partials/header.html
@@ -21,6 +25,9 @@ msgid "Account Created!"
 msgstr ""
 
 #: src/js/controllers/ContactCtrl.js
+msgid "Add to List"
+msgstr ""
+
 #: src/js/controllers/ListCtrl.js
 msgid "Add to My Contacts"
 msgstr ""
@@ -49,6 +56,14 @@ msgstr ""
 msgid "Again, thanks for helping to make humanitarian contact lists accurate."
 msgstr ""
 
+#: src/partials/dashboard.html
+msgid "Are you responding to a humanitarian situation?"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Are you still responding to the humanitarian situation(s) above?"
+msgstr ""
+
 #: src/partials/createAccount.html
 msgid "Are you sure that you want to create an account for <b>{{profile.nameGiven}} {{profile.nameFamily}}</b> with no email address?"
 msgstr ""
@@ -71,7 +86,12 @@ msgid "Both type and number are required."
 msgstr ""
 
 #: src/partials/profile.html
+#: src/partials/settingsList.html
 msgid "Cancel"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Check into"
 msgstr ""
 
 #: src/partials/about.html
@@ -118,6 +138,10 @@ msgstr ""
 msgid "Clear All"
 msgstr ""
 
+#: src/partials/dashboard.html
+msgid "Click the X next to \"checkout\" of any contact lists you are no longer responding to."
+msgstr ""
+
 #: src/partials/about.html
 #: src/partials/emailExport.html
 msgid "Code of Conduct"
@@ -145,6 +169,7 @@ msgid "Contact already exists"
 msgstr ""
 
 #: src/partials/list.html
+#: src/partials/settingsList.html
 msgid "Contacts"
 msgstr ""
 
@@ -206,6 +231,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Delete My Account"
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "Delete My List"
 msgstr ""
 
 #: src/js/controllers/ListCtrl.js
@@ -462,6 +491,10 @@ msgstr ""
 msgid "Link to a photo you've already uploaded to the internet. The URL must end in .JPG, .PNG, or .GIF."
 msgstr ""
 
+#: src/partials/settingsList.html
+msgid "List Name*"
+msgstr ""
+
 #: src/js/directives/routeLoadingIndicator.js
 msgid "Loading..."
 msgstr ""
@@ -495,12 +528,8 @@ msgstr ""
 msgid "Manage your details on global and emergency-level humanitarian contact lists. Find and be found by other responders when needed. Check-in. Connect. Respond."
 msgstr ""
 
-#: src/js/controllers/ListCtrl.js
-msgid "My Contact List"
-msgstr ""
-
 #: src/partials/dashboard.html
-msgid "My Contacts"
+msgid "My Contacts lists"
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -664,15 +693,19 @@ msgstr ""
 msgid "Remove Image"
 msgstr ""
 
-#: src/js/controllers/ContactCtrl.js
 #: src/js/controllers/ListCtrl.js
 msgid "Remove from My Contacts"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Remove from list"
 msgstr ""
 
 #: src/js/controllers/ListCtrl.js
 msgid "Removing..."
 msgstr ""
 
+#: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Report a Problem"
 msgstr ""
@@ -700,6 +733,7 @@ msgid "Role"
 msgstr ""
 
 #: src/js/controllers/ProfileCtrl.js
+#: src/partials/settingsList.html
 msgid "Save"
 msgstr ""
 
@@ -741,6 +775,10 @@ msgstr ""
 msgid "Select a country"
 msgstr ""
 
+#: src/partials/list.html
+msgid "Select a list"
+msgstr ""
+
 #: src/partials/profile.html
 msgid "Select a region"
 msgstr ""
@@ -754,8 +792,13 @@ msgstr ""
 msgid "Send Claim Email"
 msgstr ""
 
+#: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Send Notification"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Send Profile Update Email to Contact"
 msgstr ""
 
 #: src/js/controllers/ListCtrl.js
@@ -851,7 +894,7 @@ msgid "We guess that if you have landed on this page you may have questions. Res
 msgstr ""
 
 #: src/partials/about.html
-msgid "We require that all of those who register and make use of the solution behave according our"
+msgid "We require that all of those who register and make use of the solution behave according to our"
 msgstr ""
 
 #: src/partials/contact.html
@@ -931,6 +974,10 @@ msgstr ""
 msgid "read"
 msgstr ""
 
+#: src/partials/dashboard.html
+msgid "the relevant country to add your skills and contact details added to the appropriate contact list(s)."
+msgstr ""
+
 #: src/partials/contact.html
 msgid "verified"
 msgstr ""
@@ -945,4 +992,8 @@ msgstr ""
 
 #: src/js/controllers/CreateAccountCtrl.js
 msgid "will receive an email to claim their account."
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "{{list.name}}"
 msgstr ""
