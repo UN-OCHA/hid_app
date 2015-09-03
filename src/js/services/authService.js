@@ -13,7 +13,7 @@
   // Run JSO callback to catch an authentication token, if present.
   jso.callback(null, function (token) {});
 
-  angular.module("contactsId").service("authService", function($location, $http, $q, $rootScope) {
+  angular.module("contactsId").service("authService", function(offlineCache, $location, $http, $q, $rootScope) {
     var authService = {},
         oauthToken = false,
         accountData = false;
@@ -52,51 +52,17 @@
           // Request the account data from the auth system.
           var deferred = $q.defer();
 
-          $http({
-            method: 'get',
-            cache: true,
-            url: contactsId.authBaseUrl + "/account.json",
-            params: {
-              "access_token": token.access_token
-            }
-          }).then(function(data){
+          var promise = offlineCache.getData(contactsId.authBaseUrl + "/account.json",
+            {"access_token": token.access_token}).then(function(data){
             deferred.resolve(data);
-            // console.log(data.data);
-            accountData = data.data;
+            accountData = data;
             $rootScope.$emit("appLoginSuccess", accountData);
             return cb(); 
           },function(err){
             console.log("Error encountered while verifying user account data: ", err);
             return cb(err);
           });
-          // }).then(function(data){
-          //   console.log(data);
-             
-          // });
-            
-          //   cache: true
-          // }).success(function(data){
-            
-          // }).then(function(data){
-            
-          // })
-          // $.ajax({
-          //   success: function (data) {
-          //     // deferred.resolve(data);
-          //     accountData = JSON.parse(data);
-          //     $rootScope.$emit("appLoginSuccess", accountData);
-          //     return cb();
-          //   },
-          //   error: function (err) {
-          //     console.log("Error encountered while verifying user account data: ", err);
-          //     return cb(err);
-          //   },
-          //   data: {
-          //     "access_token": token.access_token
-          //   },
-          //   url: contactsId.authBaseUrl + "/account.json",
-          //   cache: true
-          // });
+
         }
       }, {});
     };

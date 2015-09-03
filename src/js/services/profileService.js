@@ -1,7 +1,7 @@
 (function($, angular, contactsId) {
   "use strict";
 
-  angular.module("contactsId").service("profileService", function(authService, $http, $q, $rootScope, $filter) {
+  angular.module("contactsId").service("profileService", function(authService, offlineCache, $http, $q, $rootScope, $filter) {
     var cacheUserData = false,
         cacheAppData = false,
         cacheCountries = false,
@@ -61,13 +61,9 @@
       }
       else {
         var defer = $q.defer();
-        promise = $http({
-          method: "get",
-          cache: true,
-          url: contactsId.profilesBaseUrl + "/v0/profile/view",
-          params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()}
-        })
-        .then(handleSuccess, handleError).then(function(data) {
+        promise = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/profile/view",
+          {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()})
+        .then(function(data){
           defer.resolve(data);
           if (data && data.profile && data.contacts) {
             var globalMatch = filter(data.contacts, function(d){return d.type === 'global';});
@@ -97,13 +93,9 @@
       }
       else {
         var defer = $q.defer();
-        promiseAppData = $http({
-          method: "get",
-          cache: true,
-          url: contactsId.profilesBaseUrl + "/v0/app/data",
-          params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
-        })
-        .then(handleSuccess, handleError).then(function(data) {
+        promiseAppData = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/app/data",
+          {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()})
+        .then(function(data) {
           defer.resolve(data);
           if (data) {
             cacheAppData = data;
@@ -156,13 +148,9 @@
     // Get profiles that match specified parameters.
     function getProfiles(terms) {
       var defer = $q.defer();
-      var request = $http({
-        method: "get",
-        cache: true,
-        url: contactsId.profilesBaseUrl + "/v0/profile/view",
-        params: $.extend({}, terms, {access_token: authService.getAccessToken()})
-      });
-      return(request.then(handleSuccess, handleError).then(function(data){
+      var request = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/profile/view",
+        $.extend({}, terms, {access_token: authService.getAccessToken()}) );
+      return(request.then(function(data){
         defer.resolve(data);
       }));
     }
@@ -170,13 +158,9 @@
     // Get contacts that match specified parameters.
     function getContacts(terms) {
       terms.access_token = authService.getAccessToken();
-      var request = $http({
-        method: "get",
-        cache: true,
-        url: contactsId.profilesBaseUrl + "/v0/contact/view",
-        params: terms
-      });
-      return(request.then(handleSuccess, handleError));
+      var request = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/contact/view",
+        terms);
+      return(request);
     }
 
     // Get custom contact lists that match specified parameters.
@@ -406,12 +390,8 @@
         promise.resolve(null);
         return promise.promise;
       }
-      promise = $http({
-        method: "get",
-        cache: true,
-        url: contactsId.hrinfoBaseUrl + "/hid/locations/" + country_id
-      })
-      .then(handleSuccess, handleError).then(function(data) {
+      promise = offlineCache.getData(contactsId.hrinfoBaseUrl + "/hid/locations/" + country_id,{})
+      .then(function(data){
         var regionData = [];
         if (data && data.regions) {
           angular.forEach(data.regions, function(value, key) {
