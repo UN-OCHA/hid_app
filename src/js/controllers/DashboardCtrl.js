@@ -9,13 +9,6 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, profileServi
 
   // Exclude operations for which the user is already checked in.
   var availOperations = angular.copy(operations);
-  if (userData && userData.contacts && userData.contacts.length) {
-    userData.contacts.forEach(function (val, idx, arr) {
-      if (val.type === 'local' && val.locationId && val.locationId.length && availOperations.hasOwnProperty(val.locationId)) {
-        delete availOperations[val.locationId];
-      }
-    });
-  }
 
   // Convert list into a sorted array
   $scope.availOperations = [];
