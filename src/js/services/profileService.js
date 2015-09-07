@@ -362,11 +362,8 @@
         return promise.promise;
       }
       else {
-        promise = $http({
-          method: "get",
-          url: contactsId.hrinfoBaseUrl + "/hid/locations/countries"
-        })
-        .then(handleSuccess, handleError).then(function(data) {
+        offlineCache.getData(contactsId.hrinfoBaseUrl + "/hid/locations/countries", {})
+        .then(function(data) {
           var countryData = [];
           if (data) {
             angular.forEach(data, function(value, key) {
