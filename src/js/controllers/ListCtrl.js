@@ -17,6 +17,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.protectedRoles = protectedRoles;
   $scope.countries = countries;
   $scope.adminRoleOptions = roles;
+  $scope.userData = userData;
 
   $scope.shortcuts = [
     {title: "Humanitarian Coordinator", path: "/list/global?localContacts&protectedRoles=56026"},
@@ -687,7 +688,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
       if (data && data.status && data.status === 'ok') {
         $scope.list = data.lists;
         $scope.listCount = data.lists.length;
-        $scope.userData = userData;
         $scope.queryCount = data.totalCount;
 
         $scope.toggleFollowButton = 'Follow';
