@@ -6,6 +6,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.locationId = $routeParams.locationId || '';
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.operations = operations;
+  $scope.hid_access = operations[$scope.locationId] ? operations[$scope.locationId].hid_access : '';
 
   $scope.list = {};
   $scope.contacts = [];
@@ -711,4 +712,5 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     }, listArray);
     return listArray;
   }
+
 }
