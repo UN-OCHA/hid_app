@@ -170,12 +170,9 @@
       }
 
       terms.access_token = authService.getAccessToken();
-      var request = $http({
-        method: "get",
-        url: contactsId.profilesBaseUrl + "/v0/list/view",
-        params: terms
-      });
-      return(request.then(handleSuccess, handleError));
+      var request = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/list/view",
+        terms);
+      return(request);
     }
 
     // Save a profile (create or update existing).
@@ -589,7 +586,7 @@
       // server (or what not handles properly - ex. server error), then we
       // may have to normalize it on our end, as best we can.
       if (!angular.isObject(response.data) || !response.data.message) {
-        if (response.status == 0) {
+        if (response.status === 0) {
           location.replace('#/offline'); //redirect to offline
         }
         return ($q.reject("An unknown error occurred."));
