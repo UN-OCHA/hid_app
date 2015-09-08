@@ -118,6 +118,11 @@
     </div>
     <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
       <div class="actions">
+        <span ng-repeat="profile in userData.contacts" ng-if="profile.type == 'global'">
+          <a class="btn btn-default btn-lg btn-block" href="#/profile/{{profile._id}}">
+            <span class="fa fa-angle-right"></span> <span translate>Edit Global Profile</span>
+          </a>
+        </span>
         <a class="btn btn-primary btn-lg btn-block" href="#/checkin" ng-show="globalProfileId.length">
           <span class="fa fa-angle-right"></span> <span translate>Check-in</span>
         </a>
