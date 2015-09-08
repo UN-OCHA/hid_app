@@ -150,7 +150,7 @@ module.exports = function(grunt) {
           'src/libraries/ngDialog/css/ngDialog.css',
           'src/libraries/ngDialog/css/ngDialog-theme-default.css',
           'src/libraries/offline/themes/offline-theme-default-indicator.css',
-          'src/libraries/offline/themes/offline-language-english.css'
+          'src/libraries/offline/themes/offline-language-english-indicator.css'
         ],
       },
       // Concatenates js files.
