@@ -20,6 +20,16 @@ Offline.options = {
   requests: false //record ajax requests and re-make on connection restore
 }
 
+if (window.applicationCache){
+  window.applicationCache.addEventListener('updateready', function(e){
+    if (window.applicationCache.status == window.applicationCache.UPDATEREADY){
+      setTimeout(function(){
+        window.location.reload();
+      },1000);
+    }
+  }, false);
+}
+
 app.value('cgBusyDefaults',{
   message:'Loading...',
   backdrop: true,
@@ -28,8 +38,7 @@ app.value('cgBusyDefaults',{
   minDuration: 300
 });
 
-app.run(function ($rootScope, $location, $window, $timeout, authService, $http) {
-  // $http.defaults.cache = offlineCache.getCacheFactory();
+app.run(function ($rootScope, $location, $window, $timeout, authService) {
 
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     $rootScope.bodyClasses = [];
