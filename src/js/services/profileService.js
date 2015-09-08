@@ -359,7 +359,7 @@
         return promise.promise;
       }
       else {
-        offlineCache.getData(contactsId.hrinfoBaseUrl + "/hid/locations/countries", {})
+        promise = offlineCache.getData(contactsId.hrinfoBaseUrl + "/hid/locations/countries", {})
         .then(function(data) {
           var countryData = [];
           if (data) {
