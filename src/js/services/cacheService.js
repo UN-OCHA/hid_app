@@ -11,8 +11,8 @@
 
     function encodeURL(url, params){ //use utils.encodeURL
       url += '?';
-      angular.forEach(params,function(value,key){
-        url += encodeURIComponent(key) + '=' + encodeURIComponent(value) + '&';
+      angular.forEach(Object.keys(params).sort(),function(param,index){
+        url += encodeURIComponent(param) + '=' + encodeURIComponent(params[param]) + '&';
       });
       url = url.substring(0, url.length-1); //chop off last "&"
       return url;
