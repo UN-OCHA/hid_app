@@ -9,22 +9,40 @@
       getData: getData
     }
 
+    function encodeURL(url, params){ //use utils.encodeURL
+      url += '?';
+      angular.forEach(params,function(value,key){
+        url += encodeURIComponent(key) + '=' + encodeURIComponent(value) + '&';
+      });
+      url = url.substring(0, url.length-1); //chop off last "&"
+      return url;
+    }
+
+
     function getData(url, options) {
-
-      // console.log("i call the shots now! \n "+ url);
-
-      //if online
+      var key = encodeURL(url, options);
+      
       var defer = $q.defer();
       var promise = $http({
           method: "get",
-          // cache: true,
           url: url,
           params: options
         })
         .then(function(response){ //handleSuccess
           defer.resolve(response.data);
+          localStorage.setItem('cache-'+key,JSON.stringify(response.data));
           return response.data;
-        }, handleError)
+        }, function(response){
+          var cacheData = localStorage.getItem('cache-'+key);
+          if (cacheData != null) {
+            cacheData = JSON.parse(cacheData);
+            defer.resolve(cacheData);
+            return cacheData;
+          }
+          else {
+            handleError(response);
+          }
+        });
 
       return promise;
     }
@@ -35,9 +53,9 @@
       // server (or what not handles properly - ex. server error), then we
       // may have to normalize it on our end, as best we can.
       if (!angular.isObject(response.data) || !response.data.message) {
-        // if (response.status == 0) {
-        //   location.replace('#/offline'); //redirect to offline
-        // }
+        if (response.status === 0) {
+          location.replace('#/offline'); //redirect to offline
+        }
         return ($q.reject("An unknown error occurred."));
       }
 
