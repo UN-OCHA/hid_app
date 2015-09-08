@@ -60,11 +60,9 @@
         return promise.promise;
       }
       else {
-        var defer = $q.defer();
         promise = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/profile/view",
           {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()})
         .then(function(data){
-          defer.resolve(data);
           if (data && data.profile && data.contacts) {
             var globalMatch = filter(data.contacts, function(d){return d.type === 'global';});
             cacheUserData = data;
@@ -92,11 +90,9 @@
         return promiseAppData;
       }
       else {
-        var defer = $q.defer();
         promiseAppData = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/app/data",
           {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()})
         .then(function(data) {
-          defer.resolve(data);
           if (data) {
             cacheAppData = data;
           }
@@ -147,12 +143,9 @@
 
     // Get profiles that match specified parameters.
     function getProfiles(terms) {
-      var defer = $q.defer();
       var request = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/profile/view",
         $.extend({}, terms, {access_token: authService.getAccessToken()}) );
-      return(request.then(function(data){
-        defer.resolve(data);
-      }));
+      return request;
     }
 
     // Get contacts that match specified parameters.
@@ -160,7 +153,7 @@
       terms.access_token = authService.getAccessToken();
       var request = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/contact/view",
         terms);
-      return(request);
+      return request;
     }
 
     // Get custom contact lists that match specified parameters.
