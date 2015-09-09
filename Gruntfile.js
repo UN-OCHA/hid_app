@@ -280,6 +280,7 @@ module.exports = function(grunt) {
           'libraries/webshim/js-webshim/minified/shims/form-validation.js',
           'libraries/webshim/js-webshim/minified/shims/plugins/jquery.ui.position.js',
           'fonts/exo2/exo2-semibold-webfont.woff2',
+          'fonts/entypo/entypo.ttf'
         ],
         dest: 'dist/offline.appcache'
       }
