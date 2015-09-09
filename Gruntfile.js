@@ -259,7 +259,6 @@ module.exports = function(grunt) {
           basePath: 'dist/',
           cache: ['<%= cacheHash["/js/app.min.js"] %>',
                   '<%= cacheHash["/css/app.min.css"] %>',
-                  'fonts/font-awesome/fontawesome-webfont.woff?1424885649',
                   'http://fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400',
                   'http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800',
                   '<%= cacheHash["/favicon-32x32.png"] %>'],
@@ -279,6 +278,7 @@ module.exports = function(grunt) {
           'libraries/webshim/js-webshim/minified/shims/form-core.js',
           'libraries/webshim/js-webshim/minified/shims/form-validation.js',
           'libraries/webshim/js-webshim/minified/shims/plugins/jquery.ui.position.js',
+          'fonts/font-awesome/fontawesome-webfont.woff',
           'fonts/exo2/exo2-semibold-webfont.woff2',
           'fonts/entypo/entypo.ttf'
         ],
