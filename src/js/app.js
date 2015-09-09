@@ -11,7 +11,7 @@ webshim.polyfill('forms forms-ext');
 
 Offline.options = {
   checkOnLoad: true,
-  interceptRequests: true,
+  interceptRequests: false,
   reconnect: false,
   // reconnect: {
   //   initialDelay: 30,

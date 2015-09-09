@@ -30,9 +30,15 @@
         })
         .then(function(response){ //handleSuccess
           defer.resolve(response.data);
+          Offline.markUp();
+
+          //TODO catch exceptions
           localStorage.setItem('cache-'+key,JSON.stringify(response.data));
+
           return response.data;
         }, function(response){
+          Offline.markDown();
+          
           var cacheData = localStorage.getItem('cache-'+key);
           if (cacheData != null) {
             cacheData = JSON.parse(cacheData);
