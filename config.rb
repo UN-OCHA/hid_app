@@ -38,3 +38,6 @@ project_type = :stand_alone
     :quiet => true,
     :unix_newlines => true
   }
+
+  asset_cache_buster :none
+  
