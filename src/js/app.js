@@ -25,7 +25,7 @@ if (window.applicationCache){
     if (window.applicationCache.status == window.applicationCache.UPDATEREADY){
       setTimeout(function(){
         window.location.reload();
-      },1000);
+      },500);
     }
   }, false);
 }
