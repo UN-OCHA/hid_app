@@ -6,6 +6,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
 
   var contact = profileData.contact,
       filter = $filter('filter');
+  contact._profile = profileData.profile;
 
   $scope.contact = contact;
   $scope.profileContacts = profileData.contacts;
