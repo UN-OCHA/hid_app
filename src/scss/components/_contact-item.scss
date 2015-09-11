@@ -220,3 +220,9 @@
     float: right;
   }
 }
+
+#contact-modal {
+  .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
+    line-height: 18px;
+  }
+}

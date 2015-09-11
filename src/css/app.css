@@ -7,8 +7,8 @@
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url(../fonts/font-awesome/fontawesome-webfont.eot?1437540778);
-  src: url(../fonts/font-awesome/fontawesome-webfont.eot?&1437540778#iefix) format("embedded-opentype"), url(../fonts/font-awesome/fontawesome-webfont.woff?1437540778) format("woff"), url(../fonts/font-awesome/fontawesome-webfont.ttf?1437540778) format("truetype"), url(../fonts/font-awesome/fontawesome-webfont.svg?1437540778#fontawesomeregular) format("svg");
+  src: url(../fonts/font-awesome/fontawesome-webfont.eot?1441156581);
+  src: url(../fonts/font-awesome/fontawesome-webfont.eot?&1441156581#iefix) format("embedded-opentype"), url(../fonts/font-awesome/fontawesome-webfont.woff?1441156581) format("woff"), url(../fonts/font-awesome/fontawesome-webfont.ttf?1441156581) format("truetype"), url(../fonts/font-awesome/fontawesome-webfont.svg?1441156581#fontawesomeregular) format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -9458,6 +9458,7 @@ h3 {
 
 .heading-custom-contacts-list {
   color: #54b1c8;
+  text-transform: uppercase;
 }
 
 /* Icons */
@@ -9928,6 +9929,10 @@ table tr td:last-child {
 }
 .filter-form .btn-reset {
   float: right;
+}
+
+#contact-modal .input-group-btn:last-child > .btn, #contact-modal .input-group-btn:last-child > .btn-group {
+  line-height: 18px;
 }
 
 #contactsid-app-view .account-create {
