@@ -4,6 +4,7 @@
   angular.module("contactsId").service("profileService", function(authService, $http, $q, $rootScope, $filter) {
     var cacheUserData = false,
         cacheAppData = false,
+        cacheCountries = false,
         promiseAppData = false,
         filter = $filter('filter');
 
@@ -360,21 +361,30 @@
 
     function getCountries() {
       var promise;
-      promise = $http({
-        method: "get",
-        url: contactsId.hrinfoBaseUrl + "/hid/locations/countries"
-      })
-      .then(handleSuccess, handleError).then(function(data) {
-        var countryData = [];
-        if (data) {
-          angular.forEach(data, function(value, key) {
-            this.push({'name': value, 'remote_id': key});
-          }, countryData);
-        }
-        return countryData;
-      });
-
-      return promise;
+      if (cacheCountries) {
+        promise = $q.defer();
+        promise.resolve(cacheCountries);
+        return promise.promise;
+      }
+      else {
+        promise = $http({
+          method: "get",
+          url: contactsId.hrinfoBaseUrl + "/hid/locations/countries"
+        })
+        .then(handleSuccess, handleError).then(function(data) {
+          var countryData = [];
+          if (data) {
+            angular.forEach(data, function(value, key) {
+              this.push({'name': value, 'remote_id': key});
+            }, countryData);
+          }
+          cacheCountries = countryData;
+          return cacheCountries;
+        });
+        
+        return promise;
+      }
+      
     }
 
     function getAdminArea(country_id) {

@@ -6,6 +6,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
 
   var contact = profileData.contact,
       filter = $filter('filter');
+  contact._profile = profileData.profile;
 
   $scope.contact = contact;
   $scope.profileContacts = profileData.contacts;
@@ -13,7 +14,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   $scope.profile = profileData.profile;
 
   // Permissions
-  var isOwnProfile = userData.profile._id === contact._profile._id;
+  var isOwnProfile = userData.profile._id === contact._profile;
   $scope.userCanEditProfile = isOwnProfile || profileService.canEditProfile(contact.locationId);
   $scope.userCanCheckIn = profileService.canCheckIn(contact._profile);
   $scope.userCanCheckOut = profileService.canCheckOut(contact);

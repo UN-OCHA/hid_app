@@ -6,6 +6,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.locationId = $routeParams.locationId || '';
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.operations = operations;
+  $scope.hid_access = operations[$scope.locationId] ? operations[$scope.locationId].hid_access : '';
 
   $scope.list = {};
   $scope.contacts = [];
@@ -16,6 +17,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.protectedRoles = protectedRoles;
   $scope.countries = countries;
   $scope.adminRoleOptions = roles;
+  $scope.userData = userData;
 
   $scope.shortcuts = [
     {title: "Humanitarian Coordinator", path: "/list/global?localContacts&protectedRoles=56026"},
@@ -333,7 +335,11 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     query.export = 'csv';
     query.limit = 0;
     query.skip = 0;
-    window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppCSV');
+    if ($routeParams.id) {
+      window.open(contactsId.profilesBaseUrl + "/v0/list/view?" + jQuery.param(query), 'hidAppCSV');
+    } else {
+      window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppCSV');
+    }
   }
 
   $scope.exportEmail = function() {
@@ -343,28 +349,53 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     query.limit = 0;
     query.skip = 0;
 
-    $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
-      if (data && data.status && data.status === 'ok') {
-        data.contacts = data.contacts || [];
-        $scope.exportEmails = data.contacts;
-        var emailExportString = "";
+    // Custom contact list.
+    if ($routeParams.id) {
+      var terms = query;
+      terms.id = $routeParams.id;
 
-        angular.forEach(data.contacts, function(value, key) {
-          if (key) {
-            emailExportString += ", ";
-          }
-          emailExportString += value.name + " <" + value.email + ">";
-        });
+      $scope.listPromise = profileService.getLists(terms).then(function(data) {
+        if (data && data.status && data.status === 'ok') {
+          var contacts = [];
+          angular.forEach(data.lists.contacts, function(value, key) {
+            this.push({
+              name: value.nameGiven + " " + value.nameFamily,
+              email: value.email[0].address
+            });
+          }, contacts);
 
-        ngDialog.open({
-          template: $scope.emailExportTpl,
-          controller: ['$scope', function($scope) {
-              $scope.emails = emailExportString;
-          }],
-        });
-      }
-    });
+          openEmailPopup(contacts);
+        }
+      });
+    } else {
+      $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
+        if (data && data.status && data.status === 'ok') {
+          data.contacts = data.contacts || [];
+          console.log(data.contacts);
+          openEmailPopup(data.contacts);
+        }
+      });
+    }
   };
+
+  function openEmailPopup(contacts) {
+    $scope.exportEmails = contacts;
+    var emailExportString = "";
+
+    angular.forEach(contacts, function(value, key) {
+      if (key) {
+        emailExportString += ", ";
+      }
+      emailExportString += value.name + " <" + value.email + ">";
+    });
+
+    ngDialog.open({
+      template: $scope.emailExportTpl,
+      controller: ['$scope', function($scope) {
+          $scope.emails = emailExportString;
+      }],
+    });
+  }
 
   // If the page loads with the email export attribute set, then remove its
   // query parameter before the contact list is built, and also open the
@@ -380,7 +411,11 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     query.export = 'pdf';
     query.limit = 0;
     query.skip = 0;
-    window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppPDF');
+    if ($routeParams.id) {
+      window.open(contactsId.profilesBaseUrl + "/v0/list/view?" + jQuery.param(query), 'hidAppCSV');
+    } else {
+      window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppPDF');
+    }
   }
 
   // Autocomplete call for Orgs
@@ -646,84 +681,21 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   }
 
   function setCustomList(id, query) {
-    var terms = {id: id};
+    var terms = query;
+    terms.id = id;
+
     $scope.listPromise = profileService.getLists(terms).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         $scope.list = data.lists;
         $scope.listCount = data.lists.length;
-        $scope.userData = userData;
-
-        $scope.queryCount = $scope.list.contacts.length;
+        $scope.queryCount = data.totalCount;
 
         $scope.toggleFollowButton = 'Follow';
         if ($scope.list.users.indexOf($scope.userData.profile.userid) != -1) {
           $scope.toggleFollowButton = 'Unfollow';
         }
 
-        //TODO: Mongoose does not allow querying of embedded object references
-        // so instead we need to filter the results after the query is made.
         var contacts = data.lists.contacts;
-        if (query.hasOwnProperty('address.country')) {
-          contacts = $scope.list.contacts.filter(function(contact){
-            if (contact.address.length > 0) {
-              return contact.address.map(function(c) { return c.country; }).indexOf(query['address.country']) != -1;
-            } else {
-              return false;
-            }
-          });
-        }
-
-        if (query.hasOwnProperty('organization.name')) {
-          contacts = $scope.list.contacts.filter(function(contact){
-            if (contact.organization.length > 0) {
-              return contact.organization.map(function(c) { return c.name; }).indexOf(query['organization.name']) != -1;
-            } else {
-              return false;
-            }
-          });
-        }
-
-        if (query.hasOwnProperty('organization.org_type_remote_id')) {
-          contacts = $scope.list.contacts.filter(function(contact){
-            if (contact.organization.length > 0) {
-              return contact.organization.map(function(c) { return c.org_type_remote_id; }).indexOf(query['organization.org_type_remote_id']) != -1;
-            } else {
-              return false;
-            }
-          });
-        }
-
-        if (query.hasOwnProperty('disasters.remote_id')) {
-          contacts = $scope.list.contacts.filter(function(contact){
-            if (contact.disasters.length > 0) {
-              return contact.disasters.map(function(c) { return c.remote_id; }).indexOf(query['disasters.remote_id']) != -1;
-            } else {
-              return false;
-            }
-          });
-        }
-
-        if (query.hasOwnProperty('protectedRoles')) {
-          contacts = $scope.list.contacts.filter(function(contact){
-            if (contact.protectedRoles.length > 0) {
-              return contact.protectedRoles.indexOf(query['organization.org_type_remote_id']) != 1;
-            } else {
-              return false;
-            }
-          });
-        }
-
-        if (query.hasOwnProperty('keyContact')) {
-          contacts = $scope.list.contacts.filter(function(contact){
-            return contact.keyContact == query['keyContact'];
-          });
-        }
-
-        if (query.hasOwnProperty('verified')) {
-          contacts = $scope.list.contacts.filter(function(contact){
-            return contact.verified == query['verified'];
-          });
-        }
 
         $scope.contactsCreated = true;
         $scope.contacts = contacts;
@@ -740,4 +712,5 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     }, listArray);
     return listArray;
   }
+
 }

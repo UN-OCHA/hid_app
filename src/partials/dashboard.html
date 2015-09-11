@@ -17,6 +17,11 @@
               <span class="profile-item-name" translate>Global Contact List</span>
             </a>
           </h4>
+          <div class="btn-group">
+            <a class="btn btn-sm" ng-click="share('Humanitarian ID','linkedin')" title="Share my profile on Linkedin"><i class="fa fa-linkedin"></i></a>
+            <a class="btn btn-sm" ng-click="share('Humanitarian ID','facebook')" title="Share my profile on Facebook"><i class="fa fa-facebook"></i></a>
+            <a class="btn btn-sm" href="#/profile/{{profile._id}}" title="{{'Edit my global profile' | translate}}"><i class="fa fa-pencil"></i></a>
+          </div>
         </li>
       </ul>
 
@@ -127,6 +132,9 @@
         <a class="btn btn-primary btn-lg btn-block" ng-show="!globalProfileId.length" href="#/profile/{{globalProfileId}}">
           <i class="entypo user"></i> <span translate>Global Profile</span>
         </a>
+        <h3><span translate>View a Country</span> :</h3>
+        <select class="form-control form-control-light" ng-options="operation as operation.name for operation in availOperations" ng-model="item" ng-change="toOperation()">
+        </select>
       </div>
     </div>
   </div>

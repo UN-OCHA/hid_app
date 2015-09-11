@@ -1,4 +1,4 @@
-function DashboardCtrl($scope, $route, $filter, $window, profileService, globalProfileId, userData) {
+function DashboardCtrl($scope, $route, $filter, $window, $location, profileService, globalProfileId, userData, operations) {
   var filter = $filter('filter');
 
   $scope.logoutPath = '/#logout';
@@ -6,6 +6,19 @@ function DashboardCtrl($scope, $route, $filter, $window, profileService, globalP
   $scope.userData = userData;
   $scope.userCanCreateAccount = profileService.canCreateAccount();
   $scope.localContacts = filter(userData.contacts, function(d){ return d.type === "local"})
+
+  // Exclude operations for which the user is already checked in.
+  var availOperations = angular.copy(operations);
+
+  // Convert list into a sorted array
+  $scope.availOperations = [];
+  angular.forEach(availOperations, function (value, key) {
+    $scope.availOperations.push(value);
+  });
+  $scope.availOperations.sort(function (a, b) {
+    return a.name && b.name ? String(a.name).localeCompare(b.name) : false;
+  });
+
 
   $scope.customContactsPromise = profileService.getLists().then(function(data) {
     if (data && data.status && data.status === 'ok') {
@@ -68,6 +81,10 @@ function DashboardCtrl($scope, $route, $filter, $window, profileService, globalP
 
   $scope.share = function (checkinName, network){
     var baseLink = "", params={}, size="";
+    var title = 'I\'ve just checked into '+checkinName+'!';
+    if (checkinName == 'Humanitarian ID') {
+      title = 'I have joined Humanitarian ID !';
+    }
     switch (network){
       case 'facebook':
         baseLink = "https://www.facebook.com/dialog/share?";
@@ -75,7 +92,7 @@ function DashboardCtrl($scope, $route, $filter, $window, profileService, globalP
           app_id: 593963747410690,
           caption: 'Humanitarian ID - always my latest details.',
           description: 'In a humanitarian crisis, an accurate contact list is critical to help ensure an effective response. You can "check-in" to a crisis and provide your locally relevant contact details. When you leave the crisis, you simply "check-out".',
-          title: 'I\'ve just checked into '+checkinName+'!', //use name if using feed share
+          title: title,
           picture: 'http://humanitarian.id/wp-content/uploads/2015/08/HID_fbshare.png',
           href: 'http://humanitarian.id',
           redirect_uri: 'http://humanitarian.id/close.html',
@@ -91,7 +108,7 @@ function DashboardCtrl($scope, $route, $filter, $window, profileService, globalP
         params = {
           mini: true,
           url: 'http://humanitarian.id',
-          title: 'I\'ve just been deployed to '+checkinName+'!',
+          title: title,
           summary: 'In a humanitarian crisis, an accurate contact list is critical to help ensure an effective response. You can "check-in" to a crisis and provide your locally relevant contact details. When you leave the crisis, you simply "check-out".',
           source: 'Humanitarian ID'
         }
@@ -105,5 +122,9 @@ function DashboardCtrl($scope, $route, $filter, $window, profileService, globalP
     baseLink = baseLink.substring(0, baseLink.length-1); //chop off last "&"
     
     $window.open(baseLink, 'sharer', size);
+  };
+
+  $scope.toOperation = function() {
+    $location.path('/list/' + $scope.item.remote_id);
   };
 }
