@@ -33,21 +33,26 @@
           Offline.markUp();
 
           //TODO catch exceptions
-          localStorage.setItem('cache-'+key,JSON.stringify(response.data));
+          localforage.setItem(key,JSON.stringify(response.data));
 
           return response.data;
         }, function(response){
           Offline.markDown();
           
-          var cacheData = localStorage.getItem('cache-'+key);
-          if (cacheData != null) {
-            cacheData = JSON.parse(cacheData);
-            defer.resolve(cacheData);
-            return cacheData;
-          }
-          else {
+          return localforage.getItem(key).then(function(cacheData){
+            if (cacheData != null) {
+              cacheData = JSON.parse(cacheData);
+              defer.resolve(cacheData);
+              return cacheData;
+            }
+            else {
+              handleError(response);
+            }
+          }, function(res) {
             handleError(response);
           }
+            );
+
         });
 
       return promise;
