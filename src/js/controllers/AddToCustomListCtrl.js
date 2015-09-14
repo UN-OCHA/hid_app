@@ -17,6 +17,19 @@ function AddToCustomListCtrl($scope, profileService) {
     $scope.customContacts[index].addToList = $scope.customContacts[index].addToList === false ? true: false;
   }
 
+  $scope.newList = function (list) {
+    profileService.saveList(list).then(function(data) {
+      if (data && data.status && data.list && data.status === 'ok') {
+        data.list.addToList = true;
+        $scope.customContacts.push(data.list);
+        $scope.list = {};
+      }
+      else {
+        alert('An error occurred while saving this contact list. Please reload and try the change again.');
+      }
+    });
+  }
+
   $scope.saveList = function () {
     angular.forEach($scope.customContacts, function(value, key) {
       if (value.addToList === true) {

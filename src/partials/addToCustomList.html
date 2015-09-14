@@ -1,10 +1,20 @@
-<div class="panel panel-primary">
+<div class="panel panel-primary" id="contact-modal">
   <div class="panel-heading">Select a list</div>
   <ul class="list-group">
     <a class="list-group-item" ng-click="addToList(index)" ng-repeat="(index, list) in customContacts">
       {{list.name}}
       <i ng-if="list.addToList" class="fa fa-check-circle"></i>
     </a>
+    <li class="list-group-item">
+      <form name="contactInlineModal">
+        <div class="input-group">
+          <input type="text" class="form-control" id="listName" ng-model="list.name" placeholder="Create a new list" required>
+          <span class="input-group-btn">
+            <button class="btn btn-primary btn-lg btn-block" ng-disabled="contactInlineModal.$invalid" ng-click="newList(list)" type="button">Create List</button>
+          </span>
+        </div>
+      </form>
+    </li>
   </ul>
 </div>
 <div class="row">
