@@ -4,7 +4,9 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     return false;
   }
 
-  profileData.contact._profile = profileData.profile;
+  if (profileData.contact && profileData.profile) {
+    profileData.contact._profile = profileData.profile;
+  }
 
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
