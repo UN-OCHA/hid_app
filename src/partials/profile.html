@@ -428,11 +428,13 @@
             </div>
 
             <div class="section col-sm-12" ng-show="userCanSendClaimEmail">
-              <a class="btn btn-primary btn-lg btn-block" ng-show="userCanSendClaimEmail" ng-click="confirmSendEmail = !confirmSendEmail" translate>Send Claim Email</a>
+              <h4 translate>Orphan Account</h4>
+              <a class="btn btn-default btn-lg btn-block" ng-show="userCanSendClaimEmail" ng-click="confirmSendEmail = !confirmSendEmail" translate>Send Claim Email</a>
               <a ng-show="confirmSendEmail" ng-disabled="sendingClaimEmail" class="fade btn btn-warning btn-lg btn-block" ng-click="sendClaimEmail()" translate>Confirm Send Claim Email</a>
             </div>
 
             <div class="section col-sm-12" ng-show="userCanSendClaimEmail">
+              <h4 translate>Notification of Change</h4>
               <div class="checkbox">
                 <label for="updateEmail" ng-click="toggleUpdateEmail()"><input type="checkbox" name="updateEmail" ng-model="email.send" ng-click="toggleUpdateEmail()"/><span translate>Send Profile Update Email to Contact</span></label>
               </div>
