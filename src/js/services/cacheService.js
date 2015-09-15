@@ -1,15 +1,12 @@
 (function($, angular, contactsId) {
   "use strict";
 
-  angular.module("contactsId").service('offlineCache', function (CacheFactory, $http, $q){
+  angular.module("contactsId").service('offlineCache', function ($http, $q){
     return {
-      getCacheFactory: function () {
-        return offlineCache;
-      },
       getData: getData
     }
 
-    function encodeURL(url, params){ //use utils.encodeURL
+    function generateKey(url, params){ //use utils.encodeURL
       url += '?';
       angular.forEach(Object.keys(params).sort(),function(param,index){
         url += encodeURIComponent(param) + '=' + encodeURIComponent(params[param]) + '&';
@@ -20,7 +17,7 @@
 
 
     function getData(url, options) {
-      var key = encodeURL(url, options);
+      var key = generateKey(url, options);
       
       var defer = $q.defer();
       var promise = $http({
@@ -82,55 +79,6 @@
       // Otherwise, use expected error message.
       return ($q.reject(response.data.message));
     }
-
-    var localPollyfill = {
-      getItem: function(key){
-        console.log("getItem " + key);
-        return localStorage.getItem(key);
-      },
-      setItem: function(key, value){
-        console.log("setItem" + key);
-        return localStorage.setItem(key,value);
-      },
-      removeItem: localStorage.removeItem
-    };
-
-
-    var storagePollyfill = { //not in use
-      // cbFunction: function(value) { //function to return value as promise
-      //   return value;
-      // },
-      getItem: function(key){
-        var promise;
-        var defer = $q.defer();
-        promise = localforage.getItem(key).then(function(value){
-            console.log("fetched item: \n" + key)
-            return value;
-          }, function (error){
-            console.log("localForage unable to getItem: \n"+ key + error)
-          }
-        ).then(function(data){
-          defer.resolve(data);
-          return data;
-        });
-        return promise.promise;
-
-      },
-      setItem: function(key,value){
-        console.log("localForage setItem \n" + key);
-        localforage.setItem(key,value);
-      },
-      removeItem: localforage.removeItem
-    };
-
-    var offlineCache = CacheFactory('offlineCache',{
-      maxAge:   10*60*1000, //10 minutes
-      cacheFlushInterval:   15*60*1000, //15 minutes
-      deleteOnExpire:   'aggressive',
-      storageMode:  'localStorage',
-      storageImpl:  localPollyfill
-    });
-
     
   });
 }(jQuery, angular, window.contactsId));

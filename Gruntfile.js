@@ -171,7 +171,6 @@ module.exports = function(grunt) {
             'src/libraries/ngDialog/js/ngDialog.js',
             'src/libraries/webshim/js-webshim/minified/polyfiller.js',
             'src/libraries/offline/offline.min.js',
-            'src/libraries/angular-cache/dist/angular-cache.min.js',
             'src/libraries/localforage/dist/localforage.min.js',
             'src/js/libraries/angularjs-breakpoint/breakpoint-0.0.1.js',
             'src/js/directives/international-phone-number.js',
