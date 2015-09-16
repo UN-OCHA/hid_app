@@ -1,0 +1,17 @@
+.offline-ui
+
+    &.offline-ui-up
+
+        .offline-ui-content:before
+            content: "Online"
+
+            @media (min-width: 768px)
+                content: "You are Online"
+
+    &.offline-ui-down
+
+        .offline-ui-content:before
+            content: "Offline"
+
+            @media (min-width: 768px)
+                content: "Currently offline. You are seeing cached content."

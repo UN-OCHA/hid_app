@@ -1,0 +1,39 @@
+@import compass/css3
+
+@import offline-theme-base-indicator
+@import keyframes
+
+$red: #EF93B3
+$green: #d6e9c6
+
+$darkRed: #551313
+$darkGreen: #468847
+
+$white: #FFFFFF
+
++keyframes-offline-fadein
++keyframes-offline-fadeout-and-hide
+
+.offline-ui
+    +border-radius(4px)
+    font-family: "Helvetica Neue", sans-serif
+    font-size: 13px
+    padding: 0.5em
+    max-width: 100%
+    bottom: 1em
+    
+    @media (min-width: 768px)
+        left: 1em
+
+    @media (max-width: 767px)
+        right: 1em
+
+    &.offline-ui-up
+        +offline-animation(offline-fadeout-and-hide forwards .5s 2s)
+        background: $green
+        color: $darkGreen
+
+    &.offline-ui-down
+        +offline-animation(offline-fadein .5s)
+        background: $red
+        color: $white

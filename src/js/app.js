@@ -10,12 +10,24 @@ webshims.setOptions({
 webshim.polyfill('forms forms-ext');
 
 Offline.options = {
-  interceptRequests: true,
-  reconnect: {
-    initialDelay: 10,
-    delay: 20
-  },
+  checkOnLoad: true,
+  interceptRequests: false,
+  reconnect: false,
+  // reconnect: {
+  //   initialDelay: 30,
+  //   delay: 60
+  // },
   requests: false //record ajax requests and re-make on connection restore
+}
+
+if (window.applicationCache){
+  window.applicationCache.addEventListener('updateready', function(e){
+    if (window.applicationCache.status == window.applicationCache.UPDATEREADY){
+      setTimeout(function(){
+        window.location.reload();
+      },500);
+    }
+  }, false);
 }
 
 app.value('cgBusyDefaults',{
@@ -27,6 +39,7 @@ app.value('cgBusyDefaults',{
 });
 
 app.run(function ($rootScope, $location, $window, $timeout, authService) {
+
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     $rootScope.bodyClasses = [];
 
@@ -419,11 +432,15 @@ app.config(function($routeProvider, $locationProvider) {
       }
     }
   }).
+  when('/offline', {
+    templateUrl: contactsId.sourcePath + '/partials/offline.html'
+  }).
   otherwise({
     templateUrl: contactsId.sourcePath + '/partials/404.html',
     controller: '404Ctrl'
   });
 });
+
 
 /**
  * Regular Expresion IndexOf for Arrays

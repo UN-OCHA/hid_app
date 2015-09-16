@@ -13,7 +13,7 @@
   // Run JSO callback to catch an authentication token, if present.
   jso.callback(null, function (token) {});
 
-  angular.module("contactsId").service("authService", function($location, $http, $q, $rootScope) {
+  angular.module("contactsId").service("authService", function(offlineCache, $location, $http, $q, $rootScope) {
     var authService = {},
         oauthToken = false,
         accountData = false;
@@ -50,21 +50,19 @@
           oauthToken = token.access_token;
 
           // Request the account data from the auth system.
-          $.ajax({
-            success: function (data) {
-              accountData = JSON.parse(data);
-              $rootScope.$emit("appLoginSuccess", accountData);
-              return cb();
-            },
-            error: function (err) {
-              console.log("Error encountered while verifying user account data: ", err);
-              return cb(err);
-            },
-            data: {
-              "access_token": token.access_token
-            },
-            url: contactsId.authBaseUrl + "/account.json"
+          var deferred = $q.defer();
+
+          var promise = offlineCache.getData(contactsId.authBaseUrl + "/account.json",
+            {"access_token": token.access_token}).then(function(data){
+            deferred.resolve(data);
+            accountData = data;
+            $rootScope.$emit("appLoginSuccess", accountData);
+            return cb(); 
+          },function(err){
+            console.log("Error encountered while verifying user account data: ", err);
+            return cb(err);
           });
+
         }
       }, {});
     };

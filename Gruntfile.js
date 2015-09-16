@@ -8,6 +8,7 @@ module.exports = function(grunt) {
     'bower-install-simple': {
       'default': {}
     },
+    cacheHash : {},
     compass: {
       sass: {
         options: {
@@ -19,7 +20,7 @@ module.exports = function(grunt) {
       html: 'src/index.html',
       options: {
         dest: 'dist',
-        // Override defaults allowing me to defind my own flow.
+        // Override defaults allowing me to define my own flow.
         flow: {
           steps: {
             js: [],
@@ -147,9 +148,7 @@ module.exports = function(grunt) {
           'src/libraries/angular-spinkit/build/angular-spinkit.min.css',
           'src/libraries/intl-tel-input/build/css/intlTelInput.css',
           'src/libraries/ngDialog/css/ngDialog.css',
-          'src/libraries/ngDialog/css/ngDialog-theme-default.css',
-          'src/libraries/offline/themes/offline-theme-slide.css',
-          'src/libraries/offline/themes/offline-language-english.css'
+          'src/libraries/ngDialog/css/ngDialog-theme-default.css'
         ],
       },
       // Concatenates js files.
@@ -172,6 +171,7 @@ module.exports = function(grunt) {
             'src/libraries/ngDialog/js/ngDialog.js',
             'src/libraries/webshim/js-webshim/minified/polyfiller.js',
             'src/libraries/offline/offline.min.js',
+            'src/libraries/localforage/dist/localforage.min.js',
             'src/js/libraries/angularjs-breakpoint/breakpoint-0.0.1.js',
             'src/js/directives/international-phone-number.js',
             'src/js/jso.js',
@@ -198,7 +198,8 @@ module.exports = function(grunt) {
             'src/js/directives/focusField.js',
             'src/js/directives/routeLoadingIndicator.js',
             'src/js/services/authService.js',
-            'src/js/services/profileService.js'
+            'src/js/services/profileService.js',
+            'src/js/services/cacheService.js'
           ]
         }]
       }
@@ -239,12 +240,46 @@ module.exports = function(grunt) {
         encoding: 'utf8',
         algorithm: 'md5',
         length: 16,
-        rename: false
+        rename: false,
+        jsonOutput: '../.tmp/cachebust.json'
       },
       assets: {
         files: [{
-          src: ['dist/index.html']
+          src: ['dist/index.html','dist/offline.manifest']
         }]
+      }
+    },
+    // Build cache manifest
+    manifest: {
+      generate: {
+        options: {
+          basePath: 'dist/',
+          cache: ['<%= cacheHash["/js/app.min.js"] %>',
+                  '<%= cacheHash["/css/app.min.css"] %>',
+                  'http://fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400',
+                  'http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800',
+                  '<%= cacheHash["/favicon-32x32.png"] %>'],
+          // network: ['*'],
+          fallback: ['/ partials/offline.html'],
+          // exclude: ['']
+          preferOnline: true,
+          hash: true,
+          verbose: false
+        },
+        src: [
+          // 'js/app.min.js',
+          // 'css/app.min.css',
+          // 'index.html',
+          'images/*.png',
+          'libraries/webshim/js-webshim/minified/shims/styles/shim.css',
+          'libraries/webshim/js-webshim/minified/shims/form-core.js',
+          'libraries/webshim/js-webshim/minified/shims/form-validation.js',
+          'libraries/webshim/js-webshim/minified/shims/plugins/jquery.ui.position.js',
+          'fonts/font-awesome/fontawesome-webfont.woff',
+          'fonts/exo2/exo2-semibold-webfont.woff2',
+          'fonts/entypo/entypo.ttf'
+        ],
+        dest: 'dist/offline.appcache'
       }
     },
     // Removes tmp dir.
@@ -273,6 +308,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-cache-bust");
   grunt.loadNpmTasks("grunt-angular-templates");
   grunt.loadNpmTasks("grunt-usemin");
+  grunt.loadNpmTasks("grunt-manifest");
+
+  //load cache buster json and generate manifest
+  grunt.registerTask('manifest-gen','Generate manifest from cache buster output', function(){
+    grunt.config.set('cacheHash',grunt.file.readJSON('.tmp/cachebust.json'));
+    grunt.log.write('Read cacheBust output');
+    grunt.task.run(['manifest']);
+  });
 
   // Default task(s).
   grunt.registerTask('default', [
@@ -290,6 +333,7 @@ module.exports = function(grunt) {
     'cssmin',
     'usemin',
     'cacheBust',
+    'manifest-gen',
     'clean:tmp'
   ]);
 
@@ -312,6 +356,7 @@ module.exports = function(grunt) {
     'cssmin',
     'usemin',
     'cacheBust',
+    'manifest-gen',
     'clean:tmp'
   ]);
 };

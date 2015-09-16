@@ -1,7 +1,7 @@
 (function($, angular, contactsId) {
   "use strict";
 
-  angular.module("contactsId").service("profileService", function(authService, $http, $q, $rootScope, $filter) {
+  angular.module("contactsId").service("profileService", function(authService, offlineCache, $http, $q, $rootScope, $filter) {
     var cacheUserData = false,
         cacheAppData = false,
         cacheCountries = false,
@@ -60,12 +60,9 @@
         return promise.promise;
       }
       else {
-        promise = $http({
-          method: "get",
-          url: contactsId.profilesBaseUrl + "/v0/profile/view",
-          params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()}
-        })
-        .then(handleSuccess, handleError).then(function(data) {
+        promise = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/profile/view",
+          {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()})
+        .then(function(data){
           if (data && data.profile && data.contacts) {
             var globalMatch = filter(data.contacts, function(d){return d.type === 'global';});
             cacheUserData = data;
@@ -93,12 +90,9 @@
         return promiseAppData;
       }
       else {
-        promiseAppData = $http({
-          method: "get",
-          url: contactsId.profilesBaseUrl + "/v0/app/data",
-          params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
-        })
-        .then(handleSuccess, handleError).then(function(data) {
+        promiseAppData = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/app/data",
+          {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()})
+        .then(function(data) {
           if (data) {
             cacheAppData = data;
           }
@@ -149,23 +143,17 @@
 
     // Get profiles that match specified parameters.
     function getProfiles(terms) {
-      var request = $http({
-        method: "get",
-        url: contactsId.profilesBaseUrl + "/v0/profile/view",
-        params: $.extend({}, terms, {access_token: authService.getAccessToken()})
-      });
-      return(request.then(handleSuccess, handleError));
+      var request = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/profile/view",
+        $.extend({}, terms, {access_token: authService.getAccessToken()}) );
+      return request;
     }
 
     // Get contacts that match specified parameters.
     function getContacts(terms) {
       terms.access_token = authService.getAccessToken();
-      var request = $http({
-        method: "get",
-        url: contactsId.profilesBaseUrl + "/v0/contact/view",
-        params: terms
-      });
-      return(request.then(handleSuccess, handleError));
+      var request = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/contact/view",
+        terms);
+      return request;
     }
 
     // Get custom contact lists that match specified parameters.
@@ -175,12 +163,9 @@
       }
 
       terms.access_token = authService.getAccessToken();
-      var request = $http({
-        method: "get",
-        url: contactsId.profilesBaseUrl + "/v0/list/view",
-        params: terms
-      });
-      return(request.then(handleSuccess, handleError));
+      var request = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/list/view",
+        terms);
+      return(request);
     }
 
     // Save a profile (create or update existing).
@@ -367,11 +352,8 @@
         return promise.promise;
       }
       else {
-        promise = $http({
-          method: "get",
-          url: contactsId.hrinfoBaseUrl + "/hid/locations/countries"
-        })
-        .then(handleSuccess, handleError).then(function(data) {
+        promise = offlineCache.getData(contactsId.hrinfoBaseUrl + "/hid/locations/countries", {})
+        .then(function(data) {
           var countryData = [];
           if (data) {
             angular.forEach(data, function(value, key) {
@@ -395,11 +377,8 @@
         promise.resolve(null);
         return promise.promise;
       }
-      promise = $http({
-        method: "get",
-        url: contactsId.hrinfoBaseUrl + "/hid/locations/" + country_id
-      })
-      .then(handleSuccess, handleError).then(function(data) {
+      promise = offlineCache.getData(contactsId.hrinfoBaseUrl + "/hid/locations/" + country_id,{})
+      .then(function(data){
         var regionData = [];
         if (data && data.regions) {
           angular.forEach(data.regions, function(value, key) {
@@ -600,6 +579,9 @@
       // server (or what not handles properly - ex. server error), then we
       // may have to normalize it on our end, as best we can.
       if (!angular.isObject(response.data) || !response.data.message) {
+        if (response.status === 0) {
+          location.replace('#/offline'); //redirect to offline
+        }
         return ($q.reject("An unknown error occurred."));
       }
 
