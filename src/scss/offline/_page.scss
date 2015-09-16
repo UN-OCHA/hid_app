@@ -1,0 +1,24 @@
+.offline-notice img{
+	display: block;
+	margin: auto;
+	padding-left: 5%;
+
+	@media (max-width: 768px){
+		margin-top: 10%;
+		width: 70%;
+	}
+}
+.offline-notice-text{
+	font-family: "Exo2";
+	text-align: center;
+
+	h2{
+		margin-top: 0px !important;
+	}
+
+	@media (max-width: 768px){
+		h2 {
+			font-size: 20px;
+		}
+	}
+}
