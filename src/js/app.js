@@ -240,6 +240,7 @@ app.config(function($routeProvider, $locationProvider) {
         });
       },
       profileData : function(profileService, $route) {
+        profileService.clearData();
         return profileService.getProfileData($route.current.params.profileId);
       },
       countries : function(profileService) {
