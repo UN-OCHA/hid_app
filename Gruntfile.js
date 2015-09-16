@@ -164,6 +164,7 @@ module.exports = function(grunt) {
             'src/libraries/angular-busy/angular-busy.js',
             'src/libraries/angular-spinkit/build/angular-spinkit.min.js',
             'src/libraries/angular-gettext/dist/angular-gettext.min.js',
+            'src/libraries/angular-md5/angular-md5.min.js',
             'src/libraries/angular-ui-select/dist/select.min.js',
             'src/libraries/angular-inview/angular-inview.js',
             'src/libraries/intl-tel-input/build/js/intlTelInput.js',
