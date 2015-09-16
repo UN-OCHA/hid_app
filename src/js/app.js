@@ -83,7 +83,7 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
 
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
 app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", ContactCtrl]);
-app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", CreateAccountCtrl]);
+app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", "countries", CreateAccountCtrl]);
 app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location", "profileService", "globalProfileId", "userData", "operations", DashboardCtrl]);
 app.controller("DefaultCtrl", ["$location", "authService", DefaultCtrl]);
 app.controller("404Ctrl", ["$scope", FourZeroFourCtrl]);
@@ -362,6 +362,9 @@ app.config(function($routeProvider, $locationProvider) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
+      },
+      countries : function(profileService) {
+        return profileService.getCountries();
       },
       userData : function(profileService) {
         var userdata = {},
