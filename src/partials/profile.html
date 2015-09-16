@@ -441,7 +441,7 @@
             </div>
           </div>
 
-          <div class="section profile-image" ng-class="{'open': updatingImage, 'empty': !profile.image[0].imageUrl}">
+          <div class="section profile-image" ng-class="{'open': updatingImage, 'empty': !profile.image[0].imageUrl && !gravatarUrl}">
             <h4 translate>Profile Image</h4>
             <div class="form-group">
               <p class="help-block" ng-if="profile.type === 'local'" translate>To update your photo, edit your global profile.</p>
