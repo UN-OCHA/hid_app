@@ -447,7 +447,7 @@
               <p class="help-block" ng-if="profile.type === 'local'" translate>To update your photo, edit your global profile.</p>
               <div class="profile-image-wrapper">
                 <span class="helper"></span>
-                <img class="fade" ng-show="imageUrl" ng-src="{{imageUrl}}">
+                <img class="fade" ng-show="imageUrl || gravatarUrl" ng-src="{{imageUrl || gravatarUrl}}">
               </div>
             </div>
             <div class="form-elements-profile-image fade" ng-show="updatingImage">

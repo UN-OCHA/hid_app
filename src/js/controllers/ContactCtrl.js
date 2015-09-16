@@ -1,4 +1,4 @@
-function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, ngDialog) {
+function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, ngDialog, md5) {
   if(!profileData.contact){
     // No contact data
     return false;
@@ -22,6 +22,16 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   // on HID, the contact has an email address (is not a ghost), and the actor
   // is an admin or a manager/editor in the location of this contact.
   $scope.userCanSendClaimEmail = profileService.canSendClaimEmail(contact);
+
+  // Get Gravatar URL
+  $scope.gravatarUrl = '';
+  var userEmails = (profileData.profile && profileData.profile._userid) ? profileData.profile._userid.split('_') : [];
+  if (userEmails && userEmails.length) {
+    var userEmail = userEmails[0];
+    userEmail = md5.createHash(userEmail.trim().toLowerCase());
+    $scope.gravatarUrl = 'http://www.gravatar.com/avatar/' + userEmail + '?s=200';
+  }
+
 
   $scope.contact.protectedRolesByName = [];
   angular.forEach($scope.contact.protectedRoles, function(value, key) {

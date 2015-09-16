@@ -1,4 +1,4 @@
-function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout, $http, profileService, authService, operations, profileData, countries, roles, protectedRoles, gettextCatalog, userData) {
+function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout, $http, profileService, authService, operations, profileData, countries, roles, protectedRoles, gettextCatalog, userData, md5) {
   if($routeParams.profileId && !profileData.profile){
     // No profile data
     return false;
@@ -32,6 +32,15 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
   $scope.orgEditorRoles = (profileData.profile && profileData.profile.orgEditorRoles && profileData.profile.orgEditorRoles.length) ? profileData.profile.orgEditorRoles : [];
   $scope.passwordUrl = contactsId.authBaseUrl + "/#forgotPass";
+
+  // Get Gravatar URL
+  $scope.gravatarUrl = '';
+  var userEmails = (profileData.profile && profileData.profile._userid) ? profileData.profile._userid.split('_') : [];
+  if (userEmails && userEmails.length) {
+    var userEmail = userEmails[0];
+    userEmail = md5.createHash(userEmail.trim().toLowerCase());
+    $scope.gravatarUrl = 'http://www.gravatar.com/avatar/' + userEmail + '?s=200';
+  }
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.operations = operations;
