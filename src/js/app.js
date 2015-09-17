@@ -87,6 +87,7 @@ app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "
 app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location", "profileService", "globalProfileId", "userData", "operations", DashboardCtrl]);
 app.controller("DefaultCtrl", ["$location", "authService", DefaultCtrl]);
 app.controller("404Ctrl", ["$scope", FourZeroFourCtrl]);
+app.controller("NumbersCtrl", ["$scope", NumbersCtrl]);
 app.controller("HeaderCtrl", ["$scope", "$rootScope", "$location", "profileService", "gettextCatalog", HeaderCtrl]);
 app.controller("ListCtrl", ["$scope", "$route", "$routeParams", "$location", "$http", "$filter", "authService", "profileService", "userData", "operations", "gettextCatalog", "protectedRoles", "orgTypes", "countries", "roles", "ngDialog", ListCtrl]);
 app.controller("LoginCtrl", ["$scope", "$location", "$routeParams", "authService", "profileService", LoginCtrl]);
@@ -119,6 +120,10 @@ app.config(function($routeProvider, $locationProvider) {
   when('/register', {
     template: '',
     controller: 'RegisterCtrl'
+  }).
+  when('/numbers', {
+    templateUrl: contactsId.sourcePath + '/partials/numbers.html',
+    controller: 'NumbersCtrl'
   }).
   when('/dashboard', {
     templateUrl: contactsId.sourcePath + '/partials/dashboard.html',
