@@ -36,10 +36,13 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   // Get Gravatar URL
   $scope.gravatarUrl = '';
   var userEmails = (profileData.profile && profileData.profile._userid) ? profileData.profile._userid.split('_') : [];
+  if (!userEmails || !userEmails.length) {
+    userEmails = (profileData.profile && profileData.profile.userid) ? profileData.profile.userid.split('_') : [];
+  }
   if (userEmails && userEmails.length) {
     var userEmail = userEmails[0];
     userEmail = md5.createHash(userEmail.trim().toLowerCase());
-    $scope.gravatarUrl = 'https://www.gravatar.com/avatar/' + userEmail + '?s=200';
+    $scope.gravatarUrl = 'https://www.gravatar.com/avatar/' + userEmail + '?s=200&d=mm';
   }
 
   // Setup scope variables from data injected by routeProvider resolve
