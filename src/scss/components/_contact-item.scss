@@ -226,3 +226,11 @@
     line-height: 18px;
   }
 }
+
+@media (max-width: $screen-xs-max) {
+  #contact-modal--confirm {
+    .margin-bottom {
+      margin-bottom: 20px;
+    }
+  }
+}
