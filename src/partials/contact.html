@@ -12,10 +12,10 @@
 
       <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
 
-        <div class="profile-image hidden-xs" ng-show="imageUrl">
+        <div class="profile-image hidden-xs" ng-show="imageUrl || gravatarUrl">
           <div class="profile-image-wrapper">
             <span class="helper"></span>
-            <img class="fade" ng-src="{{imageUrl}}">
+            <img class="fade" ng-src="{{imageUrl || gravatarUrl}}">
           </div>
         </div>
         <div class="actions">
