@@ -43,7 +43,7 @@
               return cacheData;
             }
             else {
-              handleError(response);
+              location.replace('#/offline'); //redirect to offline
             }
           }, function(res) {
             handleError(response);
