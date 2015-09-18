@@ -42,7 +42,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   if (userEmails && userEmails.length) {
     var userEmail = userEmails[0];
     userEmail = md5.createHash(userEmail.trim().toLowerCase());
-    $scope.gravatarUrl = 'https://www.gravatar.com/avatar/' + userEmail + '?s=200&d=mm';
+    $scope.gravatarUrl = 'https://secure.gravatar.com/avatar/' + userEmail + '?s=200&d=' + encodeURIComponent('https://app.humanitarian.id/images/avatar.png');
   }
 
   // Setup scope variables from data injected by routeProvider resolve
