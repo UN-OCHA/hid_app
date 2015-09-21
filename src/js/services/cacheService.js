@@ -3,7 +3,8 @@
 
   angular.module("contactsId").service('offlineCache', function ($http, $q){
     return {
-      getData: getData
+      getData: getData,
+      cacheData: cacheData
     }
 
     function generateKey(url, params){ //use utils.encodeURL
@@ -13,6 +14,30 @@
       });
       url = url.substring(0, url.length-1); //chop off last "&"
       return url;
+    }
+
+    function cacheData(url, options) {
+      var key = generateKey(url, options);
+      
+      var defer = $q.defer();
+      var promise = $http({
+          method: "get",
+          url: url,
+          params: options
+        })
+        .then(function(response){ //handleSuccess
+          defer.resolve(response.data);
+
+          //TODO catch exceptions
+          localforage.setItem(key,JSON.stringify(response.data));
+
+          return response.data;
+        }, function(response){
+          Offline.markDown();
+          return null;
+        });
+
+      return promise;
     }
 
 

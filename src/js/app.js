@@ -81,6 +81,53 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
   });
 });
 
+app.run(function ($rootScope, $timeout, profileService){
+  
+  function cacheLists() {
+    var cached = false;
+    return function() {
+      $timeout(function(){
+        if (cached){
+          return;
+        }
+        console.log('Starting caching for custom contact lists');
+
+        //cache global profile
+        profileService.cacheLists().then(function(profileData){
+          if (profileData && profileData.status && profileData.status === 'ok' && profileData.lists && profileData.lists.length > 0){
+
+            //cache list details for each list in profile
+            angular.forEach(profileData.lists, function(list, index){
+              var terms = {};
+              terms.contactList = true;
+              terms.limit = 30;
+              terms.locationId = 'contacts';
+              terms.skip = 0;
+              terms.status = 1;
+
+              terms.id = list._id;
+
+              //cache each contact in list
+              profileService.cacheLists(terms).then(function(listData){
+                if (listData && listData.status && listData.status === 'ok' && listData.lists.contacts && listData.lists.contacts.length > 0) {
+                  angular.forEach(listData.lists.contacts, function(contact, index){
+                    profileService.cacheProfiles({contactId: contact._id});  
+                  });
+                }
+              });
+            });
+          }
+        });
+        cached = true;
+        console.log('Finished caching custom contact lists');
+      }, 2000);
+    }
+  }
+
+  $rootScope.cacheCustomLists = cacheLists();
+
+});
+
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
 app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", ContactCtrl]);
 app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", CreateAccountCtrl]);

@@ -19,6 +19,8 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, profileServi
     return a.name && b.name ? String(a.name).localeCompare(b.name) : false;
   });
 
+  $scope.cacheCustomLists();
+
 
   $scope.customContactsPromise = profileService.getLists().then(function(data) {
     if (data && data.status && data.status === 'ok') {
