@@ -33,6 +33,17 @@ module.exports.init = function() {
       casper.clickLabel(text);
     })
 
+    .when("I press header link with class $CSSCLASS", function(CSSclass) {
+      // Remove target="_blank" since casper doesn't support it.
+      casper.evaluate(function () {
+          [].forEach.call(__utils__.findAll('a'), function(link) {
+              link.removeAttribute('target');
+          });
+      });
+      casper.test.assertExists('a ' + CSSclass);
+      casper.click('a ' + CSSclass);
+    })
+
     .when("I wait for the text $TEXT", function(text) {
       casper.waitForText(text);
     })
