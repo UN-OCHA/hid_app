@@ -2,6 +2,7 @@
 .tmp
 /dist
 /node_modules
+/src/css
 /src/js/config.js
 /src/js/partials.js
 /src/libraries

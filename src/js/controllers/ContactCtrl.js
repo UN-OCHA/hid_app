@@ -1,4 +1,4 @@
-function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, ngDialog) {
+function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, ngDialog, md5) {
   if(!profileData.contact){
     // No contact data
     return false;
@@ -6,6 +6,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
 
   var contact = profileData.contact,
       filter = $filter('filter');
+  contact._profile = profileData.profile;
 
   $scope.contact = contact;
   $scope.profileContacts = profileData.contacts;
@@ -13,7 +14,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   $scope.profile = profileData.profile;
 
   // Permissions
-  var isOwnProfile = userData.profile._id === contact._profile._id;
+  var isOwnProfile = userData.profile._id === contact._profile;
   $scope.userCanEditProfile = isOwnProfile || profileService.canEditProfile(contact.locationId);
   $scope.userCanCheckIn = profileService.canCheckIn(contact._profile);
   $scope.userCanCheckOut = profileService.canCheckOut(contact);
@@ -21,6 +22,19 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   // on HID, the contact has an email address (is not a ghost), and the actor
   // is an admin or a manager/editor in the location of this contact.
   $scope.userCanSendClaimEmail = profileService.canSendClaimEmail(contact);
+
+  // Get Gravatar URL
+  $scope.gravatarUrl = '';
+  var userEmails = (profileData.profile && profileData.profile._userid) ? profileData.profile._userid.split('_') : [];
+  if (!userEmails || !userEmails.length) {
+    userEmails = (profileData.profile && profileData.profile.userid) ? profileData.profile.userid.split('_') : [];
+  }
+  if (userEmails && userEmails.length) {
+    var userEmail = userEmails[0];
+    userEmail = md5.createHash(userEmail.trim().toLowerCase());
+    $scope.gravatarUrl = 'https://secure.gravatar.com/avatar/' + userEmail + '?s=200&d=' + encodeURIComponent('https://app.humanitarian.id/images/avatar.png');
+  }
+
 
   $scope.contact.protectedRolesByName = [];
   angular.forEach($scope.contact.protectedRoles, function(value, key) {

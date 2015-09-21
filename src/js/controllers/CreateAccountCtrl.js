@@ -1,4 +1,4 @@
-function CreateAccountCtrl($scope, $location, $route, $http, profileService, authService, operations, globalProfileId, userData, gettextCatalog) {
+function CreateAccountCtrl($scope, $location, $route, $http, profileService, authService, operations, globalProfileId, userData, gettextCatalog, countries) {
   $scope.logoutPath = '/#logout';
   $scope.globalProfileId = globalProfileId;
   $scope.userData = userData;
@@ -11,6 +11,7 @@ function CreateAccountCtrl($scope, $location, $route, $http, profileService, aut
   $scope.profile = {email:[{}], phone:[{}]};
   $scope.newProfileID;
   $scope.query = $location.search();
+  $scope.countries = countries;
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.operations = operations;
@@ -189,5 +190,13 @@ function CreateAccountCtrl($scope, $location, $route, $http, profileService, aut
     $scope.accountConfirm = false;
     $scope.ghostConfirm = false;
     $location.path('/createaccount');
-  }
+  };
+
+  // Set the country based on the crisis chosen
+  $scope.setCountry = function(item) {
+    $scope.profile.address = new Array();
+    $scope.profile.address[0] = {};
+    $scope.profile.address[0].country = item.name;
+  };
+
 }

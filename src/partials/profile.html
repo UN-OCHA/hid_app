@@ -7,8 +7,9 @@
     <div class="active-operations col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3" ng-hide="selectedOperation.length">
       <div class="back-link"><button type="button" class="btn btn-warning btn-sm" ng-click="back()"><i class="fa fa-arrow-circle-left"></i> <span translate>Back</span></button></div>
       <h3 translate>Select a country</h3>
+      <input ng-model="search.name" type="text" class="form-control" placeholder="{{'Start typing a country name'|translate}}" />
       <ul class="active-countries-container list-group">
-        <li class="country-item list-group-item" ng-repeat="(idx, operation) in availOperations">
+        <li class="country-item list-group-item" ng-repeat="operation in availOperations | filter:search">
           <a href="" ng-click="selectOperation(operation.remote_id)">{{operation.name}}</a>
         </li>
         <li class="operation-item" ng-if="availOperations.length == 0">
@@ -427,24 +428,26 @@
             </div>
 
             <div class="section col-sm-12" ng-show="userCanSendClaimEmail">
-              <a class="btn btn-primary btn-lg btn-block" ng-show="userCanSendClaimEmail" ng-click="confirmSendEmail = !confirmSendEmail" translate>Send Claim Email</a>
+              <h4 translate>Orphan Account</h4>
+              <a class="btn btn-default btn-lg btn-block" ng-show="userCanSendClaimEmail" ng-click="confirmSendEmail = !confirmSendEmail" translate>Send Claim Email</a>
               <a ng-show="confirmSendEmail" ng-disabled="sendingClaimEmail" class="fade btn btn-warning btn-lg btn-block" ng-click="sendClaimEmail()" translate>Confirm Send Claim Email</a>
             </div>
 
             <div class="section col-sm-12" ng-show="userCanSendClaimEmail">
+              <h4 translate>Notification of Change</h4>
               <div class="checkbox">
                 <label for="updateEmail" ng-click="toggleUpdateEmail()"><input type="checkbox" name="updateEmail" ng-model="email.send" ng-click="toggleUpdateEmail()"/><span translate>Send Profile Update Email to Contact</span></label>
               </div>
             </div>
           </div>
 
-          <div class="section profile-image" ng-class="{'open': updatingImage, 'empty': !profile.image[0].imageUrl}">
+          <div class="section profile-image" ng-class="{'open': updatingImage, 'empty': !profile.image[0].imageUrl && !gravatarUrl}">
             <h4 translate>Profile Image</h4>
             <div class="form-group">
               <p class="help-block" ng-if="profile.type === 'local'" translate>To update your photo, edit your global profile.</p>
               <div class="profile-image-wrapper">
                 <span class="helper"></span>
-                <img class="fade" ng-show="imageUrl" ng-src="{{imageUrl}}">
+                <img class="fade" ng-show="imageUrl || gravatarUrl" ng-src="{{imageUrl || gravatarUrl}}">
               </div>
             </div>
             <div class="form-elements-profile-image fade" ng-show="updatingImage">

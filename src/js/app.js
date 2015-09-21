@@ -1,6 +1,6 @@
 (function($, angular, contactsId) {
 // Initialize ng
-var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog']);
+var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-md5']);
 
 webshims.setOptions({
    waitReady: false,
@@ -129,8 +129,8 @@ app.run(function ($rootScope, $timeout, profileService){
 });
 
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
-app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", ContactCtrl]);
-app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", CreateAccountCtrl]);
+app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", "md5", ContactCtrl]);
+app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", "countries", CreateAccountCtrl]);
 app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location", "profileService", "globalProfileId", "userData", "operations", DashboardCtrl]);
 app.controller("DefaultCtrl", ["$location", "authService", DefaultCtrl]);
 app.controller("404Ctrl", ["$scope", FourZeroFourCtrl]);
@@ -138,7 +138,7 @@ app.controller("HeaderCtrl", ["$scope", "$rootScope", "$location", "profileServi
 app.controller("ListCtrl", ["$scope", "$route", "$routeParams", "$location", "$http", "$filter", "authService", "profileService", "userData", "operations", "gettextCatalog", "protectedRoles", "orgTypes", "countries", "roles", "ngDialog", ListCtrl]);
 app.controller("LoginCtrl", ["$scope", "$location", "$routeParams", "authService", "profileService", LoginCtrl]);
 app.controller("LogoutCtrl", ["$scope", "authService", LogoutCtrl]);
-app.controller("ProfileCtrl", ["$scope", "$location", "$route", "$routeParams", "$filter", "$timeout", "$http", "profileService", "authService", "operations", "profileData", "countries", "roles", "protectedRoles", "gettextCatalog", "userData", ProfileCtrl]);
+app.controller("ProfileCtrl", ["$scope", "$location", "$route", "$routeParams", "$filter", "$timeout", "$http", "profileService", "authService", "operations", "profileData", "countries", "roles", "protectedRoles", "gettextCatalog", "userData", "md5", ProfileCtrl]);
 app.controller("RegisterCtrl", ["$scope", RegisterCtrl]);
 app.controller("AddToCustomListCtrl", ["$scope", "profileService", AddToCustomListCtrl]);
 app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "profileService", "list", "ngDialog", CustomListSettingsCtrl]);
@@ -287,6 +287,7 @@ app.config(function($routeProvider, $locationProvider) {
         });
       },
       profileData : function(profileService, $route) {
+        profileService.clearData();
         return profileService.getProfileData($route.current.params.profileId);
       },
       countries : function(profileService) {
@@ -409,6 +410,9 @@ app.config(function($routeProvider, $locationProvider) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
+      },
+      countries : function(profileService) {
+        return profileService.getCountries();
       },
       userData : function(profileService) {
         var userdata = {},

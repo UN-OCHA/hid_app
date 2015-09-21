@@ -226,8 +226,6 @@
     function getProfileData(contactId) {
       contactId = contactId || '';
 
-      var promise = getUserData();
-
       return getUserData().then(function(data){
         // Check if the contact is for the current user
         if (data && data.contacts && data.contacts.length) {

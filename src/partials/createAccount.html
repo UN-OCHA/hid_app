@@ -14,7 +14,7 @@
 
         <div class="form-group">
           <label class="control-label-light" for="location">* <span translate>Crisis</span></label>
-          <select class="form-control" name="location" ng-model="profile.location" ng-options="item.name for item in availOperations" ng-blur="focus=0" focus-field="focus" required ng-class="{invalid: submitted && createAccountForm.location.$invalid}">
+          <select class="form-control" name="location" ng-model="profile.location" ng-options="item.name for item in availOperations" ng-blur="focus=0" focus-field="focus" required ng-class="{invalid: submitted && createAccountForm.location.$invalid}" ng-change="setCountry(profile.location)">
               <option value=""></option>
           </select>
           <div class="error" ng-show="createAccountForm.location.$error.required && submitted" translate>Crisis is required.</div>
@@ -37,6 +37,22 @@
           <label class="control-label-light" for="jobtitle">* <span translate>Job Title</span></label>
           <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" required  ng-class="{invalid: submitted && createAccountForm.jobtitle.$invalid }"/>
           <div class="error" ng-show="createAccountForm.jobtitle.$error.required && submitted" translate>Title is required.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="address.country" translate>Country</label>
+          <ui-select
+            name="address.country"
+            class="form-control form-control-light"
+            autocomplete="off"
+            ng-model="profile.address[0].country"
+            theme="bootstrap"
+            reset-search-input="true">
+              <ui-select-match allow-clear placeholder="{{'Search for country'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices ng-class="{'not-empty': countries.length}" repeat="country.name as country in countries | orderBy:'name' |filter: $select.search">
+                <div ng-bind-html="country.name | highlight: $select.search"></div>
+              </ui-select-choices>
+          </ui-select>
         </div>
 
         <div class="form-group">
