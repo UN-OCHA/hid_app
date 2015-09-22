@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-09-22T06:22:04.094Z\n"
+"Project-Id-Version: 2015-09-03T08:21:01.481Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
@@ -30,10 +30,6 @@ msgstr ""
 
 #: src/js/controllers/ListCtrl.js
 msgid "Add to My Contacts"
-msgstr ""
-
-#: src/partials/list.html
-msgid "Add to list"
 msgstr ""
 
 #: src/js/controllers/ListCtrl.js
@@ -187,7 +183,6 @@ msgstr ""
 msgid "Copy Email Addresses"
 msgstr ""
 
-#: src/partials/createAccount.html
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Country"
@@ -291,10 +286,6 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "Edit my"
-msgstr ""
-
-#: src/partials/dashboard.html
-msgid "Edit my global profile"
 msgstr ""
 
 #: src/partials/createAccount.html
@@ -487,6 +478,11 @@ msgstr ""
 msgid "Job Title"
 msgstr ""
 
+#: src/partials/list.html
+#: src/partials/profile.html
+msgid "Key Contact"
+msgstr ""
+
 #: src/partials/contact.html
 msgid "Last Updated"
 msgstr ""
@@ -562,13 +558,13 @@ msgstr ""
 msgid "No results found."
 msgstr ""
 
+#: src/partials/404.html
+msgid "Not Found"
+msgstr ""
+
 #: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Notes"
-msgstr ""
-
-#: src/partials/profile.html
-msgid "Notification of Change"
 msgstr ""
 
 #: src/partials/profile.html
@@ -616,10 +612,6 @@ msgstr ""
 msgid "Organizational Information"
 msgstr ""
 
-#: src/partials/profile.html
-msgid "Orphan Account"
-msgstr ""
-
 #: src/partials/list.html
 msgid "Orphan User"
 msgstr ""
@@ -649,7 +641,7 @@ msgid "Please email responsibly."
 msgstr ""
 
 #: src/partials/profile.html
-msgid "Please search for your organization"
+msgid "Please select from the list"
 msgstr ""
 
 #: src/partials/profile.html
@@ -761,7 +753,6 @@ msgstr ""
 msgid "Search by name, title, or organization"
 msgstr ""
 
-#: src/partials/createAccount.html
 #: src/partials/profile.html
 msgid "Search for country"
 msgstr ""
@@ -782,6 +773,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Select a country"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Select a list"
 msgstr ""
 
 #: src/partials/profile.html
@@ -812,10 +807,6 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Social Media Id"
-msgstr ""
-
-#: src/partials/profile.html
-msgid "Start typing a country name"
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -896,10 +887,6 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "View PDF"
-msgstr ""
-
-#: src/partials/dashboard.html
-msgid "View a Country"
 msgstr ""
 
 #: src/partials/about.html
@@ -1009,8 +996,4 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "{{list.name}}"
-msgstr ""
-
-#: src/partials/list.html
-msgid "{{locationText()}} has been set as a private contact list by our field-level administrators. This setting is used in situations where those in-countries responders believe that their information should not be easily available due to security concerns. In this case, only \"verified\" Humanitarian ID users can access the contact list. For information about \"verified\" users, please see our <a href=\"http://humanitarian.id/faqs\" target=\"_blank\">FAQs</a>."
 msgstr ""
