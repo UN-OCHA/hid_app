@@ -18,9 +18,9 @@
             </a>
           </h4>
           <div class="btn-group">
-            <a class="btn btn-sm" ng-click="share('Humanitarian ID','linkedin')" title="Share my profile on Linkedin"><i class="fa fa-linkedin"></i></a>
-            <a class="btn btn-sm" ng-click="share('Humanitarian ID','facebook')" title="Share my profile on Facebook"><i class="fa fa-facebook"></i></a>
-            <a class="btn btn-sm" href="#/profile/{{profile._id}}" title="{{'Edit my global profile' | translate}}"><i class="fa fa-pencil"></i></a>
+            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" ng-click="share('Humanitarian ID','linkedin')" title="Share my profile on Linkedin"><i class="fa fa-linkedin"></i></a>
+            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" ng-click="share('Humanitarian ID','facebook')" title="Share my profile on Facebook"><i class="fa fa-facebook"></i></a>
+            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" href="#/profile/{{profile._id}}" title="{{'Edit my global profile' | translate}}"><i class="fa fa-pencil"></i></a>
           </div>
         </li>
       </ul>
@@ -43,10 +43,10 @@
               </span>
           </h4>
           <div class="btn-group">
-            <a class="btn btn-sm" ng-click="share(profile.location,'linkedin')" title="Share my check-in on Linkedin"><i class="fa fa-linkedin"></i></a>
-            <a class="btn btn-sm" ng-click="share(profile.location,'facebook')" title="Share my check-in on Facebook"><i class="fa fa-facebook"></i></a>
-            <a class="btn btn-sm" href="#/profile/{{profile._id}}" title="{{'Edit my' | translate}} {{profile.location}} {{'profile' | translate}}"><i class="fa fa-pencil"></i></a>
-            <a class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="{{'Check-out from' | translate}} {{profile.location}}"><i class="fa fa-times"></i></a>
+            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" ng-click="share(profile.location,'linkedin')" title="Share my check-in on Linkedin"><i class="fa fa-linkedin"></i></a>
+            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" ng-click="share(profile.location,'facebook')" title="Share my check-in on Facebook"><i class="fa fa-facebook"></i></a>
+            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" href="#/profile/{{profile._id}}" title="{{'Edit my' | translate}} {{profile.location}} {{'profile' | translate}}"><i class="fa fa-pencil"></i></a>
+            <a ng-class="{'disabled' : isOffline()}" class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="{{'Check-out from' | translate}} {{profile.location}}"><i class="fa fa-times"></i></a>
           </div>
         </li>
         <li class="disaster-item" ng-if="profilesActive.length == 0">
@@ -119,11 +119,11 @@
     <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
       <div class="actions">
         <span ng-repeat="profile in userData.contacts" ng-if="profile.type == 'global'">
-          <a class="btn btn-default btn-lg btn-block" href="#/profile/{{profile._id}}">
+          <a ng-class="{'disabled' : isOffline()}" class="btn btn-default btn-lg btn-block" href="#/profile/{{profile._id}}">
             <span class="fa fa-angle-right"></span> <span translate>Edit Global Profile</span>
           </a>
         </span>
-        <a class="btn btn-primary btn-lg btn-block" href="#/checkin" ng-show="globalProfileId.length">
+        <a ng-class="{'disabled' : isOffline()}" class="btn btn-primary btn-lg btn-block" href="#/checkin" ng-show="globalProfileId.length">
           <span class="fa fa-angle-right"></span> <span translate>Check-in</span>
         </a>
         <a class="btn btn-primary btn-lg btn-block" href="#/createaccount" ng-show="userCanCreateAccount">
