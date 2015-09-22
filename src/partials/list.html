@@ -23,6 +23,16 @@
       </div>
     </form>
 
+    <div class="text-right">
+      <select class="form-control form-elements-sort" name="sort" ng-model="query.sort">
+        <option value="" selected disabled translate>Sort by</option>
+        <option value="name" translate>Name</option>
+        <option value="jobtitle" translate>Job Title</option>
+        <option value="organization" translate>Organization</option>
+        <option value="verified" translate>Verification</option>
+      </select>
+    </div>
+
     <ul class="list-group" cg-busy="contactsPromise">
       <li class="profile-item list-group-item" ng-repeat="contact in contacts | orderBy: ['nameGiven', 'nameFamily']" ng-init="contactInit()" ng-class="{'has-quick-link': contact.ql.userCanEditProfile}">
         <div class="row">
