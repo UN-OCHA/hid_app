@@ -451,6 +451,8 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   };
 
   $scope.loadMoreContacts = function(inview, inviewpart) {
+    console.log(inview);
+    console.log(inviewpart);
     // Don't do anything if elem not completely visible
     if (!inview || inviewpart !== 'both') {
       return;
@@ -678,7 +680,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
           $scope.contacts = $scope.contacts.concat(data.contacts);
           $scope.contactsCreated = true;
           $scope.queryCount = data.count;
-          $scope.contactsCount = data.contacts.length;
+          $scope.contactsCount = $scope.contacts.length;;
         }
       });
     }
