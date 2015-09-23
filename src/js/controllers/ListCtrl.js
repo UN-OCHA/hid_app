@@ -565,6 +565,9 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     profileService.saveList(list).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         $scope.contacts.splice(index, 1);
+
+        $scope.contactsCount--;
+        $scope.queryCount--;
       }
       else {
         alert('An error occurred while unfollowing this contact list. Please reload and try the change again.');
