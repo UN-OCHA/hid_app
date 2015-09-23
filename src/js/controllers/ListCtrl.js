@@ -1,5 +1,5 @@
 function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, orgTypes, countries, roles, ngDialog) {
-  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'office.name', 'organization.name', 'organization.org_type_remote_id', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified', 'id'],
+  var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'office.name', 'organization.name', 'organization.org_type_remote_id', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified', 'id', 'sort'],
       filter = $filter('filter');
 
   $scope.location = '';
@@ -32,6 +32,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.query = $location.search();
   $scope.loadLimit = 30;
   $scope.contactsCount = 0;
+  $scope.sort = 'name';
 
   $scope.showResetBtn = Object.keys($scope.query).length;
   $scope.isContactList = ($scope.locationId !== 'global' && !$scope.locationId.match(/hrinfo:/));
@@ -313,6 +314,11 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
     $scope.submitSearch();
   }
+
+  $scope.submitSort = function() {
+    $scope.submitSearch();
+  }
+
   // Sets sets url params thru $location.search().
   $scope.submitSearch = function() {
     var query = $scope.query,
@@ -325,6 +331,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     }
     // Close sidebar on mobile.
     sidebarOptions = false;
+
 
     $location.search(sObj);
   }
@@ -663,6 +670,9 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     query.status = 1;
     query.limit = $scope.loadLimit;
     query.skip = $scope.contactsCount;
+    if (!query.sort) {
+      query.sort = $scope.sort;
+    }
 
     // Custom contact list.
     if ($routeParams.id) {
