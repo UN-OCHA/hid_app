@@ -451,8 +451,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   };
 
   $scope.loadMoreContacts = function(inview, inviewpart) {
-    console.log(inview);
-    console.log(inviewpart);
     // Don't do anything if elem not completely visible
     if (!inview || inviewpart !== 'both') {
       return;
