@@ -24,17 +24,17 @@
     </form>
 
     <div class="text-right">
-      <select class="form-control form-elements-sort" name="sort" ng-model="query.sort">
+      <select class="form-control form-elements-sort" name="sort" ng-model="query.sort" ng-change="submitSort()">
         <option value="" selected disabled translate>Sort by</option>
         <option value="name" translate>Name</option>
         <option value="jobtitle" translate>Job Title</option>
-        <option value="organization" translate>Organization</option>
-        <option value="verified" translate>Verification</option>
+        <option value="organization" ng-if="locationId !== 'global' && userData.profile.userid == list.userid && list._id" translate>Organization</option>
+        <option value="verified" ng-if="locationId !== 'global' && userData.profile.userid == list.userid && list._id" translate>Verification</option>
       </select>
     </div>
 
     <ul class="list-group" cg-busy="contactsPromise">
-      <li class="profile-item list-group-item" ng-repeat="contact in contacts | orderBy: ['nameGiven', 'nameFamily']" ng-init="contactInit()" ng-class="{'has-quick-link': contact.ql.userCanEditProfile}">
+      <li class="profile-item list-group-item" ng-repeat="contact in contacts" ng-init="contactInit()" ng-class="{'has-quick-link': contact.ql.userCanEditProfile}">
         <div class="row">
           <div class="contact-item contact-item--name col-xs-12 col-md-3" >
             <a href="#/contact/{{contact._id}}" title="{{contact.nameGiven}} {{contact.nameFamily}}">{{contact.nameGiven}} {{contact.nameFamily}}</a>
