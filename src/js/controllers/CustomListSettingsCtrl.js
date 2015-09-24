@@ -1,5 +1,8 @@
 function CustomListSettingsCtrl($scope, $route, $location, profileService, list, ngDialog) {
   $scope.list = list;
+  if (!list.privacy) {
+    $scope.list.privacy = 'all';
+  }
   $scope.contactsCount = list.contacts.length;
   $scope.path = contactsId.appBaseUrl + '/#/list/contacts?id=' + list._id;
 
