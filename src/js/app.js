@@ -1,4 +1,4 @@
-(function($, angular, contactsId) {
+(function($, angular, contactsId, Offline) {
 // Initialize ng
 var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-md5']);
 
@@ -521,4 +521,4 @@ if (typeof Array.prototype.reIndexOf === 'undefined') {
   };
 }
 
-}(jQuery, angular, window.contactsId));
+}(jQuery, angular, window.contactsId, window.Offline));
