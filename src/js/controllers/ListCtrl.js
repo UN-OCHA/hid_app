@@ -688,7 +688,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
           $scope.contacts = $scope.contacts.concat(data.contacts);
           $scope.contactsCreated = true;
           $scope.queryCount = data.count;
-          $scope.contactsCount = $scope.contacts.length;;
+          $scope.contactsCount = $scope.contacts.length;
         }
       });
     }
