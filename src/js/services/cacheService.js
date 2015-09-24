@@ -43,7 +43,8 @@
               return cacheData;
             }
             else {
-              location.replace('#/offline'); //redirect to offline
+              handleError(response);
+              // location.replace('#/offline'); //redirect to offline
             }
           }, function(res) {
             handleError(response);
@@ -61,19 +62,15 @@
       // server (or what not handles properly - ex. server error), then we
       // may have to normalize it on our end, as best we can.
       if (!angular.isObject(response.data) || !response.data.message) {
-        if (response.status === 0) {
-          location.replace('#/offline'); //redirect to offline
-        }
-        return ($q.reject("An unknown error occurred."));
+        location.replace('#/offline'); //redirect to offline
+        // return ($q.reject("An unknown error occurred."));
       }
 
       // If a 403 status code is received from the profile service, then
       // set the user status to logged out and reload the page to trigger the
       // sign in process.
       if (response.status == 403) {
-        authService.logout(true);
-        location.reload();
-        return $q.defer();
+        location.replace('#/noauth');
       }
 
       // Otherwise, use expected error message.
