@@ -1,9 +1,8 @@
 function NumbersCtrl($scope) {
- 
     //Variable declaration
     var isChange=0;
     var location="World Numbers";
-    var coun;
+    var selected_Country;
     var country1;
     var country2;
     var country3;
@@ -13,7 +12,6 @@ function NumbersCtrl($scope) {
     var m=[0,0,0,0,0,0,0,0,0,0,0,0];
     var API = "http://fis-ocha.cartodb.com/api/v1/sql?q=SELECT*FROM hid_checkins";
     var country;
-    var country;
     var count2;
     var count3;
     var count4;
@@ -22,7 +20,6 @@ function NumbersCtrl($scope) {
     var currtime; 
     var clientsChart;
     var updateTime;
-
     //3rd party functions
     function onlyUnique(value, index, self) { 
         return self.indexOf(value) === index;
@@ -33,12 +30,9 @@ function NumbersCtrl($scope) {
         }
         return val;
     }
-
     //Getting JSON data
     $.getJSON(API, function (json) {
-
-        function start()
-        {
+        function start() {
             isChange++;
             m=[0,0,0,0,0,0,0,0,0,0,0,0];
             country=new Array(json.rows.length);
@@ -46,11 +40,11 @@ function NumbersCtrl($scope) {
             count3=0;
             updateTime=new Date(json.rows[0].created_at);
             currtime=new Date();//Date(json.rows[0].last_updated); 
-            coun=$("#mySelect :selected").text();
+            selected_Country=$("#mySelect :selected").text();
             for(i=0;i<json.rows.length;i++)
             {
 
-                if(json.rows[i].location_country==coun || coun=="World Numbers")
+                if(json.rows[i].last_updated.substring(0,4)==currtime.getFullYear() && (json.rows[i].location_country==selected_Country || selected_Country=="World Numbers"))
                 {  
                     country[count2++]=json.rows[i].origin_location; 
                     time=json.rows[i].last_updated;
@@ -71,25 +65,20 @@ function NumbersCtrl($scope) {
             unicount=new Array(count);
             for(m=0;m<count;m++)
                 unicount[m]=0;
-            for(j=0;j<count2;j++)
-            {
-                for(k=0;k<count;k++)
-                {
+            for(j=0;j<count2;j++) {
+                for(k=0;k<count;k++) {
                     if(unique[k]==country[j] && unique[k]!=null  && unique[k]!="None" && unique[k]!="none" && unique[k]!='')
-                        unicount[k]++;
-                        
+                        unicount[k]++;      
                 }
             }
             callback();
         }
         var i=0;
-
         //Creating the drop down menu
         country_at=new Array(json.rows.length);
         count4=0;
         for(i=0;i<json.rows.length;i++)
             country_at[count4++]=json.rows[i].location_country; 
-
         var unique2= country_at.filter(onlyUnique);
         var select = document.getElementById("mySelect");  
         for(i=0;i<unique2.length;i++){  
@@ -108,8 +97,7 @@ function NumbersCtrl($scope) {
         });
 
     });
-    function callback()
-    {
+    function callback() {
         //Create Line graph using Chart.js
         var data = {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug","Sept","Oct","Nov","Dec"],
@@ -126,7 +114,6 @@ function NumbersCtrl($scope) {
 
         ]
         };
-
         if(isChange>1) //destroy older charts to improve efficiency
             clientsChart.destroy();
         var context = document.getElementById('clients').getContext('2d');
@@ -146,56 +133,43 @@ function NumbersCtrl($scope) {
         if(count2>0 )
         {
             $('.results1').html(country1);
-            if(unicount.length >1 && country1!=country2 )
-            {
+            if(unicount.length >1 && country1!=country2 ) {
                 $(".results2").show();
                 $('.results2').html(country2);
             }
-            else
-            {
+            else {
                 $('.results2').html(" ");
                 $('.results3').html(" ");
                 $(".results2").hide();
                 $(".results3").hide();
-
-
             }  
-            if(unicount.length>2 && country2!=country3)
-            {
+            if(unicount.length>2 && country2!=country3) {
               $(".results3").show();
               $('.results3').html(country3);
             }
-            else
-            {
+            else {
                 $('.results3').html(" ");
                 $(".results3").hide();
-
             }
-
         }
-        else
-        {
+        else {
             $('.results1').html("None");
             $(".results2").hide();
             $(".results3").hide();
             $('.results2').html(" ");
-            $('.results3').html(" ");
-            
-
+            $('.results3').html(" ");   
         }
-        //Finding number of check-ins the past 48 hours
-        $('.huge').html(count3);
-        // Total number of check-ins for world or each country
-        $('.result4').html("per month ("+commaSeparateNumber(count2)+" for "+updateTime.getFullYear()+ ")");
-
-
-
+    //Finding number of check-ins the past 48 hours
+    $('.huge').html(count3);
+    // Total number of check-ins for world or each country
+    $('.result4').html("per month ("+commaSeparateNumber(count2)+" for "+updateTime.getFullYear()+ ")");
     var monthNames = [
       "January", "February", "March",
       "April", "May", "June", "July",
       "August", "September", "October",
       "November", "December"
     ];
+    //displaying the date format
     var day = updateTime.getDate();
     var monthIndex = updateTime.getMonth();
     var year = updateTime.getFullYear();
@@ -207,9 +181,7 @@ function NumbersCtrl($scope) {
     if(day=="3")
         append="rd";
     else append="th";
-
-
-        $('.updateTime').html("as of: "+day+append+" "+monthNames[monthIndex]+" "+year);
+    $('.updateTime').html("as of: "+day+append+" "+monthNames[monthIndex]+" "+year);
 
     }   
 }
