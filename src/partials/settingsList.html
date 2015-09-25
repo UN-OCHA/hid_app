@@ -22,12 +22,14 @@
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="privacy" value="all" ng-model="list.privacy" /> Anyone can view
+              <input type="radio" name="privacy" value="all" ng-model="list.privacy" /> Anyone within Humanitarian ID can view with link<br />
+              <input type="text" name="url" value="{{path}}" size="75" disabled ng-show="list.privacy == 'all'" />
             </label>
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="privacy" value="verified" ng-model="list.privacy" /> Only verified users can view
+              <input type="radio" name="privacy" value="verified" ng-model="list.privacy" /> Only verified users within Humanitarian ID can view with link<br />
+              <input type="text" name="url2" value="{{path}}" size="75" disabled ng-show="list.privacy == 'verified'" />
             </label>
           </div>
         </div>

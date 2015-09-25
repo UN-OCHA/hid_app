@@ -1,0 +1,170 @@
+@media only screen 
+  and (min-device-width: 400px)  {
+
+.bubble
+  {
+    float:left;
+    margin-left: 60px !important;
+
+  }
+
+  .header4 { 
+  text-align: center;
+  font-family: 'exo2';
+  font-size: 230%;
+  color: #54b1c8; 
+  margin-left:10% !important;
+}
+}
+
+@media only screen 
+  and (max-device-width: 400px) {
+  .bubble
+  {
+    float:left;
+    margin-left: -15px !important;
+
+  }
+
+  .header4 { 
+  text-align: center;
+  font-family: 'exo2';
+  font-size: 230%;
+  color: #54b1c8; 
+  margin-left:0 !important;
+}
+
+}
+.header5 { 
+  text-align: left;
+  font-family: 'exo2';
+  font-size: 100%;
+}
+.header6 { 
+  text-align: center;
+  font-family: 'exo2';
+  font-size: 230%;
+  color: #54b1c8; 
+}
+.results1 {
+  text-align: center;
+  font-family: 'exo2';
+  font-size: 180%;
+  border-radius: 10px;
+  padding:10px;
+  width:100%;
+  height:50px;
+  margin-left:0px;
+  background: rgb(255,255,255);
+  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
+
+}
+.results2 {
+  text-align: center;
+  font-family: 'exo2';
+  font-size: 160%;
+  border-radius: 10px;
+  padding:10px;
+  margin-left:5% !important;
+  width:90%;
+  height:47px;
+  color: rgb(160,160,160);
+  background: rgb(255,255,255);
+  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
+}
+
+
+
+.results3 {
+  text-align: center;
+  font-family: 'exo2';
+  font-size: 140%;
+  padding:10px;
+  width:80%;
+  margin-left:10% !important;
+  height:43px;
+  border-radius: 10px;
+  color: rgb(177,177,177);
+  background: rgb(255,255,255);
+  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
+}
+
+.results4 {
+  text-align: left;
+  font-family: 'exo2';
+  font-size: 140%;
+  color: #7E8587;
+  text-decoration:none !important;
+}
+
+.updateTime {
+	font-family: 'exo2';
+	font-size: 70%;
+  margin-left:20px !important;
+  margin-bottom:20px !important;
+  color: rgb(160,160,160);
+
+}
+
+
+.result4 {
+text-align: left;
+font-family: 'exo2';
+font-size: 100%;
+text-decoration:none !important;
+}
+
+p.huge { 
+  text-align: center;
+  font-family: 'exo2';
+  font-size: 500%;
+  color: #fff;
+  width: 108px;
+  height:131px;
+  z-index: 100;
+} 
+
+#mySelect {
+
+  font-family:'exo2';
+  background-color: #fff;
+  box-shadow: inset !important; 
+  background-color: white !important;
+  font-size:200%;
+}
+canvas {
+    width: 100% !important;
+    max-width: 800px;
+    height: auto !important;
+}
+
+
+#burst-12 {
+  background: #54b1c8;
+  width: 110px;
+  height: 110px;
+  position: absolute;
+  text-align: center;
+}
+#burst-12:before, #burst-12:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 110px;
+  width: 110px;
+  background: #54b1c8; 
+;
+}
+#burst-12:before {
+  -webkit-transform: rotate(30deg);
+  -moz-transform: rotate(30deg);
+  -ms-transform: rotate(30deg);
+  -o-transform: rotate(30deg);
+}
+#burst-12:after {
+  -webkit-transform: rotate(60deg);
+  -moz-transform: rotate(60deg);
+  -ms-transform: rotate(60deg);
+  -o-transform: rotate(60deg);
+}

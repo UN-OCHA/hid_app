@@ -16,8 +16,11 @@
       getProfileById: getProfileById,
       getProfileByUser: getProfileByUser,
       getProfiles: getProfiles,
+      cacheProfiles: cacheProfiles,
       getContacts: getContacts,
+      cacheContacts: cacheContacts,
       getLists: getLists,
+      cacheLists: cacheLists,
       saveList: saveList,
       deleteList: deleteList,
       getProfileData: getProfileData,
@@ -141,6 +144,17 @@
       return getProfiles({contactId: contactId});
     }
 
+    function cacheProfiles(terms) {
+      if (!terms) {
+        var terms = {};
+      }
+
+      terms.access_token = authService.getAccessToken();
+      var request = offlineCache.cacheData(contactsId.profilesBaseUrl + "/v0/profile/view",
+        terms);
+      return request;
+    }
+
     // Get profiles that match specified parameters.
     function getProfiles(terms) {
       var request = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/profile/view",
@@ -156,6 +170,13 @@
       return request;
     }
 
+    function cacheContacts(terms) {
+      terms.access_token = authService.getAccessToken();
+      var request = offlineCache.cacheData(contactsId.profilesBaseUrl + "/v0/contact/view",
+        terms);
+      return request;
+    }
+
     // Get custom contact lists that match specified parameters.
     function getLists(terms) {
       if (!terms) {
@@ -166,6 +187,17 @@
       var request = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/list/view",
         terms);
       return(request);
+    }
+
+    function cacheLists(terms) {
+      if (!terms) {
+        var terms = {};
+      }
+
+      terms.access_token = authService.getAccessToken();
+      var list = offlineCache.cacheData(contactsId.profilesBaseUrl + "/v0/list/view",
+        terms)
+      return list;
     }
 
     // Save a profile (create or update existing).
