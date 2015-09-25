@@ -1,4 +1,4 @@
-(function($, angular, contactsId) {
+(function($, angular, contactsId, Offline, localforage) {
   "use strict";
 
   angular.module("contactsId").service('offlineCache', function ($http, $q){
@@ -106,4 +106,4 @@
     }
     
   });
-}(jQuery, angular, window.contactsId));
+}(jQuery, angular, window.contactsId, window.Offline, window.localforage));

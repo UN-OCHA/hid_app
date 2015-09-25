@@ -138,3 +138,12 @@
 .intl-tel-input .flag {
   background-image: url("../images/flags.png") !important;
 }
+
+.form-elements-sort {
+  @media(min-width: $screen-md) {
+    width: 20%;
+  }
+  display: inline;
+  margin-bottom: 10px;
+}
+
