@@ -1,4 +1,4 @@
-(function($, angular, contactsId) {
+(function($, angular, contactsId, Offline) {
 // Initialize ng
 var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-md5']);
 
@@ -81,10 +81,65 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
   });
 });
 
+app.run(function ($rootScope, profileService){
+  
+  function cacheLists() {
+    var cached = false;
+    return function(forceCache) {
+      if (cached && !forceCache){
+        return;
+      }
+      console.log('Starting caching for custom contact lists');
+
+      //cache global profile
+      profileService.cacheLists().then(function(profileData){
+        if (profileData && profileData.status && profileData.status === 'ok' && profileData.lists && profileData.lists.length > 0){
+
+          //cache list details for each list in profile
+          angular.forEach(profileData.lists, function(list, index){
+            var terms = {};
+            terms.contactList = true;
+            terms.limit = 30;
+            terms.locationId = 'contacts';
+            terms.skip = 0;
+            terms.status = 1;
+
+            terms.id = list._id;
+
+            //cache each contact in list
+            profileService.cacheLists(terms).then(function(listData){
+              if (listData && listData.status && listData.status === 'ok' && listData.lists.contacts && listData.lists.contacts.length > 0) {
+                angular.forEach(listData.lists.contacts, function(contact, index){
+                  profileService.cacheProfiles({contactId: contact._id});  
+                });
+              }
+            });
+          });
+        }
+       });
+      cached = true;
+      console.log('Finished caching custom contact lists');
+    }
+
+  }
+
+  $rootScope.cacheCustomLists = cacheLists();
+
+  $rootScope.$watch(function(){
+    return Offline.state;
+  }, function(newValue, oldValue){
+    if (newValue === "up" && oldValue === "down"){
+      console.log('Caching custom lists after restoring network');
+      $rootScope.cacheCustomLists(true);
+    }
+  })
+
+});
+
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
 app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", "md5", ContactCtrl]);
 app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", "countries", CreateAccountCtrl]);
-app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location", "profileService", "globalProfileId", "userData", "operations", DashboardCtrl]);
+app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location","$timeout", "profileService", "globalProfileId", "userData", "operations", DashboardCtrl]);
 app.controller("DefaultCtrl", ["$location", "authService", DefaultCtrl]);
 app.controller("404Ctrl", ["$scope", FourZeroFourCtrl]);
 app.controller("NumbersCtrl", ["$scope", NumbersCtrl]);
@@ -471,4 +526,4 @@ if (typeof Array.prototype.reIndexOf === 'undefined') {
   };
 }
 
-}(jQuery, angular, window.contactsId));
+}(jQuery, angular, window.contactsId, window.Offline));

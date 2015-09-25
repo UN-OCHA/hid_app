@@ -1,4 +1,4 @@
-function DashboardCtrl($scope, $route, $filter, $window, $location, profileService, globalProfileId, userData, operations) {
+function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, profileService, globalProfileId, userData, operations) {
   var filter = $filter('filter');
 
   $scope.logoutPath = '/#logout';
@@ -18,6 +18,10 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, profileServi
   $scope.availOperations.sort(function (a, b) {
     return a.name && b.name ? String(a.name).localeCompare(b.name) : false;
   });
+
+  $timeout(function(){
+    $scope.cacheCustomLists();
+  }, 2000);
 
 
   $scope.customContactsPromise = profileService.getLists().then(function(data) {
