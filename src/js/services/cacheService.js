@@ -83,7 +83,7 @@
     }
 
     function checkOnline(response) {
-      if (response && ( !response.data || response.status == 0 ) ){
+      if (response && !response.data && response.status == 0 ){
         Offline.markDown();
         return false;
       }
