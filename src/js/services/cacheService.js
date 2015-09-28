@@ -34,6 +34,7 @@
           return response.data;
         }, function(response){
           checkOnline(response);
+          handleError(response, true);
           return null;
         });
 
@@ -82,20 +83,19 @@
 
     function checkOnline(response) {
       if (response && ( !response.data || response.status == 0 ) ){
-        Offline.markDown();  
+        Offline.markDown(); 
+        return false; 
       }
+      return true;
     }
 
-    function handleError(response) {
+    function handleError(response, passiveMode) {
       // The API response from the server should be returned in a
       // nomralized format. However, if the request was not handled by the
       // server (or what not handles properly - ex. server error), then we
       // may have to normalize it on our end, as best we can.
-      if (!angular.isObject(response.data) || !response.data.message) {
-        if (response.status === 0) {
-          location.replace('#/offline'); //redirect to offline
-        }
-        return ($q.reject("An unknown error occurred."));
+      if (!checkOnline(response) && !passiveMode) {
+        location.replace('#/offline'); //redirect to offline
       }
 
       // If a 403 status code is received from the profile service, then
@@ -106,7 +106,9 @@
         location.reload();
         return $q.defer();
       }
-
+      if (!angular.isObject(response.data) ) {
+        return ($q.reject("An unknown error occured."));
+      }
       // Otherwise, use expected error message.
       return ($q.reject(response.data.message));
     }
