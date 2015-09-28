@@ -33,7 +33,7 @@
 
           return response.data;
         }, function(response){
-          Offline.markDown();
+          checkOnline(response);
           return null;
         });
 
@@ -59,7 +59,7 @@
 
           return response.data;
         }, function(response){
-          Offline.markDown();
+          checkOnline(response);
           
           return localforage.getItem(key).then(function(cacheData){
             if (cacheData != null) {
@@ -78,6 +78,12 @@
         });
 
       return promise;
+    }
+
+    function checkOnline(response) {
+      if (response && ( !response.data || response.status == 0 ) ){
+        Offline.markDown();  
+      }
     }
 
     function handleError(response) {

@@ -80,6 +80,7 @@ function NumbersCtrl($scope) {
         for(i=0;i<json.rows.length;i++)
             country_at[count4++]=json.rows[i].location_country; 
         var unique2= country_at.filter(onlyUnique);
+        unique2=unique2.sort();
         var select = document.getElementById("mySelect");  
         for(i=0;i<unique2.length;i++){  
             select.options[select.options.length] = new Option(unique2[i],i);  
