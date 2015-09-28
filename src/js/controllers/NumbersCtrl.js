@@ -10,7 +10,7 @@ function NumbersCtrl($scope) {
     var unique;
     var m1=0,m2=0,m3=0,m4=0,m5=0,m6=0,m7=0,m8=0,m9=0,m10=0,m11=0,m12=0;
     var m=[0,0,0,0,0,0,0,0,0,0,0,0];
-    var API = "http://fis-ocha.cartodb.com/api/v1/sql?q=SELECT*FROM hid_checkins";
+    var API = "https://fis-ocha.cartodb.com/api/v1/sql?q=SELECT*FROM hid_checkins";
     var country;
     var count2;
     var count3;
@@ -80,6 +80,7 @@ function NumbersCtrl($scope) {
         for(i=0;i<json.rows.length;i++)
             country_at[count4++]=json.rows[i].location_country; 
         var unique2= country_at.filter(onlyUnique);
+        unique2=unique2.sort();
         var select = document.getElementById("mySelect");  
         for(i=0;i<unique2.length;i++){  
             select.options[select.options.length] = new Option(unique2[i],i);  

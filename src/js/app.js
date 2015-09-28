@@ -103,6 +103,7 @@ app.run(function ($rootScope, profileService){
             terms.locationId = 'contacts';
             terms.skip = 0;
             terms.status = 1;
+            terms.sort = 'name';
 
             terms.id = list._id;
 

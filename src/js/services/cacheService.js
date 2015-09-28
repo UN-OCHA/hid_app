@@ -1,7 +1,7 @@
 (function($, angular, contactsId, Offline, localforage) {
   "use strict";
 
-  angular.module("contactsId").service('offlineCache', function ($http, $q){
+  angular.module("contactsId").service('offlineCache', function ($http, $q, ngDialog){
     return {
       getData: getData,
       cacheData: cacheData
@@ -69,7 +69,8 @@
               return cacheData;
             }
             else {
-              location.replace('#/offline'); //redirect to offline
+              handleError(response);
+              // location.replace('#/offline'); //redirect to offline
             }
           }, function(res) {
             handleError(response);
@@ -83,8 +84,8 @@
 
     function checkOnline(response) {
       if (response && ( !response.data || response.status == 0 ) ){
-        Offline.markDown(); 
-        return false; 
+        Offline.markDown();
+        return false;
       }
       return true;
     }
@@ -102,9 +103,12 @@
       // set the user status to logged out and reload the page to trigger the
       // sign in process.
       if (response.status == 403) {
-        authService.logout(true);
-        location.reload();
-        return $q.defer();
+        ngDialog.open({
+          template: '/partials/403.html',
+        }).closePromise.then(function (data) {
+          location.replace('#/dashboard');
+        })
+
       }
       if (!angular.isObject(response.data) ) {
         return ($q.reject("An unknown error occured."));
