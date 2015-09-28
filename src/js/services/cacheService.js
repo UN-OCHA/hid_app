@@ -1,7 +1,7 @@
 (function($, angular, contactsId, Offline, localforage) {
   "use strict";
 
-  angular.module("contactsId").service('offlineCache', function ($http, $q){
+  angular.module("contactsId").service('offlineCache', function ($http, $q, ngDialog){
     return {
       getData: getData,
       cacheData: cacheData
@@ -34,6 +34,7 @@
           return response.data;
         }, function(response){
           checkOnline(response);
+          handleError(response);
           return null;
         });
 
@@ -68,7 +69,8 @@
               return cacheData;
             }
             else {
-              location.replace('#/offline'); //redirect to offline
+              handleError(response);
+              // location.replace('#/offline'); //redirect to offline
             }
           }, function(res) {
             handleError(response);
@@ -82,8 +84,10 @@
 
     function checkOnline(response) {
       if (response && ( !response.data || response.status == 0 ) ){
-        Offline.markDown();  
+        Offline.markDown();
+        return false;
       }
+      return true;
     }
 
     function handleError(response) {
@@ -91,20 +95,24 @@
       // nomralized format. However, if the request was not handled by the
       // server (or what not handles properly - ex. server error), then we
       // may have to normalize it on our end, as best we can.
-      if (!angular.isObject(response.data) || !response.data.message) {
-        if (response.status === 0) {
-          location.replace('#/offline'); //redirect to offline
-        }
-        return ($q.reject("An unknown error occurred."));
+      // if (angular.isObject(response) && !response.data.message) {
+      //   location.replace('#/offline'); //redirect to offline
+      //   // return ($q.reject("An unknown error occurred."));
+      // }
+      if (!checkOnline(response)){
+        location.replace('#/offline'); //redirect to offline
       }
 
       // If a 403 status code is received from the profile service, then
       // set the user status to logged out and reload the page to trigger the
       // sign in process.
       if (response.status == 403) {
-        authService.logout(true);
-        location.reload();
-        return $q.defer();
+        ngDialog.open({
+          template: '/partials/403.html',
+        }).closePromise.then(function (data) {
+          location.replace('#/dashboard');
+        })
+
       }
 
       // Otherwise, use expected error message.
