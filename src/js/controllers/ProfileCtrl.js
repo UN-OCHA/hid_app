@@ -156,7 +156,8 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   // Toggle logic for verified field.
   $scope.setVerified = function() {
     if ((!$scope.verified && $scope.userCanAddVerified) || ($scope.verified && $scope.userCanRemoveVerified)) {
-      $scope.verified = !$scope.verified;
+      var verified = jQuery('input[name="verified"]').is(':checked');
+      $scope.verified = verified;
     }
   };
 
