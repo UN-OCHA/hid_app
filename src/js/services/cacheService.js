@@ -34,7 +34,7 @@
           return response.data;
         }, function(response){
           checkOnline(response);
-          handleError(response);
+          handleError(response, true);
           return null;
         });
 
@@ -90,16 +90,12 @@
       return true;
     }
 
-    function handleError(response) {
+    function handleError(response, passiveMode) {
       // The API response from the server should be returned in a
       // nomralized format. However, if the request was not handled by the
       // server (or what not handles properly - ex. server error), then we
       // may have to normalize it on our end, as best we can.
-      // if (angular.isObject(response) && !response.data.message) {
-      //   location.replace('#/offline'); //redirect to offline
-      //   // return ($q.reject("An unknown error occurred."));
-      // }
-      if (!checkOnline(response)){
+      if (!checkOnline(response) && !passiveMode) {
         location.replace('#/offline'); //redirect to offline
       }
 
@@ -114,7 +110,9 @@
         })
 
       }
-
+      if (!angular.isObject(response.data) ) {
+        return ($q.reject("An unknown error occured."));
+      }
       // Otherwise, use expected error message.
       return ($q.reject(response.data.message));
     }
