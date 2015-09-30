@@ -99,11 +99,11 @@ app.run(function ($rootScope, profileService){
           angular.forEach(profileData.lists, function(list, index){
             var terms = {};
             terms.contactList = true;
-            terms.limit = 30;
+            terms.limit = 30; //api still returns all objects without limit
             terms.locationId = 'contacts';
             terms.skip = 0;
             terms.status = 1;
-            terms.sort = 'name';
+            terms.sort = 'name'; //default sort
 
             terms.id = list._id;
 
