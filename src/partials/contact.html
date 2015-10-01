@@ -15,7 +15,8 @@
         <div class="profile-image hidden-xs" ng-show="imageUrl || gravatarUrl">
           <div class="profile-image-wrapper">
             <span class="helper"></span>
-            <img class="fade" ng-src="{{imageUrl || gravatarUrl}}">
+            <img ng-if="!isOffline()" class="fade" ng-src="{{imageUrl || gravatarUrl}}">
+            <img ng-if="isOffline()" class="fade" ng-src="images/profile-offline.png">
           </div>
         </div>
         <div class="actions">

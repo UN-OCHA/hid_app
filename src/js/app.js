@@ -126,6 +126,10 @@ app.run(function ($rootScope, profileService){
 
   $rootScope.cacheCustomLists = cacheLists();
 
+  $rootScope.isOffline = function(){
+    return (Offline.state === 'down');
+  }
+
   $rootScope.$watch(function(){
     return Offline.state;
   }, function(newValue, oldValue){
