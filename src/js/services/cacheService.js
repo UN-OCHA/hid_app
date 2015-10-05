@@ -18,27 +18,38 @@
 
     function cacheData(url, options) {
       var key = generateKey(url, options);
-      
       var defer = $q.defer();
-      var promise = $http({
+      
+      return localforage.getItem(key).then(function (cacheData) {
+        if (cacheData != null) {
+          cacheData = JSON.parse(cacheData);
+          var current = Date.now();
+          // Avoid reasking the server for fresh items during at least 1 hour
+          if (cacheData.time && current - cacheData.time < 3600 * 1000) {
+            return cacheData.data;
+          }
+        }
+        var promise = $http({
           method: "get",
           url: url,
           params: options
         })
         .then(function(response){ //handleSuccess
           defer.resolve(response.data);
-
           //TODO catch exceptions
-          localforage.setItem(key,JSON.stringify(response.data));
-
+          var cacheItem = {
+            'time': Date.now(),
+            'data': response.data
+          };
+          localforage.setItem(key,JSON.stringify(cacheItem));
           return response.data;
         }, function(response){
           checkOnline(response);
           handleError(response, true);
           return null;
         });
-
-      return promise;
+        return promise;
+      });
     }
 
 
@@ -56,7 +67,11 @@
           Offline.markUp();
 
           //TODO catch exceptions
-          localforage.setItem(key,JSON.stringify(response.data));
+          var cacheItem = {
+            'time': Date.now(),
+            'data': response.data
+          };
+          localforage.setItem(key,JSON.stringify(cacheItem));
 
           return response.data;
         }, function(response){
@@ -66,7 +81,7 @@
             if (cacheData != null) {
               cacheData = JSON.parse(cacheData);
               defer.resolve(cacheData);
-              return cacheData;
+              return cacheData.data ? cacheData.data : cacheData;
             }
             else {
               handleError(response);
