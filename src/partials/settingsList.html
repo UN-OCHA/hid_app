@@ -32,6 +32,24 @@
               <input type="text" name="url2" value="{{path}}" size="75" disabled ng-show="list.privacy == 'verified'" />
             </label>
           </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="privacy" value="some" ng-model="list.privacy" /> Only certain people can view<br />
+              <ui-select
+                  name="readers"
+                  class="form-control form-control-light"
+                  ng-model="list.readers"
+                  theme="bootstrap"
+                  search-enabled="false">
+                    <ui-select-match allow-clear placeholder="{{'Enter the names'|translate}}">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices ng-class="{'not-empty': list.readers.length}" repeat="region.name as region in regions | orderBy:'name'">
+                      <div ng-bind-html="region.name"></div>
+                    </ui-select-choices>
+                </ui-select>
+
+              <input type="text" name="readers" ng-model="list.readers" ng-show="list.privacy == 'some'" />
+            </label>
+          </div>
         </div>
       </form>
     </div>
