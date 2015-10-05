@@ -35,20 +35,35 @@
           <div class="radio">
             <label>
               <input type="radio" name="privacy" value="some" ng-model="list.privacy" /> Only certain people can view<br />
-              <ui-select
+            </label>
+              <!--<ui-select
                   name="readers"
-                  class="form-control form-control-light"
+                  class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
                   ng-model="list.readers"
                   theme="bootstrap"
-                  search-enabled="false">
+                  on-select="refreshReaders()"
+                  reset-search-input="true">
                     <ui-select-match allow-clear placeholder="{{'Enter the names'|translate}}">{{$select.selected.name}}</ui-select-match>
-                    <ui-select-choices ng-class="{'not-empty': list.readers.length}" repeat="region.name as region in regions | orderBy:'name'">
-                      <div ng-bind-html="region.name"></div>
+                    <ui-select-choices ng-class="{'not-empty': list.readers.length}" repeat="org in organizations | orderBy:'name'" refresh="refreshReaders($select, 2)">
+                      <div ng-class="{default: !organizations.name.length}"  ng-bind-html="org.name"></div>
+                    </ui-select-choices>
+                </ui-select>-->
+                <ui-select
+                  name="readers"
+                  class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
+                  ng-model="list.readers"
+                  ng-show="list.privacy == 'some'"
+                  theme="bootstrap"
+                  reset-search-input="true">
+                    <ui-select-match allow-clear placeholder="{{'Please search for HID users'|translate}}">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices
+                      ng-class="{'not-empty': list.readers.length}"
+                      repeat="org in organizations | orderBy:'name'"
+                      refresh="refreshReaders($select, 2)"
+                      ui-disable-choice="org.disable">
+                      <div ng-class="{default: !organizations.name.length}" ng-bind-html="org.alt || (org.name | highlight: $select.search) "></div>
                     </ui-select-choices>
                 </ui-select>
-
-              <input type="text" name="readers" ng-model="list.readers" ng-show="list.privacy == 'some'" />
-            </label>
           </div>
         </div>
       </form>

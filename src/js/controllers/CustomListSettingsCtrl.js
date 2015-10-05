@@ -1,10 +1,11 @@
-function CustomListSettingsCtrl($scope, $route, $location, profileService, list, ngDialog) {
+function CustomListSettingsCtrl($scope, $route, $location, $http, profileService, list, gettextCatalog, ngDialog) {
   $scope.list = list;
   if (!list.privacy) {
     $scope.list.privacy = 'all';
   }
   $scope.contactsCount = list.contacts.length;
   $scope.path = contactsId.appBaseUrl + '/#/list/contacts?id=' + list._id;
+  $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
 
   $scope.refreshReaders = function(select, lengthReq) {
     var helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
