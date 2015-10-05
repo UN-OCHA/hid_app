@@ -81,7 +81,7 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
   });
 });
 
-app.run(function ($rootScope, profileService){
+app.run(function ($rootScope, $timeout, profileService){
   
   function cacheLists() {
     var cached = false;
@@ -111,7 +111,9 @@ app.run(function ($rootScope, profileService){
             profileService.cacheLists(terms).then(function(listData){
               if (listData && listData.status && listData.status === 'ok' && listData.lists.contacts && listData.lists.contacts.length > 0) {
                 angular.forEach(listData.lists.contacts, function(contact, index){
-                  profileService.cacheProfiles({contactId: contact._id});  
+                  $timeout(function(){
+                    profileService.cacheProfiles({contactId: contact._id});
+                  },200);
                 });
               }
             });
@@ -119,7 +121,7 @@ app.run(function ($rootScope, profileService){
         }
        });
       cached = true;
-      console.log('Finished caching custom contact lists');
+      console.log('Finished making requests for custom contact lists');
     }
 
   }
