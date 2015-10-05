@@ -83,11 +83,8 @@
     }
 
     function checkOnline(response) {
-      if (response && !response.data && (response.status == 0 || response.status == -1) ){
-        Offline.markDown();
-        return false;
-      }
-      return true;
+      Offline.check();
+      return Offline.status;
     }
 
     function handleError(response, passiveMode) {
