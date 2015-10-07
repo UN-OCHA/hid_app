@@ -34,7 +34,7 @@
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="privacy" value="some" ng-model="list.privacy" /> Only certain people can view<br />
+              <input type="radio" name="privacy" value="some" ng-model="list.privacy" /> Only specified users of Humanitarian ID can view<br />
             </label>
             <div class="reveal btn-reveal" ng-show="list.privacy == 'some'" ng-repeat="reader in list.readers track by $index">
               <ui-select
@@ -43,7 +43,7 @@
                 ng-model="list.readers[$index]"
                 theme="bootstrap"
                 reset-search-input="true">
-                  <ui-select-match allow-clear placeholder="{{'Please search for HID users'|translate}}">{{$select.selected.userid}}</ui-select-match>
+                  <ui-select-match allow-clear placeholder="{{'Please enter the names of HID users who can view the list'|translate}}">{{$select.selected.userid}}</ui-select-match>
                   <ui-select-choices
                     ng-class="{'not-empty': list.readers.length}"
                     repeat="reader in readers | orderBy:'name'"
