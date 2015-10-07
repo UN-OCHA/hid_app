@@ -32,6 +32,30 @@
               <input type="text" name="url2" value="{{path}}" size="75" disabled ng-show="list.privacy == 'verified'" />
             </label>
           </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="privacy" value="some" ng-model="list.privacy" /> Only specified users of Humanitarian ID can view<br />
+            </label>
+            <div class="reveal btn-reveal" ng-show="list.privacy == 'some'" ng-repeat="reader in list.readers track by $index">
+              <ui-select
+                name="readers[{{$index}}]"
+                class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
+                ng-model="list.readers[$index]"
+                theme="bootstrap"
+                reset-search-input="true">
+                  <ui-select-match allow-clear placeholder="{{'Please enter the names of HID users who can view the list'|translate}}">{{$select.selected.userid}}</ui-select-match>
+                  <ui-select-choices
+                    ng-class="{'not-empty': list.readers.length}"
+                    repeat="reader in readers | orderBy:'name'"
+                    refresh="refreshReaders($select, 2)">
+                    <div ng-class="{default: !readers.name.length}" ng-bind-html="reader.userid || (reader.name | highlight: $select.search)"></div>
+                  </ui-select-choices>
+              </ui-select>
+              <button type="button" ng-click="changeFieldEntries('readers')" ng-class="{'add' : $last && checkForValidEntry('readers', $index)}">
+                <i class="fa" ng-class="styleFieldEntries('readers')"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </form>
     </div>
