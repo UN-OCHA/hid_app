@@ -81,7 +81,7 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
   });
 });
 
-app.run(function ($rootScope, profileService){
+app.run(function ($rootScope, $timeout, profileService){
   
   function cacheLists() {
     var cached = false;
@@ -99,11 +99,11 @@ app.run(function ($rootScope, profileService){
           angular.forEach(profileData.lists, function(list, index){
             var terms = {};
             terms.contactList = true;
-            terms.limit = 30;
+            terms.limit = 30; //api still returns all objects without limit
             terms.locationId = 'contacts';
             terms.skip = 0;
             terms.status = 1;
-            terms.sort = 'name';
+            terms.sort = 'name'; //default sort
 
             terms.id = list._id;
 
@@ -111,7 +111,9 @@ app.run(function ($rootScope, profileService){
             profileService.cacheLists(terms).then(function(listData){
               if (listData && listData.status && listData.status === 'ok' && listData.lists.contacts && listData.lists.contacts.length > 0) {
                 angular.forEach(listData.lists.contacts, function(contact, index){
-                  profileService.cacheProfiles({contactId: contact._id});  
+                  $timeout(function(){
+                    profileService.cacheProfiles({contactId: contact._id});
+                  },200);
                 });
               }
             });
@@ -119,7 +121,7 @@ app.run(function ($rootScope, profileService){
         }
        });
       cached = true;
-      console.log('Finished caching custom contact lists');
+      console.log('Finished making requests for custom contact lists');
     }
 
   }
