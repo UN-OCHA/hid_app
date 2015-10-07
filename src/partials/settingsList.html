@@ -36,34 +36,25 @@
             <label>
               <input type="radio" name="privacy" value="some" ng-model="list.privacy" /> Only certain people can view<br />
             </label>
-              <!--<ui-select
-                  name="readers"
-                  class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
-                  ng-model="list.readers"
-                  theme="bootstrap"
-                  on-select="refreshReaders()"
-                  reset-search-input="true">
-                    <ui-select-match allow-clear placeholder="{{'Enter the names'|translate}}">{{$select.selected.name}}</ui-select-match>
-                    <ui-select-choices ng-class="{'not-empty': list.readers.length}" repeat="org in organizations | orderBy:'name'" refresh="refreshReaders($select, 2)">
-                      <div ng-class="{default: !organizations.name.length}"  ng-bind-html="org.name"></div>
-                    </ui-select-choices>
-                </ui-select>-->
-                <ui-select
-                  name="readers"
-                  class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
-                  ng-model="list.readers"
-                  ng-show="list.privacy == 'some'"
-                  theme="bootstrap"
-                  reset-search-input="true">
-                    <ui-select-match allow-clear placeholder="{{'Please search for HID users'|translate}}">{{$select.selected.name}}</ui-select-match>
-                    <ui-select-choices
-                      ng-class="{'not-empty': list.readers.length}"
-                      repeat="org in organizations | orderBy:'name'"
-                      refresh="refreshReaders($select, 2)"
-                      ui-disable-choice="org.disable">
-                      <div ng-class="{default: !organizations.name.length}" ng-bind-html="org.alt || (org.name | highlight: $select.search) "></div>
-                    </ui-select-choices>
-                </ui-select>
+            <div class="reveal btn-reveal" ng-show="list.privacy == 'some'" ng-repeat="reader in list.readers track by $index">
+              <ui-select
+                name="readers[{{$index}}]"
+                class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
+                ng-model="list.readers[$index]"
+                theme="bootstrap"
+                reset-search-input="true">
+                  <ui-select-match allow-clear placeholder="{{'Please search for HID users'|translate}}">{{$select.selected.userid}}</ui-select-match>
+                  <ui-select-choices
+                    ng-class="{'not-empty': list.readers.length}"
+                    repeat="reader in readers | orderBy:'name'"
+                    refresh="refreshReaders($select, 2)">
+                    <div ng-class="{default: !readers.name.length}" ng-bind-html="reader.userid || (reader.name | highlight: $select.search)"></div>
+                  </ui-select-choices>
+              </ui-select>
+              <button type="button" ng-click="changeFieldEntries('readers')" ng-class="{'add' : $last && checkForValidEntry('readers', $index)}">
+                <i class="fa" ng-class="styleFieldEntries('readers')"></i>
+              </button>
+            </div>
           </div>
         </div>
       </form>
