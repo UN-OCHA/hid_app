@@ -111,7 +111,7 @@
           template: '/partials/403.html',
         }).closePromise.then(function (data) {
           location.replace('#/dashboard');
-        })
+        });
 
       }
 
