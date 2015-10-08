@@ -119,7 +119,7 @@
           template: '/partials/403.html',
         }).closePromise.then(function (data) {
           location.replace('#/dashboard');
-        })
+        });
 
       }
       if (!angular.isObject(response.data) ) {
