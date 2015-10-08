@@ -1,31 +1,113 @@
-.index {
-  margin-bottom: 0;
-  #contactsid-app-view {
-    margin: -20px auto 0;
-    padding: 0;
-    width: 100%;
-    background: #55b1c8;
-    background: -moz-linear-gradient(top, #55b1c8 0%, #45a3bd 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#55b1c8), color-stop(100%,#45a3bd));
-    background: -webkit-linear-gradient(top, #55b1c8 0%,#45a3bd 100%);
-    background: -o-linear-gradient(top, #55b1c8 0%,#45a3bd 100%);
-    background: -ms-linear-gradient(top, #55b1c8 0%,#45a3bd 100%);
-    background: linear-gradient(to bottom, #55b1c8 0%,#45a3bd 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#55b1c8', endColorstr='#45a3bd',GradientType=0 );
+
+  .container {
+  width:100% !important;
+  height:100% !important;
   }
-  .logo-bar {
-    display: none;
+
+  body
+  {
+    background: url(/images/background.png) no-repeat center center fixed !important; 
+      -webkit-background-size: cover !important;
+      -moz-background-size: cover !important;
+      -o-background-size: cover !important;
+      background-size: cover !important;
+      font-size: 12px !important;
+      line-height: 3.42857 !important;
   }
-  .utility {
-    display: block !important;
-    height: 130px;
-    bottom: -130px;
-    @media(min-width: 768px) {
-      height: 59px;
-      bottom: auto;
+  .offline-ui {display:none !important;}
+  .header{ display:none !important;}
+  .atlwdg-trigger { display:none !important;}
+  .navbar
+  {
+    border-top: 3px solid #54889A !important;
+  }
+  .btn-primary {
+    background-color: #fff !important;
+    color: #54B1C8 !important;
+  }
+  .btn.btn-block span.fa {
+      background-color: #54B1C8 !important;
+      color: #fff;
+  }
+  .contactsid-app-view
+  {display:none !important;}
+
+
+  @media (max-width: 320px) {
+    #logo
+    {
+    width:100%; height:100%;
+    margin-bottom: 0% !important;
+    margin-top: -7% !important;
     }
   }
+
+  @media (max-width: 1600px) {
+    .container.login {
+      background: #79CFDF;
+      border-radius: 15px;
+      box-shadow: 0 0 15px #333;
+      -moz-box-shadow: 0 0 15px #333;
+      padding: 30px;
+      max-width:500px;
+      margin-top:-10%;
+    }
+    #logo
+    {
+    width:100%; height:100%;
+    margin-top:10%;
+    margin-bottom: 10%;
+    }
+  }
+  @media (min-width: 1600px) {
+    .container.login {
+      background: #79CFDF;
+      border-radius: 15px;
+      box-shadow: 0 0 15px #333;
+      -moz-box-shadow: 0 0 15px #333;
+      padding: 30px;
+      max-width:600px;
+      margin-top:-10%;
+      margin-left:20%;
+      padding-bottom:10px !important;
+
+    }
+
+    #logo
+    {
+    width:120%; height:120%;
+    margin-top:10%;
+    margin-bottom: 10%;
+    }
+  }
+  .navbar-inverse
+  {
+    background-color: #2B5D82; 
+    color: none !important;
+  }
+  .index #contactsid-app-view
+  {
+    background: none !important;
+    margin: 10% 0 auto;
+  }
+  @media (min-width: 500px) {
+  #video
+  {
+    width:100%; height:240px;
+  }
 }
+@media (max-width: 767px) {
+.navbar-collapse .nav > .divider-vertical {
+    display: none;
+  }
+}
+@media (max-width: 500px) {
+  #video
+  {
+  width:100%; height:100%;
+  }
+}
+
 
 .homepage{
   height: 100vh;
@@ -99,3 +181,4 @@
     }
   }
 }
+
