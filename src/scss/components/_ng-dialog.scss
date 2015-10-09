@@ -9,3 +9,8 @@ body .ngdialog.ngdialog-theme-default .ngdialog-content {
     border: 1px solid $neutral-color-3;
   }
 }
+
+// Custom contact list modal
+#contact-modal ul.list-group a {
+  cursor: pointer;
+}
