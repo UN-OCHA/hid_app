@@ -99,7 +99,7 @@
     </div>
 
     <div class="panel panel-danger" ng-if="hid_access == 'closed' && !userData.profile.verified">
-      <div class="panel-heading"><em translate>{{locationText()}} has been set as a private contact list by our field-level administrators. This setting is used in situations where those in-countries responders believe that their information should not be easily available due to security concerns. In this case, only "verified" Humanitarian ID users can access the contact list. For information about "verified" users, please see our <a href="http://humanitarian.id/faqs" target="_blank">FAQs</a>.</em></div>
+      <div class="panel-heading"><em translate>{{locationText()}} has been set as a private contact list by our field-level administrators. Only "verified" Humanitarian ID users can access the contact list. For information about "verified" users, please see our <a href="http://humanitarian.id/faqs" target="_blank">FAQs</a>.</em></div>
     </div>
 
     <div class="contact-loader" ng-class="{'list-complete': listComplete || !contacts.length}" in-view="loadMoreContacts($inview, $inviewpart)" in-view-options="{debounce: 1000}" cg-busy="{promise:contactsPromise, message:'', backdrop:false, templateUrl:spinTpl, minDuration:1400, wrapperClass:'list-spinner'}"></div>
