@@ -99,7 +99,7 @@
 
     function checkOnline(response) {
       Offline.check();
-      return Offline.status;
+      return (Offline.state == "up");
     }
 
     function handleError(response, passiveMode) {
