@@ -67,7 +67,7 @@
           </h4>
           <div class="btn-group">
             <a class="btn btn-primary" role="button" ng-if="userData.profile.userid != list.userid" ng-click="unfollowContactList(list, index)">Unfollow List</a>
-            <a href="#/settings/list/{{list._id}}" class="btn btn-primary" role="button" ng-if="userData.profile.userid == list.userid">List Settings</a>
+            <a ng-class="{'disabled' : isOffline()}" href="#/settings/list/{{list._id}}" class="btn btn-primary" role="button" ng-if="userData.profile.userid == list.userid">List Settings</a>
           </div>
         </li>
         <li class="profile-item list-group-item clearfix">
@@ -126,7 +126,7 @@
         <a ng-class="{'disabled' : isOffline()}" class="btn btn-primary btn-lg btn-block" href="#/checkin" ng-show="globalProfileId.length">
           <span class="fa fa-angle-right"></span> <span translate>Check-in</span>
         </a>
-        <a class="btn btn-primary btn-lg btn-block" href="#/createaccount" ng-show="userCanCreateAccount">
+        <a ng-class="{'disabled' : isOffline()}" class="btn btn-primary btn-lg btn-block" href="#/createaccount" ng-show="userCanCreateAccount">
           <span class="fa fa-angle-right"></span> <span translate>Create a Responder</span>
         </a>
         <a class="btn btn-primary btn-lg btn-block" ng-show="!globalProfileId.length" href="#/profile/{{globalProfileId}}">
