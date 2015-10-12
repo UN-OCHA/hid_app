@@ -87,22 +87,20 @@
 
         <div class="form-group">
           <label class="control-label-light" for="inviter"> <span translate>Invite From</span></label>
-          <div class="reveal btn-reveal" ng-repeat="inviter in inviters track by $index">
-            <ui-select
-              name="inviter"
-              class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
-              ng-model="profile.inviter"
-              theme="bootstrap"
-              reset-search-input="true">
-              <ui-select-match allow-clear placeholder="{{'Please enter the name of the HID user who the invite should come from'|translate}}">{{$select.selected.userid}}</ui-select-match>
-              <ui-select-choices
-                ng-class="{'not-empty': inviters.length}"
-                repeat="inviter in inviters | orderBy:'name'"
-                refresh="refreshInviters($select, 2)">
-                <div ng-class="{default: !inviters.name.length}" ng-bind-html="inviter.userid || (inviter.name | highlight: $select.search)"></div>
-              </ui-select-choices>
-            </ui-select>
-          </div>
+          <ui-select
+            name="inviter"
+            class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
+            ng-model="profile.inviter"
+            theme="bootstrap"
+            reset-search-input="true">
+            <ui-select-match allow-clear placeholder="{{'Please enter the name of the HID user who the invite should come from'|translate}}">{{$select.selected.userid}}</ui-select-match>
+            <ui-select-choices
+              ng-class="{'not-empty': inviters.length}"
+              repeat="inviter in inviters | orderBy:'name'"
+              refresh="refreshInviters($select, 2)">
+              <div ng-class="{default: !inviters.name.length}" ng-bind-html="inviter.userid || (inviter.name | highlight: $select.search)"></div>
+            </ui-select-choices>
+          </ui-select>
         </div>
 
         <button class="btn btn-default btn-lg btn-block" ng-disabled="createButtonDisabled" type="submit" translate>Create Account</button>
