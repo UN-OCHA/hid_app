@@ -13,6 +13,54 @@ function CreateAccountCtrl($scope, $location, $route, $http, profileService, aut
   $scope.query = $location.search();
   $scope.countries = countries;
 
+  $scope.inviters = [];
+  $scope.inviters.push("");
+
+  $scope.refreshInviters = function(select, lengthReq) {
+    var helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
+        emptyOption = {action:'clear', name:"", alt: gettextCatalog.getString('No results found.'), disable: true};
+
+    // Remove text in parentheses.
+    select.search = select.search.replace(/ *\([^)]*\) */g, "");
+
+    if (select.search.length > (lengthReq || 0)) {
+      select.searching = true;
+
+      $http.get(contactsId.profilesBaseUrl + '/v0/contact/view', {
+        'params': {
+          'access_token': authService.getAccessToken(),
+          'globalContacts': true,
+          'limit': 30,
+          'skip': 0,
+          'sort': 'name',
+          'status': 1,
+          'type': 'global',
+          'text': encodeURIComponent(select.search)
+        }
+        })
+        .then(function(response) {
+          select.searching = false;
+          $scope.inviters = [];
+          angular.forEach(response.data.contacts, function(value, key) {
+            this.push({
+              'name': value.nameGiven + ' ' + value.nameFamily,
+              'userid': value.nameGiven + ' ' + value.nameFamily + ' (' + value._profile.userid + ')',
+              '_id': value._profile._id
+            });
+          }, $scope.inviters);
+
+          if (!$scope.inviters.length) {
+            $scope.inviters.push(emptyOption);
+          }
+        });
+    }
+    else {
+      $scope.inviters = []
+      $scope.inviters.push(helpOption);
+    }
+  };
+
+
   // Setup scope variables from data injected by routeProvider resolve
   $scope.operations = operations;
   var availOperations = angular.copy(operations);
