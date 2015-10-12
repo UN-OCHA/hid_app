@@ -81,6 +81,7 @@ function CreateAccountCtrl($scope, $location, $route, $http, profileService, aut
     profile.status = 1;
     profile.type = 'local';
     profile.isNewContact = true;
+    profile.notify = true;
     profile.adminName = userData.global.nameGiven + " " + userData.global.nameFamily;
     profile.adminEmail = userData.global.email && userData.global.email[0] ? userData.global.email[0].address : "";
 
