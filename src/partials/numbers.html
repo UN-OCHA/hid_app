@@ -3,8 +3,8 @@
 <div class="row">
 <div class="col-md-6">
 	<p class="coun"></p>
-	<select  id="mySelect" class="form-control form-control-light">
-    <option>World Numbers</option>
+	<select  id="mySelect" ng-model="selCountry" class="form-control form-control-light">
+		<option value="World Numbers">World Numbers</option>
 	</select>
 
 	<a class="results4">NUMBER OF CHECKINS</a>
@@ -16,7 +16,12 @@
 </div>	
 <div class="col-md-6">
  <div class="row" style="margin-left:10px; margin-right:0px !important">
-	<h class="header4">TOP 3 RESPONDING COUNTRIES</h>
+	<span ng-if="selCountry == 'World Numbers'">
+		<h class="header4">Countries with most check-ins</h>
+	</span>
+        <span ng-if="selCountry != 'World Numbers'">
+		<h class="header4">Most check-ins coming from</h>
+	</span>
 	<p class="results1"></p>
 	<p class="results2"></p>
 	<p class="results3"></p>
