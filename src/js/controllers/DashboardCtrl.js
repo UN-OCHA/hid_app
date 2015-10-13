@@ -27,6 +27,25 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   $scope.customContactsPromise = profileService.getLists().then(function(data) {
     if (data && data.status && data.status === 'ok') {
       $scope.customContacts = data.lists;
+      if ($scope.customContacts.length > 0) {
+        var del = [];
+        angular.forEach($scope.customContacts, function (value, key) {
+          $scope.customContacts[key].isEditor = false;
+          $scope.customContacts[key].isFollower = false;
+          if (value.editors && value.editors.length) {
+            $scope.customContacts[key].isEditor = value.editors.indexOf($scope.userData.profile._id) == -1 ? false : true;
+          }
+          if (value.users && value.users.length) {
+            $scope.customContacts[key].isFollower = value.users.indexOf($scope.userData.profile.userid) == -1 ? false : true;
+            if (!$scope.customContacts[key].isFollower) {
+              del.push(key);
+            }
+          }
+        });
+        angular.forEach(del, function (value) {
+          $scope.customContacts.splice(value, 1);
+        });
+      }
     }
   });
 
