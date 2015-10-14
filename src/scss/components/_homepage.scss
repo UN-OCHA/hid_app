@@ -1,101 +1,92 @@
-.index {
-  margin-bottom: 0;
-  #contactsid-app-view {
-    margin: -20px auto 0;
-    padding: 0;
-    width: 100%;
-    background: #55b1c8;
-    background: -moz-linear-gradient(top, #55b1c8 0%, #45a3bd 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#55b1c8), color-stop(100%,#45a3bd));
-    background: -webkit-linear-gradient(top, #55b1c8 0%,#45a3bd 100%);
-    background: -o-linear-gradient(top, #55b1c8 0%,#45a3bd 100%);
-    background: -ms-linear-gradient(top, #55b1c8 0%,#45a3bd 100%);
-    background: linear-gradient(to bottom, #55b1c8 0%,#45a3bd 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#55b1c8', endColorstr='#45a3bd',GradientType=0 );
-  }
-  .logo-bar {
-    display: none;
-  }
-  .utility {
-    display: block !important;
-    height: 130px;
-    bottom: -130px;
-    @media(min-width: 768px) {
-      height: 59px;
-      bottom: auto;
-    }
-  }
+.btn-home {
+  background-color: white;
+  color: #54b1c8;
 }
 
-.homepage{
-  height: 100vh;
+.btn.btn-home span.fa {
+  background-color: #54b1c8;
+  color: white;
+}
 
-  color: #cbeef3;
-  font-size: 13px;
-  line-height: 1.5;
-  .homepage-wrapper{
-    padding-top: 150px;
-    @media (min-width: $screen-sm) {
-      padding-top: 100px;
-    }
-    h2 {
-      text-align: center;
-      margin: 0 0 20px;
-    }
-    .info {
-      text-align: right;
+.btn-home:hover {
+  background-color: #54b1c8;
+  color: white;
+}
+
+.btn.btn-home:hover span.fa {
+  background-color: white;
+  color: #54b1c8;
+}
+
+html {
+  height: 100%;
+}
+
+body.index {
+  height: 100%;
+  background: #55b1c8;
+  background: url('/images/background.png') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.index {
+
+  .header,
+  .offline-ui {
+    display: none;
+  }
+
+  #contactsid-app-view-wrapper {
+    display: table;
+    width: 100%;
+    height: 100%; /* For at least Firefox */
+    min-height: 100%;
+  }
+
+  #contactsid-app {
+    display: table-cell;
+    vertical-align: top;
+  }
+
+  #contactsid-app-view {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  #logo {
+    width: 100%; /* Firefox fix */
+  }
+
+  .container .login {
+    background: #79CFDF;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #333;
+    -moz-box-shadow: 0 0 15px #333;
+    padding: 30px;
+  }
+
+  #video {
+    width: 100%;
+    height: 240px;
+  }
+
+  footer .navbar {
+    background-color: #2B5D82;
+    border-top: 3px solid #54889A;
+ }
+
+  footer .navbar-inverse .navbar-nav > li > a {
+    color: #54b1c8;
+  }
+
+  @media (min-width: 768px) {
+
+    #contactsid-app {
+      vertical-align: middle;
     }
 
-    .info:after {
-      content: "";
-      display: table;
-    }
-    .btn {
-      position: relative;
-      text-transform: uppercase;
-      font-size: 12px;
-      background: white;
-      margin-bottom: 15px;
-      padding: 9px 12px;
-      border: none;
-      color: #51adc6;
-      @include border-radius($border-radius-base);
-    }
-    .btn:hover,
-    .btn:active,
-    #aboutBtn:hover,
-    #aboutBtn:active {
-      background-color: $secondary-color-4;
-    }
-
-    .btn-arrow:hover .fa {
-      background-color: white;
-      color: $secondary-color-4;
-    }
-
-    .btn-arrow .fa {
-      background-color: #51adc6;
-      color: white;
-    }
-
-    .btn-arrow .fa:before {
-      line-height: .9;
-      margin-left: 3px;
-    }
-
-    #aboutBtn {
-      background: #bbb;
-      color: white;
-    }
-
-    #aboutBtn .fa {
-      background-color: white;
-      color: #bbb;
-    }
-
-    .buttons:after {
-      content: "";
-      display: table;
+    #contactsid-app-view {
+      width: 100%;
     }
   }
 }
