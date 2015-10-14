@@ -66,8 +66,8 @@
               <li ng-if="contact.ql.userCanEditProfile">
                 <a role="menuitem" tabindex="-1" href="#/profile/{{contact._id}}" translate>Edit</a>
               </li>
-              <li ng-if="locationId !== 'global' && userData.profile.userid == list.userid && list._id">
-                <a role="menuitem" tabindex="-1" ng-click="removeContact(contact)" ng-if="userData.profile.userid == list.userid && list._id" translate>Remove from list</a>
+              <li ng-if="locationId !== 'global' && (userData.profile.userid == list.userid || isEditor) && list._id">
+                <a role="menuitem" tabindex="-1" ng-click="removeContact(contact)" ng-if="(userData.profile.userid == list.userid || isEditor) && list._id" translate>Remove from list</a>
               </li>
               <li ng-class="{'disabled':contact.ql.contactListState === 'inProgress'}">
                 <a role="menuitem" tabindex="-1" ng-click="addContact(contact)" translate>Add to list</a>
