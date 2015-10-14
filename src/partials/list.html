@@ -50,8 +50,8 @@
           <div class="dropdown" ng-class="{'ql-open': qlOpen === $index}">
             <button class="dropdown-toggle" data-toggle="dropdown" type="button" ng-click="qlClick()"><span class="quick-link-dots"></span></button>
             <ul class="dropdown-menu dropdown-menu-right" role="menu">
-              <li ng-if="locationId !== 'global' && userData.profile.userid == list.userid && list._id">
-                <a role="menuitem" tabindex="-1" ng-click="removeContact(contact)" ng-if="userData.profile.userid == list.userid && list._id" translate>Remove from list</a>
+              <li ng-if="locationId !== 'global' && (userData.profile.userid == list.userid || isEditor) && list._id">
+                <a role="menuitem" tabindex="-1" ng-click="removeContact(contact)" ng-if="(userData.profile.userid == list.userid || isEditor) && list._id" translate>Remove from list</a>
               </li>
               <li>
                 <a role="menuitem" tabindex="-1" ng-click="addContact(contact)" translate>Add to list</a>
