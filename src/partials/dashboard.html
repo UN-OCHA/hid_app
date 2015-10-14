@@ -66,8 +66,8 @@
             </a>
           </h4>
           <div class="btn-group">
-            <a class="btn btn-primary" role="button" ng-if="userData.profile.userid != list.userid && list.isFollower" ng-click="unfollowContactList(list, index)">Unfollow List</a>
-            <a ng-class="{'disabled' : isOffline()}" href="#/settings/list/{{list._id}}" class="btn btn-primary" role="button" ng-if="userData.profile.userid == list.userid || list.isEditor">List Settings</a>
+            <a ng-class="{'disabled' : isOffline()}" class="btn btn-primary" role="button" ng-if="userData.profile.userid != list.userid && list.isFollower" ng-click="unfollowContactList(list, index)">Unfollow List</a>
+            <a ng-class="{'disabled' : isOffline()}" href="#/settings/list/{{list._id}}" class="btn btn-primary" role="button" ng-if="userData.profile.userid == list.userid || list.isEditor">List Settings</a>
           </div>
         </li>
         <li class="profile-item list-group-item clearfix">
