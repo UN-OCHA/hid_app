@@ -498,7 +498,21 @@ app.config(function($routeProvider, $locationProvider) {
       },
       routeAccess : function() {
         return function(locals) {
-          return locals.userData.profile.userid === locals.list.userid;
+          var checkEditor = [];
+          // Make sure user is not an editor of a list
+          if (locals.list.editors && locals.list.editors.length) {
+            checkEditor = locals.list.editors.filter(function (value) {
+              if (value._id == locals.userData.profile._id) {
+                return value;
+              }
+            });
+          }
+          if (locals.userData.profile.userid === locals.list.userid || checkEditor.length) {
+            return true;
+          }
+          else {
+            return false;
+          }
         };
       }
     }

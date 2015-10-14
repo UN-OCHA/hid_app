@@ -46,8 +46,8 @@
                   <ui-select-match allow-clear placeholder="{{'Please enter the names of HID users who can view the list'|translate}}">{{$select.selected.userid}}</ui-select-match>
                   <ui-select-choices
                     ng-class="{'not-empty': list.readers.length}"
-                    repeat="reader in readers | orderBy:'name'"
-                    refresh="refreshReaders($select, 2)">
+                    repeat="reader in users | orderBy:'name'"
+                    refresh="refreshUsers($select, 2)">
                     <div ng-class="{default: !readers.name.length}" ng-bind-html="reader.userid || (reader.name | highlight: $select.search)"></div>
                   </ui-select-choices>
               </ui-select>
@@ -55,6 +55,28 @@
                 <i class="fa" ng-class="styleFieldEntries('readers')"></i>
               </button>
             </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <h2 translate>Editing Rights</h2>
+          <div class="reveal btn-reveal" ng-repeat="editor in list.editors track by $index">
+            <ui-select
+              name="editors[{{$index}}]"
+              class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
+              ng-model="list.editors[$index]"
+              theme="bootstrap"
+              reset-search-input="true">
+                <ui-select-match allow-clear placeholder="{{'Please enter the names of HID users who can edit the list'|translate}}">{{$select.selected.userid}}</ui-select-match>
+                <ui-select-choices
+                  ng-class="{'not-empty': list.editors.length}"
+                  repeat="editor in users | orderBy:'name'"
+                  refresh="refreshUsers($select, 2)">
+                  <div ng-class="{default: !editors.name.length}" ng-bind-html="editor.userid || (editor.name | highlight: $select.search)"></div>
+                </ui-select-choices>
+            </ui-select>
+            <button type="button" ng-click="changeFieldEntries('editors')" ng-class="{'add' : $last && checkForValidEntry('editors', $index)}">
+              <i class="fa" ng-class="styleFieldEntries('editors')"></i>
+            </button>
           </div>
         </div>
       </form>

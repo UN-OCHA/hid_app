@@ -7,8 +7,9 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
   $scope.path = contactsId.appBaseUrl + '/#/list/contacts?id=' + list._id;
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.list.readers.push("");
+  $scope.list.editors.push("");
 
-  $scope.refreshReaders = function(select, lengthReq) {
+  $scope.refreshUsers = function(select, lengthReq) {
     var helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
         emptyOption = {action:'clear', name:"", alt: gettextCatalog.getString('No results found.'), disable: true};
 
@@ -32,23 +33,23 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
         })
         .then(function(response) {
           select.searching = false;
-          $scope.readers = [];
+          $scope.users = [];
           angular.forEach(response.data.contacts, function(value, key) {
             this.push({
               'name': value.nameGiven + ' ' + value.nameFamily,
               'userid': value.nameGiven + ' ' + value.nameFamily + ' (' + value._profile.userid + ')',
               '_id': value._profile._id
             });
-          }, $scope.readers);
+          }, $scope.users);
 
-          if (!$scope.readers.length) {
-            $scope.readers.push(emptyOption);
+          if (!$scope.users.length) {
+            $scope.users.push(emptyOption);
           }
         });
     }
     else {
-      $scope.readers = []
-      $scope.readers.push(helpOption);
+      $scope.users = []
+      $scope.users.push(helpOption);
     }
   };
 
@@ -64,7 +65,7 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
     var validEntry = $scope.checkForValidEntry(field, this.$index);
     if (this.$last && validEntry) {
       // Add new field.
-      $scope.list.readers.push("");
+      $scope.list[field].push("");
     }
     else if(this.$last){
       // Focus on field.
@@ -72,7 +73,7 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
     }
     else {
       // Remove new field.
-      $scope.list.readers.splice(this.$index, 1);
+      $scope.list[field].splice(this.$index, 1);
     }
   }
 
@@ -90,7 +91,7 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
 
   $scope.saveList = function() {
     // Replace contacts with id instead of object.
-    var contacts = [], readers = [];
+    var contacts = [], readers = [], editors = [];
     angular.forEach($scope.list.contacts, function(contact, key) {
       this.push(contact._id);
     }, contacts);
@@ -101,6 +102,12 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
       this.push(reader._id);
     }, readers);
     $scope.list.readers = readers;
+
+    // Replace editors with id instead of object.
+    angular.forEach($scope.list.editors, function(editor, key) {
+      this.push(editor._id);
+    }, editors);
+    $scope.list.editors = editors;
 
     profileService.saveList($scope.list).then(function(data) {
       if (data && data.status && data.status === 'ok') {
