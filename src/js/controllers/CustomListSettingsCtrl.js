@@ -93,19 +93,25 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
     // Replace contacts with id instead of object.
     var contacts = [], readers = [], editors = [];
     angular.forEach($scope.list.contacts, function(contact, key) {
-      this.push(contact._id);
+      if (contact && contact._id) {
+        this.push(contact._id);
+      }
     }, contacts);
     $scope.list.contacts = contacts;
 
     // Replace readers with id instead of object.
     angular.forEach($scope.list.readers, function(reader, key) {
-      this.push(reader._id);
+      if (reader && reader._id) {
+        this.push(reader._id);
+      }
     }, readers);
     $scope.list.readers = readers;
 
     // Replace editors with id instead of object.
     angular.forEach($scope.list.editors, function(editor, key) {
-      this.push(editor._id);
+      if (editor && editor._id) {
+        this.push(editor._id);
+      }
     }, editors);
     $scope.list.editors = editors;
 
