@@ -42,8 +42,10 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
             }
           }
         });
-        angular.forEach(del, function (value) {
-          $scope.customContacts.splice(value, 1);
+        $scope.customContacts = $scope.customContacts.filter(function (value, index) {
+          if (del.indexOf(index) == -1) {
+            return value;
+          }
         });
       }
     }
