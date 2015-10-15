@@ -618,7 +618,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
     profileService.saveList(list).then(function(data) {
       if (data && data.status && data.status === 'ok') {
-        console.log('updated');
         $scope.toggleFollowButton = $scope.toggleFollowButton === 'Follow' ? 'Unfollow': 'Follow';
       }
       else {
