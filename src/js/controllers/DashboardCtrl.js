@@ -47,6 +47,15 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
             return value;
           }
         });
+        $scope.customContacts = $scope.customContacts.sort(function (a, b) {
+          var aname = a.name.toUpperCase();
+          var bname = b.name.toUpperCase();
+          if (aname > bname)
+            return 1;
+          if (aname < bname)
+            return -1;
+          return 0;
+        });
       }
     }
   });
