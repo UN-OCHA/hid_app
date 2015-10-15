@@ -4,6 +4,7 @@
   float: left;
   font-family: "entypo";
   font-style: normal;
+  font-weight: bold !important;
 
   &.chevron-thin-right:before {
     text-indent: 2px;
@@ -68,7 +69,7 @@
 //.entypo.book:before{ content:"\1F4D5"; }
 //.entypo.newspaper:before{ content:"\1F4F0"; }
 //.entypo.bag:before{ content:"\1F45C"; }
-//.entypo.airplane:before{ content:"\2708"; }
+.entypo.airplane:before{ content:"\2708"; }
 //.entypo.lifebuoy:before{ content:"\E788"; }
 //.entypo.eye:before{ content:"\E70A"; }
 //.entypo.clock:before{ content:"\1F554"; }
