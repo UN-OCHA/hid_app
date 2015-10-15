@@ -18,9 +18,22 @@
             </a>
           </h4>
           <div class="btn-group">
-            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" ng-click="share('Humanitarian ID','linkedin')" title="Share my profile on Linkedin"><i class="fa fa-linkedin"></i></a>
-            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" ng-click="share('Humanitarian ID','facebook')" title="Share my profile on Facebook"><i class="fa fa-facebook"></i></a>
             <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" href="#/profile/{{profile._id}}" title="{{'Edit my global profile' | translate}}"><i class="fa fa-pencil"></i></a>
+          </div>
+          <div class="quick-link">
+          <div class="uib-dropdown" ng-class="{'ql-open': qlOpen === 0}" uib-dropdown dropdown-append-to-body>
+            <button class="uib-dropdown-toggle" ng-click="qlOpen = 0;" type="button" uib-dropdown-toggle ui-btn-checkbox><span class="quick-link-dots"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
+            <li class="dropdown-header">Sharing</li>
+              <li ng-class="{'disabled' : isOffline()}" >
+                <a role="menuitem" tabindex="-1" ng-class="{'disabled' : isOffline()}" ng-click="share('Humanitarian ID','linkedin')" title="Share my profile on Linkedin"><i class="fa fa-linkedin"></i> LinkedIn</a>
+              </li>
+              <li ng-class="{'disabled' : isOffline()}" >
+                <a role="menuitem" tabindex="-1" ng-class="{'disabled' : isOffline()}" ng-click="share('Humanitarian ID','facebook')" title="Share 
+                my profile on Facebook"><i class="fa fa-facebook"></i> Facebook</a>
+              </li>
+            </ul>
+          </div>
           </div>
         </li>
       </ul>
@@ -43,10 +56,22 @@
               </span>
           </h4>
           <div class="btn-group">
-            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" ng-click="share(profile.location,'linkedin')" title="Share my check-in on Linkedin"><i class="fa fa-linkedin"></i></a>
-            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" ng-click="share(profile.location,'facebook')" title="Share my check-in on Facebook"><i class="fa fa-facebook"></i></a>
             <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" href="#/profile/{{profile._id}}" title="{{'Edit my' | translate}} {{profile.location}} {{'profile' | translate}}"><i class="fa fa-pencil"></i></a>
-            <a ng-class="{'disabled' : isOffline()}" class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="{{'Check-out from' | translate}} {{profile.location}}"><i class="fa fa-times"></i></a>
+            <a ng-class="{'disabled' : isOffline()}" class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="{{'Check-out from' | translate}} {{profile.location}}"><i class="fa fa-plane"></i></a>
+          </div>
+          <div class="quick-link">
+          <div class="uib-dropdown" ng-class="{'ql-open': qlOpen === $index}" uib-dropdown dropdown-append-to-body>
+            <button class="uib-dropdown-toggle" ng-click="qlOpen = $index;" type="button" uib-dropdown-toggle ui-btn-checkbox><span class="quick-link-dots"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
+            <li class="dropdown-header">Sharing</li>
+              <li ng-class="{'disabled' : isOffline()}" >
+                <a role="menuitem" tabindex="-1" ng-class="{'disabled' : isOffline()}" ng-click="share('Humanitarian ID','linkedin')" title="Share my check-in on Linkedin"><i class="fa fa-linkedin"></i> LinkedIn</a>
+              </li>
+              <li ng-class="{'disabled' : isOffline()}" >
+                <a role="menuitem" tabindex="-1" ng-class="{'disabled' : isOffline()}" ng-click="share('Humanitarian ID','facebook')" title="Share my check-in on Facebook"><i class="fa fa-facebook"></i> Facebook</a>
+              </li>
+            </ul>
+          </div>
           </div>
         </li>
         <li class="disaster-item" ng-if="profilesActive.length == 0">
@@ -66,8 +91,8 @@
             </a>
           </h4>
           <div class="btn-group">
-            <a ng-class="{'disabled' : isOffline()}" class="btn btn-primary" role="button" ng-if="userData.profile.userid != list.userid && list.isFollower" ng-click="unfollowContactList(list, index)">Unfollow List</a>
-            <a ng-class="{'disabled' : isOffline()}" href="#/settings/list/{{list._id}}" class="btn btn-primary" role="button" ng-if="userData.profile.userid == list.userid || list.isEditor">List Settings</a>
+            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="userData.profile.userid != list.userid && list.isFollower" ng-click="unfollowContactList(list, index)"><i class="fa fa-times"></i></a>
+            <a ng-class="{'disabled' : isOffline()}" href="#/settings/list/{{list._id}}" class="btn btn-sm" role="button" ng-if="userData.profile.userid == list.userid || list.isEditor"><i class="fa fa-cog"></i></a>
           </div>
         </li>
         <li class="profile-item list-group-item clearfix">
@@ -120,7 +145,7 @@
       <div class="actions">
         <span ng-repeat="profile in userData.contacts" ng-if="profile.type == 'global'">
           <a ng-class="{'disabled' : isOffline()}" class="btn btn-default btn-lg btn-block" href="#/profile/{{profile._id}}">
-            <span class="fa fa-angle-right"></span> <span translate>Edit Global Profile</span>
+            <span class="fa fa-cog"></span> <span translate>Edit Global Profile</span>
           </a>
         </span>
         <a ng-class="{'disabled' : isOffline()}" class="btn btn-primary btn-lg btn-block" href="#/checkin" ng-show="globalProfileId.length">

@@ -102,6 +102,8 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
     });
   };
 
+  $scope.qlOpen = -1;
+
   $scope.share = function (checkinName, network){
     var baseLink = "", params={}, size="";
     var title = 'I\'ve just checked into '+checkinName+'!';
