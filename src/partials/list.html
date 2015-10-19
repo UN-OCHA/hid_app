@@ -324,11 +324,11 @@
         </div>
         <div class="divider"></div>
         <div class="form-group">
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportEmail()" value="{{'Copy Email Addresses'|translate}}"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportEmail()" ng-if="isVerified" value="{{'Copy Email Addresses'|translate}}"/>
 
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openPDF()" value="{{'View PDF'|translate}}"/>
 
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" value="{{'Export Results'|translate}}"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" ng-if="isVerified" value="{{'Export Results'|translate}}"/>
 
         </div>
       </form>
