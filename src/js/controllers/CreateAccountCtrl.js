@@ -44,8 +44,8 @@ function CreateAccountCtrl($scope, $location, $route, $http, profileService, aut
           angular.forEach(response.data.contacts, function(value, key) {
             this.push({
               'name': value.nameGiven + ' ' + value.nameFamily,
-              'userid': value.nameGiven + ' ' + value.nameFamily + ' (' + value._profile.userid + ')',
-              '_id': value._profile._id
+              'userid': value._profile.userid,
+              'profileid': value._profile._id
             });
           }, $scope.inviters);
 
