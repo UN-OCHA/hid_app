@@ -119,6 +119,15 @@ label[for=keyContact]{
   }
 }
 
+.back-btn {
+  margin-top: -30px;
+  a {
+    font-size: larger;
+    color: grey !important;
+    text-decoration: none;
+  }
+}
+
 
 @media only print {
   * {

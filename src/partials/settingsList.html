@@ -1,6 +1,12 @@
-<h2 class="heading-custom-contacts-list">
+<div class="back-btn btn">
+  <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span>&nbsp;Back</span></a>
+</div>
+
+
+<div><h2 class="heading-custom-contacts-list" style="float: left;">
   {{::list.name}} <small>(<span translate>Contacts</span> {{contactsCount}})</small>
 </h2>
+</div>
 
 <div ng-show='!isRouteLoading' class="main row page-dashboard" ng-class="{'show-options': sidebarOptions}">
   <div class="main-content col-xs-12 col-sm-8 col-md-9 pull-right-hard" cg-busy="dashboardDataTracker">
