@@ -141,6 +141,15 @@ app.run(function ($rootScope, $timeout, profileService){
     }
   })
 
+  $rootScope.goBack = function(){
+    if (history.length) {
+      history.back();
+    }
+    else {
+      $location.path('/dashboard');
+    }
+  }
+
 });
 
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
