@@ -27,7 +27,7 @@
     </form>
 
     <div class="text-right">
-      <select class="form-control form-elements-sort" name="sort" ng-model="query.sort" ng-change="submitSort()">
+      <select class="form-control form-elements-sort" name="sort" ng-model="query.sort" ng-change="submitSort()" ng-disabled="isOffline()">
         <option value="" selected disabled translate>Sort by</option>
         <option value="name" translate>Name</option>
         <option value="jobtitle" translate>Job Title</option>
@@ -125,6 +125,7 @@
           <label class="control-label element-invisible" for="shortcuts" translate>Frequent Searches</label>
           <ui-select
             ng-model="shortcut"
+            ng-disabled="isOffline()"
             theme="bootstrap"
             class="form-control"
             name="shortcuts"
@@ -147,6 +148,7 @@
           <label class="control-label element-invisible" for="bundle" translate>Group</label>
           <ui-select
             ng-model="displayBundle"
+            ng-disabled="isOffline()"
             theme="bootstrap"
             class="form-control"
             name="bundle"
@@ -163,6 +165,7 @@
           <label class="control-label element-invisible" for="organization" translate>Organization</label>
           <ui-select
             class="form-control {{$select.searching ? 'searching' : ''}}"
+            ng-disabled="isOffline()"
             name="organization"
             ng-model="query['organization.name']"
             theme="bootstrap"
@@ -179,6 +182,7 @@
           <label class="control-label element-invisible" for="orgType" translate>Organization Type</label>
           <ui-select
             ng-model="query['organization.org_type_remote_id']"
+            ng-disabled="isOffline()"
             theme="bootstrap"
             class="form-control"
             name="bootstrap"
@@ -195,6 +199,7 @@
           <label class="control-label element-invisible" for="protectedRole" translate>Role</label>
           <ui-select
             ng-model="query.protectedRoles"
+            ng-disabled="isOffline()"
             theme="bootstrap"
             class="form-control"
             name="bootstrap"
@@ -212,6 +217,7 @@
             <label class="control-label element-invisible" for="country" translate>Country</label>
             <ui-select
               ng-model="query['address.country']"
+              ng-disabled="isOffline()"
               theme="bootstrap"
               class="form-control"
               name="country"
@@ -228,6 +234,7 @@
             <label class="control-label element-invisible" for="region" translate>Region</label>
             <ui-select
               ng-model="query['address.administrative_area']"
+              ng-disabled="isOffline()"
               theme="bootstrap"
               class="form-control"
               name="region"
@@ -248,6 +255,7 @@
             name="office"
             class="form-control"
             ng-model="query['office.name']"
+            ng-disabled="isOffline()"
             theme="bootstrap"
             search-enabled="false"
             on-select="submitSearch()">
@@ -262,6 +270,7 @@
           <label class="control-label element-invisible" for="disaster" translate>Disasters</label>
           <ui-select
             ng-model="query['disasters.remote_id']"
+            ng-disabled="isOffline()"
             theme="bootstrap"
             class="form-control"
             name="disaster"
@@ -294,6 +303,7 @@
           <label class="control-label element-invisible" for="role" translate>Admin Role</label>
           <ui-select
             ng-model="query.role"
+            ng-disabled="isOffline()"
             theme="bootstrap"
             class="form-control"
             name="bootstrap"
