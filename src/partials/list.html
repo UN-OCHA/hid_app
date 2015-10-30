@@ -20,8 +20,8 @@
         <label class="control-label element-invisible" for="text" translate>Search</label>
         <div class="input-groupx">
           <input class="form-control contact-search" type="search" name="text"
-                 placeholder="{{'Search by name, title, or organization'|translate}}" ng-model="query.text"/>
-          <input class="btn btn-lg contact-search-submit" type="submit" ng-click="submitSearch()" value="{{'Search'|translate}}"/>
+                 placeholder="{{'Search by name, title, or organization'|translate}}" ng-model="query.text" ng-disabled="isOffline()"/>
+          <input class="btn btn-lg contact-search-submit" type="submit" ng-click="submitSearch()" ng-disabled="isOffline()" value="{{'Search'|translate}}"/>
         </div>
       </div>
     </form>
@@ -333,15 +333,15 @@
         <div class="divider"></div>
 
         <div class="form-group">
-          <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitSearch()" value="{{'Search'|translate}}"/>
+          <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitSearch()" value="{{'Search'|translate}}" ng-disabled="isOffline()"/>
         </div>
         <div class="divider"></div>
         <div class="form-group">
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportEmail()" ng-if="isVerified" value="{{'Copy Email Addresses'|translate}}"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportEmail()" ng-if="isVerified" value="{{'Copy Email Addresses'|translate}}" ng-disabled="isOffline()"/>
 
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openPDF()" value="{{'View PDF'|translate}}"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openPDF()" value="{{'View PDF'|translate}}" ng-disabled="isOffline()"/>
 
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" ng-if="isVerified" value="{{'Export Results'|translate}}"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" ng-if="isVerified" value="{{'Export Results'|translate}}" ng-disabled="isOffline()"/>
 
         </div>
       </form>
