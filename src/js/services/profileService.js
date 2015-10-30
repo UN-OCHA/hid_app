@@ -202,6 +202,20 @@
 
     // Save a profile (create or update existing).
     function saveList(list) {
+      var mapCallback = function (value) {
+        if (typeof value === 'object' && value._id) {
+          return value._id;
+        }
+        else {
+          return value;
+        }
+      };
+      if (list.readers && list.readers.length) {
+        list.readers = list.readers.map(mapCallback);
+      }
+      if (list.editors && list.editors.length) {
+        list.editors = list.editors.map(mapCallback);
+      }
       var request;
       request = $http({
         method: "post",

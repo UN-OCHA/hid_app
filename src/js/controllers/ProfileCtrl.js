@@ -151,7 +151,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   }
 
   //Set update email flag to true during form load
-  setUpdateEmail();
+  $scope.profile.notify = true;
 
   // Toggle logic for verified field.
   $scope.setVerified = function() {
@@ -709,14 +709,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
   $scope.toggleOrganizationEditor = function () {
     $scope.isOrganizationEditor = !$scope.isOrganizationEditor;
-  }
-
-  $scope.toggleUpdateEmail = function () {
-    $scope.email.send = !$scope.email.send;
-  }
-
-  function setUpdateEmail() {
-    $scope.email.send = true;
   }
 
   // If profile is local, set preferred county code to checkin location.

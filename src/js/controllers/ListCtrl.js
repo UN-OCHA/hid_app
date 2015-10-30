@@ -41,6 +41,8 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.emailExportTpl = contactsId.sourcePath + '/partials/emailExport.html';
   $scope.listComplete = false;
   $scope.contactsCreated = false;
+  $scope.isEditor = false;
+  $scope.isVerified = userData.profile.verified;
 
   $scope.userCanUseAdminFilters = profileService.canUseAdminFilters();
 
@@ -617,7 +619,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
     profileService.saveList(list).then(function(data) {
       if (data && data.status && data.status === 'ok') {
-        console.log('updated');
         $scope.toggleFollowButton = $scope.toggleFollowButton === 'Follow' ? 'Unfollow': 'Follow';
       }
       else {
@@ -714,6 +715,15 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
         $scope.contactsCreated = true;
         $scope.contacts = contacts;
         $scope.contactsCount = contacts.length;
+
+        if ($scope.list.editors && $scope.list.editors.length) {
+          var checkEditor = $scope.list.editors.filter(function (value) {
+            if (value.userid && value.userid == userData.profile.userid) {
+              return value;
+            }
+          });
+          $scope.isEditor = checkEditor.length ? true: false;
+        }
       }
     });
   };

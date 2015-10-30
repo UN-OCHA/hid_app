@@ -20,6 +20,9 @@ function NumbersCtrl($scope) {
     var currtime; 
     var clientsChart;
     var updateTime;
+
+    $scope.selCountry = 'World Numbers';
+
     //3rd party functions
     function onlyUnique(value, index, self) { 
         return self.indexOf(value) === index;
@@ -163,7 +166,7 @@ function NumbersCtrl($scope) {
     //Finding number of check-ins the past 48 hours
     $('.huge').html(count3);
     // Total number of check-ins for world or each country
-    $('.result4').html("per month ("+commaSeparateNumber(count2)+" for "+updateTime.getFullYear()+ ")");
+    //$('.result4').html("per month ("+commaSeparateNumber(count2)+" for "+updateTime.getFullYear()+ ")");
     var monthNames = [
       "January", "February", "March",
       "April", "May", "June", "July",
@@ -174,15 +177,8 @@ function NumbersCtrl($scope) {
     var day = updateTime.getDate();
     var monthIndex = updateTime.getMonth();
     var year = updateTime.getFullYear();
-    var append="";
-    if(day==1)
-        append="st";
-    if(day=="2")
-        append="nd";
-    if(day=="3")
-        append="rd";
-    else append="th";
-    $('.updateTime').html("as of: "+day+append+" "+monthNames[monthIndex]+" "+year);
+    var sel = selected_Country == 'World Numbers' ? 'Humanitarian ID' : selected_Country;
+    $('.updateTime').html("As of " + monthNames[monthIndex] + " " + day + ", " + year + ", " + commaSeparateNumber(count2) + " people have checked into " + sel + " since January 1, " + year);
 
     }   
 }

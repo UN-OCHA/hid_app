@@ -1,6 +1,12 @@
-<h2 class="heading-custom-contacts-list">
+<div class="back-btn btn">
+  <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span>&nbsp;Back</span></a>
+</div>
+
+
+<div><h2 class="heading-custom-contacts-list" style="float: left;">
   {{::list.name}} <small>(<span translate>Contacts</span> {{contactsCount}})</small>
 </h2>
+</div>
 
 <div ng-show='!isRouteLoading' class="main row page-dashboard" ng-class="{'show-options': sidebarOptions}">
   <div class="main-content col-xs-12 col-sm-8 col-md-9 pull-right-hard" cg-busy="dashboardDataTracker">
@@ -15,22 +21,69 @@
         </div>
         <div class="form-group">
           <h2 translate>Privacy</h2>
-          <div class="radio">
+          <div class="radio setting-radio" ng-class="{'setting-radio-selected' : list.privacy == 'me'}">
             <label>
               <input type="radio" name="privacy" value="me" ng-model="list.privacy" /> Only visible to me
             </label>
           </div>
-          <div class="radio">
+          <div class="radio setting-radio" ng-class="{'setting-radio-selected' : list.privacy == 'all'}">
             <label>
               <input type="radio" name="privacy" value="all" ng-model="list.privacy" /> Anyone within Humanitarian ID can view with link<br />
-              <input type="text" name="url" value="{{path}}" size="75" disabled ng-show="list.privacy == 'all'" />
+              <input class= "setting-radio-url" type="text" name="url" value="{{path}}" size="75" disabled ng-show="list.privacy == 'all'" />
             </label>
           </div>
-          <div class="radio">
+          <div class="radio setting-radio" ng-class="{'setting-radio-selected' : list.privacy == 'verified'}">
             <label>
               <input type="radio" name="privacy" value="verified" ng-model="list.privacy" /> Only verified users within Humanitarian ID can view with link<br />
-              <input type="text" name="url2" value="{{path}}" size="75" disabled ng-show="list.privacy == 'verified'" />
+              <input class= "setting-radio-url" type="text" name="url2" value="{{path}}" size="75" disabled ng-show="list.privacy == 'verified'" />
             </label>
+          </div>
+          <div class="radio setting-radio" ng-class="{'setting-radio-selected' : list.privacy == 'some'}">
+            <label>
+              <input type="radio" name="privacy" value="some" ng-model="list.privacy" /> Only specified users of Humanitarian ID can view<br />
+            </label>
+            <div class="reveal btn-reveal" ng-show="list.privacy == 'some'" ng-repeat="reader in list.readers track by $index">
+              <ui-select
+                name="readers[{{$index}}]"
+                class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
+                ng-model="list.readers[$index]"
+                theme="bootstrap"
+                reset-search-input="true">
+                  <ui-select-match allow-clear placeholder="{{'Please enter the names of HID users who can view the list'|translate}}">{{$select.selected.userid}}</ui-select-match>
+                  <ui-select-choices
+                    ng-class="{'not-empty': list.readers.length}"
+                    repeat="reader in users | orderBy:'name'"
+                    refresh="refreshUsers($select, 2)">
+                    <div ng-class="{default: !readers.name.length}" ng-bind-html="reader.userid | highlight: $select.search"></div>
+                  </ui-select-choices>
+              </ui-select>
+              <button type="button" ng-click="changeFieldEntries('readers')" ng-class="{'add' : $last && checkForValidEntry('readers', $index)}">
+                <i class="fa" ng-class="styleFieldEntries('readers')"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <h2 translate>Editing Rights</h2>
+          <p translate>These people will be able to see and edit your list regardless of your privacy settings above</p>
+          <div class="reveal btn-reveal" ng-repeat="editor in list.editors track by $index">
+            <ui-select
+              name="editors[{{$index}}]"
+              class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
+              ng-model="list.editors[$index]"
+              theme="bootstrap"
+              reset-search-input="true">
+                <ui-select-match allow-clear placeholder="{{'Please enter the names of HID users who can edit the list'|translate}}">{{$select.selected.userid}}</ui-select-match>
+                <ui-select-choices
+                  ng-class="{'not-empty': list.editors.length}"
+                  repeat="editor in users | orderBy:'name'"
+                  refresh="refreshUsers($select, 2)">
+                  <div ng-class="{default: !editors.name.length}" ng-bind-html="editor.userid | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+            <button type="button" ng-click="changeFieldEntries('editors')" ng-class="{'add' : $last && checkForValidEntry('editors', $index)}">
+              <i class="fa" ng-class="styleFieldEntries('editors')"></i>
+            </button>
           </div>
         </div>
       </form>

@@ -1,4 +1,6 @@
-function DefaultCtrl($location, authService) {
+function DefaultCtrl($scope, $location, authService) {
+  $scope.isCollapsed = true;
+
   function parseLocation(location) {
     var pairs = location.substring(1).split("&"),
     obj = {},

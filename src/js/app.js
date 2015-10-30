@@ -1,6 +1,6 @@
 (function($, angular, contactsId, Offline) {
 // Initialize ng
-var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-md5']);
+var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-md5', 'ui.bootstrap']);
 
 webshims.setOptions({
    waitReady: false,
@@ -81,7 +81,7 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
   });
 });
 
-app.run(function ($rootScope, profileService){
+app.run(function ($rootScope, $timeout, profileService){
   
   function cacheLists() {
     var cached = false;
@@ -99,11 +99,11 @@ app.run(function ($rootScope, profileService){
           angular.forEach(profileData.lists, function(list, index){
             var terms = {};
             terms.contactList = true;
-            terms.limit = 30;
+            terms.limit = 30; //api still returns all objects without limit
             terms.locationId = 'contacts';
             terms.skip = 0;
             terms.status = 1;
-            terms.sort = 'name';
+            terms.sort = 'name'; //default sort
 
             terms.id = list._id;
 
@@ -111,7 +111,9 @@ app.run(function ($rootScope, profileService){
             profileService.cacheLists(terms).then(function(listData){
               if (listData && listData.status && listData.status === 'ok' && listData.lists.contacts && listData.lists.contacts.length > 0) {
                 angular.forEach(listData.lists.contacts, function(contact, index){
-                  profileService.cacheProfiles({contactId: contact._id});  
+                  $timeout(function(){
+                    profileService.cacheProfiles({contactId: contact._id});
+                  },200);
                 });
               }
             });
@@ -119,7 +121,7 @@ app.run(function ($rootScope, profileService){
         }
        });
       cached = true;
-      console.log('Finished caching custom contact lists');
+      console.log('Finished making requests for custom contact lists');
     }
 
   }
@@ -139,13 +141,22 @@ app.run(function ($rootScope, profileService){
     }
   })
 
+  $rootScope.goBack = function(){
+    if (history.length) {
+      history.back();
+    }
+    else {
+      $location.path('/dashboard');
+    }
+  }
+
 });
 
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
 app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", "md5", ContactCtrl]);
 app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", "countries", CreateAccountCtrl]);
 app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location","$timeout", "profileService", "globalProfileId", "userData", "operations", DashboardCtrl]);
-app.controller("DefaultCtrl", ["$location", "authService", DefaultCtrl]);
+app.controller("DefaultCtrl", ["$scope", "$location", "authService", DefaultCtrl]);
 app.controller("404Ctrl", ["$scope", FourZeroFourCtrl]);
 app.controller("NumbersCtrl", ["$scope", NumbersCtrl]);
 app.controller("HeaderCtrl", ["$scope", "$rootScope", "$location", "profileService", "gettextCatalog", HeaderCtrl]);
@@ -155,7 +166,7 @@ app.controller("LogoutCtrl", ["$scope", "authService", LogoutCtrl]);
 app.controller("ProfileCtrl", ["$scope", "$location", "$route", "$routeParams", "$filter", "$timeout", "$http", "profileService", "authService", "operations", "profileData", "countries", "roles", "protectedRoles", "gettextCatalog", "userData", "md5", ProfileCtrl]);
 app.controller("RegisterCtrl", ["$scope", RegisterCtrl]);
 app.controller("AddToCustomListCtrl", ["$scope", "profileService", AddToCustomListCtrl]);
-app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "profileService", "list", "ngDialog", CustomListSettingsCtrl]);
+app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$http", "authService", "profileService", "list", "gettextCatalog", "ngDialog", CustomListSettingsCtrl]);
 
 
 app.config(function($routeProvider, $locationProvider) {
@@ -496,7 +507,21 @@ app.config(function($routeProvider, $locationProvider) {
       },
       routeAccess : function() {
         return function(locals) {
-          return locals.userData.profile.userid === locals.list.userid;
+          var checkEditor = [];
+          // Make sure user is not an editor of a list
+          if (locals.list.editors && locals.list.editors.length) {
+            checkEditor = locals.list.editors.filter(function (value) {
+              if (value._id == locals.userData.profile._id) {
+                return value;
+              }
+            });
+          }
+          if (locals.userData.profile.userid === locals.list.userid || checkEditor.length) {
+            return true;
+          }
+          else {
+            return false;
+          }
         };
       }
     }

@@ -99,7 +99,7 @@
 
     function checkOnline(response) {
       Offline.check();
-      return Offline.status;
+      return (Offline.state == "up");
     }
 
     function handleError(response, passiveMode) {
@@ -119,7 +119,7 @@
           template: '/partials/403.html',
         }).closePromise.then(function (data) {
           location.replace('#/dashboard');
-        })
+        });
 
       }
       if (!angular.isObject(response.data) ) {

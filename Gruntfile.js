@@ -158,6 +158,7 @@ module.exports = function(grunt) {
           src: [
             'src/libraries/jquery/dist/jquery.min.js',
             'src/libraries/angular/angular.js',
+            'src/libraries/angular-bootstrap/ui-bootstrap.min.js',
             'src/libraries/angular-route/angular-route.js',
             'src/libraries/angular-animate/angular-animate.js',
             'src/libraries/angular-sanitize/angular-sanitize.js',

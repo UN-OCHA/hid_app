@@ -1,0 +1,25 @@
+.setting-radio {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+	background-color: white;
+	font-family: Exo2;
+	border-radius: 8px;
+	border-color: #DEDEDE;
+	border-style: solid;
+	border-width: thin;
+}
+
+.setting-radio-selected {
+	background-color: #BAE4EF;
+	color: #327595;
+	border-color: #90DBEF;
+}
+
+.setting-radio-url {
+	color: rgb(51, 118, 149);
+    font-size: smaller;
+    border-style: groove;
+    border-radius: 5px;
+    background-color: rgb(240, 255, 255);
+}

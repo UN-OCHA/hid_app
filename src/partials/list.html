@@ -1,8 +1,11 @@
+<div class="back-btn btn">
+  <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span>&nbsp;Back</span></a>
+</div>
 <div class="masthead row" ng-show='!isRouteLoading'>
   <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 pull-right-hard">
     <h2 class="heading-contact-list">
       {{locationText()}} <small>(<span translate>Contacts</span> {{queryCount}})</small>
-      <a href="#/settings/list/{{list._id}}" class="btn btn-primary pull-right-hard" ng-if="locationId !== 'global' && userData.profile.userid == list.userid && list._id" role="button">List Settings</a>
+      <a href="#/settings/list/{{list._id}}" class="btn btn-primary pull-right-hard" ng-if="locationId !== 'global' && (userData.profile.userid == list.userid || isEditor) && list._id" role="button">List Settings</a>
       <button ng-click="toggleFollow()" class="btn btn-primary pull-right-hard" ng-if="locationId !== 'global' && userData.profile.userid != list.userid && list._id" >{{toggleFollowButton}}</button>
     </h2>
   </div>
@@ -50,8 +53,8 @@
           <div class="dropdown" ng-class="{'ql-open': qlOpen === $index}">
             <button class="dropdown-toggle" data-toggle="dropdown" type="button" ng-click="qlClick()"><span class="quick-link-dots"></span></button>
             <ul class="dropdown-menu dropdown-menu-right" role="menu">
-              <li ng-if="locationId !== 'global' && userData.profile.userid == list.userid && list._id">
-                <a role="menuitem" tabindex="-1" ng-click="removeContact(contact)" ng-if="userData.profile.userid == list.userid && list._id" translate>Remove from list</a>
+              <li ng-if="locationId !== 'global' && (userData.profile.userid == list.userid || isEditor) && list._id">
+                <a role="menuitem" tabindex="-1" ng-click="removeContact(contact)" ng-if="(userData.profile.userid == list.userid || isEditor) && list._id" translate>Remove from list</a>
               </li>
               <li>
                 <a role="menuitem" tabindex="-1" ng-click="addContact(contact)" translate>Add to list</a>
@@ -66,8 +69,8 @@
               <li ng-if="contact.ql.userCanEditProfile">
                 <a role="menuitem" tabindex="-1" href="#/profile/{{contact._id}}" translate>Edit</a>
               </li>
-              <li ng-if="locationId !== 'global' && userData.profile.userid == list.userid && list._id">
-                <a role="menuitem" tabindex="-1" ng-click="removeContact(contact)" ng-if="userData.profile.userid == list.userid && list._id" translate>Remove from list</a>
+              <li ng-if="locationId !== 'global' && (userData.profile.userid == list.userid || isEditor) && list._id">
+                <a role="menuitem" tabindex="-1" ng-click="removeContact(contact)" ng-if="(userData.profile.userid == list.userid || isEditor) && list._id" translate>Remove from list</a>
               </li>
               <li ng-class="{'disabled':contact.ql.contactListState === 'inProgress'}">
                 <a role="menuitem" tabindex="-1" ng-click="addContact(contact)" translate>Add to list</a>
@@ -99,7 +102,7 @@
     </div>
 
     <div class="panel panel-danger" ng-if="hid_access == 'closed' && !userData.profile.verified">
-      <div class="panel-heading"><em translate>{{locationText()}} has been set as a private contact list by our field-level administrators. This setting is used in situations where those in-countries responders believe that their information should not be easily available due to security concerns. In this case, only "verified" Humanitarian ID users can access the contact list. For information about "verified" users, please see our <a href="http://humanitarian.id/faqs" target="_blank">FAQs</a>.</em></div>
+      <div class="panel-heading"><em translate>{{locationText()}} has been set as a private contact list by our field-level administrators. Only "verified" Humanitarian ID users can access the contact list. For information about "verified" users, please see our <a href="http://humanitarian.id/faqs" target="_blank">FAQs</a>.</em></div>
     </div>
 
     <div class="contact-loader" ng-class="{'list-complete': listComplete || !contacts.length}" in-view="loadMoreContacts($inview, $inviewpart)" in-view-options="{debounce: 1000}" cg-busy="{promise:contactsPromise, message:'', backdrop:false, templateUrl:spinTpl, minDuration:1400, wrapperClass:'list-spinner'}"></div>
@@ -334,11 +337,11 @@
         </div>
         <div class="divider"></div>
         <div class="form-group">
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportEmail()" value="{{'Copy Email Addresses'|translate}}" ng-disabled="isOffline()"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportEmail()" ng-if="isVerified" value="{{'Copy Email Addresses'|translate}}" ng-disabled="isOffline()"/>
 
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openPDF()" value="{{'View PDF'|translate}}" ng-disabled="isOffline()"/>
 
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" value="{{'Export Results'|translate}}" ng-disabled="isOffline()"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" ng-if="isVerified" value="{{'Export Results'|translate}}" ng-disabled="isOffline()"/>
 
         </div>
       </form>

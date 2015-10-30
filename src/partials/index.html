@@ -1,23 +1,43 @@
 <div class="container">
-  <div class="homepage row">
-      <div class="homepage-wrapper col-xs-12 col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3">
-        <div class="masthead">
-          <h2 translate>Humanitarian ID: Responders</h2>
-        </div>
-        <div class="alert-wrapper">
-          <browser-alert></browser-alert>
+    <div class="col-md-6" style="margin-bottom:10%">
+      <img src="/images/logo_hid_welcome.png" class="img-responsive" id="logo">
+    </div>
+    <div class="col-md-6">
+      <div class="login">
+        <div class="row">
+           <iframe id="video" src="https://www.youtube.com/embed/tqBwJld2Sz8" frameborder="0" allowfullscreen></iframe>
         </div>
         <div class="row">
-          <div class="info col-xs-12 col-sm-6 hidden-xs" translate>
-            Manage your details on global and emergency-level humanitarian contact lists. Find and be found by other responders when needed. Check-in. Connect. Respond.
-          </div>
-
-          <div class="actions buttons col-xs-12 col-sm-6">
-            <a class="btn btn-lg btn-primary btn-arrow btn-block" href="/#login"><span class="fa fa-angle-right"></span><span translate>Login</span></a>
-            <a class="btn btn-lg btn-primary btn-arrow btn-block" href="/#register"><span class="fa fa-angle-right"></span><span translate>Register</span></a>
-            <a class="btn btn-lg btn-primary btn-arrow btn-block" href="/#about"><span class="fa fa-angle-right"></span><span translate>About</span></a>
-          </div>
+            <div class="col-md-6" style="margin-top:5%">
+                <a class="btn btn-lg btn-primary btn-home btn-block" href="/#login"><span class="fa fa-angle-right"></span><span translate>Login</span></a>
+            </div>
+            <div class="col-md-6" style="margin-top:5%">
+                <a class="btn btn-lg btn-primary btn-home btn-block" href="/#register"><span class="fa fa-angle-right"></span><span translate>Register</span></a>
+            </div>
         </div>
       </div>
-  </div>
+    </div>
+    <footer>
+        <div class="navbar navbar-inverse navbar-fixed-bottom">
+            <div class="container">
+                <div class="navbar-collapse collapse" uib-collapse="isCollapsed">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="http://www.humanitarian.id/" target="_blank">ABOUT</a></li>
+                        <li><a href="http://www.humanitarian.id/support" target="_blank">SUPPORT</a></li>
+                        <li><a href="http://www.humanitarian.id/blog" target="_blank">BLOG</a></li>
+                        <li><a href="http://www.humanitarian.id/code-of-conduct" target="_blank">CODE OF CONDUCT</a></li>
+                        <li><a href="http://www.humanitarian.id/#contact" target="_blank">CONTACT</a></li>
+                    </ul>
+                </div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    
+                </div>
+            </div>
+        </div>
+    </footer>
 </div>

@@ -1,19 +1,132 @@
-function CustomListSettingsCtrl($scope, $route, $location, profileService, list, ngDialog) {
+function CustomListSettingsCtrl($scope, $route, $location, $http, authService, profileService, list, gettextCatalog, ngDialog) {
   $scope.list = list;
   if (!list.privacy) {
     $scope.list.privacy = 'all';
   }
   $scope.contactsCount = list.contacts.length;
   $scope.path = contactsId.appBaseUrl + '/#/list/contacts?id=' + list._id;
+  $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
+  $scope.list.readers.push("");
+  $scope.list.editors.push("");
+
+  angular.forEach($scope.list.readers, function(reader,key){
+    if (reader && reader.userid) {
+      reader.userid = reader.userid.replace(/(_\d+)$/,'');
+    }
+  });
+  angular.forEach($scope.list.editors, function(editor,key){
+    if (editor && editor.userid) {
+      editor.userid = editor.userid.replace(/(_\d+)$/,'');
+    }
+  });
+
+  $scope.refreshUsers = function(select, lengthReq) {
+    var helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
+        emptyOption = {action:'clear', name:"", alt: gettextCatalog.getString('No results found.'), disable: true};
+
+    // Remove text in parentheses.
+    select.search = select.search.replace(/ *\([^)]*\) */g, "");
+
+    if (select.search.length > (lengthReq || 0)) {
+      select.searching = true;
+
+      $http.get(contactsId.profilesBaseUrl + '/v0/contact/view', {
+        'params': {
+          'access_token': authService.getAccessToken(),
+          'globalContacts': true,
+          'limit': 30,
+          'skip': 0,
+          'sort': 'name',
+          'status': 1,
+          'type': 'global',
+          'text': encodeURIComponent(select.search)
+        }
+        })
+        .then(function(response) {
+          select.searching = false;
+          $scope.users = [];
+          angular.forEach(response.data.contacts, function(value, key) {
+            var email = value._profile.userid.replace(/(_\d+)$/,'');
+            this.push({
+              'name': value.nameGiven + ' ' + value.nameFamily,
+              'userid': value.nameGiven + ' ' + value.nameFamily + ' (' + email + ')',
+              '_id': value._profile._id
+            });
+          }, $scope.users);
+
+          if (!$scope.users.length) {
+            $scope.users.push(emptyOption);
+          }
+        });
+    }
+    else {
+      $scope.users = []
+      $scope.users.push(helpOption);
+    }
+  };
+
+  // Prevents adding of field if when invalid entry.
+  $scope.checkForValidEntry = function(field, index) {
+    return true;
+    /*return ( $scope.profile[field]
+          && $scope.profile[field][index]
+          && $scope.vaildFieldEntry(field, $scope.profile[field][index]));*/
+  }
+
+  $scope.changeFieldEntries = function(field) {
+    var validEntry = $scope.checkForValidEntry(field, this.$index);
+    if (this.$last && validEntry) {
+      // Add new field.
+      $scope.list[field].push("");
+    }
+    else if(this.$last){
+      // Focus on field.
+      this.focus = true;
+    }
+    else {
+      // Remove new field.
+      $scope.list[field].splice(this.$index, 1);
+    }
+  }
+
+  $scope.styleFieldEntries = function(field) {
+    var validEntry = $scope.checkForValidEntry(field, this.$index);
+    if (this.$last && validEntry) {
+      return 'fa-plus';
+    }
+    else {
+      return 'fa-remove';
+    }
+  }
+
+
 
   $scope.saveList = function() {
     // Replace contacts with id instead of object.
-    var contacts = [];
+    var contacts = [], readers = [], editors = [];
     angular.forEach($scope.list.contacts, function(contact, key) {
-      this.push(contact._id);
+      if (contact && contact._id) {
+        this.push(contact._id);
+      }
     }, contacts);
-
     $scope.list.contacts = contacts;
+
+    // Replace readers with id instead of object.
+    angular.forEach($scope.list.readers, function(reader, key) {
+      if (reader && reader._id) {
+        this.push(reader._id);
+      }
+    }, readers);
+    $scope.list.readers = readers;
+
+    // Replace editors with id instead of object.
+    angular.forEach($scope.list.editors, function(editor, key) {
+      if (editor && editor._id) {
+        this.push(editor._id);
+      }
+    }, editors);
+    $scope.list.editors = editors;
+
     profileService.saveList($scope.list).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         $location.path('/list/contacts').search({id: $scope.list._id});

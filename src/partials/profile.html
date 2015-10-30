@@ -1,3 +1,6 @@
+<div class="back-btn btn">
+  <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span>&nbsp;Back</span></a>
+</div>
 <div class="masthead" ng-show="!isRouteLoading">
   <h2 translate>Humanitarian ID</h2>
 </div>
@@ -433,10 +436,10 @@
               <a ng-show="confirmSendEmail" ng-disabled="sendingClaimEmail" class="fade btn btn-warning btn-lg btn-block" ng-click="sendClaimEmail()" translate>Confirm Send Claim Email</a>
             </div>
 
-            <div class="section col-sm-12" ng-show="userCanSendClaimEmail">
+            <div class="section col-sm-12">
               <h4 translate>Notification of Change</h4>
               <div class="checkbox">
-                <label for="updateEmail" ng-click="toggleUpdateEmail()"><input type="checkbox" name="updateEmail" ng-model="email.send" ng-click="toggleUpdateEmail()"/><span translate>Send Profile Update Email to Contact</span></label>
+                <label for="notify"><input type="checkbox" name="notify" ng-model="profile.notify" /><span translate>Send Profile Update Email to Contact</span></label>
               </div>
             </div>
           </div>

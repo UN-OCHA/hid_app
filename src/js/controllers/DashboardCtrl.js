@@ -27,6 +27,36 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   $scope.customContactsPromise = profileService.getLists().then(function(data) {
     if (data && data.status && data.status === 'ok') {
       $scope.customContacts = data.lists;
+      if ($scope.customContacts.length > 0) {
+        var del = [];
+        angular.forEach($scope.customContacts, function (value, key) {
+          $scope.customContacts[key].isEditor = false;
+          $scope.customContacts[key].isFollower = false;
+          if (value.editors && value.editors.length) {
+            $scope.customContacts[key].isEditor = value.editors.indexOf($scope.userData.profile._id) == -1 ? false : true;
+          }
+          if (value.users && value.users.length) {
+            $scope.customContacts[key].isFollower = value.users.indexOf($scope.userData.profile.userid) == -1 ? false : true;
+            if (!$scope.customContacts[key].isFollower) {
+              del.push(key);
+            }
+          }
+        });
+        $scope.customContacts = $scope.customContacts.filter(function (value, index) {
+          if (del.indexOf(index) == -1) {
+            return value;
+          }
+        });
+        $scope.customContacts = $scope.customContacts.sort(function (a, b) {
+          var aname = a.name.toUpperCase();
+          var bname = b.name.toUpperCase();
+          if (aname > bname)
+            return 1;
+          if (aname < bname)
+            return -1;
+          return 0;
+        });
+      }
     }
   });
 
@@ -82,6 +112,8 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
       }
     });
   };
+
+  $scope.qlOpen = -1;
 
   $scope.share = function (checkinName, network){
     var baseLink = "", params={}, size="";
