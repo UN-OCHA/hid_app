@@ -101,7 +101,7 @@
               ng-class="{'not-empty': inviters.length}"
               repeat="inviter in inviters | orderBy:'name'"
               refresh="refreshInviters($select, 2)">
-              <div ng-class="{default: !inviters.name.length}" ng-bind-html="inviter.userid || (inviter.name | highlight: $select.search)"></div>
+              <div ng-class="{default: !inviters.name.length}" ng-bind-html="inviter.display | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
         </div>
