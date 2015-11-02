@@ -1,8 +1,11 @@
-<div class="back-btn btn">
-  <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span>&nbsp;Back</span></a>
+<div class="back-btn back-btn-head back-btn-head-mob btn">
+    <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span></span></a>
 </div>
 <div class="masthead row" ng-show='!isRouteLoading'>
-  <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 pull-right-hard">
+  <div class="col-md-1 back-btn back-btn-float btn">
+    <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span></span></a>
+  </div>
+  <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-2 pull-right-hard">
     <h2 class="heading-contact-list">
       {{locationText()}} <small>(<span translate>Contacts</span> {{queryCount}})</small>
       <a href="#/settings/list/{{list._id}}" class="btn btn-primary pull-right-hard" ng-if="locationId !== 'global' && (userData.profile.userid == list.userid || isEditor) && list._id" role="button">List Settings</a>
