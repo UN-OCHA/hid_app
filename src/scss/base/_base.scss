@@ -120,11 +120,32 @@ label[for=keyContact]{
 }
 
 .back-btn {
-  margin-top: -30px;
+  margin-left: -15px;
   a {
-    font-size: larger;
     color: grey !important;
     text-decoration: none;
+  }
+  span:before {
+    font-family: Arial, sans-serif;
+    content: " BACK"
+  }
+}
+.back-btn-head {
+  margin-top: -25px;
+  margin-left: 0px !important;
+}
+.back-btn-head-mob {
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+.back-btn-float {
+  margin-top: 20px;
+  margin-left: 0px !important;
+  float: left;
+  
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 
