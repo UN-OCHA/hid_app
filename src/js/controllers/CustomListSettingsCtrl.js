@@ -9,6 +9,17 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
   $scope.list.readers.push("");
   $scope.list.editors.push("");
 
+  angular.forEach($scope.list.readers, function(reader,key){
+    if (reader && reader.userid) {
+      reader.userid = reader.userid.replace(/(_\d+)$/,'');
+    }
+  });
+  angular.forEach($scope.list.editors, function(editor,key){
+    if (editor && editor.userid) {
+      editor.userid = editor.userid.replace(/(_\d+)$/,'');
+    }
+  });
+
   $scope.refreshUsers = function(select, lengthReq) {
     var helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
         emptyOption = {action:'clear', name:"", alt: gettextCatalog.getString('No results found.'), disable: true};
@@ -35,9 +46,10 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
           select.searching = false;
           $scope.users = [];
           angular.forEach(response.data.contacts, function(value, key) {
+            var email = value._profile.userid.replace(/(_\d+)$/,'');
             this.push({
               'name': value.nameGiven + ' ' + value.nameFamily,
-              'userid': value.nameGiven + ' ' + value.nameFamily + ' (' + value._profile.userid + ')',
+              'userid': value.nameGiven + ' ' + value.nameFamily + ' (' + email + ')',
               '_id': value._profile._id
             });
           }, $scope.users);

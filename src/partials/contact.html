@@ -1,3 +1,6 @@
+<div class="back-btn back-btn-head back-btn-head-mob btn">
+  <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span></span></a>
+</div>
 <div class="masthead">
   <div class="main row page-contact" ng-show="!isRouteLoading" ng-class="{'show-options': sidebarOptions}">
 
@@ -11,6 +14,9 @@
       </div>
 
       <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
+      <div class="back-btn btn">
+        <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span></span></a>
+      </div>
 
         <div class="profile-image hidden-xs" ng-show="imageUrl || gravatarUrl">
           <div class="profile-image-wrapper">
@@ -20,8 +26,8 @@
           </div>
         </div>
         <div class="actions">
-          <a class="btn btn-warning btn-lg btn-block" href ng-click="back();"><i
-          class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a>
+          <!-- <a class="btn btn-warning btn-lg btn-block" href ng-click="back();"><i -->
+          <!-- class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a> -->
           <a class="btn btn-primary btn-lg btn-block" ng-show="userCanEditProfile" href="#/profile/{{contact._id}}" translate>Edit Profile</a>
           <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="addContact()" ng-bind="contactListText()"></button>
           <a class="btn btn-primary btn-lg btn-block" ng-show="userCanCheckIn" href="#/checkin/{{profile._id}}" translate>Check-in User</a>

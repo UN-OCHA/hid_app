@@ -44,6 +44,7 @@ function CreateAccountCtrl($scope, $location, $route, $http, profileService, aut
           angular.forEach(response.data.contacts, function(value, key) {
             this.push({
               'name': value.nameGiven + ' ' + value.nameFamily,
+              'display': value.nameGiven + ' ' + value.nameFamily + ' (' + value._profile.userid.replace(/(_\d+)$/,'') + ')',
               'userid': value._profile.userid,
               'profileid': value._profile._id
             });

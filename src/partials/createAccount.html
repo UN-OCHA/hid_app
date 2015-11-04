@@ -1,3 +1,6 @@
+<div class="back-btn back-btn-head btn">
+  <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span></span></a>
+</div>
 <div class="masthead" ng-show="!isRouteLoading">
   <h2 translate>Create New Account</h2>
 </div>
@@ -98,7 +101,7 @@
               ng-class="{'not-empty': inviters.length}"
               repeat="inviter in inviters | orderBy:'name'"
               refresh="refreshInviters($select, 2)">
-              <div ng-class="{default: !inviters.name.length}" ng-bind-html="inviter.userid || (inviter.name | highlight: $select.search)"></div>
+              <div ng-class="{default: !inviters.name.length}" ng-bind-html="inviter.display | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
         </div>

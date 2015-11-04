@@ -1,5 +1,11 @@
+<div class="back-btn back-btn-head back-btn-head-mob btn">
+    <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span></span></a>
+</div>
 <div class="masthead row" ng-show='!isRouteLoading'>
-  <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 pull-right-hard">
+  <div class="col-md-1 back-btn back-btn-float btn">
+    <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span></span></a>
+  </div>
+  <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-2 pull-right-hard">
     <h2 class="heading-contact-list">
       {{locationText()}} <small>(<span translate>Contacts</span> {{queryCount}})</small>
       <a href="#/settings/list/{{list._id}}" class="btn btn-primary pull-right-hard" ng-if="locationId !== 'global' && (userData.profile.userid == list.userid || isEditor) && list._id" role="button">List Settings</a>
@@ -17,14 +23,14 @@
         <label class="control-label element-invisible" for="text" translate>Search</label>
         <div class="input-groupx">
           <input class="form-control contact-search" type="search" name="text"
-                 placeholder="{{'Search by name, title, or organization'|translate}}" ng-model="query.text"/>
-          <input class="btn btn-lg contact-search-submit" type="submit" ng-click="submitSearch()" value="{{'Search'|translate}}"/>
+                 placeholder="{{'Search by name, title, or organization'|translate}}" ng-model="query.text" ng-disabled="isOffline()"/>
+          <input class="btn btn-lg contact-search-submit" type="submit" ng-click="submitSearch()" ng-disabled="isOffline()" value="{{'Search'|translate}}"/>
         </div>
       </div>
     </form>
 
     <div class="text-right">
-      <select class="form-control form-elements-sort" name="sort" ng-model="query.sort" ng-change="submitSort()">
+      <select class="form-control form-elements-sort" name="sort" ng-model="query.sort" ng-change="submitSort()" ng-disabled="isOffline()">
         <option value="" selected disabled translate>Sort by</option>
         <option value="name" translate>Name</option>
         <option value="jobtitle" translate>Job Title</option>
@@ -122,6 +128,7 @@
           <label class="control-label element-invisible" for="shortcuts" translate>Frequent Searches</label>
           <ui-select
             ng-model="shortcut"
+            ng-disabled="isOffline()"
             theme="bootstrap"
             class="form-control"
             name="shortcuts"
@@ -144,6 +151,7 @@
           <label class="control-label element-invisible" for="bundle" translate>Group</label>
           <ui-select
             ng-model="displayBundle"
+            ng-disabled="isOffline()"
             theme="bootstrap"
             class="form-control"
             name="bundle"
@@ -160,6 +168,7 @@
           <label class="control-label element-invisible" for="organization" translate>Organization</label>
           <ui-select
             class="form-control {{$select.searching ? 'searching' : ''}}"
+            ng-disabled="isOffline()"
             name="organization"
             ng-model="query['organization.name']"
             theme="bootstrap"
@@ -176,6 +185,7 @@
           <label class="control-label element-invisible" for="orgType" translate>Organization Type</label>
           <ui-select
             ng-model="query['organization.org_type_remote_id']"
+            ng-disabled="isOffline()"
             theme="bootstrap"
             class="form-control"
             name="bootstrap"
@@ -192,6 +202,7 @@
           <label class="control-label element-invisible" for="protectedRole" translate>Role</label>
           <ui-select
             ng-model="query.protectedRoles"
+            ng-disabled="isOffline()"
             theme="bootstrap"
             class="form-control"
             name="bootstrap"
@@ -209,6 +220,7 @@
             <label class="control-label element-invisible" for="country" translate>Country</label>
             <ui-select
               ng-model="query['address.country']"
+              ng-disabled="isOffline()"
               theme="bootstrap"
               class="form-control"
               name="country"
@@ -225,6 +237,7 @@
             <label class="control-label element-invisible" for="region" translate>Region</label>
             <ui-select
               ng-model="query['address.administrative_area']"
+              ng-disabled="isOffline()"
               theme="bootstrap"
               class="form-control"
               name="region"
@@ -245,6 +258,7 @@
             name="office"
             class="form-control"
             ng-model="query['office.name']"
+            ng-disabled="isOffline()"
             theme="bootstrap"
             search-enabled="false"
             on-select="submitSearch()">
@@ -259,6 +273,7 @@
           <label class="control-label element-invisible" for="disaster" translate>Disasters</label>
           <ui-select
             ng-model="query['disasters.remote_id']"
+            ng-disabled="isOffline()"
             theme="bootstrap"
             class="form-control"
             name="disaster"
@@ -291,6 +306,7 @@
           <label class="control-label element-invisible" for="role" translate>Admin Role</label>
           <ui-select
             ng-model="query.role"
+            ng-disabled="isOffline()"
             theme="bootstrap"
             class="form-control"
             name="bootstrap"
@@ -320,15 +336,15 @@
         <div class="divider"></div>
 
         <div class="form-group">
-          <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitSearch()" value="{{'Search'|translate}}"/>
+          <input class="btn btn-primary btn-lg btn-block" type="submit" ng-click="submitSearch()" value="{{'Search'|translate}}" ng-disabled="isOffline()"/>
         </div>
         <div class="divider"></div>
         <div class="form-group">
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportEmail()" ng-if="isVerified" value="{{'Copy Email Addresses'|translate}}"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportEmail()" ng-if="isVerified" value="{{'Copy Email Addresses'|translate}}" ng-disabled="isOffline()"/>
 
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openPDF()" value="{{'View PDF'|translate}}"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openPDF()" value="{{'View PDF'|translate}}" ng-disabled="isOffline()"/>
 
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" ng-if="isVerified" value="{{'Export Results'|translate}}"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" ng-if="isVerified" value="{{'Export Results'|translate}}" ng-disabled="isOffline()"/>
 
         </div>
       </form>

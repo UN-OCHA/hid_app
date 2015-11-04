@@ -72,7 +72,12 @@
             //delete ctrl.$error['international-phone-number'];
             ctrl.$setValidity('international-phone-number', true);
           }
-          return value;
+          if (value.length && value[0].value) {
+            return value[0].value;
+          }
+          else {
+            return value;
+          }
         });
         // element.on('blur keyup change', function(event) {
         //   return scope.$apply(read);
