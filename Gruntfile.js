@@ -260,7 +260,7 @@ module.exports = function(grunt) {
           basePath: 'dist/',
           cache: ['<%= cacheHash["/js/app.min.js"] %>',
                   '<%= cacheHash["/css/app.min.css"] %>',
-                  'https://fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400',
+                  'https://fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic',
                   'https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800',
                   '<%= cacheHash["/favicon-32x32.png"] %>'],
           // network: ['*'],
