@@ -239,6 +239,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   $scope.addContact = function() {
     $scope.contact = $scope.contact;
     $scope.userid = userData.profile.userid;
+    $scope.userData = userData;
 
     ngDialog.open({
       name: 'AddContact',
