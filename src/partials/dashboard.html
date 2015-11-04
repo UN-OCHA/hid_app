@@ -85,13 +85,14 @@
       <h3><span translate>Custom Contacts lists</span> :</h3>
       <ul class="custom-contacts-container list-group">
         <li class="profile-item list-group-item" ng-repeat="(index, list) in customContacts">
+        <button ng-show="list.confirmUnfollow" class="slide btn btn-warning" href ng-click="unfollowContactList(list, index)" ng-if="userData.profile.userid != list.userid && list.isFollower" translate>Unfollow</button>
           <h4>
             <a href="#/list/contacts?id={{list._id}}">
               <span class="profile-item-name" translate>{{list.name}}</span>
             </a>
           </h4>
           <div class="btn-group">
-            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="userData.profile.userid != list.userid && list.isFollower" ng-click="unfollowContactList(list, index)" title="{{'Unfollow list' | translate}}"><i class="fa fa-times"></i></a>
+            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="userData.profile.userid != list.userid && list.isFollower" ng-click="list.confirmUnfollow = !list.confirmUnfollow" title="{{'Unfollow list' | translate}}"><i class="fa fa-times"></i></a>
             <a ng-class="{'disabled' : isOffline()}" href="#/settings/list/{{list._id}}" class="btn btn-sm" role="button" ng-if="userData.profile.userid == list.userid || list.isEditor" title="{{'List Settings' | translate}}"><i class="fa fa-cog"></i></a>
           </div>
         </li>
