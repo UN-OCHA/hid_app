@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2015-09-03T08:21:01.481Z\n"
+"Project-Id-Version: 2015-11-04T09:07:28.962Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
@@ -12,7 +12,6 @@ msgid "* Required Field"
 msgstr ""
 
 #: src/partials/header.html
-#: src/partials/index.html
 msgid "About"
 msgstr ""
 
@@ -30,6 +29,10 @@ msgstr ""
 
 #: src/js/controllers/ListCtrl.js
 msgid "Add to My Contacts"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Add to list"
 msgstr ""
 
 #: src/js/controllers/ListCtrl.js
@@ -76,7 +79,6 @@ msgstr ""
 msgid "Assign key contact"
 msgstr ""
 
-#: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Back"
 msgstr ""
@@ -139,7 +141,7 @@ msgid "Clear All"
 msgstr ""
 
 #: src/partials/dashboard.html
-msgid "Click the X next to \"checkout\" of any contact lists you are no longer responding to."
+msgid "Click the airplane icon next to any of the contact lists you are no longer responding to."
 msgstr ""
 
 #: src/partials/about.html
@@ -183,6 +185,7 @@ msgstr ""
 msgid "Copy Email Addresses"
 msgstr ""
 
+#: src/partials/createAccount.html
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Country"
@@ -214,6 +217,10 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Current Location"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Custom Contacts lists"
 msgstr ""
 
 #: src/partials/createAccount.html
@@ -286,6 +293,14 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "Edit my"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Edit my global profile"
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "Editing Rights"
 msgstr ""
 
 #: src/partials/createAccount.html
@@ -435,10 +450,6 @@ msgstr ""
 msgid "Humanitarian ID is a way to help humanitarian responders find, connect, and collaborate at the time of a humanitarian crisis (protracted or sudden onset). By making this process faster and smoother, the responders have more time to focus on what is needed most: saving lives and alleviating suffering."
 msgstr ""
 
-#: src/partials/index.html
-msgid "Humanitarian ID: Responders"
-msgstr ""
-
 #: src/partials/createAccount.html
 msgid "If a person does not have an email address associated with their information, they will not be able to claim their account."
 msgstr ""
@@ -472,15 +483,15 @@ msgstr ""
 msgid "Invalid phone number."
 msgstr ""
 
-#: src/partials/contact.html
 #: src/partials/createAccount.html
-#: src/partials/profile.html
-msgid "Job Title"
+msgid "Invite From"
 msgstr ""
 
+#: src/partials/contact.html
+#: src/partials/createAccount.html
 #: src/partials/list.html
 #: src/partials/profile.html
-msgid "Key Contact"
+msgid "Job Title"
 msgstr ""
 
 #: src/partials/contact.html
@@ -493,6 +504,10 @@ msgstr ""
 
 #: src/partials/settingsList.html
 msgid "List Name*"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "List Settings"
 msgstr ""
 
 #: src/js/directives/routeLoadingIndicator.js
@@ -524,16 +539,12 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: src/partials/index.html
-msgid "Manage your details on global and emergency-level humanitarian contact lists. Find and be found by other responders when needed. Check-in. Connect. Respond."
-msgstr ""
-
-#: src/partials/dashboard.html
-msgid "My Contacts lists"
-msgstr ""
-
 #: src/partials/dashboard.html
 msgid "My checked-in lists"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Name"
 msgstr ""
 
 #: src/js/controllers/CreateAccountCtrl.js
@@ -553,13 +564,10 @@ msgid "No profiles found."
 msgstr ""
 
 #: src/js/controllers/CreateAccountCtrl.js
+#: src/js/controllers/CustomListSettingsCtrl.js
 #: src/js/controllers/ListCtrl.js
 #: src/js/controllers/ProfileCtrl.js
 msgid "No results found."
-msgstr ""
-
-#: src/partials/404.html
-msgid "Not Found"
 msgstr ""
 
 #: src/partials/contact.html
@@ -568,7 +576,15 @@ msgid "Notes"
 msgstr ""
 
 #: src/partials/profile.html
+msgid "Notification of Change"
+msgstr ""
+
+#: src/partials/profile.html
 msgid "Number"
+msgstr ""
+
+#: src/partials/header.html
+msgid "Numbers"
 msgstr ""
 
 #: src/partials/list.html
@@ -612,6 +628,10 @@ msgstr ""
 msgid "Organizational Information"
 msgstr ""
 
+#: src/partials/profile.html
+msgid "Orphan Account"
+msgstr ""
+
 #: src/partials/list.html
 msgid "Orphan User"
 msgstr ""
@@ -640,12 +660,28 @@ msgstr ""
 msgid "Please email responsibly."
 msgstr ""
 
+#: src/partials/createAccount.html
+msgid "Please enter the name of the HID user who the invite should come from"
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "Please enter the names of HID users who can edit the list"
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "Please enter the names of HID users who can view the list"
+msgstr ""
+
 #: src/partials/profile.html
-msgid "Please select from the list"
+msgid "Please search for your organization"
 msgstr ""
 
 #: src/partials/profile.html
 msgid "Please update your {{profileName()}} profile."
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "Privacy"
 msgstr ""
 
 #: src/partials/profile.html
@@ -753,6 +789,7 @@ msgstr ""
 msgid "Search by name, title, or organization"
 msgstr ""
 
+#: src/partials/createAccount.html
 #: src/partials/profile.html
 msgid "Search for country"
 msgstr ""
@@ -762,6 +799,7 @@ msgid "Search for organizations"
 msgstr ""
 
 #: src/js/controllers/CreateAccountCtrl.js
+#: src/js/controllers/CustomListSettingsCtrl.js
 #: src/js/controllers/ListCtrl.js
 #: src/js/controllers/ProfileCtrl.js
 msgid "Search term must be at least 3 characters long."
@@ -773,10 +811,6 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Select a country"
-msgstr ""
-
-#: src/partials/list.html
-msgid "Select a list"
 msgstr ""
 
 #: src/partials/profile.html
@@ -809,6 +843,14 @@ msgstr ""
 msgid "Social Media Id"
 msgstr ""
 
+#: src/partials/list.html
+msgid "Sort by"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Start typing a country name"
+msgstr ""
+
 #: src/partials/dashboard.html
 msgid "Thank you for registering on Humanitarian ID. With your help, we will ensure that humanitarian contact lists are always up-to-date. As you will notice, you do not have access to any lists just yet."
 msgstr ""
@@ -833,6 +875,10 @@ msgstr ""
 msgid "There is already an account associated with"
 msgstr ""
 
+#: src/partials/settingsList.html
+msgid "These people will be able to see and edit your list regardless of your privacy settings above"
+msgstr ""
+
 #: src/partials/createAccount.html
 msgid "Title is required."
 msgstr ""
@@ -851,6 +897,10 @@ msgstr ""
 
 #: src/js/controllers/ListCtrl.js
 msgid "Unassign key contact"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Unfollow list"
 msgstr ""
 
 #: src/js/controllers/ListCtrl.js
@@ -873,6 +923,10 @@ msgstr ""
 msgid "Valid email is required."
 msgstr ""
 
+#: src/partials/list.html
+msgid "Verification"
+msgstr ""
+
 #: src/partials/profile.html
 msgid "Verified Responder"
 msgstr ""
@@ -887,6 +941,10 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "View PDF"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "View a Country"
 msgstr ""
 
 #: src/partials/about.html
@@ -996,4 +1054,8 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "{{list.name}}"
+msgstr ""
+
+#: src/partials/list.html
+msgid "{{locationText()}} has been set as a private contact list by our field-level administrators. Only \"verified\" Humanitarian ID users can access the contact list. For information about \"verified\" users, please see our <a href=\"http://humanitarian.id/faqs\" target=\"_blank\">FAQs</a>."
 msgstr ""

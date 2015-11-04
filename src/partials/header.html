@@ -13,12 +13,9 @@
         <a class="btn-login-controls btn hidden-xs" ng-if="isAuthenticated" href="#/logout"><span translate>Logout</span></a>
         <select name="language" ng-change="switchLanguage()" ng-model="language" ng-show="breakpoint.class !== 'smallscreen' || !isAuthenticated" class="form-control input-sm">
           <option value="ar">العربية</option>
-          <option value="de">Deutsch</option>
           <option value="en">English</option>
           <option value="fr">Français</option>
-          <option value="ne">नेपाली</option>
           <option value="ru">русский</option>
-          <option value="tl">Tagalog</option>
         </select>
       </div>
     </div>
