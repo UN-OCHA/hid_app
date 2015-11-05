@@ -20,7 +20,7 @@
           <input class="form-control" type="text" name="name" ng-model="list.name" required/>
         </div>
         <div class="form-group">
-          <h2 translate>Privacy</h2>
+          <h2 class="setting-heading" translate>Privacy</h2>
           <div class="radio setting-radio" ng-class="{'setting-radio-selected' : list.privacy == 'me'}">
             <label>
               <input type="radio" name="privacy" value="me" ng-model="list.privacy" /> Only visible to me
@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="form-group">
-          <h2 translate>Editing Rights</h2>
+          <h2 class="setting-heading" translate>Editing Rights</h2>
           <p translate>These people will be able to see and edit your list regardless of your privacy settings above</p>
           <div class="reveal btn-reveal" ng-repeat="editor in list.editors track by $index">
             <ui-select
