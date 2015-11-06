@@ -22,6 +22,10 @@
       getLists: getLists,
       cacheLists: cacheLists,
       saveList: saveList,
+      followList: followList,
+      unfollowList: unfollowList,
+      addContactToList: addContactToList,
+      deleteContactFromList: deleteContactFromList,
       deleteList: deleteList,
       getProfileData: getProfileData,
       saveProfile: saveProfile,
@@ -226,13 +230,57 @@
       return(request.then(handleSuccess, handleError));
     }
 
-    function deleteList(list) {
+    // Follow a list
+    function followList(list) {
+      var request;
+      request = $http({
+        method: "put",
+        url: contactsId.profilesBaseUrl + "/v0.1/lists/" + list._id + "/follow",
+        params: {access_token: authService.getAccessToken()}
+      });
+      return (request.then(handleSuccess, handleError));
+    }
+
+    // Unfollow a list
+    function unfollowList(list) {
+      var request;
+      request = $http({
+        method: 'delete',
+        url: contactsId.profilesBaseUrl + "/v0.1/lists/" + list._id + "/follow",
+        params: {access_token: authService.getAccessToken()}
+      });
+      return (request.then(handleSuccess, handleError));
+    }
+
+    // Add a contact to a list
+    function addContactToList(list, contact) {
       var request;
       request = $http({
         method: "post",
-        url: contactsId.profilesBaseUrl + "/v0/list/delete",
+        url: contactsId.profilesBaseUrl + "/v0.1/lists/" + list._id + "/contacts",
+        data: {'contact': contact},
+        params: {access_token: authService.getAccessToken()}
+      });
+      return (request.then(handleSuccess, handleError));
+    }
+
+    // Delete a contact from a list
+    function deleteContactFromList(list, contact) {
+      var request;
+      request = $http({
+        method: 'delete',
+        url: contactsId.profilesBaseUrl + "/v0.1/lists/" + list._id + "/contacts/" + contact._id,
         params: {access_token: authService.getAccessToken()},
-        data: list
+      });
+      return (request.then(handleSuccess, handleError));
+    }
+
+    function deleteList(list) {
+      var request;
+      request = $http({
+        method: "delete",
+        url: contactsId.profilesBaseUrl + "/v0.1/lists/" + list._id,
+        params: {access_token: authService.getAccessToken()},
       });
       return(request.then(handleSuccess, handleError));
     }
