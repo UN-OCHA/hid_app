@@ -22,6 +22,8 @@
       getLists: getLists,
       cacheLists: cacheLists,
       saveList: saveList,
+      followList: followList,
+      unfollowList: unfollowList,
       addContactToList: addContactToList,
       deleteContactFromList: deleteContactFromList,
       deleteList: deleteList,
@@ -226,6 +228,28 @@
         data: list
       });
       return(request.then(handleSuccess, handleError));
+    }
+
+    // Follow a list
+    function followList(list) {
+      var request;
+      request = $http({
+        method: "put",
+        url: contactsId.profilesBaseUrl + "/v0.1/lists/" + list._id + "/follow",
+        params: {access_token: authService.getAccessToken()}
+      });
+      return (request.then(handleSuccess, handleError));
+    }
+
+    // Unfollow a list
+    function unfollowList(list) {
+      var request;
+      request = $http({
+        method: 'delete',
+        url: contactsId.profilesBaseUrl + "/v0.1/lists/" + list._id + "/follow",
+        params: {access_token: authService.getAccessToken()}
+      });
+      return (request.then(handleSuccess, handleError));
     }
 
     // Add a contact to a list

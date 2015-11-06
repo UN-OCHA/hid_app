@@ -590,30 +590,20 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
   $scope.toggleFollow = function() {
     var list = $scope.list;
-    if ($scope.toggleFollowButton === 'Follow') {
-      list.users.push($scope.userData.profile.userid);
-    } else {
-      var index = list.users.indexOf($scope.userData.profile.userid);
-      if (index > -1) {
-        list.users.splice(index, 1);
-      }
-    }
-
-    // Rebuild contacts since it now contains the full objects.
-    var contacts = [];
-    angular.forEach(list.contacts, function(value, key) {
-      this.push(value._id);
-    }, contacts);
-    list.contacts = contacts;
-
-    profileService.saveList(list).then(function(data) {
+    var cb = function (data) {
       if (data && data.status && data.status === 'ok') {
         $scope.toggleFollowButton = $scope.toggleFollowButton === 'Follow' ? 'Unfollow': 'Follow';
       }
       else {
         alert('An error occurred while unfollowing this contact list. Please reload and try the change again.');
       }
-    });
+    };
+    if ($scope.toggleFollowButton === 'Follow') {
+      profileService.followList(list).then(cb);
+    }
+    else {
+      profileService.unfollowList(list).then(cb);
+    }
   }
 
   // Builds the list of contacts.

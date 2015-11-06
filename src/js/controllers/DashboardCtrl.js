@@ -61,18 +61,8 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   });
 
   $scope.unfollowContactList = function(list, index) {
-    var updatedUsers = [];
-    angular.forEach(list.users, function(user, key) {
-      if (user != $scope.userData.profile.userid) {
-        this.push(user);
-      }
-    }, updatedUsers);
-
-    list.users = updatedUsers;
-
-    profileService.saveList(list).then(function(data) {
+    profileService.unfollowList(list).then(function(data) {
       if (data && data.status && data.status === 'ok') {
-        list.users = updatedUsers;
         $scope.customContacts.splice(index, 1);
       }
       else {
