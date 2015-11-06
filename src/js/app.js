@@ -89,14 +89,15 @@ app.run(function ($rootScope, $timeout, profileService){
       if (cached && !forceCache){
         return;
       }
-      console.log('Starting caching for custom contact lists');
+      console.log('DEBUG: Started caching for custom contact lists');
+      var cacheRequests = 0, cacheResponses=0;
 
       //cache global profile
       profileService.cacheLists().then(function(profileData){
         if (profileData && profileData.status && profileData.status === 'ok' && profileData.lists && profileData.lists.length > 0){
 
           //cache list details for each list in profile
-          angular.forEach(profileData.lists, function(list, index){
+          angular.forEach(profileData.lists, function(list, listIndex){
             var terms = {};
             terms.contactList = true;
             terms.limit = 30; //api still returns all objects without limit
@@ -110,18 +111,26 @@ app.run(function ($rootScope, $timeout, profileService){
             //cache each contact in list
             profileService.cacheLists(terms).then(function(listData){
               if (listData && listData.status && listData.status === 'ok' && listData.lists.contacts && listData.lists.contacts.length > 0) {
-                angular.forEach(listData.lists.contacts, function(contact, index){
+                angular.forEach(listData.lists.contacts, function(contact, profileIndex){
                   $timeout(function(){
-                    profileService.cacheProfiles({contactId: contact._id});
+                    cacheRequests++;
+                    profileService.cacheProfiles({contactId: contact._id}).then(function(){
+                      cacheResponses++;
+                    },function(){
+                      cacheResponses++;
+                    });
                   },200);
                 });
               }
             });
           });
         }
+        // console.log('Finished caching on custom contact lists');
+        $rootScope.isCaching = function(){
+          return (cacheRequests - cacheResponses) > 2;
+        }
        });
       cached = true;
-      console.log('Finished making requests for custom contact lists');
     }
 
   }
