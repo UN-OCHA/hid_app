@@ -22,6 +22,7 @@
       getLists: getLists,
       cacheLists: cacheLists,
       saveList: saveList,
+      deleteContactFromList: deleteContactFromList,
       deleteList: deleteList,
       getProfileData: getProfileData,
       saveProfile: saveProfile,
@@ -226,13 +227,23 @@
       return(request.then(handleSuccess, handleError));
     }
 
+    // Delete a contact from a list
+    function deleteContactFromList(list, contact) {
+      var request;
+      request = $http({
+        method: 'delete',
+        url: contactsId.profilesBaseUrl + "/v0.1/lists/" + list._id + "/contacts/" + contact._id,
+        params: {access_token: authService.getAccessToken()},
+      });
+      return (request.then(handleSuccess, handleError));
+    }
+
     function deleteList(list) {
       var request;
       request = $http({
-        method: "post",
-        url: contactsId.profilesBaseUrl + "/v0/list/delete",
+        method: "delete",
+        url: contactsId.profilesBaseUrl + "/v0.1/lists/" + list._id,
         params: {access_token: authService.getAccessToken()},
-        data: list
       });
       return(request.then(handleSuccess, handleError));
     }

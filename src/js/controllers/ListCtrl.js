@@ -558,29 +558,18 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
   // Remove contact from the custom list.
   $scope.removeContact = function(contact) {
-
     // Create copy of $scope.list.
     var list = (JSON.parse(JSON.stringify($scope.list)));
     index = $scope.list.contacts.indexOf(contact);
 
-    // Create an array of ids so that mongoose can save the contacts reference.
-    var contacts = [];
-    angular.forEach($scope.list.contacts, function(contact, key) {
-      if (key !== index) {
-        this.push(contact._id);
-      }
-    }, contacts);
-
-    list.contacts = contacts;
-
-    profileService.saveList(list).then(function(data) {
+    profileService.deleteContactFromList(list, contact).then(function(data) {
       if (data && data.status && data.status === 'ok') {
         $scope.contacts.splice(index, 1);
         $scope.contactsCount--;
         $scope.queryCount--;
       }
       else {
-        alert('An error occurred while unfollowing this contact list. Please reload and try the change again.');
+        alert('An error occurred while trying to delete this contact. Please reload and try the change again.');
       }
     });
   }
