@@ -22,6 +22,7 @@
       getLists: getLists,
       cacheLists: cacheLists,
       saveList: saveList,
+      addContactToList: addContactToList,
       deleteContactFromList: deleteContactFromList,
       deleteList: deleteList,
       getProfileData: getProfileData,
@@ -225,6 +226,18 @@
         data: list
       });
       return(request.then(handleSuccess, handleError));
+    }
+
+    // Add a contact to a list
+    function addContactToList(list, contact) {
+      var request;
+      request = $http({
+        method: "post",
+        url: contactsId.profilesBaseUrl + "/v0.1/lists/" + list._id + "/contacts",
+        data: {'contact': contact},
+        params: {access_token: authService.getAccessToken()}
+      });
+      return (request.then(handleSuccess, handleError));
     }
 
     // Delete a contact from a list
