@@ -81,7 +81,7 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
   });
 });
 
-app.run(function ($rootScope, $timeout, profileService){
+app.run(function ($rootScope, $timeout, $location, profileService){
   
   function cacheLists() {
     var cached = false;
@@ -141,12 +141,12 @@ app.run(function ($rootScope, $timeout, profileService){
     }
   })
 
-  $rootScope.goBack = function(){
-    if (history.length) {
+  $rootScope.goBack = function(force){
+    if (history.length && !force) {
       history.back();
     }
     else {
-      $location.path('/dashboard');
+      $location.url('/dashboard');
     }
   }
 
