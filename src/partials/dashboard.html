@@ -163,7 +163,7 @@
         <select class="form-control form-control-light" ng-options="operation as operation.name for operation in availOperations" ng-model="item" ng-change="toOperation()" ng-disabled="isOffline()">
         </select>
         <h3><span translate>View a Disaster</span> :</h3>
-        <select class="form-control form-control-light" ng-options="disaster.value as disaster.value.name for disaster in disasterOptions | orderBy:'value.name'" ng-model="item" ng-change="toDisaster()" ng-disabled="isOffline()">
+        <select class="form-control form-control-light" ng-options="disaster as disaster.name for disaster in disasterOptions | orderBy:'name'" ng-model="item" ng-change="toDisaster()" ng-disabled="isOffline()">
         </select>
       </div>
     </div>

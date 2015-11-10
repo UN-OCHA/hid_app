@@ -19,16 +19,21 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
     return a.name && b.name ? String(a.name).localeCompare(b.name) : false;
   });
 
+  var allDisasters = {};
   $scope.disasterOptions = [];
   angular.forEach($scope.availOperations, function (oper, opId) {
     if (oper.disasters) {
       angular.forEach(oper.disasters, function (dstr) {
         if (dstr.remote_id && dstr.name && !this.hasOwnProperty(dstr.remote_id)) {
-          this.push({key: dstr.remote_id, value: dstr});
+          this[dstr.remote_id] = dstr;
         }
-      },$scope.disasterOptions);
+      },allDisasters);
     }
   });
+  angular.forEach(allDisasters, function (val, key){
+    this.push(val);
+  },$scope.disasterOptions);
+
 
   $timeout(function(){
     $scope.cacheCustomLists();
