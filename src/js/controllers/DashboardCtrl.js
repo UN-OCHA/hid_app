@@ -19,6 +19,17 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
     return a.name && b.name ? String(a.name).localeCompare(b.name) : false;
   });
 
+  $scope.disasterOptions = [];
+  angular.forEach($scope.availOperations, function (oper, opId) {
+    if (oper.disasters) {
+      angular.forEach(oper.disasters, function (dstr) {
+        if (dstr.remote_id && dstr.name && !this.hasOwnProperty(dstr.remote_id)) {
+          this.push({key: dstr.remote_id, value: dstr});
+        }
+      },$scope.disasterOptions);
+    }
+  });
+
   $timeout(function(){
     $scope.cacheCustomLists();
   }, 2000);
@@ -152,5 +163,9 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
 
   $scope.toOperation = function() {
     $location.path('/list/' + $scope.item.remote_id);
+  };
+
+  $scope.toDisaster = function() {
+    $location.path('/list/global').search("disasters.remote_id", $scope.item.remote_id);
   };
 }
