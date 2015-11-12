@@ -7,7 +7,7 @@
   </div>
   <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-2 pull-right-hard">
     <h2 class="heading-contact-list">
-      {{locationText()}} <small>(<span translate>Contacts</span> {{queryCount}})</small>
+      <i class="fa fa-lock" ng-if="hid_access == 'closed'" data-toggle="tooltip" data-placement="top" title="This list is only accessible to verified Humanitarian ID users."></i> {{locationText()}} <small>(<span translate>Contacts</span> {{queryCount}})</small>
       <a href="#/settings/list/{{list._id}}" class="btn btn-primary pull-right-hard" ng-if="locationId !== 'global' && (userData.profile.userid == list.userid || isEditor) && list._id" role="button">List Settings</a>
       <button ng-click="toggleFollow()" class="btn btn-primary pull-right-hard" ng-if="locationId !== 'global' && userData.profile.userid != list.userid && list._id" >{{toggleFollowButton}}</button>
     </h2>
