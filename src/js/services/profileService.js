@@ -21,12 +21,17 @@
       cacheContacts: cacheContacts,
       getLists: getLists,
       cacheLists: cacheLists,
+      getService: getService,
+      getServices: getServices,
+      getMailchimpLists: getMailchimpLists,
       saveList: saveList,
+      saveService: saveService,
       followList: followList,
       unfollowList: unfollowList,
       addContactToList: addContactToList,
       deleteContactFromList: deleteContactFromList,
       deleteList: deleteList,
+      deleteService: deleteService,
       getProfileData: getProfileData,
       saveProfile: saveProfile,
       deleteProfile: deleteProfile,
@@ -204,7 +209,44 @@
       return list;
     }
 
-    // Save a profile (create or update existing).
+    function getService(id) {
+      var request;
+      request = $http({
+        method: 'get',
+        url: contactsId.profilesBaseUrl + '/v0.1/services/' + id,
+        params: {access_token: authService.getAccessToken()}
+      });
+      return (request.then(handleSuccessv01, handleError));
+    }
+
+    function getServices(query) {
+      var params = { access_token: authService.getAccessToken() };
+      if (query && query != '') {
+        params.q = query;
+      }
+      var request;
+      request = $http({
+        method: 'get',
+        url: contactsId.profilesBaseUrl + '/v0.1/services',
+        params: params
+      });
+      return (request.then(handleSuccessv01, handleError));
+    }
+
+    function getMailchimpLists(mc_api_key) {
+      var request;
+      request = $http({
+        method: 'get',
+        url: contactsId.profilesBaseUrl + '/v0.1/services/mailchimp/lists',
+        params: {
+          access_token: authService.getAccessToken(),
+          mc_api_key: mc_api_key
+        }
+      });
+      return (request.then(handleSuccessv01, handleError));
+    }
+
+    // Save a list (create or update existing).
     function saveList(list) {
       var mapCallback = function (value) {
         if (typeof value === 'object' && value._id) {
@@ -228,6 +270,25 @@
         data: list
       });
       return(request.then(handleSuccess, handleError));
+    }
+
+    // Save a service (create or update existing)
+    function saveService(service) {
+      var method = 'post', url = '/v0.1/services';
+      if (service._id) {
+        method = 'put';
+        url = '/v0.1/services/' + service._id;
+        service._id = undefined;
+        service._v = undefined;
+      }
+      var request;
+      request = $http({
+        method: method,
+        url: contactsId.profilesBaseUrl + url,
+        params: {access_token: authService.getAccessToken()},
+        data: service
+      });
+      return (request.then(handleSuccessv01, handleError));
     }
 
     // Follow a list
@@ -283,6 +344,16 @@
         params: {access_token: authService.getAccessToken()},
       });
       return(request.then(handleSuccess, handleError));
+    }
+
+    function deleteService(service) {
+      var request;
+      request = $http({
+        method: "delete",
+        url: contactsId.profilesBaseUrl + "/v0.1/services/" + service._id,
+        params: {access_token: authService.getAccessToken()},
+      });
+      return (request.then(handleSuccessv01, handleError));
     }
 
     function getProfileData(contactId) {
@@ -692,6 +763,10 @@
 
     function handleSuccess(response) {
       return (response.data);
+    }
+
+    function handleSuccessv01(response) {
+      return response;
     }
 
   });

@@ -1,0 +1,50 @@
+<div class="back-btn back-btn-head btn">
+  <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span></span></a>
+</div>
+
+
+<div>
+  <h2 ng-if="!service._id" translate>Create New Service</h2>
+  <h2 ng-if="service._id" translate>Edit Service</h2>
+</div>
+
+<div ng-show='!isRouteLoading' class="main row page-dashboard" ng-class="{'show-options': sidebarOptions}">
+  <div class="main-content col-xs-12 col-sm-8 col-md-9 pull-right-hard" cg-busy="dashboardDataTracker">
+    <div class="custom-contacts-wrapper">
+      <i translate>* Required Field</i>
+
+      <form name="serviceForm" autocomplete="off">
+        <div class="form-group">
+          <label class="control-label" for="name" translate>Service Name*</label>
+          <input class="form-control" type="text" name="name" ng-model="service.name" required/>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="type" translate>Service Type*</label>
+          <select name="type" ng-model="service.type">
+            <option value="mailchimp">Mailchimp</option>
+          </select>
+        </div>
+        <div class="form-group" ng-if="service.type == 'mailchimp'">
+          <label class="control-label" for="mc_api_key" translate>Mailchimp API Key</label>
+          <input class="form-control" type="text" name="mc_api_key" ng-model="service.mc_api_key" ng-blur="getMailchimpLists()" />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="sidebar-left">
+    <div class="col-xs-12 col-sm-4 col-md-3">
+      <div class="actions">
+        <a class="btn btn-primary btn-lg btn-block" ng-click="saveService()">
+          <span translate>Save</span>
+        </a>
+        <a class="btn btn-default btn-lg btn-block" href="#/dashboard">
+          </span> <span translate>Cancel</span>
+        </a>
+        <a class="btn btn-default btn-lg btn-block" ng-if="service._id" ng-click="deleteService()">
+          <span translate>Delete Service</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

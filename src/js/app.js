@@ -176,6 +176,8 @@ app.controller("ProfileCtrl", ["$scope", "$location", "$route", "$routeParams", 
 app.controller("RegisterCtrl", ["$scope", RegisterCtrl]);
 app.controller("AddToCustomListCtrl", ["$scope", "profileService", AddToCustomListCtrl]);
 app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$http", "authService", "profileService", "list", "gettextCatalog", "ngDialog", CustomListSettingsCtrl]);
+app.controller("ServicesCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "service", ServicesCtrl]);
+app.controller("ServicesListCtrl", ["$scope", "$route", "$routeParams", "profileService", "userData", ServicesListCtrl]);
 
 
 app.config(function($routeProvider, $locationProvider) {
@@ -532,6 +534,62 @@ app.config(function($routeProvider, $locationProvider) {
             return false;
           }
         };
+      }
+    }
+  }).
+  when('/services/add', {
+    templateUrl: contactsId.sourcePath + '/partials/servicesEdit.html',
+    controller: 'ServicesCtrl',
+    requireAuth: true,
+    resolve: {
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
+      },
+      service: function() {
+        return {};
+      }
+    }
+  }).
+  when('/services/:serviceId/edit', {
+    templateUrl: contactsId.sourcePath + '/partials/servicesEdit.html',
+    controller: 'ServicesCtrl',
+    requireAuth: true,
+    resolve: {
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
+      },
+      service: function (profileService, $route) {
+        return profileService.getService($route.current.params.serviceId).then(function (response) {
+          if (response.status != 200) {
+            throw new Error('Could not find service');
+          }
+          return response.data;
+        });
+      }
+    }
+  }).
+  when('/services', {
+    templateUrl: contactsId.sourcePath + '/partials/services.html',
+    controller: 'ServicesListCtrl',
+    requireAuth: true,
+    resolve: {
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
       }
     }
   }).
