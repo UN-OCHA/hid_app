@@ -83,9 +83,14 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
 
 app.run(function ($rootScope, $timeout, $location, profileService){
   
+  $rootScope.doSync = false;
+
   function cacheLists() {
     var cached = false;
     return function(forceCache) {
+      if (!$rootScope.doSync) {
+        return;
+      }
       if (cached && !forceCache){
         return;
       }
