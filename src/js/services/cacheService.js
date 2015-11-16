@@ -24,10 +24,6 @@
         if (cacheData != null) {
           cacheData = JSON.parse(cacheData);
           var current = Date.now();
-          // Avoid reasking the server for fresh items during at least 1 hour
-          if (cacheData.time && current - cacheData.time < 3600 * 1000) {
-            return cacheData.data;
-          }
         }
         var promise = $http({
           method: "get",

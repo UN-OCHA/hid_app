@@ -37,11 +37,6 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   },$scope.disasterOptions);
 
 
-  $timeout(function(){
-    $scope.cacheCustomLists();
-  }, 2000);
-
-
   $scope.customContactsPromise = profileService.getLists().then(function(data) {
     if (data && data.status && data.status === 'ok') {
       $scope.customContacts = data.lists;
