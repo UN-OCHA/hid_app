@@ -7,6 +7,8 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   $scope.userCanCreateAccount = profileService.canCreateAccount();
   $scope.localContacts = filter(userData.contacts, function(d){ return d.type === "local"})
 
+  $scope.operations = operations;
+
   // Exclude operations for which the user is already checked in.
   var availOperations = angular.copy(operations);
 
