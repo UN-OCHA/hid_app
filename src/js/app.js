@@ -86,9 +86,6 @@ app.run(function ($rootScope, $timeout, $location, profileService){
   function cacheLists() {
     var cached = false;
     return function(forceCache) {
-      if (cached && !forceCache){
-        return;
-      }
       console.log('DEBUG: Started caching for custom contact lists');
       var cacheRequests = 0, cacheResponses=0;
 
@@ -143,12 +140,7 @@ app.run(function ($rootScope, $timeout, $location, profileService){
 
   $rootScope.$watch(function(){
     return Offline.state;
-  }, function(newValue, oldValue){
-    if (newValue === "up" && oldValue === "down"){
-      console.log('Caching custom lists after restoring network');
-      $rootScope.cacheCustomLists(true);
-    }
-  })
+  });
 
   $rootScope.goBack = function(force){
     if (history.length && !force) {
