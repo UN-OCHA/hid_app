@@ -82,8 +82,7 @@
       <div class="alert alert-info" role="alert" ng-show="!localContacts.length && globalProfileId.length"><strong translate>Are you responding to a humanitarian situation?</strong> <a href="#/checkin" translate>Check into</a> <span translate>the relevant country to add your skills and contact details added to the appropriate contact list(s).</span></div>
       <div class="alert alert-info" role="alert" ng-show="localContacts.length"><strong translate>Are you still responding to the humanitarian situation(s) above?</strong> <span translate>Click the airplane icon next to any of the contact lists you are no longer responding to.</span></div>
 
-      <h3><span translate>Custom Contacts lists</span> : <i ng-if="isCaching()" class="fa fa-refresh data-sync data-sync-animate" data-toggle="tooltip" data-placement="top" title="We are busy synchronizing your custom contact lists for offline access."></i>
-      <button type="button" class="btn btn-primary" ng-click="cacheCustomLists()">Cache my custom contact lists offline</button>
+      <h3><span translate>Custom Contacts lists</span> : <button type="button" class="btn btn-primary" ng-click="cacheCustomLists()">Store offline</button> <i ng-if="isCaching()" class="fa fa-refresh data-sync data-sync-animate" data-toggle="tooltip" data-placement="top" title="We are busy synchronizing your custom contact lists for offline access."></i>
       </h3>
 
       <ul class="custom-contacts-container list-group">
