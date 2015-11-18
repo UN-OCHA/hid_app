@@ -92,31 +92,17 @@
     function cacheData(url, options) {
       var key = generateKey(url, options);
       var defer = $q.defer();
-      
-      // if 
 
-      return localforage.getItem(key).then(function (cacheData) {
-        if (cacheData != null) {
-          cacheData = JSON.parse(cacheData);
-          var current = Date.now();
-          // Avoid reasking the server for fresh items during at least 1 hour
-          if (cacheData.time && current - cacheData.time < 3600 * 1000) {
-            return cacheData.data;
-          }
-        }
-        var promise = $http({
-          method: "get",
-          url: url,
-          params: options
-        })
+      var promise = $http({
+        method: "get",
+        url: url,
+        params: options
+      })
         .then(function(response){ //handleSuccess
           defer.resolve(response.data);
           //TODO catch exceptions
-          var cacheItem = {
-            'time': Date.now(),
-            'data': response.data
-          };
-          localforage.setItem(key,JSON.stringify(cacheItem));
+
+          localforage.setItem(key,JSON.stringify(response.data));
           return response.data;
         }, function(response){
           checkOnline(response);
@@ -124,7 +110,6 @@
           return null;
         });
         return promise;
-      });
     }
 
 
@@ -142,11 +127,7 @@
           Offline.markUp();
 
           //TODO catch exceptions
-          var cacheItem = {
-            'time': Date.now(),
-            'data': response.data
-          };
-          localforage.setItem(key,JSON.stringify(cacheItem));
+          localforage.setItem(key,JSON.stringify(response.data));
 
           return response.data;
         }, function(response){
@@ -156,7 +137,7 @@
             if (cacheData != null) {
               cacheData = JSON.parse(cacheData);
               defer.resolve(cacheData);
-              return cacheData.data ? cacheData.data : cacheData;
+              return cacheData;
             }
             else {
               handleError(response);
