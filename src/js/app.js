@@ -81,11 +81,14 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
   });
 });
 
-app.run(function ($rootScope, $timeout, $location, profileService){
+app.run(function ($rootScope, $timeout, profileService){
   
   function cacheLists() {
     var cached = false;
     return function(forceCache) {
+      if (cached && !forceCache){
+        return;
+      }
       console.log('DEBUG: Started caching for custom contact lists');
       var cacheRequests = 0, cacheResponses=0;
 
@@ -107,16 +110,8 @@ app.run(function ($rootScope, $timeout, $location, profileService){
 
             //cache each contact in list
             profileService.cacheLists(terms).then(function(listData){
-              if (listData && listData.status && listData.status === 'ok' && listData.lists.contacts && listData.lists.contacts.length > 0) {
-                angular.forEach(listData.lists.contacts, function(contact, profileIndex){
-                  $timeout(function(){
-                    cacheRequests++;
-                    profileService.cacheProfiles({contactId: contact._id}).then(function(){
-                      cacheResponses++;
-                    },function(){
-                      cacheResponses++;
-                    });
-                  },200);
+              if (listData && listData.status && listData.status === 'ok' && listData.lists) {
+                profileService.cacheProfiles({id: listData.lists._id}).then(function(){
                 });
               }
             });
@@ -140,7 +135,12 @@ app.run(function ($rootScope, $timeout, $location, profileService){
 
   $rootScope.$watch(function(){
     return Offline.state;
-  });
+  }, function(newValue, oldValue){
+    if (newValue === "up" && oldValue === "down"){
+      console.log('DEBUG: Caching custom lists after restoring network');
+      $rootScope.cacheCustomLists(true);
+    }
+  })
 
   $rootScope.goBack = function(force){
     if (history.length && !force) {

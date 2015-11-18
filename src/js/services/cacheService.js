@@ -4,7 +4,9 @@
   angular.module("contactsId").service('offlineCache', function ($http, $q, ngDialog){
     return {
       getData: getData,
-      cacheData: cacheData
+      cacheData: cacheData,
+      getProfiles: getProfiles,
+      cacheProfiles: cacheProfiles
     }
 
     function generateKey(url, params){ //use utils.encodeURL
@@ -16,28 +18,91 @@
       return url;
     }
 
-    function cacheData(url, options) {
-      var key = generateKey(url, options);
+    function getProfiles(url, options){
       var defer = $q.defer();
-      
-      return localforage.getItem(key).then(function (cacheData) {
-        if (cacheData != null) {
-          cacheData = JSON.parse(cacheData);
-          var current = Date.now();
-        }
-        var promise = $http({
+      var promise = $http({
           method: "get",
           url: url,
           params: options
         })
         .then(function(response){ //handleSuccess
           defer.resolve(response.data);
+          Offline.markUp();
+
+          localforage.setItem('profile-'+response.data.profile._id, JSON.stringify(response.data));
+
+          angular.forEach(response.data.contacts, function(contact){
+            localforage.setItem('contact-'+contact._id, contact._profile);
+          });
+
+          return response.data;
+        }, function(response){
+          checkOnline(response);
+
+          //get contactid and then profile from that id
+          return localforage.getItem('contact-'+options.contactId).then(function(profileId){
+            if (profileId != null) {
+              return localforage.getItem('profile-'+profileId).then(function(cacheData){
+                if (cacheData != null) {
+                  cacheData = JSON.parse(cacheData);
+                  defer.resolve(cacheData);
+                  return cacheData;
+                }
+                else {
+                  handleError(response);
+                }
+              });
+            }
+            else {
+              handleError(response);
+            }
+          });
+        });
+
+      return promise;
+    }
+
+    function cacheProfiles(url, options){
+      var defer = $q.defer();
+      var promise = $http({
+        method: "get",
+        url: url,
+        params: options
+      }).then(function(response){
+        defer.resolve(response.data);
+        if (response.data){
+          angular.forEach(response.data, function(profile){
+           localforage.setItem('profile-'+profile.profile._id, JSON.stringify(profile));
+
+           angular.forEach(profile.contacts, function(contact){
+            localforage.setItem('contact-'+contact._id, contact._profile);
+           });
+
+          });
+        }
+        return response.data;
+      }, function (response){
+        handleError(response, true);
+        return null;
+      });
+
+      return promise;
+    }
+
+    function cacheData(url, options) {
+      var key = generateKey(url, options);
+      var defer = $q.defer();
+
+      var promise = $http({
+        method: "get",
+        url: url,
+        params: options
+      })
+        .then(function(response){ //handleSuccess
+          defer.resolve(response.data);
           //TODO catch exceptions
-          var cacheItem = {
-            'time': Date.now(),
-            'data': response.data
-          };
-          localforage.setItem(key,JSON.stringify(cacheItem));
+
+          localforage.setItem(key,JSON.stringify(response.data));
           return response.data;
         }, function(response){
           checkOnline(response);
@@ -45,7 +110,6 @@
           return null;
         });
         return promise;
-      });
     }
 
 
@@ -63,11 +127,7 @@
           Offline.markUp();
 
           //TODO catch exceptions
-          var cacheItem = {
-            'time': Date.now(),
-            'data': response.data
-          };
-          localforage.setItem(key,JSON.stringify(cacheItem));
+          localforage.setItem(key,JSON.stringify(response.data));
 
           return response.data;
         }, function(response){
@@ -77,7 +137,7 @@
             if (cacheData != null) {
               cacheData = JSON.parse(cacheData);
               defer.resolve(cacheData);
-              return cacheData.data ? cacheData.data : cacheData;
+              return cacheData;
             }
             else {
               handleError(response);

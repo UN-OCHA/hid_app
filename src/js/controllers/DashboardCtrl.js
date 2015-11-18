@@ -21,6 +21,9 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
     return a.name && b.name ? String(a.name).localeCompare(b.name) : false;
   });
 
+  $timeout(function(){
+    $scope.cacheCustomLists();
+  }, 2000);
   var allDisasters = {};
   $scope.disasterOptions = [];
   angular.forEach($scope.availOperations, function (oper, opId) {
