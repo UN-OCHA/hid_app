@@ -98,6 +98,7 @@ app.run(function ($rootScope, $timeout, profileService){
 
           //cache list details for each list in profile
           angular.forEach(profileData.lists, function(list, listIndex){
+            cacheRequests++;
             var terms = {};
             terms.contactList = true;
             terms.limit = 30; //api still returns all objects without limit
@@ -112,6 +113,9 @@ app.run(function ($rootScope, $timeout, profileService){
             profileService.cacheLists(terms).then(function(listData){
               if (listData && listData.status && listData.status === 'ok' && listData.lists) {
                 profileService.cacheProfiles({id: listData.lists._id}).then(function(){
+                  cacheResponses++;
+                }, function() {
+                  cacheResponses++;
                 });
               }
             });
