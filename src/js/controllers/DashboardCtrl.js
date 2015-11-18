@@ -7,6 +7,8 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   $scope.userCanCreateAccount = profileService.canCreateAccount();
   $scope.localContacts = filter(userData.contacts, function(d){ return d.type === "local"})
 
+  $scope.operations = operations;
+
   // Exclude operations for which the user is already checked in.
   var availOperations = angular.copy(operations);
 
@@ -22,6 +24,20 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   $timeout(function(){
     $scope.cacheCustomLists();
   }, 2000);
+  var allDisasters = {};
+  $scope.disasterOptions = [];
+  angular.forEach($scope.availOperations, function (oper, opId) {
+    if (oper.disasters) {
+      angular.forEach(oper.disasters, function (dstr) {
+        if (dstr.remote_id && dstr.name && !this.hasOwnProperty(dstr.remote_id)) {
+          this[dstr.remote_id] = dstr;
+        }
+      },allDisasters);
+    }
+  });
+  angular.forEach(allDisasters, function (val, key){
+    this.push(val);
+  },$scope.disasterOptions);
 
 
   $scope.customContactsPromise = profileService.getLists().then(function(data) {
@@ -61,18 +77,8 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   });
 
   $scope.unfollowContactList = function(list, index) {
-    var updatedUsers = [];
-    angular.forEach(list.users, function(user, key) {
-      if (user != $scope.userData.profile.userid) {
-        this.push(user);
-      }
-    }, updatedUsers);
-
-    list.users = updatedUsers;
-
-    profileService.saveList(list).then(function(data) {
+    profileService.unfollowList(list).then(function(data) {
       if (data && data.status && data.status === 'ok') {
-        list.users = updatedUsers;
         $scope.customContacts.splice(index, 1);
       }
       else {
@@ -162,5 +168,9 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
 
   $scope.toOperation = function() {
     $location.path('/list/' + $scope.item.remote_id);
+  };
+
+  $scope.toDisaster = function() {
+    $location.path('/list/global').search("disasters.remote_id", $scope.item.remote_id);
   };
 }

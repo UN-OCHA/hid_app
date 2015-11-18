@@ -46,7 +46,7 @@
 
           <h4>
               <span class="profile-item-name">
-                <a href="#/list/{{profile.locationId}}">{{profile.location}}</a>
+                <a href="#/list/{{profile.locationId}}"><i class="fa fa-lock" ng-if="operations[profile.locationId].hid_access == 'closed'" data-toggle="tooltip" data-placement="top" title="This list is only accessible to verified Humanitarian ID users."></i>  {{profile.location}}</a>
                 <span class="profile-item-disasters" ng-show="profile.disasters.length" ng-if="0">
                   <span class="profile-item-disaster-spacer">/</span>
                   <span class="profile-item-disaster" ng-repeat="disaster in profile.disasters | orderBy: 'name'">
@@ -82,7 +82,8 @@
       <div class="alert alert-info" role="alert" ng-show="!localContacts.length && globalProfileId.length"><strong translate>Are you responding to a humanitarian situation?</strong> <a href="#/checkin" translate>Check into</a> <span translate>the relevant country to add your skills and contact details added to the appropriate contact list(s).</span></div>
       <div class="alert alert-info" role="alert" ng-show="localContacts.length"><strong translate>Are you still responding to the humanitarian situation(s) above?</strong> <span translate>Click the airplane icon next to any of the contact lists you are no longer responding to.</span></div>
 
-      <h3><span translate>Custom Contacts lists</span> : <i ng-if="isCaching()" class="fa fa-refresh data-sync data-sync-animate"></i></h3>
+      <h3><span translate>Custom Contacts lists</span> :
+      </h3>
 
       <ul class="custom-contacts-container list-group">
         <li class="profile-item list-group-item" ng-repeat="(index, list) in customContacts">
@@ -160,7 +161,10 @@
           <i class="entypo user"></i> <span translate>Global Profile</span>
         </a>
         <h3><span translate>View a Country</span> :</h3>
-        <select class="form-control form-control-light" ng-options="operation as operation.name for operation in availOperations" ng-model="item" ng-change="toOperation()">
+        <select class="form-control form-control-light" ng-options="operation as operation.name for operation in availOperations" ng-model="item" ng-change="toOperation()" ng-disabled="isOffline()">
+        </select>
+        <h3><span translate>View a Disaster</span> :</h3>
+        <select class="form-control form-control-light" ng-options="disaster as disaster.name for disaster in disasterOptions | orderBy:'name'" ng-model="item" ng-change="toDisaster()" ng-disabled="isOffline()">
         </select>
       </div>
     </div>

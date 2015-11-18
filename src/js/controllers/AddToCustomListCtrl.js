@@ -33,9 +33,8 @@ function AddToCustomListCtrl($scope, profileService) {
   $scope.saveList = function () {
     angular.forEach($scope.customContacts, function(value, key) {
       if (value.addToList === true) {
-        value.contacts.push($scope.contact._id);
 
-        profileService.saveList(value).then(function(data) {
+        profileService.addContactToList(value, $scope.contact._id).then(function(data) {
           if (data && data.status && data.status === 'ok') {
             console.log('updated');
           }

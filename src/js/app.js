@@ -137,17 +137,17 @@ app.run(function ($rootScope, $timeout, profileService){
     return Offline.state;
   }, function(newValue, oldValue){
     if (newValue === "up" && oldValue === "down"){
-      console.log('Caching custom lists after restoring network');
+      console.log('DEBUG: Caching custom lists after restoring network');
       $rootScope.cacheCustomLists(true);
     }
   })
 
-  $rootScope.goBack = function(){
-    if (history.length) {
+  $rootScope.goBack = function(force){
+    if (history.length && !force) {
       history.back();
     }
     else {
-      $location.path('/dashboard');
+      $location.url('/dashboard');
     }
   }
 

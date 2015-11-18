@@ -16,11 +16,11 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label-light" for="location">* <span translate>Crisis</span></label>
+          <label class="control-label-light" for="location">* <span translate>Country or Operation of Response</span></label>
           <select class="form-control" name="location" ng-model="profile.location" ng-options="item.name for item in availOperations" ng-blur="focus=0" focus-field="focus" required ng-class="{invalid: submitted && createAccountForm.location.$invalid}" ng-change="setCountry(profile.location)">
               <option value=""></option>
           </select>
-          <div class="error" ng-show="createAccountForm.location.$error.required && submitted" translate>Crisis is required.</div>
+          <div class="error" ng-show="createAccountForm.location.$error.required && submitted" translate>Country or Operation is required.</div>
         </div>
 
         <div class="form-group">
@@ -43,7 +43,7 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label-light" for="address.country" translate>Country</label>
+          <label class="control-label-light" for="address.country" translate>Physical Location (Country)</label>
           <ui-select
             name="address.country"
             class="form-control form-control-light"
