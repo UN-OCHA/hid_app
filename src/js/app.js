@@ -110,16 +110,8 @@ app.run(function ($rootScope, $timeout, profileService){
 
             //cache each contact in list
             profileService.cacheLists(terms).then(function(listData){
-              if (listData && listData.status && listData.status === 'ok' && listData.lists.contacts && listData.lists.contacts.length > 0) {
-                angular.forEach(listData.lists.contacts, function(contact, profileIndex){
-                  $timeout(function(){
-                    cacheRequests++;
-                    profileService.cacheProfiles({contactId: contact._id}).then(function(){
-                      cacheResponses++;
-                    },function(){
-                      cacheResponses++;
-                    });
-                  },200);
+              if (listData && listData.status && listData.status === 'ok' && listData.lists) {
+                profileService.cacheProfiles({id: listData.lists._id}).then(function(){
                 });
               }
             });
