@@ -81,7 +81,7 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
   });
 });
 
-app.run(function ($rootScope, $timeout, profileService){
+app.run(function ($rootScope, $location, $timeout, profileService){
   
   function cacheLists() {
     var cached = false;
