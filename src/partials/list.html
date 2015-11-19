@@ -8,7 +8,7 @@
   <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-2 pull-right-hard">
     <h2 class="heading-contact-list">
       <i class="fa fa-lock" ng-if="hid_access == 'closed'" data-toggle="tooltip" data-placement="top" title="This list is only accessible to verified Humanitarian ID users."></i> {{locationText()}} <small>(<span translate>Contacts</span> {{queryCount}})</small>
-      <a href="#/settings/list/{{list._id}}" class="btn btn-primary pull-right-hard" ng-if="locationId !== 'global' && (userData.profile.userid == list.userid || isEditor) && list._id" role="button">List Settings</a>
+      <a href="#/settings/list/{{list._id}}" class="btn btn-primary pull-right-hard" ng-disabled="isOffline()" ng-if="locationId !== 'global' && (userData.profile.userid == list.userid || isEditor) && list._id" role="button">List Settings</a>
       <button ng-click="toggleFollow()" class="btn btn-primary pull-right-hard" ng-if="locationId !== 'global' && userData.profile.userid != list.userid && list._id" >{{toggleFollowButton}}</button>
     </h2>
   </div>
@@ -52,7 +52,7 @@
           <div class="contact-item contact-item--bundle col-md-4" ng-hide="!contact.bundle.length"><span title="{{contact.bundle.join(', ')}}">{{contact.bundle.join(', ')}}</span></div>
           <div class="contact-item contact-item--organization col-xs-5 col-md-2"><span title="{{parseAcronym(contact.organization[0].name)}}">{{parseAcronym(contact.organization[0].name)}}</span></div>
         </div>
-        <div class="quick-link">
+        <div class="quick-link" ng-if="!isOffline()">
           <div class="dropdown" ng-class="{'ql-open': qlOpen === $index}">
             <button class="dropdown-toggle" data-toggle="dropdown" type="button" ng-click="qlClick()"><span class="quick-link-dots"></span></button>
             <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -65,9 +65,9 @@
             </ul>
           </div>
         </div>
-        <div class="quick-link" ng-if="showQuickLinks(contact)">
+        <div class="quick-link" ng-if="showQuickLinks(contact) && !isOffline()">
           <div class="dropdown" ng-class="{'ql-open': qlOpen === $index}">
-            <button class="dropdown-toggle" data-toggle="dropdown" type="button" ng-click="qlClick()"><span class="quick-link-dots"></span></button>
+            <button class="dropdown-toggle" data-toggle="dropdown" type="button" ng-click="qlClick()" ><span class="quick-link-dots"></span></button>
             <ul class="dropdown-menu dropdown-menu-right" role="menu">
               <li ng-if="contact.ql.userCanEditProfile">
                 <a role="menuitem" tabindex="-1" href="#/profile/{{contact._id}}" translate>Edit</a>
