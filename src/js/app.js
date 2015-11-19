@@ -172,6 +172,7 @@ app.controller("ProfileCtrl", ["$scope", "$location", "$route", "$routeParams", 
 app.controller("RegisterCtrl", ["$scope", RegisterCtrl]);
 app.controller("AddToCustomListCtrl", ["$scope", "profileService", AddToCustomListCtrl]);
 app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$http", "authService", "profileService", "list", "gettextCatalog", "ngDialog", CustomListSettingsCtrl]);
+app.controller("CheckInCtrl", ["$scope", "$location", "$routeParams", "profileService", CheckInCtrl]);
 
 
 app.config(function($routeProvider, $locationProvider) {
@@ -405,6 +406,11 @@ app.config(function($routeProvider, $locationProvider) {
         };
       }
     }
+  }).
+  when('/contact/:contactId/checkin', {
+    template: '',
+    controller: 'CheckInCtrl',
+    requireAuth: true
   }).
   when('/list/:locationId', {
     templateUrl: contactsId.sourcePath + '/partials/list.html',
