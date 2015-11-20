@@ -26,6 +26,8 @@
       unfollowList: unfollowList,
       addContactToList: addContactToList,
       deleteContactFromList: deleteContactFromList,
+      checkInContact: checkInContact,
+      checkOutContact: checkOutContact,
       deleteList: deleteList,
       getProfileData: getProfileData,
       saveProfile: saveProfile,
@@ -273,6 +275,28 @@
         params: {access_token: authService.getAccessToken()},
       });
       return (request.then(handleSuccess, handleError));
+    }
+
+    // Check a contact in
+    function checkInContact(contactId) {
+      var request;
+      request = $http({
+        method: 'put',
+        url: contactsId.profilesBaseUrl + "/v0.1/contacts/" + contactId + "/checkin",
+        params: {access_token: authService.getAccessToken()},
+      });
+      return (request.then(handleSuccessv01, handleError));
+    }
+
+    // Checkout a contact
+    function checkOutContact(contactId) {
+      var request;
+      request = $http({
+        method: 'delete',
+        url: contactsId.profilesBaseUrl + "/v0.1/contacts/" + contactId + "/checkin",
+        params: {access_token: authService.getAccessToken()},
+      });
+      return (request.then(handleSuccessv01, handleError));
     }
 
     function deleteList(list) {
@@ -692,6 +716,10 @@
 
     function handleSuccess(response) {
       return (response.data);
+    }
+
+    function handleSuccessv01(response) {
+       return response;
     }
 
   });
