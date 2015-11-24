@@ -164,7 +164,7 @@ app.run(function ($rootScope, $timeout, $location, profileService){
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
 app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", "md5", ContactCtrl]);
 app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", "countries", CreateAccountCtrl]);
-app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location","$timeout", "profileService", "globalProfileId", "userData", "operations", DashboardCtrl]);
+app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location","$timeout", "profileService", "globalProfileId", "userData", "operations", "ngDialog", DashboardCtrl]);
 app.controller("DefaultCtrl", ["$scope", "$location", "authService", DefaultCtrl]);
 app.controller("404Ctrl", ["$scope", FourZeroFourCtrl]);
 app.controller("NumbersCtrl", ["$scope", NumbersCtrl]);
@@ -177,7 +177,7 @@ app.controller("RegisterCtrl", ["$scope", RegisterCtrl]);
 app.controller("AddToCustomListCtrl", ["$scope", "profileService", AddToCustomListCtrl]);
 app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$http", "authService", "profileService", "list", "gettextCatalog", "ngDialog", CustomListSettingsCtrl]);
 app.controller("ServicesCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "service", ServicesCtrl]);
-app.controller("ServicesListCtrl", ["$scope", "$route", "$routeParams", "profileService", "userData", ServicesListCtrl]);
+app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", ServicesListCtrl]);
 
 
 app.config(function($routeProvider, $locationProvider) {

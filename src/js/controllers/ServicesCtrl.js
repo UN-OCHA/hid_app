@@ -57,11 +57,10 @@ function ServicesCtrl($scope, $location, $route, $routeParams, profileService, u
   };
 }
 
-function ServicesListCtrl($scope, $route, $routeParams, profileService, userData) {
+function ServicesListCtrl($scope, $location, $route, $routeParams, profileService, userData, ngDialog) {
   $scope.services = [];
   $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
-  $scope.query = {};
-  $scope.query.text = '';
+  $scope.query = $location.search();
   $scope.servicesPromise;
 
   $scope.submitSearch = function() {
@@ -70,12 +69,53 @@ function ServicesListCtrl($scope, $route, $routeParams, profileService, userData
         $scope.services = response.data;
         $scope.services.forEach(function (service) {
           service.editAllowed = false;
+          service.subscribed = false;
           if (userData.profile.roles.indexOf('admin') != -1 || service.userid == userData.profile.userid) {
             service.editAllowed = true;
+          }
+          if (userData.profile.subscriptions) {
+            userData.profile.subscriptions.forEach(function (sub) {
+              if (sub.service === service._id) {
+                service.subscribed = true;
+              }
+            });
           }
         });
         
       }
+    });
+  }
+
+  $scope.subscribeDialog = function(service) {
+    ngDialog.open({
+      template: 'partials/subscribeService.html',
+      controller: ['$scope', 'profileService', function ($scope, profileService) {
+        $scope.service = service;
+        $scope.email = '';
+        $scope.subscribe = function () {
+          profileService.subscribeService(service, $scope.email, userData.profile).then(function (response) {
+            if (response.status === 204) {
+              $scope.closeThisDialog();
+              service.subscribed = true;
+            }
+          }, function (message) {
+            alert(message);
+          });
+        };
+      }]
+    });
+  }
+
+  $scope.unsubscribeDialog = function (service) {
+    ngDialog.openConfirm({
+      template: '<p>Are you sure you want to unsubscribe ?</p><div class="ngdialog-buttons"><button type="button" class="btn btn-primary" ng-click="confirm(1)">Yes</button> <button type="button" class="btn btn-default" ng-click="closeThisDialog(0)">No</button></div>',
+      plain: true
+    }).then(function () {
+      profileService.unsubscribeService(service, userData.profile).then(function (response) {
+        service.subscribed = false;
+      }, function (message) {
+        alert('There was an error unsubscribing: ' + message);
+      });
     });
   }
 

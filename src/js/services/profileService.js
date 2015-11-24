@@ -32,6 +32,9 @@
       deleteContactFromList: deleteContactFromList,
       deleteList: deleteList,
       deleteService: deleteService,
+      subscribeService: subscribeService,
+      unsubscribeService: unsubscribeService,
+      getSubscriptions: getSubscriptions,
       getProfileData: getProfileData,
       saveProfile: saveProfile,
       deleteProfile: deleteProfile,
@@ -352,6 +355,42 @@
         method: "delete",
         url: contactsId.profilesBaseUrl + "/v0.1/services/" + service._id,
         params: {access_token: authService.getAccessToken()},
+      });
+      return (request.then(handleSuccessv01, handleError));
+    }
+
+    // Subscribe a user to a service
+    function subscribeService(service, email, profile) {
+      var pid = profile._id;
+      var request;
+      request = $http({
+        method: "post",
+        url: contactsId.profilesBaseUrl + "/v0.1/profiles/" + pid + "/subscriptions",
+        params: { access_token: authService.getAccessToken() },
+        data: { service: service._id, email: email }
+      });
+      return (request.then(handleSuccessv01, handleError));
+    }
+
+    // Unsubscribe user from service
+    function unsubscribeService(service, profile) {
+      var pid = profile._id;
+      var request;
+      request = $http({
+        method: "delete",
+        url: contactsId.profilesBaseUrl + "/v0.1/profiles/" + pid + "/subscriptions/" + service._id,
+        params: { access_token: authService.getAccessToken() }
+      });
+      return (request.then(handleSuccessv01, handleError));
+    }
+
+    // Get subscriptions of a profile
+    function getSubscriptions(profile) {
+      var request;
+      request = $http({
+        method: "get",
+        url: contactsId.profilesBaseUrl + "/v0.1/profiles/" + profile._id + "/subscriptions",
+        params: { access_token: authService.getAccessToken() }
       });
       return (request.then(handleSuccessv01, handleError));
     }

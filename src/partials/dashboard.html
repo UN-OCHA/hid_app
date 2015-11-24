@@ -119,6 +119,34 @@
         </li>
       </ul>
 
+      <h3><span translate>Subscription Services</span> : <a href="#/services/add" class="btn btn-dashboard pull-right" title="Create New Service"><i class="fa fa-plus-square"></i></a></h3>
+
+      <form class="search-form">
+        <div class="form-group">
+          <label class="control-label element-invisible" for="text" translate>Search</label>
+          <div class="input-groupx">
+            <input class="form-control contact-search" type="search" name="servicesText"
+                 placeholder="{{'Search services'|translate}}" ng-model="servicesText" ng-disabled="isOffline()"/>
+            <input class="btn btn-lg contact-search-submit" type="submit" ng-click="servicesSearch()" ng-disabled="isOffline()" value="{{'Search'|translate}}"/>
+          </div>
+        </div>
+      </form>
+
+      <ul class="subscriptions-container list-group">
+        <li class="profile-item list-group-item" ng-repeat="subscription in subscriptions">
+          <div class="row">
+            <div class="contact-item contact-item--name col-xs-12 col-md-3" >
+              {{subscription.service.name}} <span class="label label-primary" translate>Subscribed</span>
+            </div>
+            <div class="btn-group">
+              <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-click="unsubscribeDialog(subscription.service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times"></i></a>
+              <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="subscription.service.editAllowed" href="#/services/{{subscription.service._id}}/edit" title="{{'Edit' | translate}}"><i class="fa fa-cog"></i></a>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+
       <div class="mobile-checkin visible-xs">
         <a class="btn btn-primary btn-lg btn-block" href="#/checkin">
           <span class="fa fa-angle-right"></span> <span translate>Check-in</span>
