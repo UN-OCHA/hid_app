@@ -161,11 +161,33 @@
           <i class="entypo user"></i> <span translate>Global Profile</span>
         </a>
         <h3><span translate>View a Country</span> :</h3>
-        <select class="form-control form-control-light" ng-options="operation as operation.name for operation in availOperations" ng-model="item" ng-change="toOperation()" ng-disabled="isOffline()">
-        </select>
+        <ui-select
+            ng-model="country"
+            ng-disabled="isOffline()"
+            theme="bootstrap"
+            class="form-control"
+            name="operations"
+            reset-search-input="true"
+            on-select="toOperation($item, $model)">
+              <ui-select-match allow-clear placeholder="{{'Country' | translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices ng-class="{'not-empty': availOperations.length}" repeat="operation.name as operation in availOperations | orderBy:'name' | filter: $select.search">
+                <div ng-bind-html="operation.name  | highlight: $select.search"></div>
+              </ui-select-choices>
+          </ui-select>
         <h3><span translate>View a Disaster</span> :</h3>
-        <select class="form-control form-control-light" ng-options="disaster as disaster.name for disaster in disasterOptions | orderBy:'name'" ng-model="item" ng-change="toDisaster()" ng-disabled="isOffline()">
-        </select>
+        <ui-select
+            ng-model="disaster"
+            ng-disabled="isOffline()"
+            theme="bootstrap"
+            class="form-control"
+            name="operations"
+            reset-search-input="true"
+            on-select="toDisaster($item, $model)">
+              <ui-select-match allow-clear placeholder="{{'Disaster' | translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices ng-class="{'not-empty': disasterOptions.length}" repeat="disaster.name as disaster in disasterOptions | orderBy:'name' | filter: $select.search">
+                <div ng-bind-html="disaster.name  | highlight: $select.search"></div>
+              </ui-select-choices>
+          </ui-select>
       </div>
     </div>
   </div>

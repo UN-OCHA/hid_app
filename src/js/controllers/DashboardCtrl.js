@@ -135,9 +135,9 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
           caption: 'Humanitarian ID - always my latest details.',
           description: 'In a humanitarian crisis, an accurate contact list is critical to help ensure an effective response. You can "check-in" to a crisis and provide your locally relevant contact details. When you leave the crisis, you simply "check-out".',
           title: title,
-          picture: 'http://humanitarian.id/wp-content/uploads/2015/08/HID_fbshare.png',
+          picture: 'http://about.humanitarian.id/wp-content/uploads/2015/08/HID_fbshare.png',
           href: 'http://humanitarian.id',
-          redirect_uri: 'http://humanitarian.id/close.html',
+          redirect_uri: 'http://about.humanitarian.id/close.html',
           // locale: 'en_US',
           display: 'iframe',
           sdk: 'joey'//,
@@ -166,11 +166,11 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
     $window.open(baseLink, 'sharer', size);
   };
 
-  $scope.toOperation = function() {
-    $location.path('/list/' + $scope.item.remote_id);
+  $scope.toOperation = function(country) {
+    $location.path('/list/' + country.remote_id);
   };
 
-  $scope.toDisaster = function() {
-    $location.path('/list/global').search("disasters.remote_id", $scope.item.remote_id);
+  $scope.toDisaster = function(disaster) {
+    $location.path('/list/global').search("disasters.remote_id", disaster.remote_id);
   };
 }
