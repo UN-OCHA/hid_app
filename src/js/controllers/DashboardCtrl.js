@@ -166,11 +166,11 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
     $window.open(baseLink, 'sharer', size);
   };
 
-  $scope.toOperation = function() {
-    $location.path('/list/' + $scope.item.remote_id);
+  $scope.toOperation = function(country) {
+    $location.path('/list/' + country.remote_id);
   };
 
-  $scope.toDisaster = function() {
-    $location.path('/list/global').search("disasters.remote_id", $scope.item.remote_id);
+  $scope.toDisaster = function(disaster) {
+    $location.path('/list/global').search("disasters.remote_id", disaster.remote_id);
   };
 }
