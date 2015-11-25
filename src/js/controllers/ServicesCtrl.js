@@ -1,4 +1,4 @@
-function ServicesCtrl($scope, $location, $route, $routeParams, profileService, userData, service) {
+function ServicesCtrl($scope, $location, $route, $routeParams, profileService, userData, ngDialog, service) {
 
   $scope.service = service;
   $scope.mc_lists = [];
@@ -21,13 +21,18 @@ function ServicesCtrl($scope, $location, $route, $routeParams, profileService, u
     });
   }
 
-  $scope.deleteService = function() {
-    profileService.deleteService($scope.service).then(function (response) {
-      if (response.status == 204) {
-        $scope.addAlert('success', 'Service deleted successfully.');
-      }
-    }, function (message) {
-      $scope.addAlert('danger', message);
+  $scope.deleteServiceDialog = function() {
+    ngDialog.openConfirm({
+      template: '<h3>Confirm deletion of ' + service.name + ' Subscription Service</h3><p>You are about to delete ' + service.name + ' Subscription Service from Humanitarian ID. By deleting ' + service.name + ', users and managers will no longer be able to subscribe to ' + service.name + ' through Humanitarian ID. We will NOT remove any subscribed users from the external service provider and thus recommend you do so if appropriate.</p><div class="ngdialog-buttons"><button type="button" class="btn btn-primary" ng-click="confirm(1)">Yes</button> <button type="button" class="btn btn-default" ng-click="closeThisDialog(0)">No</button></div>',
+      plain: true
+    }).then(function () {
+      profileService.deleteService($scope.service).then(function (response) {
+        if (response.status === 204) {
+          $scope.addAlert('success', 'Service deleted successfully.');
+        }
+      }, function (message) {
+        $scope.addAlert('danger', 'There was an error deleting this service: ' + message);
+      });
     });
   }
 
