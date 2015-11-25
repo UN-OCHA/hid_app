@@ -61,7 +61,6 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
   $scope.services = [];
   $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
   $scope.query = $location.search();
-  $scope.servicesPromise;
 
   $scope.submitSearch = function() {
     $scope.servicesPromise = profileService.getServices($scope.query.text).then(function (response) {
