@@ -5,7 +5,9 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   $scope.globalProfileId = globalProfileId;
   $scope.userData = userData;
   $scope.userCanCreateAccount = profileService.canCreateAccount();
-  $scope.localContacts = filter(userData.contacts, function(d){ return d.type === "local"})
+  $scope.localContacts = filter(userData.contacts, function(d){ return d.type === "local"});
+  $scope.isAdmin = userData.profile.roles.indexOf('admin') != -1;
+  $scope.isManager = userData.profile.roles.indexOf('manager') != -1;
 
   // Exclude operations for which the user is already checked in.
   var availOperations = angular.copy(operations);
