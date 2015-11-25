@@ -66,6 +66,16 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
   $scope.services = [];
   $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
   $scope.query = $location.search();
+  $scope.userEmails = [];
+  userData.contacts.forEach(function (item) {
+    if (item.email && item.email.length) {
+      item.email.forEach(function (email) {
+        if ($scope.userEmails.indexOf(email.address) === -1) {
+          $scope.userEmails.push(email.address);
+        }
+      });
+    }
+  });
 
   $scope.submitSearch = function() {
     $scope.servicesPromise = profileService.getServices($scope.query.text).then(function (response) {
@@ -94,6 +104,7 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
     ngDialog.open({
       template: 'partials/subscribeService.html',
       showClose: false,
+      scope: $scope,
       controller: ['$scope', 'profileService', function ($scope, profileService) {
         $scope.service = service;
         $scope.email = '';
