@@ -30,6 +30,8 @@
       unfollowList: unfollowList,
       addContactToList: addContactToList,
       deleteContactFromList: deleteContactFromList,
+      checkInContact: checkInContact,
+      checkOutContact: checkOutContact,
       deleteList: deleteList,
       deleteService: deleteService,
       subscribeService: subscribeService,
@@ -160,16 +162,16 @@
       if (!terms) {
         var terms = {};
       }
-
+      var list_id = terms.id;
       terms.access_token = authService.getAccessToken();
-      var request = offlineCache.cacheData(contactsId.profilesBaseUrl + "/v0/profile/view",
+      var request = offlineCache.cacheProfiles(contactsId.profilesBaseUrl + "/v0.1/lists/"+list_id+"/profiles",
         terms);
       return request;
     }
 
     // Get profiles that match specified parameters.
     function getProfiles(terms) {
-      var request = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/profile/view",
+      var request = offlineCache.getProfiles(contactsId.profilesBaseUrl + "/v0/profile/view",
         $.extend({}, terms, {access_token: authService.getAccessToken()}) );
       return request;
     }
@@ -337,6 +339,28 @@
         params: {access_token: authService.getAccessToken()},
       });
       return (request.then(handleSuccess, handleError));
+    }
+
+    // Check a contact in
+    function checkInContact(contactId) {
+      var request;
+      request = $http({
+        method: 'put',
+        url: contactsId.profilesBaseUrl + "/v0.1/contacts/" + contactId + "/checkin",
+        params: {access_token: authService.getAccessToken()},
+      });
+      return (request.then(handleSuccessv01, handleError));
+    }
+
+    // Checkout a contact
+    function checkOutContact(contactId) {
+      var request;
+      request = $http({
+        method: 'delete',
+        url: contactsId.profilesBaseUrl + "/v0.1/contacts/" + contactId + "/checkin",
+        params: {access_token: authService.getAccessToken()},
+      });
+      return (request.then(handleSuccessv01, handleError));
     }
 
     function deleteList(list) {

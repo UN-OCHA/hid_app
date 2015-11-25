@@ -81,7 +81,7 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
   });
 });
 
-app.run(function ($rootScope, $timeout, $location, profileService){
+app.run(function ($rootScope, $location, $timeout, profileService){
   
   function cacheLists() {
     var cached = false;
@@ -98,6 +98,7 @@ app.run(function ($rootScope, $timeout, $location, profileService){
 
           //cache list details for each list in profile
           angular.forEach(profileData.lists, function(list, listIndex){
+            cacheRequests++;
             var terms = {};
             terms.contactList = true;
             terms.limit = 30; //api still returns all objects without limit
@@ -110,16 +111,11 @@ app.run(function ($rootScope, $timeout, $location, profileService){
 
             //cache each contact in list
             profileService.cacheLists(terms).then(function(listData){
-              if (listData && listData.status && listData.status === 'ok' && listData.lists.contacts && listData.lists.contacts.length > 0) {
-                angular.forEach(listData.lists.contacts, function(contact, profileIndex){
-                  $timeout(function(){
-                    cacheRequests++;
-                    profileService.cacheProfiles({contactId: contact._id}).then(function(){
-                      cacheResponses++;
-                    },function(){
-                      cacheResponses++;
-                    });
-                  },200);
+              if (listData && listData.status && listData.status === 'ok' && listData.lists) {
+                profileService.cacheProfiles({id: listData.lists._id}).then(function(){
+                  cacheResponses++;
+                }, function() {
+                  cacheResponses++;
                 });
               }
             });
@@ -145,7 +141,7 @@ app.run(function ($rootScope, $timeout, $location, profileService){
     return Offline.state;
   }, function(newValue, oldValue){
     if (newValue === "up" && oldValue === "down"){
-      console.log('Caching custom lists after restoring network');
+      console.log('DEBUG: Caching custom lists after restoring network');
       $rootScope.cacheCustomLists(true);
     }
   })
@@ -176,6 +172,7 @@ app.controller("ProfileCtrl", ["$scope", "$location", "$route", "$routeParams", 
 app.controller("RegisterCtrl", ["$scope", RegisterCtrl]);
 app.controller("AddToCustomListCtrl", ["$scope", "profileService", AddToCustomListCtrl]);
 app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$http", "authService", "profileService", "list", "gettextCatalog", "ngDialog", CustomListSettingsCtrl]);
+app.controller("CheckInCtrl", ["$scope", "$location", "$routeParams", "profileService", CheckInCtrl]);
 app.controller("ServicesCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "service", ServicesCtrl]);
 app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", ServicesListCtrl]);
 
@@ -411,6 +408,11 @@ app.config(function($routeProvider, $locationProvider) {
         };
       }
     }
+  }).
+  when('/contact/:contactId/checkin', {
+    template: '',
+    controller: 'CheckInCtrl',
+    requireAuth: true
   }).
   when('/list/:locationId', {
     templateUrl: contactsId.sourcePath + '/partials/list.html',

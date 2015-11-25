@@ -144,8 +144,8 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
       showClose: false,
       controller: ['$scope', 'profileService', function($scope, profileService) {
         $scope.delete = function() {
-          profileService.deleteList($scope.list).then(function(data) {
-            if (data && data.status && data.status === 'ok') {
+          profileService.deleteList($scope.list).then(function(response) {
+            if (response.status === 204) {
               $location.path('/dashboard');
             }
             else {

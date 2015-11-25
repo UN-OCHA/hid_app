@@ -181,6 +181,7 @@ module.exports = function(grunt) {
             'src/js/translations.js',
             'src/js/controllers/AboutCtrl.js',
             'src/js/controllers/AddToCustomListCtrl.js',
+            'src/js/controllers/CheckInCtrl.js',
             'src/js/controllers/ContactCtrl.js',
             'src/js/controllers/CreateAccountCtrl.js',
             'src/js/controllers/CustomListSettingsCtrl.js',

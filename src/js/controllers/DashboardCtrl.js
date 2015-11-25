@@ -9,6 +9,8 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   $scope.isAdmin = userData.profile.roles.indexOf('admin') != -1;
   $scope.isManager = userData.profile.roles.indexOf('manager') != -1;
 
+  $scope.operations = operations;
+
   // Exclude operations for which the user is already checked in.
   var availOperations = angular.copy(operations);
 
@@ -21,6 +23,9 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
     return a.name && b.name ? String(a.name).localeCompare(b.name) : false;
   });
 
+  $timeout(function(){
+    $scope.cacheCustomLists();
+  }, 2000);
   var allDisasters = {};
   $scope.disasterOptions = [];
   angular.forEach($scope.availOperations, function (oper, opId) {
@@ -35,11 +40,6 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   angular.forEach(allDisasters, function (val, key){
     this.push(val);
   },$scope.disasterOptions);
-
-
-  $timeout(function(){
-    $scope.cacheCustomLists();
-  }, 2000);
 
 
   $scope.customContactsPromise = profileService.getLists().then(function(data) {
@@ -172,9 +172,9 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
           caption: 'Humanitarian ID - always my latest details.',
           description: 'In a humanitarian crisis, an accurate contact list is critical to help ensure an effective response. You can "check-in" to a crisis and provide your locally relevant contact details. When you leave the crisis, you simply "check-out".',
           title: title,
-          picture: 'http://humanitarian.id/wp-content/uploads/2015/08/HID_fbshare.png',
+          picture: 'http://about.humanitarian.id/wp-content/uploads/2015/08/HID_fbshare.png',
           href: 'http://humanitarian.id',
-          redirect_uri: 'http://humanitarian.id/close.html',
+          redirect_uri: 'http://about.humanitarian.id/close.html',
           // locale: 'en_US',
           display: 'iframe',
           sdk: 'joey'//,
@@ -203,11 +203,11 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
     $window.open(baseLink, 'sharer', size);
   };
 
-  $scope.toOperation = function() {
-    $location.path('/list/' + $scope.item.remote_id);
+  $scope.toOperation = function(country) {
+    $location.path('/list/' + country.remote_id);
   };
 
-  $scope.toDisaster = function() {
-    $location.path('/list/global').search("disasters.remote_id", $scope.item.remote_id);
+  $scope.toDisaster = function(disaster) {
+    $location.path('/list/global').search("disasters.remote_id", disaster.remote_id);
   };
 }
