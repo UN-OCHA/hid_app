@@ -1,0 +1,11 @@
+<div class="panel panel-primary">
+  <div class="panel-heading" translate>Confirm deletion of {{service.name}} Subscription Service</div>
+  <div class="panel-body">
+    <p translate>You are about to delete {{service.name}} Subscription Service from Humanitarian ID. By deleting {{service.name}}, users and managers will no longer be able to subscribe to {{service.name}} through Humanitarian ID. We will NOT remove any subscribed users from the external service provider and thus recommend you do so if appropriate.</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6 margin-bottom"><button class="btn btn-primary btn-lg btn-block" ng-click="confirm(1)" translate>Yes</button></div>
+  <div class="col-sm-6"><button class="btn btn-default btn-lg btn-block" ng-click="closeThisDialog()" type="button" translate>No</button></div>
+</div>
+

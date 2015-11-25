@@ -23,8 +23,8 @@ function ServicesCtrl($scope, $location, $route, $routeParams, profileService, u
 
   $scope.deleteServiceDialog = function() {
     ngDialog.openConfirm({
-      template: '<h3>Confirm deletion of ' + service.name + ' Subscription Service</h3><p>You are about to delete ' + service.name + ' Subscription Service from Humanitarian ID. By deleting ' + service.name + ', users and managers will no longer be able to subscribe to ' + service.name + ' through Humanitarian ID. We will NOT remove any subscribed users from the external service provider and thus recommend you do so if appropriate.</p><div class="ngdialog-buttons"><button type="button" class="btn btn-primary" ng-click="confirm(1)">Yes</button> <button type="button" class="btn btn-default" ng-click="closeThisDialog(0)">No</button></div>',
-      plain: true
+      template: 'partials/serviceDelete.html',
+      scope: $scope,
     }).then(function () {
       profileService.deleteService($scope.service).then(function (response) {
         if (response.status === 204) {
@@ -93,6 +93,7 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
   $scope.subscribeDialog = function(service) {
     ngDialog.open({
       template: 'partials/subscribeService.html',
+      showClose: false,
       controller: ['$scope', 'profileService', function ($scope, profileService) {
         $scope.service = service;
         $scope.email = '';
@@ -111,9 +112,10 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
   }
 
   $scope.unsubscribeDialog = function (service) {
+    $scope.service = service;
     ngDialog.openConfirm({
-      template: '<p>Are you sure you want to unsubscribe ?</p><div class="ngdialog-buttons"><button type="button" class="btn btn-primary" ng-click="confirm(1)">Yes</button> <button type="button" class="btn btn-default" ng-click="closeThisDialog(0)">No</button></div>',
-      plain: true
+      template: 'partials/unsubscribeService.html',
+      scope: $scope,
     }).then(function () {
       profileService.unsubscribeService(service, userData.profile).then(function (response) {
         service.subscribed = false;

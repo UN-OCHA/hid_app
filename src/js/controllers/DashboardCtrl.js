@@ -91,9 +91,10 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   });
 
   $scope.unsubscribeDialog = function (service) {
+    $scope.service = service;
     ngDialog.openConfirm({
-      template: '<p>Are you sure you want to unsubscribe ?</p><div class="ngdialog-buttons"><button type="button" class="btn btn-primary" ng-click="confirm(1)">Yes</button> <button type="button" class="btn btn-default" ng-click="closeThisDialog(0)">No</button></div>',
-      plain: true
+      template: 'partials/unsubscribeService.html',
+      scope: $scope
     }).then(function () {
       profileService.unsubscribeService(service, userData.profile).then(function (response) {
         var index = -1;

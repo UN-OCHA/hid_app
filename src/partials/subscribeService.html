@@ -1,9 +1,12 @@
-<div class="ngdialog-message">
-  <h3>Subscribe to {{service.name}}</h3>
-  <p>Please enter the email address you would like to use to subscribe to {{service.name}}</p>
-  <input type="text" name="email" ng-model="email" placeholder="Email address" />
+<div class="panel panel-primary">
+  <div class="panel-heading" translate>Subscribe to {{service.name}}</div>
+  <div class="panel-body">
+    <p translate>Please enter the email address you would like to use to subscribe to {{service.name}}</p>
+    <input type="text" name="email" ng-model="email" placeholder="Email address" />
+  </div>
 </div>
-<div class="ngdialog-buttons">
-  <button type="button" class="btn btn-primary" ng-click="subscribe()">Subscribe</button>
-  <button type="button" class="btn btn-default" ng-click="closeThisDialog()">Cancel</button>
+<div class="row">
+  <div class="col-sm-6 margin-bottom"><button class="btn btn-primary btn-lg btn-block" ng-click="subscribe()" translate>Subscribe</button></div>
+  <div class="col-sm-6"><button class="btn btn-default btn-lg btn-block" ng-click="closeThisDialog()" type="button" translate>Close</button></div>
 </div>
+
