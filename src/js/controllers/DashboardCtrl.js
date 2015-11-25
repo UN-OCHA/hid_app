@@ -1,11 +1,13 @@
-function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, profileService, globalProfileId, userData, operations) {
+function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, profileService, globalProfileId, userData, operations, ngDialog) {
   var filter = $filter('filter');
 
   $scope.logoutPath = '/#logout';
   $scope.globalProfileId = globalProfileId;
   $scope.userData = userData;
   $scope.userCanCreateAccount = profileService.canCreateAccount();
-  $scope.localContacts = filter(userData.contacts, function(d){ return d.type === "local"})
+  $scope.localContacts = filter(userData.contacts, function(d){ return d.type === "local"});
+  $scope.isAdmin = userData.profile.roles.indexOf('admin') != -1;
+  $scope.isManager = userData.profile.roles.indexOf('manager') != -1;
 
   $scope.operations = operations;
 
@@ -75,6 +77,41 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
       }
     }
   });
+
+  $scope.subscriptionsPromise = profileService.getSubscriptions(userData.profile).then(function (response) {
+    if (response.status == 200) {
+      $scope.subscriptions = response.data;
+      $scope.subscriptions.forEach(function (subscription) {
+        subscription.service.editAllowed = false;
+        if (userData.profile.roles.indexOf('admin') != -1 || service.userid == userData.profile.userid) {
+          subscription.service.editAllowed = true;
+        }
+      });
+    }
+  });
+
+  $scope.unsubscribeDialog = function (service) {
+    ngDialog.openConfirm({
+      template: '<p>Are you sure you want to unsubscribe ?</p><div class="ngdialog-buttons"><button type="button" class="btn btn-primary" ng-click="confirm(1)">Yes</button> <button type="button" class="btn btn-default" ng-click="closeThisDialog(0)">No</button></div>',
+      plain: true
+    }).then(function () {
+      profileService.unsubscribeService(service, userData.profile).then(function (response) {
+        var index = -1;
+        for (var i = 0; i < $scope.subscriptions.length; i++) {
+          if ($scope.subscriptions[i].service._id === service._id) {
+            index = i;
+          }
+        }
+        $scope.subscriptions.splice(index, 1);
+      }, function (message) {
+        alert('There was an error unsubscribing: ' + message);
+      });
+    });
+  }
+
+  $scope.servicesSearch = function () {
+    $location.path('/services').search('text', $scope.servicesText);
+  }
 
   $scope.unfollowContactList = function(list, index) {
     profileService.unfollowList(list).then(function(data) {

@@ -160,7 +160,7 @@ app.run(function ($rootScope, $location, $timeout, profileService){
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
 app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", "md5", ContactCtrl]);
 app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", "countries", CreateAccountCtrl]);
-app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location","$timeout", "profileService", "globalProfileId", "userData", "operations", DashboardCtrl]);
+app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location","$timeout", "profileService", "globalProfileId", "userData", "operations", "ngDialog", DashboardCtrl]);
 app.controller("DefaultCtrl", ["$scope", "$location", "authService", DefaultCtrl]);
 app.controller("404Ctrl", ["$scope", FourZeroFourCtrl]);
 app.controller("NumbersCtrl", ["$scope", NumbersCtrl]);
@@ -173,6 +173,8 @@ app.controller("RegisterCtrl", ["$scope", RegisterCtrl]);
 app.controller("AddToCustomListCtrl", ["$scope", "profileService", AddToCustomListCtrl]);
 app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$http", "authService", "profileService", "list", "gettextCatalog", "ngDialog", CustomListSettingsCtrl]);
 app.controller("CheckInCtrl", ["$scope", "$location", "$routeParams", "profileService", CheckInCtrl]);
+app.controller("ServicesCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "service", ServicesCtrl]);
+app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", ServicesListCtrl]);
 
 
 app.config(function($routeProvider, $locationProvider) {
@@ -534,6 +536,62 @@ app.config(function($routeProvider, $locationProvider) {
             return false;
           }
         };
+      }
+    }
+  }).
+  when('/services/add', {
+    templateUrl: contactsId.sourcePath + '/partials/servicesEdit.html',
+    controller: 'ServicesCtrl',
+    requireAuth: true,
+    resolve: {
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
+      },
+      service: function() {
+        return {};
+      }
+    }
+  }).
+  when('/services/:serviceId/edit', {
+    templateUrl: contactsId.sourcePath + '/partials/servicesEdit.html',
+    controller: 'ServicesCtrl',
+    requireAuth: true,
+    resolve: {
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
+      },
+      service: function (profileService, $route) {
+        return profileService.getService($route.current.params.serviceId).then(function (response) {
+          if (response.status != 200) {
+            throw new Error('Could not find service');
+          }
+          return response.data;
+        });
+      }
+    }
+  }).
+  when('/services', {
+    templateUrl: contactsId.sourcePath + '/partials/services.html',
+    controller: 'ServicesListCtrl',
+    requireAuth: true,
+    resolve: {
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
       }
     }
   }).

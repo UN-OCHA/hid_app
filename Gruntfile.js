@@ -195,6 +195,7 @@ module.exports = function(grunt) {
             'src/js/controllers/ProfileCtrl.js',
             'src/js/controllers/RegisterCtrl.js',
             'src/js/controllers/NumbersCtrl.js',
+            'src/js/controllers/ServicesCtrl.js',
             'src/js/Chart.min.js',
             'src/js/app.js',
             'src/js/partials.js',

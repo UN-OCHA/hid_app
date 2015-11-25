@@ -82,3 +82,29 @@
     background-color: darken($brand-danger, 5);
   }
 }
+
+.btn-dashboard {
+  margin: 9px 8px;
+  padding: 0;
+  margin: 0 0 0 15px;
+  border-radius: 0;
+  background: $primary-color-2;
+  @media (min-width: 768px) {
+    margin: 0 0 0 10px;
+  }
+  i {
+    color: $white;
+    padding: 4px 6px;
+    box-shadow: 1px 1px 2px 0px $neutral-color-1;
+    @media (min-width: 768px) {
+      padding: 2px 4px;
+    }
+  }
+  .fa {
+    font-size: 25px;
+    font-weight: 100;
+    @media (min-width: 768px) {
+     font-size: 20px;
+    }
+  }
+}
