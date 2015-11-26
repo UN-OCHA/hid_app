@@ -588,6 +588,47 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     });
   }
 
+  // Edit subscriptions
+  $scope.editSubscriptionsModal = function(profile) {
+    ngDialog.open({
+      template: 'partials/subscriptions.html',
+      showClose: false,
+      scope: $scope,
+      controller: ['$scope', 'profileService', function ($scope, profileService) {
+        profileService.getSubscriptions(profile).then(function (response) {
+          if (response.status == 200) {
+            $scope.subscriptions = response.data;
+            $scope.subscriptions.forEach(function (subscription) {
+              subscription.service.editAllowed = false;
+            });
+          }
+        });
+
+        $scope.unsubscribeDialog = function (service) {
+          $scope.service = service;
+          ngDialog.openConfirm({
+            template: 'partials/unsubscribeService.html',
+            scope: $scope,
+          }).then(function () {
+            profileService.unsubscribeService(service, profile).then(function (response) {
+              var index = -1;
+              for (var i = 0; i < $scope.subscriptions.length; i++) {
+                if ($scope.subscriptions[i].service._id === service._id) {
+                  index = i;
+                }
+              }
+              if (index != -1) {
+                $scope.subscriptions.splice(index, 1);
+              }
+            }, function (message) {
+              alert('There was an error unsubscribing: ' + message);
+            });
+          });
+        }
+      }]
+    });
+  }
+
   $scope.toggleFollow = function() {
     var list = $scope.list;
     var cb = function (data) {
