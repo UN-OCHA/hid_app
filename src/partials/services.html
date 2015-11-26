@@ -18,10 +18,10 @@
 
     <form class="search-form">
       <div class="form-group">
-        <label class="control-label element-invisible" for="text" translate>Search</label>
+        <label class="control-label element-invisible" for="q" translate>Search</label>
         <div class="input-groupx">
           <input class="form-control contact-search" type="search" name="text"
-                 placeholder="{{'Search by name'|translate}}" ng-model="query.text" ng-disabled="isOffline()"/>
+                 placeholder="{{'Search by name'|translate}}" ng-model="query.q" ng-disabled="isOffline()"/>
           <input class="btn btn-lg contact-search-submit" type="submit" ng-click="submitSearch()" ng-disabled="isOffline()" value="{{'Search'|translate}}"/>
         </div>
       </div>

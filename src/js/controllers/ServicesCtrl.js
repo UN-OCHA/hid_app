@@ -78,7 +78,8 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
   });
 
   $scope.submitSearch = function() {
-    $scope.servicesPromise = profileService.getServices($scope.query.text).then(function (response) {
+    $scope.query.status = true;
+    $scope.servicesPromise = profileService.getServices($scope.query).then(function (response) {
       if (response.status == 200) {
         $scope.services = response.data;
         $scope.services.forEach(function (service) {
