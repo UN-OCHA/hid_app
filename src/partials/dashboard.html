@@ -134,7 +134,7 @@
       </form>
 
       <ul class="subscriptions-container list-group">
-        <li class="profile-item list-group-item" ng-repeat="subscription in subscriptions" ng-if="subscription.service.status === true">
+        <li class="profile-item list-group-item" ng-repeat="subscription in subscriptions" ng-if="subscription.service.status">
           <div class="row">
             <div class="contact-item contact-item--name col-xs-12 col-md-3" >
               {{subscription.service.name}} <span class="label label-primary" translate>Subscribed</span>
