@@ -111,7 +111,7 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   }
 
   $scope.servicesSearch = function () {
-    $location.path('/services').search('text', $scope.servicesText);
+    $location.path('/services').search('q', $scope.servicesText);
   }
 
   $scope.unfollowContactList = function(list, index) {

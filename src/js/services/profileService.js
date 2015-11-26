@@ -226,8 +226,8 @@
 
     function getServices(query) {
       var params = { access_token: authService.getAccessToken() };
-      if (query && query != '') {
-        params.q = query;
+      if (query) {
+        for (var attrname in query) { params[attrname] = query[attrname]; }
       }
       var request;
       request = $http({
