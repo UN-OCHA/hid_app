@@ -175,6 +175,7 @@ app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$htt
 app.controller("CheckInCtrl", ["$scope", "$location", "$routeParams", "profileService", CheckInCtrl]);
 app.controller("ServicesCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", "service", ServicesCtrl]);
 app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", ServicesListCtrl]);
+app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsCtrl]);
 
 
 app.config(function($routeProvider, $locationProvider) {
