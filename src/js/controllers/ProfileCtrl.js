@@ -1,4 +1,4 @@
-function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout, $http, profileService, authService, operations, profileData, countries, roles, protectedRoles, gettextCatalog, userData, md5) {
+function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout, $http, profileService, authService, operations, profileData, countries, roles, protectedRoles, gettextCatalog, userData, md5, ngDialog) {
   if($routeParams.profileId && !profileData.profile){
     // No profile data
     return false;
@@ -709,6 +709,17 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
   $scope.toggleOrganizationEditor = function () {
     $scope.isOrganizationEditor = !$scope.isOrganizationEditor;
+  }
+
+  // Edit subscriptions
+  $scope.editSubscriptionsModal = function(profile) {
+    $scope.profile_selected = profile;
+    ngDialog.open({
+      template: 'partials/subscriptions.html',
+      showClose: false,
+      scope: $scope,
+      controller: 'SubscriptionsCtrl',
+    });
   }
 
   // If profile is local, set preferred county code to checkin location.

@@ -72,6 +72,9 @@
               <li ng-if="contact.ql.userCanEditProfile">
                 <a role="menuitem" tabindex="-1" href="#/profile/{{contact._id}}" translate>Edit</a>
               </li>
+              <li ng-if="contact.ql.userCanEditProfile">
+                <a role="menuitem" tabindex="-1" ng-click="editSubscriptionsModal(contact._profile)" translate>Edit Subscriptions</a>
+              </li>
               <li ng-if="locationId !== 'global' && (userData.profile.userid == list.userid || isEditor) && list._id">
                 <a role="menuitem" tabindex="-1" ng-click="removeContact(contact)" ng-if="(userData.profile.userid == list.userid || isEditor) && list._id" translate>Remove from list</a>
               </li>

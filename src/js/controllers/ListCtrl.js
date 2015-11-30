@@ -588,6 +588,17 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     });
   }
 
+  // Edit subscriptions
+  $scope.editSubscriptionsModal = function(profile) {
+    $scope.profile_selected = profile;
+    ngDialog.open({
+      template: 'partials/subscriptions.html',
+      showClose: false,
+      scope: $scope,
+      controller: 'SubscriptionsCtrl',
+    });
+  }
+
   $scope.toggleFollow = function() {
     var list = $scope.list;
     var cb = function (data) {

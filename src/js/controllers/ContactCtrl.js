@@ -250,6 +250,17 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     });
   }
 
+  // Edit subscriptions
+  $scope.editSubscriptionsModal = function() {
+    $scope.profile_selected = $scope.profile;
+    ngDialog.open({
+      template: 'partials/subscriptions.html',
+      showClose: false,
+      scope: $scope,
+      controller: 'SubscriptionsCtrl',
+    });
+  }
+
   function setEditorOrganizations() {
     var editorOrgs = [];
     var profile;
