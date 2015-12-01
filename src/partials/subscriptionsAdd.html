@@ -1,0 +1,31 @@
+<div class="panel panel-primary" id="subscriptions-modal">
+  <div class="panel-heading">Subscribe to</div>
+
+  <form class="search-form">
+    <div class="form-group">
+      <label class="control-label element-invisible" for="q" translate>Search</label>
+      <div class="input-groupx">
+        <input class="form-control contact-search" type="search" name="text"
+               placeholder="{{'Search by name'|translate}}" ng-model="query.q" ng-disabled="isOffline()"/>
+        <input class="btn btn-lg contact-search-submit" type="submit" ng-click="submitSearch()" ng-disabled="isOffline()" value="{{'Search'|translate}}"/>
+      </div>
+    </div>
+  </form>
+
+  <ul class="list-group">
+    <li class="profile-item list-group-item" ng-repeat="service in services">
+      <div class="row">
+        <div class="contact-item contact-item--name col-xs-12 col-md-3" >
+          {{service.name}} <span class="label label-primary" ng-if="service.subscribed" translate>Subscribed</span>
+        </div>
+        <div class="btn-group">
+          <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-click="subscribeDialog(service)" ng-if="!service.subscribed" title="{{'Subscribe' | translate}}"><i class="fa fa-share-square"></i></a>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3"><button class="btn btn-default btn-lg btn-block" ng-click="closeThisDialog()" type="button">Close</button></div>
+</div>
+
