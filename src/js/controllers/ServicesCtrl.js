@@ -79,7 +79,6 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
 
   $scope.submitSearch = function() {
     $scope.query.status = true;
-    $scope.query.hidden = false;
     $scope.servicesPromise = profileService.getServices($scope.query).then(function (response) {
       if (response.status == 200) {
         $scope.services = response.data;
