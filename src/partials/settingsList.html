@@ -26,6 +26,11 @@
               <input type="radio" name="privacy" value="me" ng-model="list.privacy" /> Only visible to me
             </label>
           </div>
+          <div class="radio setting-radio" ng-class="{'setting-radio-selected': list.privacy == 'inlist'}">
+            <label>
+              <input type="radio" name="privacy" value="inlist" ng-model="list.privacy" /> Only visible to people on the list
+            </label>
+          </div>
           <div class="radio setting-radio" ng-class="{'setting-radio-selected' : list.privacy == 'all'}">
             <label>
               <input type="radio" name="privacy" value="all" ng-model="list.privacy" /> Anyone within Humanitarian ID can view with link<br />
