@@ -22,6 +22,10 @@
           <input class="form-control" type="text" name="name" ng-model="service.name" required/>
         </div>
         <div class="form-group">
+          <label class="control-label" for="hidden" translate>Hidden</label>
+          <input type="checkbox" ng-model="service.hidden" name="hidden" /> <span translate>Check this to hide this service</span>
+        </div>
+        <div class="form-group">
           <label class="control-label" for="type" translate>Service Type*</label>
           <select name="type" ng-model="service.type">
             <option value="mailchimp">Mailchimp</option>
