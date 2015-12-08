@@ -7,7 +7,7 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   $scope.userCanCreateAccount = profileService.canCreateAccount();
   $scope.localContacts = filter(userData.contacts, function(d){ return d.type === "local"});
   $scope.isAdmin = userData.profile.roles.indexOf('admin') != -1;
-  $scope.isManager = userData.profile.roles.indexOf('manager') != -1;
+  $scope.isManager = profileService.hasRole('manager');
 
   $scope.operations = operations;
 

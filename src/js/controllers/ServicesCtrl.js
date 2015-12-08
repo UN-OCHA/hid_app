@@ -4,6 +4,9 @@ function ServicesCtrl($scope, $location, $route, $routeParams, profileService, u
   $scope.mc_lists = [];
   $scope.alerts = [];
 
+  if (!$scope.service.locations) {
+    $scope.service.locations = [];
+  }
   $scope.service.locations.push("");
 
   $scope.operations = operations;
@@ -14,7 +17,9 @@ function ServicesCtrl($scope, $location, $route, $routeParams, profileService, u
   // Convert list into a sorted array
   $scope.availOperations = [];
   angular.forEach(availOperations, function (value, key) {
-    $scope.availOperations.push(value);
+    if (profileService.hasRole('admin') || profileService.hasRole('manager:' + key)) {
+      $scope.availOperations.push(value);
+    }
   });
   $scope.availOperations.sort(function (a, b) {
     return a.name && b.name ? String(a.name).localeCompare(b.name) : false;
