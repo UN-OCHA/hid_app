@@ -206,7 +206,7 @@
             reset-search-input="true"
             on-select="toOperation($item, $model)">
               <ui-select-match allow-clear placeholder="{{'Country' | translate}}">{{$select.selected.name}}</ui-select-match>
-              <ui-select-choices ng-class="{'not-empty': availOperations.length}" repeat="operation.name as operation in availOperations | orderBy:'name' | filter: $select.search">
+              <ui-select-choices ng-class="{'not-empty': availOperations.length}" repeat="operation.name as operation in availOperations | orderBy:'name' | filter: {name: $select.search }">
                 <div ng-bind-html="operation.name  | highlight: $select.search"></div>
               </ui-select-choices>
           </ui-select>
@@ -220,7 +220,7 @@
             reset-search-input="true"
             on-select="toDisaster($item, $model)">
               <ui-select-match allow-clear placeholder="{{'Disaster' | translate}}">{{$select.selected.name}}</ui-select-match>
-              <ui-select-choices ng-class="{'not-empty': disasterOptions.length}" repeat="disaster.name as disaster in disasterOptions | orderBy:'name' | filter: $select.search">
+              <ui-select-choices ng-class="{'not-empty': disasterOptions.length}" repeat="disaster.name as disaster in disasterOptions | orderBy:'name' | filter: {name: $select.search }">
                 <div ng-bind-html="disaster.name  | highlight: $select.search"></div>
               </ui-select-choices>
           </ui-select>
