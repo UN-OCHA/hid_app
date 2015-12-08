@@ -15,6 +15,9 @@
 <div class="main row page-list" ng-show='!isRouteLoading' ng-class="{'show-options': sidebarOptions}">
   <div class="active-contacts col-xs-12 col-sm-8 col-md-9 pull-right-hard">
     <browser-alert></browser-alert>
+    <div>
+      <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+    </div>
 
     <form class="search-form">
       <div class="form-group">

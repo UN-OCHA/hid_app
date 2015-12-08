@@ -622,8 +622,22 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       $scope.submitProcessing = true;
       profileService.saveContact(profile).then(function(data) {
         if (data && data.status && data.status === 'ok') {
-          $scope.back();
-          profileService.clearData();
+          if (checkinFlow) {
+            profileService.getServices({ location: profile.locationId }).then(function (resp) {
+              console.log(resp);
+              if (!resp.data.length) {
+                $scope.back();
+              }
+              else {
+                $location.path('/services/' + profile.locationId);
+              }
+              profileService.clearData();
+            });
+          }
+          else {
+            $scope.back();
+            profileService.clearData();
+          }
         }
         else {
           alert('An error occurred while updating this profile. Please reload and try the change again.');
