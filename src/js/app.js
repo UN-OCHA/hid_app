@@ -173,7 +173,7 @@ app.controller("RegisterCtrl", ["$scope", RegisterCtrl]);
 app.controller("AddToCustomListCtrl", ["$scope", "profileService", AddToCustomListCtrl]);
 app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$http", "authService", "profileService", "list", "gettextCatalog", "ngDialog", CustomListSettingsCtrl]);
 app.controller("CheckInCtrl", ["$scope", "$location", "$routeParams", "profileService", CheckInCtrl]);
-app.controller("ServicesCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", "service", ServicesCtrl]);
+app.controller("ServicesCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", "operations", "service", ServicesCtrl]);
 app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", ServicesListCtrl]);
 app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsCtrl]);
 app.controller("SubscriptionsAddCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsAddCtrl]);
@@ -554,6 +554,11 @@ app.config(function($routeProvider, $locationProvider) {
           return data;
         });
       },
+      operations : function(profileService) {
+        return profileService.getOperationsData().then(function(data) {
+          return data;
+        });
+      },
       service: function() {
         return {};
       }
@@ -569,6 +574,11 @@ app.config(function($routeProvider, $locationProvider) {
           if (!data || !data.profile || !data.contacts) {
             throw new Error('Your user data cannot be retrieved. Please sign in again.');
           }
+          return data;
+        });
+      },
+      operations : function(profileService) {
+        return profileService.getOperationsData().then(function(data) {
           return data;
         });
       },

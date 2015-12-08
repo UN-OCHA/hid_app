@@ -26,6 +26,25 @@
           <input type="checkbox" ng-model="service.hidden" name="hidden" /> <span translate>Check this to hide this service</span>
         </div>
         <div class="form-group">
+          <label class="control-label" translate>Operations</label>
+          <p translate>This service should be suggested when checking into the following operations:</p>
+          <div class="reveal btn-reveal" ng-repeat="location in service.locations track by $index">
+            <ui-select 
+            name="locations[{{$index}}]"
+            class="form-control form-control-light"
+            ng-model="service.locations[$index]"
+            theme="bootstrap">
+              <ui-select-match placeholder="Select an operation...">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices ng-class="{'not-empty': availOperations.length}" repeat="{name: operation.name, remote_id: operation.remote_id} as operation in availOperations | orderBy:'name' | filter: {name: $select.search }">
+                <div ng-bind-html="operation.name  | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+            <button type="button" ng-click="changeFieldEntries('locations')" ng-class="{'add' : $last}">
+              <i class="fa" ng-class="styleFieldEntries('locations')"></i>
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
           <label class="control-label" for="type" translate>Service Type*</label>
           <select name="type" ng-model="service.type">
             <option value="mailchimp">Mailchimp</option>
