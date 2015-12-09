@@ -131,6 +131,10 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
     }
   });
 
+  $scope.closeAlert = function(index) {
+    $scope.alerts.splice(index, 1);
+  };
+
   $scope.submitSearch = function() {
     $scope.query.status = true;
     if ($routeParams.locationId) {
