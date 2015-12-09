@@ -1,13 +1,24 @@
-function ServicesCtrl($scope, $location, $route, $routeParams, profileService, userData, ngDialog, operations, service) {
+function ServicesCtrl($scope, $location, $route, $routeParams, $http, authService, profileService, userData, ngDialog, operations, gettextCatalog, service) {
 
   $scope.service = service;
   $scope.mc_lists = [];
   $scope.alerts = [];
+  $scope.users = [];
 
   if (!$scope.service.locations) {
     $scope.service.locations = [];
   }
   $scope.service.locations.push("");
+
+  if (!$scope.service.owners) {
+    $scope.service.owners = [];
+  }
+  angular.forEach($scope.service.owners, function(owner,key){
+    if (owner && owner.userid) {
+      owner.userid = owner.userid.replace(/(_\d+)$/,'');
+    }
+  });
+  $scope.service.owners.push("");
 
   $scope.operations = operations;
 
@@ -24,6 +35,52 @@ function ServicesCtrl($scope, $location, $route, $routeParams, profileService, u
   $scope.availOperations.sort(function (a, b) {
     return a.name && b.name ? String(a.name).localeCompare(b.name) : false;
   });
+
+  $scope.refreshUsers = function(select, lengthReq) {
+    var helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
+        emptyOption = {action:'clear', name:"", alt: gettextCatalog.getString('No results found.'), disable: true};
+
+    // Remove text in parentheses.
+    select.search = select.search.replace(/ *\([^)]*\) */g, "");
+
+    if (select.search.length > (lengthReq || 0)) {
+      select.searching = true;
+
+      $http.get(contactsId.profilesBaseUrl + '/v0/contact/view', {
+        'params': {
+          'access_token': authService.getAccessToken(),
+          'globalContacts': true,
+          'limit': 30,
+          'skip': 0,
+          'sort': 'name',
+          'status': 1,
+          'type': 'global',
+          'text': encodeURIComponent(select.search)
+        }
+        })
+        .then(function(response) {
+          select.searching = false;
+          $scope.users = [];
+          angular.forEach(response.data.contacts, function(value, key) {
+            var email = value._profile.userid.replace(/(_\d+)$/,'');
+            this.push({
+              'name': value.nameGiven + ' ' + value.nameFamily,
+              'userid': value.nameGiven + ' ' + value.nameFamily + ' (' + email + ')',
+              '_id': value._profile._id
+            });
+          }, $scope.users);
+
+          if (!$scope.users.length) {
+            $scope.users.push(emptyOption);
+          }
+        });
+    }
+    else {
+      $scope.users = []
+      $scope.users.push(helpOption);
+    }
+  };
+
 
   $scope.changeFieldEntries = function(field) {
     if (this.$last) {
@@ -47,6 +104,15 @@ function ServicesCtrl($scope, $location, $route, $routeParams, profileService, u
   }
 
   $scope.saveService = function() {
+    var owners = [];
+    // Replace owners with id instead of object.
+    angular.forEach($scope.service.owners, function(owner, key) {
+      if (owner && owner._id) {
+        this.push(owner._id);
+      }
+    }, owners);
+    $scope.service.owners = owners;
+
     if (!$scope.service.userid) {
       $scope.service.userid = userData.profile.userid;
     }
@@ -61,6 +127,11 @@ function ServicesCtrl($scope, $location, $route, $routeParams, profileService, u
       }
       else if (response.status == 200) {
         $scope.service = response.data;
+        angular.forEach($scope.service.owners, function(owner,key){
+          if (owner && owner.userid) {
+            owner.userid = owner.userid.replace(/(_\d+)$/,'');
+          }
+        });
         $scope.addAlert('success', 'Service saved successfully.');
       }
     }, function (message) {

@@ -45,6 +45,29 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="control-label" translate>Owners</label>
+          <p translate>These people will be able to edit this service</p>
+          <div class="reveal btn-reveal" ng-repeat="owner in service.owners track by $index">
+            <ui-select
+              name="owners[{{$index}}]"
+              class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
+              ng-model="service.owners[$index]"
+              theme="bootstrap"
+              reset-search-input="true">
+                <ui-select-match allow-clear placeholder="{{'Please enter the names of HID users who own this service'|translate}}">{{$select.selected.userid}}</ui-select-match>
+                <ui-select-choices
+                  ng-class="{'not-empty': service.owners.length}"
+                  repeat="user in users | orderBy:'name'"
+                  refresh="refreshUsers($select, 2)">
+                  <div ng-class="{default: !user.name.length}" ng-bind-html="user.userid | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+            <button type="button" ng-click="changeFieldEntries('owners')" ng-class="{'add' : $last}">
+              <i class="fa" ng-class="styleFieldEntries('owners')"></i>
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
           <label class="control-label" for="type" translate>Service Type*</label>
           <select name="type" ng-model="service.type">
             <option value="mailchimp">Mailchimp</option>
