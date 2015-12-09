@@ -213,7 +213,7 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
         $scope.services.forEach(function (service) {
           service.editAllowed = false;
           service.subscribed = false;
-          if (!$routeParams.locationId && (userData.profile.roles.indexOf('admin') != -1 || service.userid == userData.profile.userid)) {
+          if (!$routeParams.locationId && (userData.profile.roles.indexOf('admin') != -1 || service.userid == userData.profile.userid || (service.owners && service.owners.indexOf(userData.profile._id) != -1))) {
             service.editAllowed = true;
           }
           if (userData.profile.subscriptions) {
