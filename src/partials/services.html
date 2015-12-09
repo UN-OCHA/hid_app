@@ -16,7 +16,7 @@
   <div class="active-contacts col-xs-12 col-sm-8 col-md-9 pull-right-hard">
     <browser-alert></browser-alert>
     <div>
-      <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+      <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</uib-alert>
     </div>
 
     <form class="search-form">
