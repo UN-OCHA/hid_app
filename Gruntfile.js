@@ -148,7 +148,8 @@ module.exports = function(grunt) {
           'src/libraries/angular-spinkit/build/angular-spinkit.min.css',
           'src/libraries/intl-tel-input/build/css/intlTelInput.css',
           'src/libraries/ngDialog/css/ngDialog.css',
-          'src/libraries/ngDialog/css/ngDialog-theme-default.css'
+          'src/libraries/ngDialog/css/ngDialog-theme-default.css',
+          'src/libraries/angular-loading-bar/build/loading-bar.min.css'
         ],
       },
       // Concatenates js files.
@@ -168,6 +169,7 @@ module.exports = function(grunt) {
             'src/libraries/angular-md5/angular-md5.min.js',
             'src/libraries/angular-ui-select/dist/select.min.js',
             'src/libraries/angular-inview/angular-inview.js',
+            'src/libraries/angular-loading-bar/build/loading-bar.min.js',
             'src/libraries/intl-tel-input/build/js/intlTelInput.js',
             'src/libraries/intl-tel-input/lib/libphonenumber/build/utils.js',
             'src/libraries/ngDialog/js/ngDialog.js',
