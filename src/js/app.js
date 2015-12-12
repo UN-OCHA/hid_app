@@ -1,6 +1,6 @@
 (function($, angular, contactsId, Offline) {
 // Initialize ng
-var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-md5', 'ui.bootstrap', 'angular-loading-bar']);
+var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-md5', 'ui.bootstrap', 'angular-loading-bar', 'ngIOS9UIWebViewPatch']);
 
 webshims.setOptions({
    waitReady: false,

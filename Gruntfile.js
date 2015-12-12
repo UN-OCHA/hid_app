@@ -177,6 +177,7 @@ module.exports = function(grunt) {
             'src/libraries/offline/offline.min.js',
             'src/libraries/localforage/dist/localforage.min.js',
             'src/js/libraries/angularjs-breakpoint/breakpoint-0.0.1.js',
+            'src/js/libraries/angular-ios9-uiwebview.patch.js',
             'src/js/directives/international-phone-number.js',
             'src/js/jso.js',
             'src/js/config.js',
