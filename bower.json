@@ -32,6 +32,7 @@
     "ngDialog": "~0.3.12",
     "offline": "0.7.13",
     "selectize": "~0.8.5",
-    "webshim": "~1.15.7"
+    "webshim": "~1.15.7",
+    "angular-loading-bar": "~0.8.0"
   }
 }
