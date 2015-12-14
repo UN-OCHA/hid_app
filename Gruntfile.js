@@ -206,7 +206,8 @@ module.exports = function(grunt) {
             'src/js/directives/routeLoadingIndicator.js',
             'src/js/services/authService.js',
             'src/js/services/profileService.js',
-            'src/js/services/cacheService.js'
+            'src/js/services/cacheService.js',
+            'src/js/services/flashService.js'
           ]
         }]
       }

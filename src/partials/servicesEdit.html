@@ -11,7 +11,7 @@
 <div ng-show='!isRouteLoading' class="main row page-dashboard">
   <div class="main-content col-xs-12 col-sm-8 col-md-9 pull-right-hard">
     <div>
-      <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+      <uib-alert ng-repeat="alert in flash.get()" type="{{alert.type}}" close="flash.close($index)">{{alert.msg}}</uib-alert>
     </div>
     <div class="custom-contacts-wrapper">
       <i translate>* Required Field</i>

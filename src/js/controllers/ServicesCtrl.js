@@ -1,8 +1,8 @@
-function ServicesCtrl($scope, $location, $route, $routeParams, profileService, userData, ngDialog, operations, service) {
+function ServicesCtrl($scope, $location, $route, $routeParams, profileService, flashService, userData, ngDialog, operations, service) {
 
   $scope.service = service;
   $scope.mc_lists = [];
-  $scope.alerts = [];
+  $scope.flash = flashService;
 
   if (!$scope.service.locations) {
     $scope.service.locations = [];
@@ -57,14 +57,15 @@ function ServicesCtrl($scope, $location, $route, $routeParams, profileService, u
     }
     profileService.saveService($scope.service).then(function(response) {  
       if (response.status == 201) {
+        flashService.set('Service saved successfully.', 'success');
         $location.path('/services/' + response.data._id + '/edit');
       }
       else if (response.status == 200) {
         $scope.service = response.data;
-        $scope.addAlert('success', 'Service saved successfully.');
+        flashService.set('Service saved successfully', 'success');
       }
     }, function (message) {
-      $scope.addAlert('danger', message);
+      flashService.set(message, 'danger');
     });
   }
 
@@ -75,10 +76,10 @@ function ServicesCtrl($scope, $location, $route, $routeParams, profileService, u
     }).then(function () {
       profileService.deleteService($scope.service).then(function (response) {
         if (response.status === 204) {
-          $scope.addAlert('success', 'Service deleted successfully.');
+          flashService.set('Service deleted successfully.', 'success');
         }
       }, function (message) {
-        $scope.addAlert('danger', 'There was an error deleting this service: ' + message);
+        flashService.set('There was an error deleting this service: ' + message, 'danger');
       });
     });
   }
@@ -91,22 +92,13 @@ function ServicesCtrl($scope, $location, $route, $routeParams, profileService, u
           });
       }
     }, function (message) {
-      $scope.alerts.push({type: 'danger', msg: message});
+      flashService.set(message, 'danger');
     });
   }
 
   if ($scope.service.mc_api_key) {
     $scope.getMailchimpLists();
   }
-
-  $scope.addAlert = function(type, message) {
-    $scope.alerts.length = 0;
-    $scope.alerts.push({type: type, msg: message});
-  };
-
-  $scope.closeAlert = function(index) {
-    $scope.alerts.splice(index, 1);
-  };
 }
 
 function ServicesListCtrl($scope, $location, $route, $routeParams, profileService, userData, ngDialog, operations) {
