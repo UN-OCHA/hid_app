@@ -17,6 +17,7 @@
         _browser.msie    = /msie/.test(uagent)    || /trident/.test(uagent);
         _browser.safari  = /safari/.test(uagent)  && /applewebkit/.test(uagent) && !/chrome/.test(uagent);
         _browser.opr     = /mozilla/.test(uagent) && /applewebkit/.test(uagent) &&  /chrome/.test(uagent) && /safari/.test(uagent) && /opr/.test(uagent);
+        _browser.ios     = /mobile/.test(uagent)  && /applewebkit/.test(uagent) && !/chrome/.test(uagent);
         _browser.version = '';
 
         for (x in _browser) {
@@ -40,6 +41,7 @@
         if( _browser.chrome
           || _browser.firefox
           || _browser.safari
+          || _browser.ios
           || (_browser.msie && parseFloat(_browser.version) && parseFloat(_browser.version) >= 10)) {
           scope.supported = true;
         }
