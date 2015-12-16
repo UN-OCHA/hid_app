@@ -38,6 +38,10 @@ app.value('cgBusyDefaults',{
   minDuration: 300
 });
 
+app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider){
+  cfpLoadingBarProvider.includeSpinner = false;
+}]);
+
 app.run(function ($rootScope, $location, $window, $timeout, authService) {
 
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
