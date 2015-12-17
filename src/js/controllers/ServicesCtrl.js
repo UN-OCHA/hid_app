@@ -119,6 +119,15 @@ function ServicesCtrl($scope, $location, $route, $routeParams, $http, authServic
     }
   }
 
+  // Triggered when changing service type. To be removed when multiple domains become available for google groups.
+  $scope.changeServiceType = function () {
+    if ($scope.service.type === 'googlegroup') {
+      // Set domain to humanitarian.id by default for now. To be removed when there are multiple domains to chose from
+      $scope.service.googlegroup ? $scope.service.googlegroup.domain = 'humanitarian.id' : $scope.service.googlegroup = { domain: 'humanitarian.id' };
+      $scope.setGoogleGroups($scope.service.googlegroup.domain);
+    }
+  }
+
   // Set the google groups for a given domain
   $scope.setGoogleGroups = function (domain) {
     profileService.getGoogleGroups(domain).then(function (response) {
