@@ -69,7 +69,7 @@
         </div>
         <div class="form-group">
           <label class="control-label" for="type" translate>Service Type*</label>
-          <select name="type" ng-model="service.type">
+          <select name="type" ng-model="service.type" ng-change="changeServiceType()">
             <option value="mailchimp">Mailchimp</option>
             <option value="googlegroup">Google Group</option>
           </select>
@@ -85,7 +85,7 @@
           </select>
         </div>
 
-        <div class="form-group" ng-if="service.type === 'googlegroup'">
+        <div class="form-group hidden" ng-if="service.type === 'googlegroup'">
           <label class="control-label" for="googlegroup_domain" translate>Domain</label>
           <select name="googlegroup_domain" ng-model="service.googlegroup.domain" ng-options="domain for domain in googlegroup_creds track by domain" ng-change="setGoogleGroups(service.googlegroup.domain)">
           </select>
