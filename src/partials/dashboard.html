@@ -112,7 +112,7 @@
                 <input type="text" class="form-control" id="listName" ng-model="list.name" required>
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" ng-disabled="contactInline.$invalid" ng-click="addCustomContactList(list)">Create List</button>
+                <button type="submit" class="btn btn-primary" ng-disabled="contactInline.$invalid || isOffline()" ng-click="addCustomContactList(list)">Create List</button>
               </div>
             </div>
           </div>
