@@ -1,7 +1,7 @@
 <div class="panel panel-primary" id="contact-modal">
   <div class="panel-heading">Select a list</div>
   <ul class="list-group">
-    <a class="list-group-item" ng-click="addToList(index)" ng-repeat="(index, list) in customContacts">
+    <a class="list-group-item" ng-click="addToList(index)" ng-repeat="(index, list) in customContacts | orderBy: 'name' ">
       {{list.name}}
       <i ng-if="list.addToList" class="fa fa-check-circle"></i>
     </a>
