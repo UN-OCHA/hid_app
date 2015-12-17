@@ -4,6 +4,8 @@ function ServicesCtrl($scope, $location, $route, $routeParams, $http, authServic
   $scope.mc_lists = [];
   $scope.flash = flashService;
   $scope.users = [];
+  $scope.googlegroup_creds = [];
+  $scope.googlegroups = [];
 
   if (!$scope.service.locations) {
     $scope.service.locations = [];
@@ -34,6 +36,20 @@ function ServicesCtrl($scope, $location, $route, $routeParams, $http, authServic
   });
   $scope.availOperations.sort(function (a, b) {
     return a.name && b.name ? String(a.name).localeCompare(b.name) : false;
+  });
+
+  // Get available service credentials
+  profileService.getServiceCredentials().then(function (response) {
+    angular.forEach(response.data, function (cred, key) {
+      if (cred.type === 'googlegroup') {
+        $scope.googlegroup_creds.push(cred.googlegroup.domain);
+      }
+    });
+    if ($scope.service.googlegroup && $scope.service.googlegroup.domain) {
+      $scope.setGoogleGroups($scope.service.googlegroup.domain);
+    }
+  }, function (message) {
+    flashService.set('Could not retrieve list of available google groups domains', 'danger');
   });
 
   $scope.refreshUsers = function(select, lengthReq) {
@@ -102,6 +118,15 @@ function ServicesCtrl($scope, $location, $route, $routeParams, $http, authServic
       return 'fa-remove';
     }
   }
+
+  // Set the google groups for a given domain
+  $scope.setGoogleGroups = function (domain) {
+    profileService.getGoogleGroups(domain).then(function (response) {
+       $scope.googlegroups = response.data;
+    }, function (message) {
+      flashService.set('There was an error retrieving groups for this domain', 'danger');
+    });
+  };
 
   $scope.saveService = function() {
     var owners = [];

@@ -24,6 +24,8 @@
       getService: getService,
       getServices: getServices,
       getMailchimpLists: getMailchimpLists,
+      getGoogleGroups: getGoogleGroups,
+      getServiceCredentials: getServiceCredentials,
       saveList: saveList,
       saveService: saveService,
       followList: followList,
@@ -238,6 +240,16 @@
       return (request.then(handleSuccessv01, handleError));
     }
 
+    function getServiceCredentials(query) {
+      var request;
+      request = $http({
+        method: 'get',
+        url: contactsId.profilesBaseUrl + '/v0.1/service_credentials',
+        params: { access_token: authService.getAccessToken() }
+      });
+      return (request.then(handleSuccessv01, handleError));
+    }
+
     function getMailchimpLists(mc_api_key) {
       var request;
       request = $http({
@@ -246,6 +258,19 @@
         params: {
           access_token: authService.getAccessToken(),
           mc_api_key: mc_api_key
+        }
+      });
+      return (request.then(handleSuccessv01, handleError));
+    }
+
+    function getGoogleGroups(domain) {
+      var request;
+      request = $http({
+        method: 'get',
+        url: contactsId.profilesBaseUrl + '/v0.1/services/google/groups',
+        params: {
+          access_token: authService.getAccessToken(),
+          domain: domain
         }
       });
       return (request.then(handleSuccessv01, handleError));
