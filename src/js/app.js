@@ -1,6 +1,6 @@
 (function($, angular, contactsId, Offline) {
 // Initialize ng
-var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-md5', 'ui.bootstrap', 'angular-loading-bar', 'ngIOS9UIWebViewPatch']);
+var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-md5', 'ui.bootstrap', 'angular-loading-bar', 'ngIOS9UIWebViewPatch', 'ngCsvImport']);
 
 webshims.setOptions({
    waitReady: false,
@@ -181,6 +181,7 @@ app.controller("ServicesCtrl", ["$scope", "$location", "$route", "$routeParams",
 app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", "operations", ServicesListCtrl]);
 app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsCtrl]);
 app.controller("SubscriptionsAddCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsAddCtrl]);
+app.controller("BulkAddCtrl", ["$scope","$http", BulkAddCtrl]);
 
 
 app.config(function($routeProvider, $locationProvider) {
@@ -615,6 +616,11 @@ app.config(function($routeProvider, $locationProvider) {
         });
       }
     }
+  }).
+  when('/bulkadd', {
+    templateUrl: contactsId.sourcePath + '/partials/bulkadd.html',
+    controller: 'BulkAddCtrl',
+    requireAuth: true
   }).
   when('/offline', {
     templateUrl: contactsId.sourcePath + '/partials/offline.html'

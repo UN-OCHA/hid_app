@@ -33,6 +33,7 @@
     "offline": "0.7.13",
     "selectize": "~0.8.5",
     "webshim": "~1.15.7",
-    "angular-loading-bar": "~0.8.0"
+    "angular-loading-bar": "~0.8.0",
+    "angular-csv-import-tmp": "angular-csv-import#~0.0.27"
   }
 }
