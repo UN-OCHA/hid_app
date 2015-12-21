@@ -32,6 +32,14 @@ function HeaderCtrl($scope, $rootScope, $location, profileService, gettextCatalo
     }
   };
 
+  $scope.sendFeedbackEmail = function () {
+    var link = "mailto:info@humanitarian.id" + 
+                "?subject=Mobile app feedback" +
+                "&body=" +escape("\n\n\n\n\n")+"Phone details: " + navigator.userAgent + escape("\n\n");
+
+    window.open(link,"_blank");
+  }
+
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     $scope.mainMenu = false;
     $scope.externalLinks = false;
