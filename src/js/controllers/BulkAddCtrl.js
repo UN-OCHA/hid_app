@@ -1,7 +1,4 @@
 function BulkAddCtrl($scope, $http, $timeout, profileService, operations) {
-	var auth_token = "Letmeaddcontacts!"
-
-	$scope.auth = true;
 
 	$scope.operations = operations;
 
