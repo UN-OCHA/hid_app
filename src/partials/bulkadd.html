@@ -1,0 +1,54 @@
+<div class="back-btn back-btn-head btn">
+  <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span></span></a>
+</div>
+
+
+<div class="main">
+  <h2>Bulk add</h2>
+
+  
+  <ng-csv-import 
+    content="csv.content"
+    header="true" 
+    headerVisible="true" 
+    separator="','"
+    result="csv.result"
+    accept="'.csv'"></ng-csv-import>
+  
+      <h4><a class="btn btn-primary" ng-click="transformOutput()">Process CSV</a></h4>
+      <h4><a class="btn btn-primary" ng-click="submitContacts()">Submit selected</a></h4>
+      <h4><a class="btn btn-primary" ng-csv="exportArray()" filename="bulk_add_result.csv" csv-label="true">Export selected</a></h4>
+
+    <p>The CSV needs the following headers, respectively (case-sensitive): <br/>
+    <strong>Organization type, Organization, Organization, acronym, Name, Job Title, Phone1ext, Phone1, Phone2ext Phone2, Email, Operation, Country</strong>
+    </p>
+    <p>After importing file, click on Process CSV button to set it up. Select all contacts you want to submit and click on Submit. Use the Export button to generate a CSV of all selected contacts</p>
+
+
+
+  <input type="search" ng-model="filter" class="form-control" autocomplete="on" placeholder="Filter">
+  <table class="table table-striped">
+    <th><input type="checkbox" ng-model="selectAll" ng-click="selectAllFn()"></input></th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Email</th>
+    <th>Organization</th>
+    <th>Location</th>
+    <!-- <th>Organization type</th> -->
+    <th>Job Title</th>
+    <th>Phone</th>
+    <tr ng-repeat="contact in contacts | filter:filter" ng-class="{success: contact._status == 'done', danger: contact._status == 'error', info: contact._status == 'exists'}" uib-tooltip="{{contact._response}}">
+      <td><input type="checkbox" ng-model="contact._select"></input></td>
+      <td>{{contact.nameGiven}}</td>
+      <td>{{contact.nameFamily}}</td>
+      <td>{{contact.email[0].address}}</td>
+      <td>{{contact.organization}}</td>
+      <td>{{contact.location}}:{{contact.locationId}}</td>
+      <td>{{contact.jobtitle}}</td>
+      <td>{{contact.phone[0].number}}</td>
+    </tr>
+  </table>
+
+  <!-- {{csv.result}} -->
+</div>
+
