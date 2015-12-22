@@ -1,7 +1,12 @@
 <div class="back-btn back-btn-head btn">
   <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span></span></a>
 </div>
-<div class="block">
+
+
+<div class="main">
+  <h2>Bulk add</h2>
+
+  
   <ng-csv-import 
     content="csv.content"
     header="true" 
@@ -9,15 +14,18 @@
     separator="','"
     result="csv.result"
     accept="'.csv'"></ng-csv-import>
-</div>
-    <h4><a class="btn btn-primary" ng-click="transformOutput()">Click to process</a></h4>
-    <h4><a class="btn btn-primary" ng-click="submitContacts()">Submit selected</a></h4>
-    <h4><a class="btn btn-primary" ng-csv="exportArray()" filename="bulk_add.csv" csv-label="true">Export selected</a></h4>
+  
+      <h4><a class="btn btn-primary" ng-click="transformOutput()">Process CSV</a></h4>
+      <h4><a class="btn btn-primary" ng-click="submitContacts()">Submit selected</a></h4>
+      <h4><a class="btn btn-primary" ng-csv="exportArray()" filename="bulk_add_result.csv" csv-label="true">Export selected</a></h4>
+
+    <p>The CSV needs the following headers, respectively (case-sensitive): <br/>
+    <strong>Organization type, Organization, Organization, acronym, Name, Job Title, Phone1ext, Phone1, Phone2ext Phone2, Email, Operation, Country</strong>
+    </p>
+    <p>After importing file, click on Process CSV button to set it up. Select all contacts you want to submit and click on Submit. Use the Export button to generate a CSV of all selected contacts</p>
 
 
-<div class="row">
 
-  <h2>Bulk add</h2>
   <input type="search" ng-model="filter" class="form-control" autocomplete="on" placeholder="Filter">
   <table class="table table-striped">
     <th><input type="checkbox" ng-model="selectAll" ng-click="selectAllFn()"></input></th>
