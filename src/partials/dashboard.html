@@ -57,7 +57,7 @@
           </h4>
           <div class="btn-group">
             <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" href="#/profile/{{profile._id}}" title="{{'Edit my' | translate}} {{profile.location}} {{'profile' | translate}}"><i class="fa fa-pencil"></i></a>
-            <a ng-class="{'disabled' : isOffline()}" class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="{{'Check-out from' | translate}} {{profile.location}}"><i class="fa fa-plane"></i></a>
+            <a class="btn btn-checkout btn-sm" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="{{'Check-out from' | translate}} {{profile.location}}"><i class="fa fa-plane"></i></a>
           </div>
           <div class="quick-link">
           <div class="uib-dropdown" ng-class="{'ql-open': qlOpen === $index}" uib-dropdown dropdown-append-to-body>
@@ -179,7 +179,7 @@
             <span class="fa fa-angle-right"></span> <span translate>Edit Global Profile</span>
           </a>
         </span>
-        <a ng-class="{'disabled' : isOffline()}" class="btn btn-primary btn-lg btn-block" href="#/checkin" ng-show="globalProfileId.length">
+        <a class="btn btn-primary btn-lg btn-block" href="#/checkin" ng-show="globalProfileId.length">
           <span class="fa fa-angle-right"></span> <span translate>Check-in</span>
         </a>
         <a ng-class="{'disabled' : isOffline()}" class="btn btn-primary btn-lg btn-block" href="#/createaccount" ng-show="userCanCreateAccount">

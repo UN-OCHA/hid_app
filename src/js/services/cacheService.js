@@ -1,12 +1,14 @@
 (function($, angular, contactsId, Offline, localforage) {
   "use strict";
 
-  angular.module("contactsId").service('offlineCache', function ($http, $q, ngDialog){
+  angular.module("contactsId").service('offlineCache', function ($http, $q, $timeout, ngDialog){
     return {
       getData: getData,
       cacheData: cacheData,
       getProfiles: getProfiles,
-      cacheProfiles: cacheProfiles
+      cacheProfiles: cacheProfiles,
+      makeRequests: makeRequests,
+      processRequest: processRequest
     }
 
     function generateKey(url, params){ //use utils.encodeURL
@@ -112,7 +114,6 @@
         return promise;
     }
 
-
     function getData(url, options) {
       var key = generateKey(url, options);
       
@@ -151,6 +152,69 @@
         });
 
       return promise;
+    }
+
+    function makeRequests(){
+      //get from queue in localforage
+      //make all requests in order
+      localforage.getItem('requestqueue').then(function(cacheData){
+        if (cacheData != null){
+          cacheData = JSON.parse(cacheData);
+          var requests = [];
+          angular.forEach(cacheData, function(request, key){
+            $timeout( function() { 
+              var request = processRequest(request.url, request.params, request.data).then(function(response){ 
+                delete cacheData[key];      
+              });
+              requests.push(request);
+            }, 500);
+          });
+
+          $q.all(requests).then(function(){ //all requests success
+            localforage.setItem('requestqueue', JSON.stringify(cacheData));
+          }, function(){ //some request failed
+            localforage.setItem('requestqueue', JSON.stringify(cacheData));
+          });
+        }
+      });
+    }
+
+    function processRequest(url, options, data){
+      //standard post request
+      //offline fallback -> add to cache
+      // var defer = $q.defer();
+      var key = generateKey(url, options);
+      var request = $http({
+        method: 'POST',
+        url: url,
+        params: options,
+        data: data
+      }).then(function(response){
+        Offline.markUp();
+        return response.data;
+
+      }, function(response){
+        checkOnline(response);
+
+        console.log('Going to add to Q!');
+        return localforage.getItem('requestqueue').then(function(cacheData){
+          cacheData = (cacheData != null ? JSON.parse(cacheData) : {});
+          var theTime = new Date(); //better way to do this?
+
+          var cacheObject = {url: url, params: options, data: data, time: theTime};
+          cacheData[key] = cacheObject;
+
+          localforage.setItem('requestqueue', JSON.stringify(cacheData)).then(function(){
+            console.log('Added to Q!');
+          });
+
+          //some kind of popup to show request added to queue?
+          
+        });
+
+      });
+
+      return request;
     }
 
     function checkOnline(response) {

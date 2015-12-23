@@ -494,13 +494,16 @@
     // Save a contact (create or update existing).
     function saveContact(contact) {
       var request;
-      request = $http({
-        method: "post",
-        url: contactsId.profilesBaseUrl + "/v0/contact/save",
-        params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
-        data: contact
-      });
-      return(request.then(handleSuccess, handleError));
+      var url = contactsId.profilesBaseUrl + "/v0/contact/save";
+      var params = {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()};
+      // request = $http({
+      //   method: "post",
+      //   url: contactsId.profilesBaseUrl + "/v0/contact/save",
+      //   params: {userid: authService.getAccountData().user_id, access_token: authService.getAccessToken()},
+      //   data: contact
+      // });
+      request = offlineCache.processRequest(url, params, contact);
+      return request;
     }
 
     // Save a contact to personal (create or update existing).

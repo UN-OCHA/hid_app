@@ -1,4 +1,4 @@
-(function($, angular, contactsId, Offline) {
+(function($, angular, contactsId, Offline, localforage) {
 // Initialize ng
 var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-md5', 'ui.bootstrap', 'angular-loading-bar', 'ngIOS9UIWebViewPatch']);
 
@@ -85,7 +85,7 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
   });
 });
 
-app.run(function ($rootScope, $location, $timeout, profileService){
+app.run(function ($rootScope, $location, $timeout, profileService, offlineCache){
   
   function cacheLists() {
     var cached = false;
@@ -125,7 +125,7 @@ app.run(function ($rootScope, $location, $timeout, profileService){
             });
           });
         }
-        // console.log('Finished caching on custom contact lists');
+        
         $rootScope.isCaching = function(){
           return (cacheRequests - cacheResponses) > 2;
         }
@@ -145,8 +145,11 @@ app.run(function ($rootScope, $location, $timeout, profileService){
     return Offline.state;
   }, function(newValue, oldValue){
     if (newValue === "up" && oldValue === "down"){
-      console.log('DEBUG: Caching custom lists after restoring network');
+      console.log('DEBUG: Caching custom lists after network restore');
       $rootScope.cacheCustomLists(true);
+
+      console.log('DEBUG: Making cached requests after network restore');
+      offlineCache.makeRequests();
     }
   })
 
@@ -645,4 +648,4 @@ if (typeof Array.prototype.reIndexOf === 'undefined') {
   };
 }
 
-}(jQuery, angular, window.contactsId, window.Offline));
+}(jQuery, angular, window.contactsId, window.Offline, window.localforage));
