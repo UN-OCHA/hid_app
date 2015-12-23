@@ -179,6 +179,7 @@ app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$htt
 app.controller("CheckInCtrl", ["$scope", "$location", "$routeParams", "profileService", CheckInCtrl]);
 app.controller("ServicesCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", "service", ServicesCtrl]);
 app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", ServicesListCtrl]);
+app.controller("OfflineSettingsCtrl", ["$scope", "cache", OfflineSettingsCtrl]);
 
 
 app.config(function($routeProvider, $locationProvider) {
@@ -595,6 +596,21 @@ app.config(function($routeProvider, $locationProvider) {
             throw new Error('Your user data cannot be retrieved. Please sign in again.');
           }
           return data;
+        });
+      }
+    }
+  }).
+  when('/settings/offline', {
+    templateUrl: contactsId.sourcePath + '/partials/settingsOffline.html',
+    controller: 'OfflineSettingsCtrl',
+    requireAuth: true,
+    resolve: {
+      cache : function() {
+        var cache = {};
+        return localforage.iterate( function(value, key, iterNum){
+          cache[key] = value;
+        }).then(function(){
+          return cache;
         });
       }
     }

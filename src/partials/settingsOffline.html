@@ -1,0 +1,27 @@
+<div class="back-btn back-btn-head btn">
+  <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span></span></a>
+</div>
+
+
+<div class="main row">
+  <h2>Offline Cache</h2>
+    <p>
+      Everything in the cache.
+    </p>
+
+
+
+  <input type="search" ng-model="filter" class="form-control" autocomplete="on" placeholder="Filter">
+  <table class="table table-striped">
+    <th class="col-md-2">Action</th>
+    <th class="col-md-4">Key</th>
+    <th class="col-md-6">Value</th>
+    <tr ng-repeat="(key, value) in requests | filter:filter">
+      <td></td>
+      <td>{{key}}</td>
+      <td>{{value}}</td>
+    </tr>
+  </table>
+
+</div>
+
