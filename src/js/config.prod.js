@@ -5,5 +5,5 @@ var contactsId = {
     "authBaseUrl": "https://auth.humanitarian.id",
     "profilesBaseUrl": "https://profiles.humanitarian.id",
     "hrinfoBaseUrl": "https://www.humanitarianresponse.info",
-    "googlePlusApiKey": "AIzaSyBI3vq4vutsK_Lic5RrKu4omWF9IS1SaGk"
+    "googlePlusApiKey": "AIzaSyBJOqcOsd8lS2ifx_FjwGyeKVOKBijCDks"
   };
