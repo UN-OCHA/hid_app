@@ -68,6 +68,7 @@
         color: $white;
         padding: 4px 6px;
         box-shadow: 1px 1px 2px 0px $neutral-color-1;
+        text-transform: none;
         @media (min-width: 768px) {
          padding: 2px 4px;
         }
@@ -81,6 +82,10 @@
      font-size: 20px;
     }
   }
+}
+
+.page-services .profile-item .btn-group .btn i {
+  font-size: 14px;
 }
 
 .list-group {
