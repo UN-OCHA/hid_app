@@ -84,8 +84,13 @@
   }
 }
 
-.page-services .profile-item .btn-group .btn i {
-  font-size: 14px;
+.page-services .profile-item .btn-group {
+  .btn i {
+    font-size: 14px;
+  }
+  .btn-subscribe {
+    font-family: $font-family-sans-serif;
+  }
 }
 
 .list-group {
