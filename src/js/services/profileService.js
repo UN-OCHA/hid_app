@@ -17,6 +17,7 @@
       getProfileByUser: getProfileByUser,
       getProfiles: getProfiles,
       cacheProfiles: cacheProfiles,
+      getContact: getContact,
       getContacts: getContacts,
       cacheContacts: cacheContacts,
       getLists: getLists,
@@ -177,6 +178,14 @@
       var request = offlineCache.getProfiles(contactsId.profilesBaseUrl + "/v0/profile/view",
         $.extend({}, terms, {access_token: authService.getAccessToken()}) );
       return request;
+    }
+
+    // Get contact by id
+    function getContact(id) {
+      var request;
+      request = offlineCache.getData(contactsId.profilesBaseUrl + '/v0.1/contacts/' + id, 
+        { access_token: authService.getAccessToken() });
+      return (request.then(handleSuccessv01, handleError));
     }
 
     // Get contacts that match specified parameters.
