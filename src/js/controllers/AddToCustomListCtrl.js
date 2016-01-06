@@ -13,8 +13,8 @@ function AddToCustomListCtrl($scope, profileService) {
     }
   });
 
-  $scope.addToList = function (index) {
-    $scope.customContacts[index].addToList = $scope.customContacts[index].addToList === false ? true: false;
+  $scope.addToList = function (list) {
+    list.addToList = list.addToList === false ? true: false;
   }
 
   $scope.newList = function (list) {
