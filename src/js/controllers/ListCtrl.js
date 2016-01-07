@@ -246,7 +246,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
           $route.reload();
         }
         else {
-          alert('error');
+          $scope.flash.set('There was an error checking this contact out.', 'danger');
         }
       });
 
@@ -265,7 +265,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
           $route.reload();
         }
         else {
-          alert('error');
+          $scope.flash.set('There was an error adding this contact to the contact list.', 'danger');
         }
       });
     }
@@ -290,7 +290,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
             $route.reload();
           }
           else {
-            alert('error');
+            $scope.flash.set('There was an error updating this profile.', 'danger');
           }
         });
       }
@@ -312,7 +312,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
           $route.reload();
         }
         else {
-          alert('error');
+          $scope.flash.set('There was an error deleting this profile.', 'danger');
         }
       });
     }
@@ -334,7 +334,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
             console.info('Account claim email sent successfully.');
           }
           else {
-            alert('An error occurred while attempting to send the account claim email. Please try again or contact an administrator.');
+            $scope.flash.set('An error occurred while attempting to send the account claim email. Please try again or contact an administrator.', 'danger');
           }
         });
       }
@@ -620,7 +620,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
         $scope.queryCount--;
       }
       else {
-        alert('An error occurred while trying to delete this contact. Please reload and try the change again.');
+        $scope.flash.set('An error occurred while trying to delete this contact. Please reload and try the change again.', 'danger');
       }
     });
   }
@@ -692,7 +692,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
         $scope.toggleFollowButton = $scope.toggleFollowButton === 'Follow' ? 'Unfollow': 'Follow';
       }
       else {
-        alert('An error occurred while unfollowing this contact list. Please reload and try the change again.');
+        $scope.flash.set('An error occurred while unfollowing this contact list. Please reload and try the change again.', 'danger');
       }
     };
     if ($scope.toggleFollowButton === 'Follow') {
