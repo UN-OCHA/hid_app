@@ -1,27 +1,27 @@
-function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, ngDialog, md5) {
-  if(!profileData.contact){
-    // No contact data
-    return false;
-  }
-
-  var contact = profileData.contact,
+function ContactCtrl($scope, $route, $routeParams, $filter, profileService, flashService, gettextCatalog, userData, protectedRoles, profileData, currentContact, ngDialog, md5) {
+  var contact = currentContact,
       filter = $filter('filter');
-  contact._profile = profileData.profile;
 
   $scope.contact = contact;
   $scope.profileContacts = profileData.contacts;
   $scope.globalContactId = profileData.global._id;
-  $scope.profile = profileData.profile;
+  $scope.profile = contact._profile;
+
+  $scope.flash = flashService;
+
+  if (!contact.status) {
+    flashService.set('This contact is already checked out and kept for archive reasons only', 'danger');
+  }
 
   // Permissions
   var isOwnProfile = userData.profile._id === contact._profile;
-  $scope.userCanEditProfile = isOwnProfile || profileService.canEditProfile(contact.locationId);
-  $scope.userCanCheckIn = profileService.canCheckIn(contact._profile);
-  $scope.userCanCheckOut = profileService.canCheckOut(contact);
+  $scope.userCanEditProfile = contact.status && (isOwnProfile || profileService.canEditProfile(contact.locationId));
+  $scope.userCanCheckIn = contact.status && profileService.canCheckIn(contact._profile);
+  $scope.userCanCheckOut = contact.status && profileService.canCheckOut(contact);
   // Allow sending an orphan user claim email if the user has not made an edit
   // on HID, the contact has an email address (is not a ghost), and the actor
   // is an admin or a manager/editor in the location of this contact.
-  $scope.userCanSendClaimEmail = profileService.canSendClaimEmail(contact);
+  $scope.userCanSendClaimEmail = contact.status && profileService.canSendClaimEmail(contact);
 
   // Get Gravatar URL
   $scope.gravatarUrl = '';
@@ -76,6 +76,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   if ($scope.contact.created){
     $scope.contact.displayCreatedDate = formatDateTime($scope.contact.created);
   }
+
 
   $scope.locationText = function() {
     return $scope.contact.location || gettextCatalog.getString('Global');

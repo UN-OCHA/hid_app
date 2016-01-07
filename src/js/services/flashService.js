@@ -1,5 +1,9 @@
-angular.module('contactsId').service("flashService", function() {
+angular.module('contactsId').service("flashService", function($rootScope) {
   var queue = [], currentMessage = '';
+
+  $rootScope.$on("$routeChangeStart", function() {
+    queue = [];
+  });
   
   return {
     set: function(message, type) {
@@ -10,6 +14,9 @@ angular.module('contactsId').service("flashService", function() {
     },
     close: function(index) {
       queue.splice(index, 1);
+    },
+    clear: function () {
+      queue = [];
     }
   };
 });
