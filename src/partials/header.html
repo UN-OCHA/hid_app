@@ -56,4 +56,17 @@
       </div>
     </div>
   </div>
+
+  <div class="messages">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <span ng-repeat="alert in flash.get()">
+            <uib-alert ng-if="alert.close === true" type="{{alert.type}}" close="flash.close($index)" dismiss-on-timeout="{{alert.timeout}}">{{alert.msg}}</uib-alert>
+            <uib-alert ng-if="alert.close === false" type="{{alert.type}}">{{alert.msg}}</uib-alert>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

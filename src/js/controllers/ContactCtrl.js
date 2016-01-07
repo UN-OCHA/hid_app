@@ -1,4 +1,4 @@
-function ContactCtrl($scope, $route, $routeParams, $filter, profileService, flashService, gettextCatalog, userData, protectedRoles, profileData, currentContact, ngDialog, md5) {
+function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, currentContact, ngDialog, md5) {
   var contact = currentContact,
       filter = $filter('filter');
 
@@ -7,10 +7,8 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, flas
   $scope.globalContactId = profileData.global._id;
   $scope.profile = contact._profile;
 
-  $scope.flash = flashService;
-
   if (!contact.status) {
-    flashService.set('This contact is already checked out and kept for archive reasons only', 'danger');
+    $scope.flash.set('This contact is already checked out and kept for archive reasons only', 'danger', false);
   }
 
   // Permissions

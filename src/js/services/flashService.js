@@ -6,8 +6,9 @@ angular.module('contactsId').service("flashService", function($rootScope) {
   });
   
   return {
-    set: function(message, type) {
-      queue.push({ 'msg': message, 'type': type});
+    set: function(message, type, close, timeout) {
+      var dismissable = (close === undefined) ? true : close;
+      queue.push({ 'msg': message, 'type': type, 'close': dismissable, 'timeout': timeout});
     },
     get: function() {
       return queue;
