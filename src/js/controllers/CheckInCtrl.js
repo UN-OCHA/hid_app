@@ -1,12 +1,31 @@
-function CheckInCtrl($scope, $location, $routeParams, profileService) {
+function CheckInCtrl($scope, $location, $routeParams, $timeout, profileService) {
   profileService.checkInContact($routeParams.contactId).then(function (response) {
     if (response.status === 200) {
-      alert('You were successfully checked in');
-      $location.path('/contact/' + $routeParams.contactId);
+      $scope.flash.set(response.data.nameGiven + ' ' + response.data.nameFamily + ' was successfully checked in', 'success', false);
+      $timeout(function() {
+        $location.path('/contact/' + $routeParams.contactId);
+      }, 3000);
     }
     else {
-      alert('There was an error checking you in. Please try again later.');
-      $location.path('/dashboard');
+      $scope.flash.set('There was an error checking this contact in. Please try again later.', 'danger', false);
+      $timeout(function() {
+        $location.path('/dashboard');
+      }, 3000);
     }
   });
 }
+
+function CheckOutCtrl($scope, $location, $routeParams, $timeout, profileService) {
+  profileService.checkOutContact($routeParams.contactId).then(function (response) {
+    if (response.status === 200) {
+      $scope.flash.set(response.data.nameGiven + ' ' + response.data.nameFamily + ' was successfully checked out.', 'success', false);
+    }
+    else {
+      $scope.flash.set('There was an error checking this contact out.', 'danger');
+    }
+    $timeout(function(){
+      $location.path('/dashboard');
+    }, 3000);
+  });
+}
+

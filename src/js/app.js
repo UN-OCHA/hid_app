@@ -85,7 +85,7 @@ app.run(function ($rootScope, $location, $window, $timeout, authService) {
   });
 });
 
-app.run(function ($rootScope, $location, $timeout, profileService){
+app.run(function ($rootScope, $location, $timeout, profileService, flashService){
   
   function cacheLists() {
     var cached = false;
@@ -159,10 +159,12 @@ app.run(function ($rootScope, $location, $timeout, profileService){
     }
   }
 
+  $rootScope.flash = flashService;
+
 });
 
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
-app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "flashService", "gettextCatalog", "userData", "protectedRoles", "profileData", "currentContact", "ngDialog", "md5", ContactCtrl]);
+app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "currentContact", "ngDialog", "md5", ContactCtrl]);
 app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", "countries", CreateAccountCtrl]);
 app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location","$timeout", "profileService", "globalProfileId", "userData", "operations", "ngDialog", DashboardCtrl]);
 app.controller("DefaultCtrl", ["$scope", "$location", "authService", DefaultCtrl]);
@@ -176,8 +178,9 @@ app.controller("ProfileCtrl", ["$scope", "$location", "$route", "$routeParams", 
 app.controller("RegisterCtrl", ["$scope", RegisterCtrl]);
 app.controller("AddToCustomListCtrl", ["$scope", "profileService", AddToCustomListCtrl]);
 app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$http", "authService", "profileService", "list", "gettextCatalog", "ngDialog", CustomListSettingsCtrl]);
-app.controller("CheckInCtrl", ["$scope", "$location", "$routeParams", "profileService", CheckInCtrl]);
-app.controller("ServicesCtrl", ["$scope", "$location", "$route", "$routeParams", "$http", "authService", "profileService", "flashService", "userData", "ngDialog", "operations", "gettextCatalog", "service", ServicesCtrl]);
+app.controller("CheckInCtrl", ["$scope", "$location", "$routeParams", "$timeout", "profileService", CheckInCtrl]);
+app.controller("CheckOutCtrl", ["$scope", "$location", "$routeParams", "$timeout", "profileService", CheckOutCtrl]);
+app.controller("ServicesCtrl", ["$scope", "$location", "$route", "$routeParams", "$http", "authService", "profileService", "userData", "ngDialog", "operations", "gettextCatalog", "service", ServicesCtrl]);
 app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", "operations", ServicesListCtrl]);
 app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsCtrl]);
 app.controller("SubscriptionsAddCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsAddCtrl]);
@@ -417,6 +420,11 @@ app.config(function($routeProvider, $locationProvider) {
   when('/contact/:contactId/checkin', {
     template: '',
     controller: 'CheckInCtrl',
+    requireAuth: true
+  }).
+  when('/contact/:contactId/checkout', {
+    template: '',
+    controller: 'CheckOutCtrl',
     requireAuth: true
   }).
   when('/list/:locationId', {
