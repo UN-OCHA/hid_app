@@ -1,8 +1,7 @@
-function ServicesCtrl($scope, $location, $route, $routeParams, $http, authService, profileService, flashService, userData, ngDialog, operations, gettextCatalog, service) {
+function ServicesCtrl($scope, $location, $route, $routeParams, $http, authService, profileService, userData, ngDialog, operations, gettextCatalog, service) {
 
   $scope.service = service;
   $scope.mc_lists = [];
-  $scope.flash = flashService;
   $scope.users = [];
   $scope.googlegroup_creds = [];
   $scope.googlegroups = [];
@@ -49,7 +48,7 @@ function ServicesCtrl($scope, $location, $route, $routeParams, $http, authServic
       $scope.setGoogleGroups($scope.service.googlegroup.domain);
     }
   }, function (message) {
-    flashService.set('Could not retrieve list of available google groups domains', 'danger');
+    $scope.flash.set('Could not retrieve list of available google groups domains', 'danger');
   });
 
   $scope.refreshUsers = function(select, lengthReq) {
@@ -133,7 +132,7 @@ function ServicesCtrl($scope, $location, $route, $routeParams, $http, authServic
     profileService.getGoogleGroups(domain).then(function (response) {
        $scope.googlegroups = response.data;
     }, function (message) {
-      flashService.set('There was an error retrieving groups for this domain', 'danger');
+      $scope.flash.set('There was an error retrieving groups for this domain', 'danger');
     });
   };
 
@@ -157,7 +156,7 @@ function ServicesCtrl($scope, $location, $route, $routeParams, $http, authServic
     }
     profileService.saveService($scope.service).then(function(response) {  
       if (response.status == 201) {
-        flashService.set('Service saved successfully.', 'success');
+        $scope.flash.set('Service saved successfully.', 'success');
         $location.path('/services/' + response.data._id + '/edit');
       }
       else if (response.status == 200) {
@@ -167,10 +166,10 @@ function ServicesCtrl($scope, $location, $route, $routeParams, $http, authServic
             owner.userid = owner.userid.replace(/(_\d+)$/,'');
           }
         });
-        flashService.set('Service saved successfully', 'success');
+        $scope.flash.set('Service saved successfully', 'success');
       }
     }, function (message) {
-      flashService.set(message, 'danger');
+      $scope.flash.set(message, 'danger');
     });
   }
 
@@ -181,10 +180,10 @@ function ServicesCtrl($scope, $location, $route, $routeParams, $http, authServic
     }).then(function () {
       profileService.deleteService($scope.service).then(function (response) {
         if (response.status === 204) {
-          flashService.set('Service deleted successfully.', 'success');
+          $scope.flash.set('Service deleted successfully.', 'success');
         }
       }, function (message) {
-        flashService.set('There was an error deleting this service: ' + message, 'danger');
+        $scope.flash.set('There was an error deleting this service: ' + message, 'danger');
       });
     });
   }
@@ -197,7 +196,7 @@ function ServicesCtrl($scope, $location, $route, $routeParams, $http, authServic
           });
       }
     }, function (message) {
-      flashService.set(message, 'danger');
+      $scope.flash.set(message, 'danger');
     });
   }
 
