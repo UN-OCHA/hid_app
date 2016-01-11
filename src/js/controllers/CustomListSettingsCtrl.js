@@ -1,5 +1,7 @@
-function CustomListSettingsCtrl($scope, $route, $location, $http, authService, profileService, list, gettextCatalog, ngDialog) {
+function CustomListSettingsCtrl($scope, $route, $location, $http, authService, profileService, userData, list, gettextCatalog, ngDialog) {
   $scope.list = list;
+  $scope.userData = userData;
+
   if (!list.privacy) {
     $scope.list.privacy = 'all';
   }
@@ -8,6 +10,10 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.list.readers.push("");
   $scope.list.editors.push("");
+
+  $scope.isOwner = $scope.list.userid === userData.profile.userid;
+  $scope.list.userid = userData.profile;
+  $scope.list.userid.userid.replace(/(_\d+)$/,'');
 
   angular.forEach($scope.list.readers, function(reader,key){
     if (reader && reader.userid) {

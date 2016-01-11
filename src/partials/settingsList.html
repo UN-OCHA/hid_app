@@ -68,6 +68,24 @@
             </div>
           </div>
         </div>
+        <div class="form-group" ng-show="isOwner">
+          <h2 class="setting-heading" translate>List owner</h2>
+          <p translate>Allows you to change the owner of this list</p>
+          <ui-select
+            name="owner"
+            class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
+            ng-model="list.userid"
+            theme="bootstrap"
+            reset-search-input="true">
+              <ui-select-match allow-clear placeholder="{{'Please enter the name of the new owner of this list'|translate}}">{{$select.selected.userid}}</ui-select-match>
+              <ui-select-choices
+                  ng-class="{'not-empty': list.userid.length}"
+                  repeat="owner in users | orderBy:'name'"
+                  refresh="refreshUsers($select, 2)">
+                  <div ng-class="{default: !owner.name.length}" ng-bind-html="owner.userid | highlight: $select.search"></div> 
+              </ui-select-choices>
+          </ui-select>
+        </div>
         <div class="form-group">
           <h2 class="setting-heading" translate>Editing Rights</h2>
           <p translate>These people will be able to see and edit your list regardless of your privacy settings above</p>
