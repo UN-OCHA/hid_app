@@ -588,6 +588,41 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     });
   }
 
+
+
+  $scope.showRoles = function(contact){
+
+    $scope.protectedRoles = protectedRoles;
+    $scope.contact = contact;
+    $scope.userid = userData.profile.userid;
+    $scope.profile = userData.profile; 
+    ngDialog.open({
+      name: 'AddRole',
+      template: 'partials/addProtectedRoles.html',
+      showClose: false,
+      scope: $scope,
+      controller: 'AddProtectedRolesCtrl',
+    });
+
+  }
+
+  $scope.showGroups = function(contact){
+  
+    $scope.contact = contact;
+    $scope.userid = userData.profile.userid;
+
+    //This contains the logged in users profile.
+    $scope.profile = userData.profile; 
+    ngDialog.open({
+      name: 'AddContact',
+      template: 'partials/addProtectedGroups.html',
+      showClose: false,
+      scope: $scope,
+      controller: 'AddProtectedGroupsCtrl',
+    });
+
+  }
+
   // Edit subscriptions
   $scope.editSubscriptionsModal = function(profile) {
     $scope.profile_selected = profile;

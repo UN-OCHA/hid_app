@@ -1,0 +1,14 @@
+<div class="panel panel-primary" id="contact-modal">
+  <div class="panel-heading">Select a Role</div>
+  <ul class="list-group">
+    <a class="list-group-item" ng-click="addToList(protectedRole)" ng-repeat="protectedRole in protectedRoles">
+      <i ng-if="protectedRole.addToList" class="fa fa-check"></i>
+      {{protectedRole.name}}
+    </a>
+  </ul>
+</div>
+<div class="row" id="contact-modal--confirm">
+  <div class="col-sm-6 margin-bottom"><button class="btn btn-primary btn-lg btn-block" ng-click="updateContact()" type="button">Save</button></div>
+  <div class="col-sm-6"><button class="btn btn-default btn-lg btn-block" ng-click="closeThisDialog()" type="button">Close</button></div>
+</div>
+

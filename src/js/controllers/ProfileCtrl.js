@@ -419,6 +419,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   // Update submit text when changing language.
   $scope.submitText = function() {
     if ($scope.profile.type === 'global' || !checkinFlow) {
+    //  console.log($scope.profile);
       return gettextCatalog.getString('Save');
     }
     else {
@@ -621,6 +622,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
       $scope.submitProcessing = true;
       profileService.saveContact(profile).then(function(data) {
+
         if (data && data.status && data.status === 'ok') {
           if (checkinFlow) {
             profileService.getServices({ location: profile.locationId }).then(function (resp) {
