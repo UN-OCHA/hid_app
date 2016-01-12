@@ -78,10 +78,12 @@
               <li ng-class="{'disabled':contact.ql.contactListState === 'inProgress'}">
                 <a role="menuitem" tabindex="-1" ng-click="addContact(contact)" translate>Add to list</a>
               </li>
-              <li ng-if="userCanEditProtectedRoles">
+              <!--<li ng-if="userCanEditProtectedRoles">-->
+              <li>
                 <a role="menuitem" tabindex="-1" ng-click="showRoles(contact)" translate>Edit Roles</a>
               </li>
-              <li ng-if="userCanEditProtectedBundle">
+              <!--<li ng-if="userCanEditProtectedBundle">-->
+              <li>
                 <a role="menuitem" tabindex="-1" ng-click="showGroups(contact)" translate>Edit Groups</a>
               </li>
               <li ng-if="contact.ql.userCanCheckIn">
