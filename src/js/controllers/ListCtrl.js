@@ -43,9 +43,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.contactsCreated = false;
   $scope.isEditor = false;
   $scope.isVerified = userData.profile.verified;
-  setPermissions();
 
-  console.log($scope.userCanEditProtectedRoles);
 
   function setPermissions() {
     var hasRoleAdmin = profileService.hasRole('admin');

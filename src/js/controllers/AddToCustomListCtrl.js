@@ -7,7 +7,6 @@ function AddToCustomListCtrl($scope, profileService) {
       angular.forEach(data.lists, function(value, key) {
         if ((value.contacts.indexOf($scope.contact._id) == -1) && ($scope.userid == value.userid || value.editors.indexOf($scope.userData.profile._id) != -1)) {
           var list = value;
-          console.log("ccc", list);
           list.addToList = false;
           this.push(list);
         }

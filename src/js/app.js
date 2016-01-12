@@ -202,8 +202,6 @@ app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routePara
 app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsCtrl]);
 app.controller("SubscriptionsAddCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsAddCtrl]);
 app.controller("BulkAddCtrl", ["$scope", "$http", "$timeout", "profileService", "operations", BulkAddCtrl]);
-app.controller("BlaCtrl", ["$scope", "$http", "$timeout", "profileService", "operations", BulkAddCtrl]);
-
 
 
 app.config(function($routeProvider, $locationProvider) {
