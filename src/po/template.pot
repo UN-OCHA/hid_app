@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2016-01-12T08:56:59.396Z\n"
+"Project-Id-Version: 2016-01-12T11:14:13.921Z\n"
 
 #: src/partials/dashboard.html
 msgid "{{list.name}}"

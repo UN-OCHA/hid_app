@@ -26,8 +26,6 @@
           </div>
         </div>
         <div class="actions">
-          <!-- <a class="btn btn-warning btn-lg btn-block" href ng-click="back();"><i -->
-          <!-- class="fa fa-arrow-circle-left"></i> <span translate>Back</span></a> -->
           <a class="btn btn-primary btn-lg btn-block" ng-show="userCanEditProfile" href="#/profile/{{contact._id}}" translate>Edit Profile</a>
           <a class="btn btn-primary btn-lg btn-block" ng-show="userCanEditProfile" ng-click="editSubscriptionsModal()" translate>Edit Subscriptions</a>
           <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="addContact()" ng-bind="contactListText()"></button>
