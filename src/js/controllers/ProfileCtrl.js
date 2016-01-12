@@ -419,7 +419,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   // Update submit text when changing language.
   $scope.submitText = function() {
     if ($scope.profile.type === 'global' || !checkinFlow) {
-    //  console.log($scope.profile);
       return gettextCatalog.getString('Save');
     }
     else {

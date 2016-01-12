@@ -43,7 +43,8 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.contactsCreated = false;
   $scope.isEditor = false;
   $scope.isVerified = userData.profile.verified;
-
+  
+  setPermissions();
 
   function setPermissions() {
     var hasRoleAdmin = profileService.hasRole('admin');
@@ -638,9 +639,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     });
   }
 
-  // console.log("cont: ",contact);
 
-  console.log($scope.userData);
 
   $scope.showRoles = function(contact){
 
