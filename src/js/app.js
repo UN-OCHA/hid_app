@@ -2,6 +2,24 @@
 // Initialize ng
 var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-md5', 'ui.bootstrap', 'angular-loading-bar', 'ngIOS9UIWebViewPatch', 'ngCsvImport', 'ngCsv']);
 
+//Access to the facebook SDK 
+window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '269496693131470',
+    xfbml      : true,
+    version    : 'v2.5'
+  });
+};
+
+(function(d, s, id){
+   var js, fjs = d.getElementsByTagName(s)[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement(s); js.id = id;
+   js.src = "//connect.facebook.net/en_US/sdk.js";
+   fjs.parentNode.insertBefore(js, fjs);
+ }(document, 'script', 'facebook-jssdk'));
+
+
 webshims.setOptions({
    waitReady: false,
    basePath: './libraries/webshim/js-webshim/minified/shims/'
@@ -177,6 +195,8 @@ app.controller("LogoutCtrl", ["$scope", "authService", LogoutCtrl]);
 app.controller("ProfileCtrl", ["$scope", "$location", "$route", "$routeParams", "$filter", "$timeout", "$http", "profileService", "authService", "operations", "profileData", "countries", "roles", "protectedRoles", "gettextCatalog", "userData", "md5", 'ngDialog', ProfileCtrl]);
 app.controller("RegisterCtrl", ["$scope", RegisterCtrl]);
 app.controller("AddToCustomListCtrl", ["$scope", "profileService", AddToCustomListCtrl]);
+app.controller("AddProtectedRolesCtrl", ["$scope", "profileService", AddProtectedRolesCtrl]);
+app.controller("AddProtectedGroupsCtrl", ["$scope", "profileService", AddProtectedGroupsCtrl]);
 app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$http", "authService", "profileService", "list", "gettextCatalog", "ngDialog", CustomListSettingsCtrl]);
 app.controller("CheckInCtrl", ["$scope", "$location", "$routeParams", "$timeout", "profileService", CheckInCtrl]);
 app.controller("CheckOutCtrl", ["$scope", "$location", "$routeParams", "$timeout", "profileService", CheckOutCtrl]);
@@ -637,6 +657,9 @@ app.config(function($routeProvider, $locationProvider) {
   }).
   when('/offline', {
     templateUrl: contactsId.sourcePath + '/partials/offline.html'
+  }).
+  when('/AddProtectedRoles', {
+    controller: 'AddProtectedRolesCtrl'
   }).
   otherwise({
     templateUrl: contactsId.sourcePath + '/partials/404.html',

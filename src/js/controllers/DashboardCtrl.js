@@ -158,6 +158,21 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   };
 
   $scope.qlOpen = -1;
+  
+  $scope.FBShare = function(){
+    FB.ui(
+    {
+      method: 'share',
+      href: 'http://humanitarian.id',
+      app_id: 593963747410690,
+      redirect_uri: 'http://about.humanitarian.id/close.html',
+      display: 'iframe',
+      caption: 'Humanitarian ID - always my latest details.',
+      description: 'In a humanitarian crisis, an accurate contact list is critical to help ensure an effective response. You can "check-in" to a crisis and provide your locally relevant contact details. When you leave the crisis, you simply "check-out".',
+      picture: 'http://about.humanitarian.id/wp-content/uploads/2015/08/HID_fbshare.png',
+    });
+  }
+
 
   $scope.share = function (checkinName, network){
     var baseLink = "", params={}, size="";
@@ -166,23 +181,6 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
       title = 'I have joined Humanitarian ID !';
     }
     switch (network){
-      case 'facebook':
-        baseLink = "https://www.facebook.com/dialog/share?";
-        params = {
-          app_id: 593963747410690,
-          caption: 'Humanitarian ID - always my latest details.',
-          description: 'In a humanitarian crisis, an accurate contact list is critical to help ensure an effective response. You can "check-in" to a crisis and provide your locally relevant contact details. When you leave the crisis, you simply "check-out".',
-          title: title,
-          picture: 'http://about.humanitarian.id/wp-content/uploads/2015/08/HID_fbshare.png',
-          href: 'http://humanitarian.id',
-          redirect_uri: 'http://about.humanitarian.id/close.html',
-          // locale: 'en_US',
-          display: 'iframe',
-          sdk: 'joey'//,
-          // version: 'v2.2'
-        }
-        size = 'width=550,height=650';
-        break;
       case 'linkedin':
         baseLink = "http://www.linkedin.com/shareArticle?";
         params = {

@@ -621,6 +621,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
       $scope.submitProcessing = true;
       profileService.saveContact(profile).then(function(data) {
+
         if (data && data.status && data.status === 'ok') {
           if (checkinFlow) {
             profileService.getServices({ location: profile.locationId }).then(function (resp) {
