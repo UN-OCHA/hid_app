@@ -18,7 +18,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.countries = countries;
   $scope.adminRoleOptions = roles;
   $scope.userData = userData;
-
+   
   $scope.shortcuts = [
     {title: "Humanitarian Coordinator", path: "/list/global?localContacts&protectedRoles=56026"},
     {title: "Head of Agencies", path: "/list/global?localContacts&protectedRoles=2377"},
@@ -43,8 +43,59 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.contactsCreated = false;
   $scope.isEditor = false;
   $scope.isVerified = userData.profile.verified;
+  
+  setPermissions();
 
-  $scope.userCanUseAdminFilters = profileService.canUseAdminFilters();
+  function setPermissions() {
+    var hasRoleAdmin = profileService.hasRole('admin');
+    $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.selectedOperation);
+    $scope.userCanEditProtectedBundle = profileService.canEditProtectedBundle($scope.selectedOperation);
+    
+    // Determine what roles are available to assign to a user
+    if ($scope.userCanEditRoles && hasRoleAdmin) {
+      // You're an admin and can assign any role
+      $scope.adminRoleOptions = roles;
+    }
+    else if ($scope.userCanEditRoles) {
+      for (var i in userData.profile.roles) {
+        if (userData.profile.roles.hasOwnProperty(i)) {
+          var role = userData.profile.roles[i],
+              roleData = roleInArray(role, roles),
+              roleParts = role.split(":");
+
+          if (roleData) {
+            $scope.adminRoleOptions.push(roleData);
+          }
+          if (roleParts[0] === 'manager') {
+            var tempData = roleInArray(('editor:' + roleParts[1] + ':'+ roleParts[2]), roles);
+            if (tempData) {
+              $scope.adminRoleOptions.push(tempData);
+            }
+          }
+        }
+      }
+    }
+    else {
+      // For users who only have editor roles.
+      for (var i in $scope.adminRoles) {
+        if ($scope.adminRoles.hasOwnProperty(i)) {
+          var roleData = roleInArray($scope.adminRoles[i], roles);
+          if (roleData) {
+            $scope.adminRoleOptions.push(roleData);
+          }
+        }
+      }
+    }
+  }
+  
+
+  // Helper for fetching role data.
+  function roleInArray(roleId, roles) {
+    var rolesById = roles.map(function(e) { return e.id; })
+        index = rolesById.indexOf(roleId);
+    return (index > -1) ? roles[index] : false;
+  }
+
 
   if ($scope.locationId === 'global' && !$scope.query.hasOwnProperty('globalContacts') && !$scope.query.hasOwnProperty('localContacts')) {
     $scope.query.globalContacts = true;
@@ -226,10 +277,12 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.updateProfile = function (contact, field) {
     var access = field === 'verified' ?  contact.ql.userCanEditVerified : contact.ql.userCanEditKeyContact,
         stateKey = field + 'State';
+    if(!contact._profile.verifiedBy)
+         contact._profile.verified = '';
     if (access) {
       if (contact.ql[stateKey] === 'confirm') {
         contact.userid = contact._profile._userid || contact._profile.userid;
-        contact._profile = contact._profile._id;
+        contact._profile.verifiedBy = userData.profile.userid;
 
         contact[field] = contact.ql[field];
         contact.ql[stateKey] = 'inProgress';
@@ -586,6 +639,41 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
       scope: $scope,
       controller: 'AddToCustomListCtrl',
     });
+  }
+
+
+
+  $scope.showRoles = function(contact){
+
+    $scope.protectedRoles = protectedRoles;
+    $scope.contact = contact;
+    $scope.userid = userData.profile.userid;
+    $scope.profile = userData.profile; 
+    ngDialog.open({
+      name: 'AddRole',
+      template: 'partials/addProtectedRoles.html',
+      showClose: false,
+      scope: $scope,
+      controller: 'AddProtectedRolesCtrl',
+    });
+
+  }
+
+  $scope.showGroups = function(contact){
+  
+    $scope.contact = contact;
+    $scope.userid = userData.profile.userid;
+
+    //This contains the logged in users profile.
+    $scope.profile = userData.profile; 
+    ngDialog.open({
+      name: 'AddContact',
+      template: 'partials/addProtectedGroups.html',
+      showClose: false,
+      scope: $scope,
+      controller: 'AddProtectedGroupsCtrl',
+    });
+
   }
 
   // Edit subscriptions
