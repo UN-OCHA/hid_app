@@ -19,6 +19,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
   $scope.imageTypes = ['URL', 'Facebook', 'Google+'];
+  $scope.verifiedBy = '';
 
   var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': [], 'disasters': ['remote_id']},
       pathParams = $location.path().split('/'),

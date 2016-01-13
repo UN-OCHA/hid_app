@@ -41,10 +41,10 @@ function AddProtectedRolesCtrl($scope, profileService) {
     $scope.contact.userid = userid;
     profileService.saveContact($scope.contact).then(function(data) {
     if (data && data.status && data.status === 'ok') {
-      console.log('updated');
+        $scope.flash.set('Updated', 'success');
     }
     else {
-      alert('An error occurred.');
+        $scope.flash.set('There was an error updating this profile.', 'danger');
     }
   });
   $scope.closeThisDialog();
