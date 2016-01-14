@@ -277,6 +277,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.updateProfile = function (contact, field) {
     var access = field === 'verified' ?  contact.ql.userCanEditVerified : contact.ql.userCanEditKeyContact,
         stateKey = field + 'State';
+
     if(!contact.verifiedByID){
        contact.verifiedByID = '';
        contact.verifiedByName = '';
@@ -289,7 +290,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
         contact.ql[stateKey] = 'inProgress';
         if(contact.verified == true)
         {
-          console.log("UD", userData);
           contact.verifiedByID = userData.global._id;
           var name = userData.global.nameGiven + " " + userData.global.nameFamily;
           contact.verifiedByName = name;
