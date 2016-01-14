@@ -56,7 +56,8 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
             this.push({
               'name': value.nameGiven + ' ' + value.nameFamily,
               'userid': value.nameGiven + ' ' + value.nameFamily + ' (' + email + ')',
-              '_id': value._profile._id
+              '_id': value._profile._id,
+              '_userid': value._profile.userid
             });
           }, $scope.users);
 
@@ -132,6 +133,11 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
       }
     }, editors);
     $scope.list.editors = editors;
+
+    // Replace list owner with userid instead of object
+    if ($scope.list.userid._userid) {
+      $scope.list.userid = $scope.list.userid._userid;
+    }
 
     profileService.saveList($scope.list).then(function(data) {
       if (data && data.status && data.status === 'ok') {
