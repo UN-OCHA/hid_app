@@ -6,7 +6,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   $scope.profileContacts = profileData.contacts;
   $scope.globalContactId = profileData.global._id;
   $scope.profile = contact._profile;
-
+  
   if (!contact.status) {
     $scope.flash.set('This contact is already checked out and kept for archive reasons only', 'danger', false);
   }
