@@ -1,5 +1,7 @@
-function CustomListSettingsCtrl($scope, $route, $location, $http, authService, profileService, list, gettextCatalog, ngDialog) {
+function CustomListSettingsCtrl($scope, $route, $location, $http, authService, profileService, userData, list, gettextCatalog, ngDialog) {
   $scope.list = list;
+  $scope.userData = userData;
+
   if (!list.privacy) {
     $scope.list.privacy = 'all';
   }
@@ -8,6 +10,10 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.list.readers.push("");
   $scope.list.editors.push("");
+
+  $scope.isOwner = $scope.list.userid === userData.profile.userid;
+  $scope.list.userid = userData.profile;
+  $scope.list.userid.userid.replace(/(_\d+)$/,'');
 
   angular.forEach($scope.list.readers, function(reader,key){
     if (reader && reader.userid) {
@@ -50,7 +56,8 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
             this.push({
               'name': value.nameGiven + ' ' + value.nameFamily,
               'userid': value.nameGiven + ' ' + value.nameFamily + ' (' + email + ')',
-              '_id': value._profile._id
+              '_id': value._profile._id,
+              '_userid': value._profile.userid
             });
           }, $scope.users);
 
@@ -126,6 +133,11 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
       }
     }, editors);
     $scope.list.editors = editors;
+
+    // Replace list owner with userid instead of object
+    if ($scope.list.userid._userid) {
+      $scope.list.userid = $scope.list.userid._userid;
+    }
 
     profileService.saveList($scope.list).then(function(data) {
       if (data && data.status && data.status === 'ok') {
