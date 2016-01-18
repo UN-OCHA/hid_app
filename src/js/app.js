@@ -5,7 +5,7 @@ var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'c
 //Access to the facebook SDK 
 window.fbAsyncInit = function() {
   FB.init({
-    appId      : '269496693131470',
+    appId      : '593963747410690',
     xfbml      : true,
     version    : 'v2.5'
   });
