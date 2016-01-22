@@ -55,7 +55,7 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
           }
           if (value.users && value.users.length) {
             $scope.customContacts[key].isFollower = value.users.indexOf($scope.userData.profile.userid) == -1 ? false : true;
-            if (!$scope.customContacts[key].isFollower) {
+            if (!$scope.customContacts[key].isFollower && $scope.customContacts[key].userid != $scope.userData.profile.userid) {
               del.push(key);
             }
           }
