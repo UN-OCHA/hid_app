@@ -7,7 +7,6 @@ function NumbersCtrl($scope, $http) {
     var unique_Org;
     
     var m=[0,0,0,0,0,0,0,0,0,0,0,0];
-    var w=[0,0,0,0,0,0,0,0,0,0,0,0];
 
     var API = "https://fis-ocha.cartodb.com/api/v1/sql?q=SELECT*FROM hid_checkins";
     
@@ -118,7 +117,7 @@ function NumbersCtrl($scope, $http) {
     });
 
 
-    function letsSee (myData) {
+    function initialGraph (myData) {
         function start() {
 
             isChange++;
@@ -577,7 +576,7 @@ function NumbersCtrl($scope, $http) {
         $scope.globalCount = myData.rows.length;
     }
 
-    letsSee(myData);
+    initialGraph(myData);
     getStatistics();
 
 }
