@@ -1,58 +1,129 @@
 <div class="back-btn back-btn-head btn">
   <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span></span></a>
 </div>
+<div>
+	<a class="results4" style="font-size: 47px; margin-left:19px">Number of Checkins</a>
+	<a class="result4"></a>
+</div>
 <div class="container">
 <div class="row">
 <div class="col-md-6">
-	<p class="coun"></p>
 	<select  id="mySelect" ng-model="selCountry" class="form-control form-control-light">
 		<option value="World Numbers">World Numbers</option>
 	</select>
+	<br>
 
-	<a class="results4">NUMBER OF CHECKINS</a>
-	<a class="result4"></a>
+	<!-- <canvas  height="400" width="550" id="clients2"></canvas> -->
 	<canvas  height="400" width="550" id="clients"></canvas>
+
 	<br>
  	<br>
  	<br>
 </div>	
+
 <div class="col-md-6">
- <div class="row" style="margin-left:10px; margin-right:0px !important">
-	<span ng-if="selCountry == 'World Numbers'">
-		<h class="header4">Countries with most check-ins</h>
-	</span>
-        <span ng-if="selCountry != 'World Numbers'">
-		<h class="header4">Most check-ins coming from</h>
-	</span>
-	<p class="results1"></p>
-	<p class="results2"></p>
-	<p class="results3"></p>
- </div>
- <br>
- <br>
- <br>
-<div class="row" style="margin-left:20px">
-	<div style="float:left">
-		<img src="/images/check.png"><img>
-		<div width="220px" height="67px">
-			<h class="header6">CHECK-INS</h>
-			<br>
-			<h class="header5">within past 7 days</h>
+ <div class="row" style="margin-left:10px; margin-right:0px !important;">
+	<div class="results1" style:"margin-top:5px;">
+		<h4 class="results5">Last Week </h4>	
+		<div>
+			<div style="float: left; width: 50%">
+				<h2 class="results6">{{weeklyCount}}</h2>
+			</div>
+			<div style="float: right; width: 45%; margin-top: -16px;  line-height: 1.3;" ng-if ="globalFig == true">
+					<ol type="1" >
+						<li class="results7" ng-repeat="country in topn">
+							 {{country.country}} <b>[</b> <b class ="results8">{{country.count}}</b> <b>]</b>
+						</li>
+					</ol> 
+			</div>
+			<div style="float: right; width: 45%; margin-top: -16px;  line-height: 1.3;" ng-if ="globalFig == false">
+					<ol type="1" >
+						<li class="results7" ng-repeat="org in weeklyOrgDetails">
+							 {{org.orgName[1]}} <b>[</b> <b class ="results8">{{org.count}}</b> <b>]</b>
+						</li>
+					</ol> 
+			</div>
 		</div>
 	</div>
-	<div class="bubble">
-		<p class="huge" style="position:absolute"></p>	
-		<p id="burst-12"></p>
+
+	<br>	
+	
+	<div class="results1"> 
+		<h4 class="results5">Last Month</h4>	
+		<div style="float: left; width: 50%">
+			<h2 class="results6">{{monthlyCount}}</h2>
+		</div>
+		<div style="float: right; width: 45%; margin-top: -16px;  line-height: 1.3;" ng-if ="globalFig == true">
+				<ol type="1" >
+					<li class="results7" ng-repeat="country in monthlyDetails" >
+						 {{country.country}} <b>[</b> <b class ="results8">{{country.count}}</b> <b>]</b>
+					</li>
+				</ol> 
+		</div>
+		<div style="float: right; width: 45%; margin-top: -16px;  line-height: 1.3;" ng-if ="globalFig == false">
+			<ol type="1" >
+				<li class="results7" ng-repeat="org in monthlyOrgDetails">
+					 {{org.orgName[1]}} <b>[</b> <b class ="results8">{{org.count}}</b> <b>]</b>
+				</li>
+			</ol> 
+		</div>
+	</div><br>
+	<div class="results1">
+		<h4 class="results5">Last 6 Months</h4>	
+		<div style="float: left; width: 50%">
+			<h2 class="results6">{{sixMonthlyCount}}</h2>
+		</div>
+		<div style="float: right; width: 45%; margin-top: -16px" ng-if ="globalFig == true">
+				<ol type="1" >
+					<li class="results7" ng-repeat="country in sixMonthlyDetails" >
+						 {{country.country}} <b>[</b> <b class ="results8">{{country.count}}</b> <b>]</b>
+					</li>
+				</ol> 
+		</div>
+		<div style="float: right; width: 45%; margin-top: -16px; line-height: 1.3;" ng-if ="globalFig == false">
+			<ol type="1" >
+				<li class="results7" ng-repeat="org in sixMonthlyOrgDetails">
+						{{org.orgName[1]}} <b>[</b> <b class ="results8">{{org.count}}</b> <b>]</b>
+				</li>
+			</ol> 
+		</div>
+	</div>	
+ </div>
+
+</div>
+</div>
+<br>
+<div class="results9"  ng-if ="globalFig == true">
+	<br>
+	<div style ="float: left; margin-top: -11px; width: 30%;">
+		<div style="float: left; margin-top: -16px">
+			<h4 class="results5">SINCE THE <b>BEGINING</b></h4>	
+		</div>
+		<br>
+		<div style="float: left; margin-top: -11px; margin-left: -294px">
+			<p class ="results6" style: "width: 0%">{{globalCount}}</p>
+		</div>
+	</div>
+	<div style ="float: right; margin-top: -123px; margin-left: 5px; width: 70%;">
+		<div style ="float: left; width: 20.1em;">
+			<ol type="1">
+				<li class="results10" ng-repeat="country in globalCountryDetails1">
+						{{country.countryName}} <b>[</b> <b class ="results8">{{country.count}}</b> <b>]</b>
+				</li>
+			</ol>
+		</div>
+		<div style ="float: left; width: 20.1em;">
+			<ol type="1" start="4" >
+				<li class="results10" style="margin-left: -26px" ng-repeat="country in globalCountryDetails2">
+						{{country.countryName}} <b>[</b> <b class ="results8">{{country.count}}</b> <b>]</b>
+				</li>
+			</ol>
+		</div>
 	</div>
 </div>
 </div>
-</div>
-<div class="row">
-<br>
-<br>
-<p class="updateTime"></p>
-</div>
-</div>
+
+
 
 
 
