@@ -6,7 +6,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   $scope.profileContacts = profileData.contacts;
   $scope.globalContactId = profileData.global._id;
   $scope.profile = contact._profile;
-
+  
   if (!contact.status) {
     $scope.flash.set('This contact is already checked out and kept for archive reasons only', 'danger', false);
   }
@@ -20,7 +20,8 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   // on HID, the contact has an email address (is not a ghost), and the actor
   // is an admin or a manager/editor in the location of this contact.
   $scope.userCanSendClaimEmail = contact.status && profileService.canSendClaimEmail(contact);
-
+  var hasRoleAdmin = profileService.hasRole('admin');
+  $scope.userIsAdmin = hasRoleAdmin;
   // Get Gravatar URL
   $scope.gravatarUrl = '';
   var userEmails = (profileData.profile && profileData.profile._userid) ? profileData.profile._userid.split('_') : [];
@@ -32,7 +33,6 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     userEmail = md5.createHash(userEmail.trim().toLowerCase());
     $scope.gravatarUrl = 'https://secure.gravatar.com/avatar/' + userEmail + '?s=200&d=' + encodeURIComponent('https://app.humanitarian.id/images/avatar.png');
   }
-
 
   $scope.contact.protectedRolesByName = [];
   angular.forEach($scope.contact.protectedRoles, function(value, key) {
@@ -75,6 +75,12 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     $scope.contact.displayCreatedDate = formatDateTime($scope.contact.created);
   }
 
+  if($scope.profile.verifiedByID == userData.global._profile)
+  {
+      var name  = userData.global.nameGiven +  " " + userData.global.nameFamily
+      $scope.verifiedByName = name;
+      $scope.globalProfileLink = userData.global._id;
+  }
 
   $scope.locationText = function() {
     return $scope.contact.location || gettextCatalog.getString('Global');
