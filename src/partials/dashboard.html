@@ -8,6 +8,12 @@
       <div class="alert alert-warning" role="alert" ng-show="!globalProfileId.length"><span translate>Please create a</span> <a href="#/profile" translate>Global Profile</a> <span translate>before checking-in to a country/emergency.</span></div>
       <browser-alert></browser-alert>
     </div>
+        <div class="mobile-checkin visible-xs" style="width: 80%;margin-left: 10%;">
+        <a class="btn btn-primary btn-lg btn-block" href="#/checkin">
+          <span class="fa fa-angle-right"></span> <span translate>Check-in</span>
+        </a>
+      </div>
+      <br>
     <div class="active-profiles-wrapper" ng-show="userData.contacts.length">
       <h3><span translate>General List</span> :</h3>
       <ul class="active-profiles-container list-group">
@@ -156,11 +162,7 @@
       </ul>
 
 
-      <div class="mobile-checkin visible-xs">
-        <a class="btn btn-primary btn-lg btn-block" href="#/checkin">
-          <span class="fa fa-angle-right"></span> <span translate>Check-in</span>
-        </a>
-      </div>
+  
     </div>
     <div class="empty-profiles" ng-hide="userData.contacts.length">
       <p translate>Thank you for registering on Humanitarian ID. With your help, we will ensure that humanitarian contact lists are always up-to-date. As you will notice, you do not have access to any lists just yet.</p>

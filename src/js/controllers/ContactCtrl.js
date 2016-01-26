@@ -34,7 +34,6 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     $scope.gravatarUrl = 'https://secure.gravatar.com/avatar/' + userEmail + '?s=200&d=' + encodeURIComponent('https://app.humanitarian.id/images/avatar.png');
   }
 
-
   $scope.contact.protectedRolesByName = [];
   angular.forEach($scope.contact.protectedRoles, function(value, key) {
     var role = filter(protectedRoles,function(d) { return d.id === value;});
@@ -76,6 +75,12 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     $scope.contact.displayCreatedDate = formatDateTime($scope.contact.created);
   }
 
+  if($scope.profile.verifiedByID == userData.global._profile)
+  {
+      var name  = userData.global.nameGiven +  " " + userData.global.nameFamily
+      $scope.verifiedByName = name;
+      $scope.globalProfileLink = userData.global._id;
+  }
 
   $scope.locationText = function() {
     return $scope.contact.location || gettextCatalog.getString('Global');
