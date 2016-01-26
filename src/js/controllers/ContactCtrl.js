@@ -6,7 +6,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   $scope.profileContacts = profileData.contacts;
   $scope.globalContactId = profileData.global._id;
   $scope.profile = contact._profile;
-
+  
   if (!contact.status) {
     $scope.flash.set('This contact is already checked out and kept for archive reasons only', 'danger', false);
   }
@@ -20,7 +20,8 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   // on HID, the contact has an email address (is not a ghost), and the actor
   // is an admin or a manager/editor in the location of this contact.
   $scope.userCanSendClaimEmail = contact.status && profileService.canSendClaimEmail(contact);
-
+  var hasRoleAdmin = profileService.hasRole('admin');
+  $scope.userIsAdmin = hasRoleAdmin;
   // Get Gravatar URL
   $scope.gravatarUrl = '';
   var userEmails = (profileData.profile && profileData.profile._userid) ? profileData.profile._userid.split('_') : [];

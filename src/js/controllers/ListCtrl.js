@@ -277,15 +277,25 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.updateProfile = function (contact, field) {
     var access = field === 'verified' ?  contact.ql.userCanEditVerified : contact.ql.userCanEditKeyContact,
         stateKey = field + 'State';
-    if(!contact._profile.verifiedBy)
-         contact._profile.verified = '';
+
+    if(!contact.verifiedByID){
+       contact.verifiedByID = '';
+       contact.verifiedByName = '';
+       contact.verificationDate = '';
+    }
     if (access) {
       if (contact.ql[stateKey] === 'confirm') {
         contact.userid = contact._profile._userid || contact._profile.userid;
-        contact._profile.verifiedBy = userData.profile.userid;
-
         contact[field] = contact.ql[field];
         contact.ql[stateKey] = 'inProgress';
+        if(contact.verified == true)
+        {
+          contact.verifiedByID = userData.global._id;
+          var name = userData.global.nameGiven + " " + userData.global.nameFamily;
+          contact.verifiedByName = name;
+          contact.verificationDate = new Date();
+
+        }
         profileService.saveContact(contact).then(function(data) {
           if (data && data.status && data.status === 'ok') {
             profileService.clearData();
