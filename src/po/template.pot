@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2016-01-12T11:14:13.921Z\n"
+"Project-Id-Version: 2016-01-26T15:21:34.118Z\n"
 
 #: src/partials/dashboard.html
 msgid "{{list.name}}"
@@ -75,6 +75,10 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "Again, thanks for helping to make humanitarian contact lists accurate."
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "Allows you to change the owner of this list"
 msgstr ""
 
 #: src/partials/about.html
@@ -612,6 +616,10 @@ msgstr ""
 msgid "List Name*"
 msgstr ""
 
+#: src/partials/settingsList.html
+msgid "List owner"
+msgstr ""
+
 #: src/partials/dashboard.html
 msgid "List Settings"
 msgstr ""
@@ -807,6 +815,10 @@ msgstr ""
 
 #: src/partials/createAccount.html
 msgid "Please enter the name of the HID user who the invite should come from"
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "Please enter the name of the new owner of this list"
 msgstr ""
 
 #: src/partials/settingsList.html
