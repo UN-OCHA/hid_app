@@ -284,13 +284,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
         contact[field] = contact.ql[field];
         contact.ql[stateKey] = 'inProgress';
 
-        
-        if(contact._profile.verifiedByID == userData.global._profile)
-        {
-            var name  = userData.global.nameGiven +  " " + userData.global.nameFamily
-            contact.verifiedByName = name;
-            contact.verifiedGlobalProfileID = userData.global._id;
-        }
         profileService.saveContact(contact).then(function(data) {
           if (data && data.status && data.status === 'ok') {
             profileService.clearData();
