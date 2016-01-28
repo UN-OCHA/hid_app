@@ -22,7 +22,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   $scope.verifiedByID = '';
   $scope.verifiedByName = '';
   $scope.verificationDate = '';
-  $scope.verifiedGlobalProfileID = '';
 
   var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': [], 'disasters': ['remote_id']},
       pathParams = $location.path().split('/'),
@@ -605,7 +604,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       profile.verifiedByID = $scope.verifiedByID;
       profile.verifiedByName = $scope.verifiedByName;
       profile.verificationDate = $scope.verificationDate;
-      profile.verifiedGlobalProfileID = $scope.verifiedGlobalProfileID;
       //Organization Editor
       //Remove any existing OrgEditor role for current location
       if ($scope.orgEditorRoles){
@@ -993,6 +991,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       }
     }
   }
+
 
   // Helper for fetching role data.
   function roleInArray(roleId, roles) {
