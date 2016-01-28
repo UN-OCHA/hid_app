@@ -6,7 +6,6 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   $scope.profileContacts = profileData.contacts;
   $scope.globalContactId = profileData.global._id;
   $scope.profile = contact._profile;
-  
   if (!contact.status) {
     $scope.flash.set('This contact is already checked out and kept for archive reasons only', 'danger', false);
   }
@@ -76,12 +75,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     $scope.contact.displayCreatedDate = formatDateTime($scope.contact.created);
   }
 
-  if($scope.profile.verifiedByID == userData.global._profile)
-  {
-      var name  = userData.global.nameGiven +  " " + userData.global.nameFamily
-      $scope.verifiedByName = name;
-      $scope.globalProfileLink = userData.global._id;
-  }
+ 
   $scope.locationText = function() {
     return $scope.contact.location || gettextCatalog.getString('Global');
   }
