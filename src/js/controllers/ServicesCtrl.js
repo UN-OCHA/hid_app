@@ -218,7 +218,7 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
     $scope.alerts.push({type: 'info', msg: 'Thank you for checking into ' + operations[$routeParams.locationId].name + '. We thought these services might be of interest to you. Feel free to subscribe to them.'});
     $scope.isCheckingIn = true;
   }
-
+  $scope.countryName = operations[$routeParams.locationId].name;
   userData.contacts.forEach(function (item) {
     if (item.email && item.email.length) {
       item.email.forEach(function (email) {
