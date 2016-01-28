@@ -283,7 +283,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
         contact.userid = contact._profile._userid || contact._profile.userid;
         contact[field] = contact.ql[field];
         contact.ql[stateKey] = 'inProgress';
-
         profileService.saveContact(contact).then(function(data) {
           if (data && data.status && data.status === 'ok') {
             profileService.clearData();
