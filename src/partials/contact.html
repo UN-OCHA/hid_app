@@ -160,6 +160,14 @@
               <span class="group-label" translate>Created</span>
               <span class="title"><strong>{{contact.displayCreatedDate}}</strong></span>
             </div>
+            <div class="right-sidebar-group" ng-if="contact._profile.verified && userIsAdmin">
+              <span class="group-label" translate>Verified By:</span>
+              <span class="title"><strong><a href="#/contact/{{globalProfileLink}}" ng-if="userIsAdmin">{{verifiedByName}}</strong></a></span> 
+            </div>
+            <div class="right-sidebar-group" ng-if="contact._profile.verified && userIsAdmin">
+              <span class="group-label" translate>Verification Date:</span>
+              <span class="title"><strong>{{contact._profile.verificationDate | date:'yyyy-MM-dd' }}</strong></span>
+            </div>
           </div>
         </div>
       </div>

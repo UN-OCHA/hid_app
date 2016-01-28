@@ -19,7 +19,9 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   $scope.phoneTypes = ['Landline', 'Mobile', 'Fax', 'Satellite'];
   $scope.emailTypes = ['Work', 'Personal', 'Other'];
   $scope.imageTypes = ['URL', 'Facebook', 'Google+'];
-  $scope.verifiedBy = '';
+  $scope.verifiedByID = '';
+  $scope.verifiedByName = '';
+  $scope.verificationDate = '';
 
   var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': [], 'disasters': ['remote_id']},
       pathParams = $location.path().split('/'),
@@ -597,8 +599,11 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         delete profile.departureDate;
       }
 
-      profile.verified = $scope.verified;
 
+      profile.verified = $scope.verified;
+      profile.verifiedByID = $scope.verifiedByID;
+      profile.verifiedByName = $scope.verifiedByName;
+      profile.verificationDate = $scope.verificationDate;
       //Organization Editor
       //Remove any existing OrgEditor role for current location
       if ($scope.orgEditorRoles){
