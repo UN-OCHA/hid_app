@@ -1,22 +1,33 @@
 <div class="back-btn back-btn-head back-btn-head-mob btn" ng-if="!isCheckingIn">
     <a ng-click="goBack(true)"><i class="fa fa-chevron-left"></i><span></span></a>
 </div>
-<div class="masthead row" ng-show='!isRouteLoading'>
+<div  ng-show='!isRouteLoading'>
   <div class="col-md-1 back-btn back-btn-float btn" ng-if="!isCheckingIn">
     <a ng-click="goBack(true)"><i class="fa fa-chevron-left"></i><span></span></a>
   </div>
-  <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-2 pull-right-hard">
-    <h2 class="heading-contact-list" translate>
-      Mailing Lists and Discussion Groups <small>({{services.length}})</small>
-    </h2>
+  <div>
+    <div class ="header1">
+      <h2 class="heading-subscriptions-list" translate>
+        You have succesfully checked into {{countryName}}!
+      </h2>
+      <p class="subheading-subscriptions-list" translate>
+        Thank you for checking in. Here are a few mailing lists and discussion groups that you might find useful:
+      </p>
+    </div>
+    <div class ="heading-subscriptions-list checkbox-properties">
+      <span >
+        <i class="fa fa-check-circle-o"></i>
+      </span>
+    </div>
   </div>
+  
 </div>
-
+<br>
 <div class="main row page-services" ng-show='!isRouteLoading' ng-class="{'show-options': sidebarOptions}">
-  <div class="active-contacts col-xs-12 col-sm-8 col-md-9 pull-right-hard">
+  <div class="active-contacts margin-left: 124px;">
     <browser-alert></browser-alert>
     <div>
-      <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</uib-alert>
+      <!-- <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</uib-alert> -->
     </div>
 
     <form class="search-form" ng-if="!isCheckingIn">
@@ -30,15 +41,15 @@
       </div>
     </form>
 
-    <ul class="list-group" cg-busy="servicesPromise">
-      <li class="profile-item list-group-item" ng-repeat="service in services">
+    <ul cg-busy="servicesPromise">
+      <li class="profile-item list-group-item btn-align" ng-repeat="service in services">
         <div class="row">
-          <div class="contact-item contact-item--name col-xs-12 col-md-6" >
-            {{service.name}} <span class="label label-primary" ng-if="service.subscribed" translate>Subscribed</span>
+          <div class="service-name" >{{service.name}}
+            <span ng-if="service.subscribed" translate>Subscribed</span>
           </div>
-          <div class="btn-group">
-            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="service.subscribed" ng-click="unsubscribeDialog(service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times"></i></a>
-            <button ng-class="{'disabled' : isOffline()}" class="btn btn-sm btn-subscribe" role="button" ng-if="!service.subscribed" ng-click="subscribeDialog(service)" title="{{'Subscribe' | translate}}"><i class="fa">Subscribe</i></button>
+          <div class="btn-group" style="margin-top: -20px;">
+            <a  ng-class="{'disabled' : isOffline()}" class="btn btn-sm " role="button" ng-if="service.subscribed" ng-click="unsubscribeDialog(service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times"></i></a>
+            <button ng-class="{'disabled' : isOffline()}"  class="button-padding btn btn-sm btn-subscribe " role="button" ng-if="!service.subscribed" ng-click="subscribeDialog(service)" title="{{'Subscribe' | translate}}"><i class="fa">Subscribe</i></button>
             <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="service.editAllowed" href="#/services/{{service._id}}/edit" title="{{'Edit' | translate}}"><i class="fa fa-cog"></i></a>
           </div>
         </div>
@@ -50,12 +61,13 @@
     </div>
 
   </div>
-
-  <div class="sidebar-left">
-    <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper" ng-if="isCheckingIn">
-      <div class="actions">
-        <a class="btn btn-primary btn-lg btn-block" ng-disabled="submitProcessing" href="/#dashboard" translate>Done</a>
-      </div>
-    </div>
+</div>
+<br>
+<div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper submit-left-align" ng-if="isCheckingIn">
+  <div class="actions">
+    
+      <a  class="btn btn-primary btn-lg btn-block " ng-disabled="submitProcessing" href="/#dashboard" translate>
+      <span class="fa fa-angle-left"></span>
+        Back to Dashboard</a>
   </div>
 </div>
