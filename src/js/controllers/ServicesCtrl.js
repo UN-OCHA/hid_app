@@ -233,6 +233,7 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
     $scope.query.status = true;
     if ($routeParams.locationId) {
       $scope.query.location = $routeParams.locationId;
+      $scope.query.auto_add = false;
     }
     $scope.servicesPromise = profileService.getServices($scope.query).then(function (response) {
       if (response.status == 200) {
