@@ -992,7 +992,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     }
   }
 
-
   // Helper for fetching role data.
   function roleInArray(roleId, roles) {
     var rolesById = roles.map(function(e) { return e.id; })
