@@ -220,9 +220,7 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
     $scope.isCheckingIn = true;
     $scope.countryName = operations[$routeParams.locationId].name;
   }
-  else{
-      $scope.isCheckingIn = false;
-  }
+  
   userData.contacts.forEach(function (item) {
     if (item.email && item.email.length) {
       item.email.forEach(function (email) {
@@ -232,7 +230,6 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
       });
     }
   });
-  console.log(  $scope.isCheckingIn);
   $scope.submitSearch = function() {
     $scope.query.status = true;
     if ($routeParams.locationId) {
