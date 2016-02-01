@@ -5,7 +5,14 @@
   <div class="col-md-1 back-btn back-btn-float btn" ng-if="!isCheckingIn">
     <a ng-click="goBack(true)"><i class="fa fa-chevron-left"></i><span></span></a>
   </div>
-  <div>
+
+  <div ng-show="!isCheckingIn" class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-2 pull-right-hard">
+      <h2 class="heading-contact-list" translate>
+        Mailing Lists and Discussion Groups <small>({{services.length}})</small>
+      </h2>
+
+  </div>
+  <div ng-show= "isCheckingIn">
     <div class ="header1">
       <h2 class="heading-subscriptions-list" translate>
         You have succesfully checked into {{countryName}}!
@@ -14,24 +21,20 @@
         Thank you for checking in. Here are a few mailing lists and discussion groups that you might find useful:
       </p>
     </div>
-    <div class ="heading-subscriptions-list checkbox-properties">
-      <span >
+    <div class ="heading-subscriptions-list checkbox-properties" ng-show="isCheckingIn">
+      <span > 
         <i class="fa fa-check-circle-o"></i>
       </span>
     </div>
   </div>
-  
+
 </div>
 <br>
 <div class="main row page-services" ng-show='!isRouteLoading' ng-class="{'show-options': sidebarOptions}">
-  <div class="active-contacts margin-left: 124px;">
+  <div class="active-contacts">
     <browser-alert></browser-alert>
-    <div>
-      <!-- <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</uib-alert> -->
-    </div>
-
     <form class="search-form" ng-if="!isCheckingIn">
-      <div class="form-group">
+      <div class="form-group  col-xs-12 col-sm-8 col-md-9 pull-right-hard">
         <label class="control-label element-invisible" for="q" translate>Search</label>
         <div class="input-groupx">
           <input class="form-control contact-search" type="search" name="text"
@@ -42,14 +45,28 @@
     </form>
 
     <ul cg-busy="servicesPromise">
-      <li class="profile-item list-group-item btn-align" ng-repeat="service in services">
+      <li class="profile-item  list-group-item btn-align" ng-repeat="service in services" ng-show="isCheckingIn">
         <div class="row">
-          <div class="service-name" >{{service.name}}
+          <div class="service-name" ng-show="isCheckingIn" >{{service.name}}
             <span  class="label label-primary" ng-if="service.subscribed" translate>Subscribed</span>
           </div>
-          <div class="btn-group" style="margin-top: -20px;">
-            <a  ng-class="{'disabled' : isOffline()}" class="btn btn-sm " role="button" ng-if="service.subscribed" ng-click="unsubscribeDialog(service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times"></i></a>
-            <button ng-class="{'disabled' : isOffline()}"  class="button-padding btn btn-sm btn-subscribe " role="button" ng-if="!service.subscribed" ng-click="subscribeDialog(service)" title="{{'Subscribe' | translate}}"><i class="fa">Subscribe</i></button>
+          <div class="btn-group">
+            <div class ="services-btn-group">
+              <a  ng-class="{'disabled' : isOffline()}" class="btn btn-sm " role="button" ng-if="service.subscribed" ng-click="unsubscribeDialog(service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times"></i></a>
+              <button ng-class="{'disabled' : isOffline()}"  class="button-padding btn btn-sm btn-subscribe " role="button" ng-if="!service.subscribed" ng-click="subscribeDialog(service)" title="{{'Subscribe' | translate}}"><i class="fa">Subscribe</i></button>
+              <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="service.editAllowed" href="#/services/{{service._id}}/edit" title="{{'Edit' | translate}}"><i class="fa fa-cog"></i></a>
+            </div>
+          </div>
+        </div>
+      </li>
+        <li class="profile-item services-item list-group-item col-xs-12 col-sm-9 col-md-10 pull-right-hard" ng-repeat="service in services" ng-show="!isCheckingIn">
+        <div class="row">
+          <div class="contact-item contact-item--name col-xs-12 col-md-6" >
+            {{service.name}} <span class="label label-primary" ng-if="service.subscribed" translate>Subscribed</span>
+          </div>
+          <div class="btn-group">
+            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="service.subscribed" ng-click="unsubscribeDialog(service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times"></i></a>
+            <button ng-class="{'disabled' : isOffline()}" class="btn btn-sm btn-subscribe" role="button" ng-if="!service.subscribed" ng-click="subscribeDialog(service)" title="{{'Subscribe' | translate}}"><i class="fa">Subscribe</i></button>
             <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="service.editAllowed" href="#/services/{{service._id}}/edit" title="{{'Edit' | translate}}"><i class="fa fa-cog"></i></a>
           </div>
         </div>
