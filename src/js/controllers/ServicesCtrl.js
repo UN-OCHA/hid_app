@@ -208,17 +208,19 @@ function ServicesCtrl($scope, $location, $route, $routeParams, $http, authServic
 function ServicesListCtrl($scope, $location, $route, $routeParams, profileService, userData, ngDialog, operations) {
   $scope.alerts = [];
   $scope.services = [];
+  $scope.countryName 
   $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
   $scope.query = $location.search();
   $scope.userEmails = [];
-  $scope.isCheckingIn = false;;
+  $scope.isCheckingIn = false;
 
   if ($routeParams.locationId) {
     $scope.alerts.length = 0;
     $scope.alerts.push({type: 'info', msg: 'Thank you for checking into ' + operations[$routeParams.locationId].name + '. We thought these services might be of interest to you. Feel free to subscribe to them.'});
     $scope.isCheckingIn = true;
+    $scope.countryName = operations[$routeParams.locationId].name;
   }
-  $scope.countryName = operations[$routeParams.locationId].name;
+  
   userData.contacts.forEach(function (item) {
     if (item.email && item.email.length) {
       item.email.forEach(function (email) {
@@ -228,7 +230,6 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
       });
     }
   });
-
   $scope.submitSearch = function() {
     $scope.query.status = true;
     if ($routeParams.locationId) {
