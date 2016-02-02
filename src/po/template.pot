@@ -1,15 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2016-01-26T15:21:34.118Z\n"
-
-#: src/partials/dashboard.html
-msgid "{{list.name}}"
-msgstr ""
-
-#: src/partials/list.html
-msgid "{{locationText()}} has been set as a private contact list by our field-level administrators. Only \"verified\" Humanitarian ID users can access the contact list. For information about \"verified\" users, please see our <a href=\"http://humanitarian.id/faqs\" target=\"_blank\">FAQs</a>."
-msgstr ""
+"Project-Id-Version: 2016-02-02T09:01:26.435Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
@@ -18,6 +10,12 @@ msgstr ""
 #: src/partials/servicesEdit.html
 #: src/partials/settingsList.html
 msgid "* Required Field"
+msgstr ""
+
+#: src/partials/services.html
+msgid ""
+"<span class=\"fa fa-angle-left\"></span>\n"
+"        Back to Dashboard"
 msgstr ""
 
 #: src/partials/header.html
@@ -32,25 +30,16 @@ msgstr ""
 msgid "Account Created!"
 msgstr ""
 
-#: src/partials/profile.html
-msgid "add a missing group"
-msgstr ""
-
-#: src/partials/createAccount.html
-#: src/partials/profile.html
-msgid "add a missing organization"
-msgstr ""
-
-#: src/partials/list.html
-msgid "Add to list"
-msgstr ""
-
 #: src/js/controllers/ContactCtrl.js
 msgid "Add to List"
 msgstr ""
 
 #: src/js/controllers/ListCtrl.js
 msgid "Add to My Contacts"
+msgstr ""
+
+#: src/partials/list.html
+msgid "Add to list"
 msgstr ""
 
 #: src/js/controllers/ListCtrl.js
@@ -81,10 +70,6 @@ msgstr ""
 msgid "Allows you to change the owner of this list"
 msgstr ""
 
-#: src/partials/about.html
-msgid "and subscribe to our"
-msgstr ""
-
 #: src/partials/dashboard.html
 msgid "Are you responding to a humanitarian situation?"
 msgstr ""
@@ -109,12 +94,16 @@ msgstr ""
 msgid "Assign key contact"
 msgstr ""
 
-#: src/partials/profile.html
-msgid "Back"
+#: src/partials/servicesEdit.html
+msgid "Automatic addition"
 msgstr ""
 
-#: src/partials/dashboard.html
-msgid "before checking-in to a country/emergency."
+#: src/partials/servicesEdit.html
+msgid "Automatic removal"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Back"
 msgstr ""
 
 #: src/js/controllers/ProfileCtrl.js
@@ -133,6 +122,14 @@ msgstr ""
 
 #: src/partials/about.html
 msgid "Check out our animation,"
+msgstr ""
+
+#: src/partials/servicesEdit.html
+msgid "Check this box to automatically subscribe users to your service once they check in to one of the countries below."
+msgstr ""
+
+#: src/partials/servicesEdit.html
+msgid "Check this box to automatically unsubscribe users from your service, once they check out of the countries below."
 msgstr ""
 
 #: src/partials/servicesEdit.html
@@ -155,12 +152,12 @@ msgstr ""
 msgid "Check-out"
 msgstr ""
 
-#: src/partials/dashboard.html
-msgid "Check-out from"
-msgstr ""
-
 #: src/partials/contact.html
 msgid "Check-out User"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Check-out from"
 msgstr ""
 
 #: src/js/controllers/ListCtrl.js
@@ -196,33 +193,29 @@ msgstr ""
 msgid "Confirm Delete Account"
 msgstr ""
 
-#: src/partials/serviceDelete.html
-msgid "Confirm deletion of {{service.name}} Subscription Service"
-msgstr ""
-
 #: src/partials/contact.html
 #: src/partials/profile.html
 msgid "Confirm Send Claim Email"
-msgstr ""
-
-#: src/partials/unsubscribeService.html
-msgid "Confirm unsubscription"
 msgstr ""
 
 #: src/partials/contact.html
 msgid "Confirm User Checkout"
 msgstr ""
 
-#: src/js/controllers/CreateAccountCtrl.js
-msgid "Contact already exists"
+#: src/partials/serviceDelete.html
+msgid "Confirm deletion of {{service.name}} Subscription Service"
+msgstr ""
+
+#: src/partials/unsubscribeService.html
+msgid "Confirm unsubscription"
 msgstr ""
 
 #: src/partials/list.html
 msgid "Contact List Filters"
 msgstr ""
 
-#: src/partials/about.html
-msgid "contact us"
+#: src/js/controllers/CreateAccountCtrl.js
+msgid "Contact already exists"
 msgstr ""
 
 #: src/partials/list.html
@@ -254,10 +247,6 @@ msgstr ""
 msgid "Country or Operation of Response"
 msgstr ""
 
-#: src/partials/dashboard.html
-msgid "Create a Responder"
-msgstr ""
-
 #: src/partials/createAccount.html
 msgid "Create Account"
 msgstr ""
@@ -268,6 +257,10 @@ msgstr ""
 
 #: src/partials/servicesEdit.html
 msgid "Create New Service"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Create a Responder"
 msgstr ""
 
 #: src/partials/contact.html
@@ -291,10 +284,6 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: src/js/controllers/ListCtrl.js
-msgid "Delete account"
-msgstr ""
-
 #: src/partials/profile.html
 msgid "Delete Account"
 msgstr ""
@@ -309,6 +298,10 @@ msgstr ""
 
 #: src/partials/servicesEdit.html
 msgid "Delete Service"
+msgstr ""
+
+#: src/js/controllers/ListCtrl.js
+msgid "Delete account"
 msgstr ""
 
 #: src/js/controllers/ListCtrl.js
@@ -335,10 +328,6 @@ msgstr ""
 msgid "Domain"
 msgstr ""
 
-#: src/partials/services.html
-msgid "Done"
-msgstr ""
-
 #: src/partials/browser-alert.html
 msgid "Download Google Chrome"
 msgstr ""
@@ -362,14 +351,6 @@ msgstr ""
 msgid "Edit Groups"
 msgstr ""
 
-#: src/partials/dashboard.html
-msgid "Edit my"
-msgstr ""
-
-#: src/partials/dashboard.html
-msgid "Edit my global profile"
-msgstr ""
-
 #: src/js/controllers/CreateAccountCtrl.js
 msgid "Edit New Account"
 msgstr ""
@@ -390,6 +371,14 @@ msgstr ""
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Edit Subscriptions"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Edit my"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Edit my global profile"
 msgstr ""
 
 #: src/partials/settingsList.html
@@ -429,6 +418,10 @@ msgstr ""
 msgid "Extension"
 msgstr ""
 
+#: src/partials/about.html
+msgid "FAQ page"
+msgstr ""
+
 #: src/js/controllers/ProfileCtrl.js
 #: src/partials/createAccount.html
 msgid "Family Name"
@@ -440,10 +433,6 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Family Name*"
-msgstr ""
-
-#: src/partials/about.html
-msgid "FAQ page"
 msgstr ""
 
 #: src/partials/header.html
@@ -460,10 +449,6 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "First, you will need to <em>create your Global profile</em>. In this profile, you will provide your usual details or information of where you are usually located.  After you have completed this step, you will see and have access to the Global contact list."
-msgstr ""
-
-#: src/partials/about.html
-msgid "follow us on Twitter"
 msgstr ""
 
 #: src/partials/browser-alert.html
@@ -596,14 +581,6 @@ msgstr ""
 msgid "Job Title"
 msgstr ""
 
-#: src/partials/about.html
-msgid "join our mailing list"
-msgstr ""
-
-#: src/partials/contact.html
-msgid "key contact"
-msgstr ""
-
 #: src/partials/contact.html
 msgid "Last Updated"
 msgstr ""
@@ -616,12 +593,12 @@ msgstr ""
 msgid "List Name*"
 msgstr ""
 
-#: src/partials/settingsList.html
-msgid "List owner"
-msgstr ""
-
 #: src/partials/dashboard.html
 msgid "List Settings"
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "List owner"
 msgstr ""
 
 #: src/js/directives/routeLoadingIndicator.js
@@ -742,10 +719,6 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
-#: src/partials/about.html
-msgid "or simply"
-msgstr ""
-
 #: src/partials/contact.html
 #: src/partials/createAccount.html
 #: src/partials/list.html
@@ -775,10 +748,6 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "Orphan User"
-msgstr ""
-
-#: src/partials/about.html
-msgid "our FAQs"
 msgstr ""
 
 #: src/partials/servicesEdit.html
@@ -845,10 +814,6 @@ msgstr ""
 msgid "Privacy"
 msgstr ""
 
-#: src/partials/dashboard.html
-msgid "profile"
-msgstr ""
-
 #: src/partials/profile.html
 msgid "Profile"
 msgstr ""
@@ -864,10 +829,6 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "Protected Roles"
-msgstr ""
-
-#: src/partials/about.html
-msgid "read"
 msgstr ""
 
 #: src/js/directives/routeLoadingIndicator.js
@@ -894,16 +855,16 @@ msgstr ""
 msgid "Reminder sent"
 msgstr ""
 
-#: src/partials/list.html
-msgid "Remove from list"
+#: src/partials/profile.html
+msgid "Remove Image"
 msgstr ""
 
 #: src/js/controllers/ListCtrl.js
 msgid "Remove from My Contacts"
 msgstr ""
 
-#: src/partials/profile.html
-msgid "Remove Image"
+#: src/partials/list.html
+msgid "Remove from list"
 msgstr ""
 
 #: src/js/controllers/ListCtrl.js
@@ -920,12 +881,12 @@ msgstr ""
 msgid "Request to"
 msgstr ""
 
-#: src/partials/profile.html
-msgid "Required field"
-msgstr ""
-
 #: src/partials/createAccount.html
 msgid "Required Field"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "Required field"
 msgstr ""
 
 #: src/partials/profile.html
@@ -1027,6 +988,10 @@ msgid "Sending..."
 msgstr ""
 
 #: src/partials/servicesEdit.html
+msgid "Service Description"
+msgstr ""
+
+#: src/partials/servicesEdit.html
 msgid "Service Name*"
 msgstr ""
 
@@ -1067,6 +1032,10 @@ msgstr ""
 msgid "Subscription Services"
 msgstr ""
 
+#: src/partials/services.html
+msgid "Thank you for checking in. Here are a few mailing lists and discussion groups that you might find useful:"
+msgstr ""
+
 #: src/partials/dashboard.html
 msgid "Thank you for registering on Humanitarian ID. With your help, we will ensure that humanitarian contact lists are always up-to-date. As you will notice, you do not have access to any lists just yet."
 msgstr ""
@@ -1085,10 +1054,6 @@ msgstr ""
 
 #: src/partials/profile.html
 msgid "The name which appears in your Google+ profile URL. For example: https://plus.google.com/[use_this_name]/posts"
-msgstr ""
-
-#: src/partials/dashboard.html
-msgid "the relevant country to add your skills and contact details added to the appropriate contact list(s)."
 msgstr ""
 
 #: src/js/controllers/CreateAccountCtrl.js
@@ -1119,6 +1084,10 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
+#: src/partials/profile.html
+msgid "URL"
+msgstr ""
+
 #: src/js/controllers/ListCtrl.js
 msgid "Unassign key contact"
 msgstr ""
@@ -1146,10 +1115,6 @@ msgid "Update Image"
 msgstr ""
 
 #: src/partials/profile.html
-msgid "URL"
-msgstr ""
-
-#: src/partials/profile.html
 msgid "Username"
 msgstr ""
 
@@ -1166,7 +1131,11 @@ msgid "Verification"
 msgstr ""
 
 #: src/partials/contact.html
-msgid "verified"
+msgid "Verification Date:"
+msgstr ""
+
+#: src/partials/contact.html
+msgid "Verified By:"
 msgstr ""
 
 #: src/partials/profile.html
@@ -1181,6 +1150,10 @@ msgstr ""
 msgid "Verify account"
 msgstr ""
 
+#: src/partials/list.html
+msgid "View PDF"
+msgstr ""
+
 #: src/partials/dashboard.html
 msgid "View a Country"
 msgstr ""
@@ -1191,10 +1164,6 @@ msgstr ""
 
 #: src/partials/dashboard.html
 msgid "View all services"
-msgstr ""
-
-#: src/partials/list.html
-msgid "View PDF"
 msgstr ""
 
 #: src/partials/about.html
@@ -1225,18 +1194,6 @@ msgstr ""
 msgid "When you leave a country/emergency, remember that <em>you need to check-out</em>. By doing so, you will remove your details from the contact list."
 msgstr ""
 
-#: src/partials/about.html
-msgid "will answer your question. If not, do not be afraid to"
-msgstr ""
-
-#: src/js/controllers/CreateAccountCtrl.js
-msgid "will be added to the contact list.  They will not be able to claim their account."
-msgstr ""
-
-#: src/js/controllers/CreateAccountCtrl.js
-msgid "will receive an email to claim their account."
-msgstr ""
-
 #: src/js/controllers/CreateAccountCtrl.js
 msgid "Would you like to check them in?"
 msgstr ""
@@ -1250,6 +1207,87 @@ msgstr ""
 msgid "You are about to delete {{service.name}} Subscription Service from Humanitarian ID. By deleting {{service.name}}, users and managers will no longer be able to subscribe to {{service.name}} through Humanitarian ID. We will NOT remove any subscribed users from the external service provider and thus recommend you do so if appropriate."
 msgstr ""
 
+#: src/partials/services.html
+msgid "You have succesfully checked into {{countryName}}!"
+msgstr ""
+
 #: src/partials/about.html
 msgid "YouTube channel"
+msgstr ""
+
+#: src/partials/profile.html
+msgid "add a missing group"
+msgstr ""
+
+#: src/partials/createAccount.html
+#: src/partials/profile.html
+msgid "add a missing organization"
+msgstr ""
+
+#: src/partials/about.html
+msgid "and subscribe to our"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "before checking-in to a country/emergency."
+msgstr ""
+
+#: src/partials/about.html
+msgid "contact us"
+msgstr ""
+
+#: src/partials/about.html
+msgid "follow us on Twitter"
+msgstr ""
+
+#: src/partials/about.html
+msgid "join our mailing list"
+msgstr ""
+
+#: src/partials/contact.html
+msgid "key contact"
+msgstr ""
+
+#: src/partials/about.html
+msgid "or simply"
+msgstr ""
+
+#: src/partials/about.html
+msgid "our FAQs"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "profile"
+msgstr ""
+
+#: src/partials/about.html
+msgid "read"
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "the relevant country to add your skills and contact details added to the appropriate contact list(s)."
+msgstr ""
+
+#: src/partials/contact.html
+msgid "verified"
+msgstr ""
+
+#: src/partials/about.html
+msgid "will answer your question. If not, do not be afraid to"
+msgstr ""
+
+#: src/js/controllers/CreateAccountCtrl.js
+msgid "will be added to the contact list.  They will not be able to claim their account."
+msgstr ""
+
+#: src/js/controllers/CreateAccountCtrl.js
+msgid "will receive an email to claim their account."
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "{{list.name}}"
+msgstr ""
+
+#: src/partials/list.html
+msgid "{{locationText()}} has been set as a private contact list by our field-level administrators. Only \"verified\" Humanitarian ID users can access the contact list. For information about \"verified\" users, please see our <a href=\"http://humanitarian.id/faqs\" target=\"_blank\">FAQs</a>."
 msgstr ""
