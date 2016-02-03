@@ -115,40 +115,43 @@ app.run(function ($rootScope, $location, $timeout, profileService, flashService)
       var cacheRequests = 0, cacheResponses=0;
 
       //cache global profile
-      profileService.cacheLists().then(function(profileData){
-        if (profileData && profileData.status && profileData.status === 'ok' && profileData.lists && profileData.lists.length > 0){
+      profileService.getUserData().then(function (userData) {
+        if (userData) {
+          profileService.cacheLists(userData.profile).then(function(profileData){
+            if (profileData){
 
-          //cache list details for each list in profile
-          angular.forEach(profileData.lists, function(list, listIndex){
-            cacheRequests++;
-            var terms = {};
-            terms.contactList = true;
-            terms.limit = 30; //api still returns all objects without limit
-            terms.locationId = 'contacts';
-            terms.skip = 0;
-            terms.status = 1;
-            terms.sort = 'name'; //default sort
+              //cache list details for each list in profile
+              angular.forEach(profileData, function(list, listIndex){
+                cacheRequests++;
+                var terms = {};
+                terms.contactList = true;
+                terms.limit = 30; //api still returns all objects without limit
+                terms.locationId = 'contacts';
+                terms.skip = 0;
+                terms.status = 1;
+                terms.sort = 'name'; //default sort
 
-            terms.id = list._id;
+                terms.id = list._id;
 
-            //cache each contact in list
-            profileService.cacheLists(terms).then(function(listData){
-              if (listData && listData.status && listData.status === 'ok' && listData.lists) {
-                profileService.cacheProfiles({id: listData.lists._id}).then(function(){
-                  cacheResponses++;
-                }, function() {
-                  cacheResponses++;
+                //cache each contact in list
+                profileService.cacheList(list._id).then(function(listData){
+                  if (listData) {
+                    profileService.cacheProfiles({id: listData._id}).then(function(){
+                      cacheResponses++;
+                    }, function() {
+                      cacheResponses++;
+                    });
+                  }
                 });
-              }
-            });
-          });
-        }
-        // console.log('Finished caching on custom contact lists');
-        $rootScope.isCaching = function(){
-          return (cacheRequests - cacheResponses) > 2;
-        }
-       });
-      cached = true;
+              });
+            }
+            $rootScope.isCaching = function(){
+              return (cacheRequests - cacheResponses) > 2;
+            }
+         });
+         cached = true;
+       }
+      });
     }
 
   }
@@ -543,11 +546,12 @@ app.config(function($routeProvider, $locationProvider) {
         });
       },
       list : function(profileService, $route) {
-        return profileService.getLists({id: $route.current.params.listId}).then(function(data) {
-          if (data && data.lists && data.status === 'ok') {
-            return data.lists;
-          } else {
-            throw new Error('The custom contact list could not be found.');
+        return profileService.getList($route.current.params.listId).then(function(data) {
+          if (data) {
+            return data;
+          }
+          else {
+            throw new Error('Could not find list');
           }
         });
       },

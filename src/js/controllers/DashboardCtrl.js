@@ -42,9 +42,9 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
   },$scope.disasterOptions);
 
 
-  $scope.customContactsPromise = profileService.getLists().then(function(data) {
-    if (data && data.status && data.status === 'ok') {
-      $scope.customContacts = data.lists;
+  $scope.customContactsPromise = profileService.getListsForUser(userData.profile).then(function(data) {
+    if (data) {
+      $scope.customContacts = data;
       if ($scope.customContacts.length > 0) {
         var del = [];
         angular.forEach($scope.customContacts, function (value, key) {
