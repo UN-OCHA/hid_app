@@ -20,6 +20,7 @@
       getContact: getContact,
       getContacts: getContacts,
       cacheContacts: cacheContacts,
+      getLists: getLists,
       getList: getList,
       getListsForUser: getListsForUser,
       cacheLists: cacheLists,
@@ -223,6 +224,20 @@
     function getList(id) {
       var terms = { access_token: authService.getAccessToken() };
       return offlineCache.getData(contactsId.profilesBaseUrl + '/v0.1/lists/' + id, terms).then(handleSuccessv01, handleError);
+    }
+
+    function getLists(query) {
+      if (!query) {
+        var query = {};
+      }
+      query.access_token = authService.getAccessToken();
+      var request;
+      request = $http({
+        method: 'get',
+        url: contactsId.profilesBaseUrl + '/v0.1/lists',
+        params: query
+      });
+      return (request.then(handleSuccessv01, handleError));
     }
 
     // Get lists for a specific user (by profile)

@@ -114,6 +114,10 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
     $location.path('/services').search('q', $scope.servicesText);
   }
 
+  $scope.listsSearch = function () {
+    $location.path('/lists').search('q', $scope.listsText);
+  }
+
   $scope.unfollowContactList = function(list, index) {
     profileService.unfollowList(list).then(function(data) {
       if (data && data.status && data.status === 'ok') {
