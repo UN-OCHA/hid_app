@@ -217,10 +217,18 @@ function NumbersCtrl($scope) {
         var length = 7;
 
         for(var i =0; i < length-1; i++){   
-            if((currentMonth+6) > 12){
-                currentMonth = 0;
+            if((currentMonth+6) < 12){
+                 newLables[i] = labelsArray[currentMonth+6];
             }
-            newLables[i] = labelsArray[currentMonth+6];
+            else
+            {
+                currentMonth = 0
+                if(currentMonth <  ((new Date().getMonth())))
+                {
+                    newLables[i] = labelsArray[currentMonth];
+                }
+
+            }
             currentMonth++;
         }
 
@@ -558,10 +566,35 @@ function NumbersCtrl($scope) {
             var country3 = 'occupied Palestinian territory';
             if($scope.globalCountryDetails2[i].countryName.toString().includes(country1))
                 $scope.globalCountryDetails2[i].countryName = 'DRC';
-             if($scope.globalCountryDetails2[i].countryName.toString().includes(country2))
+            if($scope.globalCountryDetails2[i].countryName.toString().includes(country2))
                 $scope.globalCountryDetails2[i].countryName = 'CAR';
-             if($scope.globalCountryDetails2[i].countryName.toString().includes(country3))
+            if($scope.globalCountryDetails2[i].countryName.toString().includes(country3))
                 $scope.globalCountryDetails2[i].countryName = 'Palestine';
+            
+            //Weekly count name fix
+            if($scope.topn[i].country.toString().includes(country1))
+                $scope.topn[i].country = 'DRC';
+            if($scope.topn[i].country.toString().includes(country2))
+                $scope.topn[i].country = 'CAR';
+            if($scope.topn[i].country.toString().includes(country3))
+                $scope.topn[i].country = 'Palestine';
+
+            //Monthly Count Fix
+            if($scope.monthlyDetails[i].country.toString().includes(country1))
+                $scope.monthlyDetails[i].country = 'DRC';
+            if($scope.monthlyDetails[i].country.toString().includes(country2))
+                $scope.monthlyDetails[i].country = 'CAR';
+            if($scope.monthlyDetails[i].country.toString().includes(country3))
+                $scope.monthlyDetails[i].country = 'Palestine';            
+
+            //siz monthly count fix
+            //Monthly Count Fix
+            if($scope.sixMonthlyDetails[i].country.toString().includes(country1))
+                $scope.sixMonthlyDetails[i].country = 'DRC';
+            if($scope.sixMonthlyDetails[i].country.toString().includes(country2))
+                $scope.sixMonthlyDetails[i].country = 'CAR';
+            if($scope.sixMonthlyDetails[i].country.toString().includes(country3))
+                $scope.sixMonthlyDetails[i].coucountryntryName = 'Palestine';            
         }
        
    
