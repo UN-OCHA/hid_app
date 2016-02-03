@@ -1,0 +1,54 @@
+<div class="back-btn back-btn-head back-btn-head-mob btn">
+    <a ng-click="goBack(true)"><i class="fa fa-chevron-left"></i><span></span></a>
+</div>
+<div  ng-show='!isRouteLoading'>
+  <div class="col-md-1 back-btn back-btn-float btn">
+    <a ng-click="goBack(true)"><i class="fa fa-chevron-left"></i><span></span></a>
+  </div>
+
+  <div ng-show="!isCheckingIn" class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-2 pull-right-hard">
+      <h2 class="heading-contact-list" translate>
+        Custom Contact Lists <small>({{lists.length}})</small>
+      </h2>
+
+  </div>
+
+</div>
+<br>
+<div class="main row page-lists" ng-show='!isRouteLoading' ng-class="{'show-options': sidebarOptions}">
+  <div class="active-contacts">
+    <browser-alert></browser-alert>
+    <form class="search-form">
+      <div class="form-group  col-xs-12 col-sm-8 col-md-9 pull-right-hard">
+        <label class="control-label element-invisible" for="q" translate>Search</label>
+        <div class="input-groupx">
+          <input class="form-control contact-search" type="search" name="text"
+                 placeholder="{{'Search by name'|translate}}" ng-model="query.q" ng-disabled="isOffline()"/>
+          <input class="btn btn-lg contact-search-submit" type="submit" ng-click="submitSearch()" ng-disabled="isOffline()" value="{{'Search'|translate}}"/>
+        </div>
+      </div>
+    </form>
+
+    <ul cg-busy="listsPromise">
+      <li class="profile-item services-item list-group-item col-xs-12 col-sm-9 col-md-10 pull-right-hard" ng-repeat="list in lists">
+        <div class="row">
+          <div class="service-name">
+            <a href="#/list/contacts?id={{list._id}}">{{list.name}}</a>
+          </div>
+          <div class="btn-group">
+            <div class="services-btn-group">
+              <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="list.isFollowing" ng-click="unsubscribeDialog(service)" title="{{'Unfollow' | translate}}"><i class="fa fa-times"></i></a>
+              <!-- <button ng-class="{'disabled' : isOffline()}" class="btn btn-sm btn-subscribe" role="button" ng-if="!service.subscribed" ng-click="subscribeDialog(service)" title="{{'Subscribe' | translate}}"><i class="fa">Subscribe</i></button>-->
+              <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="list.editAllowed" href="#/settings/list/{{list._id}}" title="{{'Edit' | translate}}"><i class="fa fa-cog"></i></a>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="panel panel-danger" ng-if="lists.length == 0">
+      <div class="panel-heading"><em translate>No list found</em></div>
+    </div>
+
+  </div>
+</div>

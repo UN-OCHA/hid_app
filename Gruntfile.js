@@ -195,6 +195,7 @@ module.exports = function(grunt) {
             'src/js/controllers/FourZeroFourCtrl.js',
             'src/js/controllers/HeaderCtrl.js',
             'src/js/controllers/ListCtrl.js',
+            'src/js/controllers/ListsCtrl.js',
             'src/js/controllers/LoginCtrl.js',
             'src/js/controllers/LogoutCtrl.js',
             'src/js/controllers/ProfileCtrl.js',
