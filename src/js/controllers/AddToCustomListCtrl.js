@@ -1,10 +1,10 @@
 function AddToCustomListCtrl($scope, profileService) {
   
-  $scope.customContactsPromise = profileService.getLists().then(function(data) {
+  $scope.customContactsPromise = profileService.getListsForUser($scope.userData.profile).then(function(data) {
    
-    if (data && data.status && data.status === 'ok') {
+    if (data) {
       $scope.customContacts = [];
-      angular.forEach(data.lists, function(value, key) {
+      angular.forEach(data, function(value, key) {
         if ((value.contacts.indexOf($scope.contact._id) == -1) && ($scope.userid == value.userid || value.editors.indexOf($scope.userData.profile._id) != -1)) {
           var list = value;
           list.addToList = false;

@@ -20,8 +20,10 @@
       getContact: getContact,
       getContacts: getContacts,
       cacheContacts: cacheContacts,
-      getLists: getLists,
+      getList: getList,
+      getListsForUser: getListsForUser,
       cacheLists: cacheLists,
+      cacheList: cacheList,
       getService: getService,
       getServices: getServices,
       getMailchimpLists: getMailchimpLists,
@@ -203,27 +205,30 @@
       return request;
     }
 
-    // Get custom contact lists that match specified parameters.
-    function getLists(terms) {
-      if (!terms) {
-        var terms = {};
-      }
-
+    function cacheLists(profile) {
+      var terms = {};
       terms.access_token = authService.getAccessToken();
-      var request = offlineCache.getData(contactsId.profilesBaseUrl + "/v0/list/view",
+      var lists = offlineCache.cacheData(contactsId.profilesBaseUrl + '/v0.1/profiles/' + profile._id + '/lists',
         terms);
-      return(request);
+      return lists;
     }
 
-    function cacheLists(terms) {
-      if (!terms) {
-        var terms = {};
-      }
-
-      terms.access_token = authService.getAccessToken();
-      var list = offlineCache.cacheData(contactsId.profilesBaseUrl + "/v0/list/view",
-        terms)
+    function cacheList(id) {
+      var terms = { access_token: authService.getAccessToken() };
+      var list = offlineCache.cacheData(contactsId.profilesBaseUrl + '/v0.1/lists/' + id, terms);
       return list;
+    }
+
+    // Get list by id
+    function getList(id) {
+      var terms = { access_token: authService.getAccessToken() };
+      return offlineCache.getData(contactsId.profilesBaseUrl + '/v0.1/lists/' + id, terms).then(handleSuccessv01, handleError);
+    }
+
+    // Get lists for a specific user (by profile)
+    function getListsForUser(profile) {
+      var terms = { access_token: authService.getAccessToken() };
+      return offlineCache.getData(contactsId.profilesBaseUrl + '/v0.1/profiles/' + profile._id + '/lists', terms).then(handleSuccessv01, handleError);
     }
 
     function getService(id) {

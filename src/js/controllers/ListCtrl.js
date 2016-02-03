@@ -395,7 +395,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     query.limit = 0;
     query.skip = 0;
     if ($routeParams.id) {
-      window.open(contactsId.profilesBaseUrl + "/v0/list/view?" + jQuery.param(query), 'hidAppCSV');
+      window.open(contactsId.profilesBaseUrl + "/v0.1/lists/" + $routeParams.id + "?" + jQuery.param(query), 'hidAppCSV');
     } else {
       window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppCSV');
     }
@@ -410,13 +410,10 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
     // Custom contact list.
     if ($routeParams.id) {
-      var terms = query;
-      terms.id = $routeParams.id;
-
-      $scope.listPromise = profileService.getLists(terms).then(function(data) {
-        if (data && data.status && data.status === 'ok') {
+      $scope.listPromise = profileService.getList($routeParams.id).then(function(data) {
+        if (data) {
           var contacts = [];
-          angular.forEach(data.lists.contacts, function(value, key) {
+          angular.forEach(data.contacts, function(value, key) {
             this.push({
               name: value.nameGiven + " " + value.nameFamily,
               email: value.email[0].address
@@ -471,7 +468,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     query.limit = 0;
     query.skip = 0;
     if ($routeParams.id) {
-      window.open(contactsId.profilesBaseUrl + "/v0/list/view?" + jQuery.param(query), 'hidAppCSV');
+      window.open(contactsId.profilesBaseUrl + "/v0.1/lists/" + $routeParams.id + "?" + jQuery.param(query), 'hidAppCSV');
     } else {
       window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppPDF');
     }
@@ -771,21 +768,18 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   }
 
   function setCustomList(id, query) {
-    var terms = query;
-    terms.id = id;
 
-    $scope.listPromise = profileService.getLists(terms).then(function(data) {
-      if (data && data.status && data.status === 'ok') {
-        $scope.list = data.lists;
-        $scope.listCount = data.lists.length;
-        $scope.queryCount = data.totalCount;
+    $scope.listPromise = profileService.getList(id).then(function(data) {
+      if (data) {
+        $scope.list = data;
+        $scope.queryCount = data.contacts.length;
 
         $scope.toggleFollowButton = 'Follow';
         if ($scope.list.users.indexOf($scope.userData.profile.userid) != -1) {
           $scope.toggleFollowButton = 'Unfollow';
         }
 
-        var contacts = data.lists.contacts;
+        var contacts = data.contacts;
 
         $scope.contactsCreated = true;
         $scope.contacts = contacts;
