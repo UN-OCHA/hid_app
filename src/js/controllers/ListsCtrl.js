@@ -8,7 +8,7 @@ function ListsCtrl($scope, $location, userData, profileService) {
         list.isFollowing = false;
       }
       else {
-        alert('An error occurred while unfollowing this contact list. Please reload and try the change again.');
+        $scope.flash.set('An error occurred while unfollowing this contact list. Please reload and try the change again.', 'danger');
       }
     });
   }
