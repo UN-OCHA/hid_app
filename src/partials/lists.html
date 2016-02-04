@@ -8,7 +8,7 @@
 
   <div ng-show="!isCheckingIn" class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-2 pull-right-hard">
       <h2 class="heading-contact-list" translate>
-        Custom Contact Lists <small>({{lists.length}})</small>
+        Custom Contact Lists <small>({{totalCount}})</small>
       </h2>
 
   </div>
@@ -16,10 +16,10 @@
 </div>
 <br>
 <div class="main row page-lists" ng-show='!isRouteLoading' ng-class="{'show-options': sidebarOptions}">
-  <div class="active-contacts">
+  <div class="active-contacts col-xs-12 col-sm-8 col-md-9 pull-right-hard">
     <browser-alert></browser-alert>
     <form class="search-form">
-      <div class="form-group  col-xs-12 col-sm-8 col-md-9 pull-right-hard">
+      <div class="form-group">
         <label class="control-label element-invisible" for="q" translate>Search</label>
         <div class="input-groupx">
           <input class="form-control contact-search" type="search" name="text"
@@ -29,8 +29,8 @@
       </div>
     </form>
 
-    <ul cg-busy="listsPromise">
-      <li class="profile-item services-item list-group-item col-xs-12 col-sm-9 col-md-10 pull-right-hard" ng-repeat="list in lists">
+    <ul class="list-group" cg-busy="listsPromise">
+      <li class="profile-item list-group-item" ng-repeat="list in lists">
         <div class="row">
           <div class="service-name">
             <a href="#/list/contacts?id={{list._id}}">{{list.name}}</a>
@@ -48,6 +48,10 @@
     <div class="panel panel-danger" ng-if="lists.length == 0">
       <div class="panel-heading"><em translate>No list found</em></div>
     </div>
+
+    <div class="contact-loader" ng-class="{'list-complete': listComplete || !lists.length}" in-view="loadMoreLists($inview, $inviewpart)" in-view-options="{debounce: 1000}" cg-busy="{promise:listsPromise, message:'', backdrop:false, templateUrl:spinTpl, minDuration:1400, wrapperClass:'list-spinner'}"></div>
+
+    <div class="contact-count" ng-show="queryCount">{{queryCount}} / {{totalCount}}</div>
 
   </div>
 </div>
