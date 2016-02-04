@@ -322,7 +322,6 @@ function NumbersCtrl($scope) {
         unique_Org = org_names.filter(onlyUnique);
         $scope.sortedCountries = unique;
         $scope.sortedOrg = unique_Org;
-        var ONE_WEEK = 1000 * 60 * 60 * 24 * 7;
 
         for(i=0;i<myData.rows.length;i++)
         {
@@ -606,7 +605,7 @@ function NumbersCtrl($scope) {
                 if($scope.sixMonthlyDetails[i].country.toString().includes(country2))
                    $scope.sixMonthlyDetails[i].country = 'CAR';
                 if($scope.sixMonthlyDetails[i].country.toString().includes(country3))
-                   $scope.sixMonthlyDetails[i].coucountryntryName = 'Palestine'; 
+                   $scope.sixMonthlyDetails[i].country = 'Palestine'; 
             }
                        
         }
@@ -614,8 +613,6 @@ function NumbersCtrl($scope) {
    
         for(var i =0; i < m.length; i++)
             sixMonthlyCount += m[i];
-
-        $scope.monthlyDetails.sort();
 
         $scope.weeklyCount = weekCount;
         $scope.monthlyCount = monthlyCount;
