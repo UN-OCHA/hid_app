@@ -2,6 +2,17 @@ function ListsCtrl($scope, $location, userData, profileService) {
   $scope.lists = [];
   $scope.query = $location.search();
 
+  $scope.unfollow = function(list) {
+    profileService.unfollowList(list).then(function(data) {
+      if (data && data.status && data.status === 'ok') {
+        list.isFollowing = false;
+      }
+      else {
+        alert('An error occurred while unfollowing this contact list. Please reload and try the change again.');
+      }
+    });
+  }
+
   $scope.submitSearch = function() {
     $scope.listsPromise = profileService.getLists($scope.query).then(function (response) {
       if (response.status == 200) {
