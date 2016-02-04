@@ -119,7 +119,6 @@ function NumbersCtrl($scope) {
 
     function initialGraph (myData) {
         function start() {
-
             isChange++;
             m=[0,0,0,0,0,0,0,0,0,0,0,0];
             country=new Array(myData.rows.length);
@@ -137,7 +136,6 @@ function NumbersCtrl($scope) {
                 $scope.globalFig = false;
             }
             var currentDate = new Date();
-            var previousWeek = new Date(currentDate.getFullYear(), (currentDate.getMonth() + 1), currentDate.getDate() - 7);
             var previousMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())  
             for(var j = 0; j < myData.rows.length; j++)
             {
@@ -310,12 +308,11 @@ function NumbersCtrl($scope) {
         countMC = 0;
         countSMC = 0;
         monthlyCount=0;
-        sixMonthlyCount=0;
+        sixMonthlyCount=0;      
 
         var currentDate = new Date();
-        var previousWeek = new Date(currentDate.getFullYear(), (currentDate.getMonth() + 1), currentDate.getDate() - 7);
-        var previousMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())  
-     
+       var previousMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, currentDate.getDate());
+        
         for(var j = 0; j < myData.rows.length; j++)
         {
             countries[j] = myData.rows[j].location_country;
@@ -325,6 +322,8 @@ function NumbersCtrl($scope) {
         unique_Org = org_names.filter(onlyUnique);
         $scope.sortedCountries = unique;
         $scope.sortedOrg = unique_Org;
+        var ONE_WEEK = 1000 * 60 * 60 * 24 * 7;
+
         for(i=0;i<myData.rows.length;i++)
         {
             var currMonth = currentDate.getMonth();
@@ -332,21 +331,27 @@ function NumbersCtrl($scope) {
             globalCountries[i] = myData.rows[i].location_country;
             if(myData.rows[i].location_country==selected_Country || selected_Country=="World Numbers")
             {
-                if((myData.rows[i].last_updated.substring(0,4) >= previousWeek.getFullYear()) &&
-                    (myData.rows[i].last_updated.substring(5,7) >= previousWeek.getMonth()) && 
-                        (myData.rows[i].last_updated.substring(8,10) > previousWeek.getDate())){
-                            weekCount++;
-                            if(unique.indexOf(myData.rows[i].location_country) != -1){
-                                countWC++;
-                                sortedWeeklyCountries[countWC] = myData.rows[i].location_country;
-                            }    
-                            if(unique_Org.indexOf(myData.rows[i].org_name) != -1){
-                                if(myData.rows[i].org_name !== "null"){
-                                        countOrgW++;
-                                        sortedOrgWeek[countOrgW] = myData.rows[i].org_name;
-                                    }
-                            }                   
+                var dataBaseDate1 = new Date(myData.rows[i].last_updated.substring(0,10));
+               
+
+                var currentEpochTime_ms = currentDate.getTime();
+                var dataBaseEpochTime = dataBaseDate1.getTime();
+                var diff = Math.ceil(currentEpochTime_ms-dataBaseEpochTime)/(1000 * 3600 * 24);
+                if( diff < 7 && diff > 0)
+                {
+                    weekCount++;
+                    if(unique.indexOf(myData.rows[i].location_country) != -1){
+                        countWC++;
+                        sortedWeeklyCountries[countWC] = myData.rows[i].location_country;
+                    }    
+                    if(unique_Org.indexOf(myData.rows[i].org_name) != -1){
+                        if(myData.rows[i].org_name !== "null"){
+                                countOrgW++;
+                                sortedOrgWeek[countOrgW] = myData.rows[i].org_name;
+                            }
+                    }            
                 }
+
                 if(myData.rows[i].last_updated.substring(5,7) == (currMonth + 1) && myData.rows[i].last_updated.substring(0,4) == currtime.getFullYear())
                 { 
                     time=myData.rows[i].last_updated;
@@ -570,31 +575,40 @@ function NumbersCtrl($scope) {
                 $scope.globalCountryDetails2[i].countryName = 'CAR';
             if($scope.globalCountryDetails2[i].countryName.toString().includes(country3))
                 $scope.globalCountryDetails2[i].countryName = 'Palestine';
-            
-            //Weekly count name fix
-            if($scope.topn[i].country.toString().includes(country1))
-                $scope.topn[i].country = 'DRC';
-            if($scope.topn[i].country.toString().includes(country2))
-                $scope.topn[i].country = 'CAR';
-            if($scope.topn[i].country.toString().includes(country3))
-                $scope.topn[i].country = 'Palestine';
+
+             //Weekly count name fix
+            if($scope.topn[i]  != undefined)
+            { 
+                if($scope.topn[i].country.toString().includes(country1))
+                   $scope.topn[i].country = 'DRC';
+                if($scope.topn[i].country.toString().includes(country2))
+                   $scope.topn[i].country = 'CAR';
+                if($scope.topn[i].country.toString().includes(country3))
+                   $scope.topn[i].country = 'Palestine';
+            }
 
             //Monthly Count Fix
-            if($scope.monthlyDetails[i].country.toString().includes(country1))
-                $scope.monthlyDetails[i].country = 'DRC';
-            if($scope.monthlyDetails[i].country.toString().includes(country2))
-                $scope.monthlyDetails[i].country = 'CAR';
-            if($scope.monthlyDetails[i].country.toString().includes(country3))
-                $scope.monthlyDetails[i].country = 'Palestine';            
-
+            if($scope.monthlyDetails[i] != undefined)
+            {
+                if($scope.monthlyDetails[i].country.toString().includes(country1))
+                    $scope.monthlyDetails[i].country = 'DRC';
+                if($scope.monthlyDetails[i].country.toString().includes(country2))
+                    $scope.monthlyDetails[i].country = 'CAR';
+                if($scope.monthlyDetails[i].country.toString().includes(country3))
+                    $scope.monthlyDetails[i].country = 'Palestine';            
+            }
             //siz monthly count fix
+            if($scope.sixMonthlyDetails[i] != undefined)
             //Monthly Count Fix
-            if($scope.sixMonthlyDetails[i].country.toString().includes(country1))
-                $scope.sixMonthlyDetails[i].country = 'DRC';
-            if($scope.sixMonthlyDetails[i].country.toString().includes(country2))
-                $scope.sixMonthlyDetails[i].country = 'CAR';
-            if($scope.sixMonthlyDetails[i].country.toString().includes(country3))
-                $scope.sixMonthlyDetails[i].coucountryntryName = 'Palestine';            
+            {
+                if($scope.sixMonthlyDetails[i].country.toString().includes(country1))
+                   $scope.sixMonthlyDetails[i].country = 'DRC';
+                if($scope.sixMonthlyDetails[i].country.toString().includes(country2))
+                   $scope.sixMonthlyDetails[i].country = 'CAR';
+                if($scope.sixMonthlyDetails[i].country.toString().includes(country3))
+                   $scope.sixMonthlyDetails[i].coucountryntryName = 'Palestine'; 
+            }
+                       
         }
        
    
