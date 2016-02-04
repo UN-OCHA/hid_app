@@ -37,8 +37,7 @@
           </div>
           <div class="btn-group">
             <div class="services-btn-group">
-              <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="list.isFollowing" ng-click="unsubscribeDialog(service)" title="{{'Unfollow' | translate}}"><i class="fa fa-times"></i></a>
-              <!-- <button ng-class="{'disabled' : isOffline()}" class="btn btn-sm btn-subscribe" role="button" ng-if="!service.subscribed" ng-click="subscribeDialog(service)" title="{{'Subscribe' | translate}}"><i class="fa">Subscribe</i></button>-->
+              <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="list.isFollowing" ng-click="unfollow(list)" title="{{'Unfollow' | translate}}"><i class="fa fa-times"></i></a>
               <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="list.editAllowed" href="#/settings/list/{{list._id}}" title="{{'Edit' | translate}}"><i class="fa fa-cog"></i></a>
             </div>
           </div>
