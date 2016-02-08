@@ -68,7 +68,7 @@
             </div>
           </div>
         </div>
-        <div class="form-group" ng-show="isOwner">
+        <div class="form-group">
           <h2 class="setting-heading" translate>List owner</h2>
           <p translate>Allows you to change the owner of this list</p>
           <ui-select
@@ -76,7 +76,8 @@
             class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
             ng-model="list.userid"
             theme="bootstrap"
-            reset-search-input="true">
+            reset-search-input="true"
+            ng-disabled="!isOwner">
               <ui-select-match allow-clear placeholder="{{'Please enter the name of the new owner of this list'|translate}}">{{$select.selected.userid}}</ui-select-match>
               <ui-select-choices
                   ng-class="{'not-empty': list.userid.length}"
