@@ -12,8 +12,13 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
   $scope.list.editors.push("");
 
   $scope.isOwner = $scope.list.userid === userData.profile.userid;
-  $scope.list.userid = userData.profile;
-  $scope.list.userid.userid.replace(/(_\d+)$/,'');
+  if ($scope.isOwner) {
+    $scope.list.userid = userData.profile;
+    $scope.list.userid.userid.replace(/(_\d+)$/,'');
+  }
+  else {
+    $scope.list.userid = { userid: $scope.list.userid };
+  }
 
   angular.forEach($scope.list.readers, function(reader,key){
     if (reader && reader.userid) {
