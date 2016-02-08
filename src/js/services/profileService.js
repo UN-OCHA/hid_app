@@ -425,7 +425,7 @@
         url: contactsId.profilesBaseUrl + "/v0.1/lists/" + list._id,
         params: {access_token: authService.getAccessToken()},
       });
-      return(request.then(handleSuccessv01, handleError));
+      return request;
     }
 
     function deleteService(service) {

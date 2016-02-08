@@ -160,8 +160,12 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
             if (response.status === 204) {
               $location.path('/dashboard');
             }
+          }, function (response) {
+            if (response.status === 403) {
+              $scope.flash.set('You can not delete this list because you are not the list owner.', 'danger');
+            }
             else {
-              alert('An error occurred while deleting this contact list. Please reload and try the change again.');
+              $scope.flash.set('An error occurred while deleting this contact list. Please reload and try the change again.', 'danger');
             }
           });
           $scope.closeThisDialog();
