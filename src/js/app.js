@@ -193,7 +193,7 @@ app.controller("404Ctrl", ["$scope", FourZeroFourCtrl]);
 app.controller("NumbersCtrl", ["$scope", NumbersCtrl]);
 app.controller("HeaderCtrl", ["$scope", "$rootScope", "$location", "profileService", "gettextCatalog", HeaderCtrl]);
 app.controller("ListCtrl", ["$scope", "$route", "$routeParams", "$location", "$http", "$filter", "authService", "profileService", "userData", "operations", "gettextCatalog", "protectedRoles", "orgTypes", "countries", "roles", "ngDialog", ListCtrl]);
-app.controller("ListsCtrl", ["$scope", "$location", "userData", "profileService", ListsCtrl]);
+app.controller("ListsCtrl", ["$scope", "$location", "userData", "profileService", "gettextCatalog", "ngDialog", ListsCtrl]);
 app.controller("LoginCtrl", ["$scope", "$location", "$routeParams", "authService", "profileService", LoginCtrl]);
 app.controller("LogoutCtrl", ["$scope", "authService", LogoutCtrl]);
 app.controller("ProfileCtrl", ["$scope", "$location", "$route", "$routeParams", "$filter", "$timeout", "$http", "profileService", "authService", "operations", "profileData", "countries", "roles", "protectedRoles", "gettextCatalog", "userData", "md5", 'ngDialog', ProfileCtrl]);

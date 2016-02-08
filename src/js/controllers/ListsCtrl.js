@@ -1,4 +1,4 @@
-function ListsCtrl($scope, $location, userData, profileService) {
+function ListsCtrl($scope, $location, userData, profileService, gettextCatalog, ngDialog) {
   $scope.lists = [];
   $scope.query = $location.search();
   $scope.queryCount = 0;
@@ -8,16 +8,24 @@ function ListsCtrl($scope, $location, userData, profileService) {
   $scope.listsPromise;
   $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
 
-  $scope.unfollow = function(list) {
-    profileService.unfollowList(list).then(function(data) {
-      if (data && data.status && data.status === 'ok') {
-        list.isFollowing = false;
-      }
-      else {
-        $scope.flash.set('An error occurred while unfollowing this contact list. Please reload and try the change again.', 'danger');
-      }
+  $scope.unfollowDialog = function (list) {
+    $scope.title = gettextCatalog.getString("Stop following {{name}}", { name: list.name });
+    $scope.message = gettextCatalog.getString("Are you sure you want to stop following {{name}} ?", { name: list.name });
+    ngDialog.openConfirm({
+      template: 'partials/confirm.html',
+      scope: $scope,
+    }).then(function () {
+      profileService.unfollowList(list).then(function(data) {
+        if (data && data.status && data.status === 'ok') {
+          list.isFollowing = false;
+        }
+        else {
+          $scope.flash.set('An error occurred while unfollowing this contact list. Please reload and try the change again.', 'danger');
+        }
+      });
     });
   }
+
 
   $scope.loadMoreLists = function(inview, inviewpart) {
     // Don't do anything if elem not completely visible

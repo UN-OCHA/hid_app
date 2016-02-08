@@ -41,7 +41,7 @@
       <tr ng-repeat="list in lists">
         <td><a href="#/list/contacts?id={{list._id}}">{{list.name}}</a></td>
         <td><a href="#/contact/{{list.ownerId}}">{{list.owner}}</a></td>
-        <td class="text-right"><a ng-class="{'disabled' : isOffline()}" class="btn btn-action btn-sm" role="button" ng-if="list.isFollowing" ng-click="unfollow(list)" title="{{'Unfollow' | translate}}"><i class="fa fa-times"></i></a>
+        <td class="text-right"><a ng-class="{'disabled' : isOffline()}" class="btn btn-action btn-sm" role="button" ng-if="list.isFollowing" ng-click="unfollowDialog(list)" title="{{'Unfollow' | translate}}"><i class="fa fa-times"></i></a>
             <a ng-class="{'disabled' : isOffline()}" class="btn btn-action btn-sm" role="button" ng-if="list.editAllowed" href="#/settings/list/{{list._id}}" title="{{'Edit' | translate}}"><i class="fa fa-cog"></i></a></td>
       </tr>
       </tbody>

@@ -174,8 +174,10 @@ function ServicesCtrl($scope, $location, $route, $routeParams, $http, authServic
   }
 
   $scope.deleteServiceDialog = function() {
+    $scope.title = gettextCatalog.getString("Confirm deletion of {{name}} Subscription Service", { name: $scope.service.name });
+    $scope.message = gettextCatalog.getString("You are about to delete {{name}} Subscription Service from Humanitarian ID. By deleting {{name}}, users and managers will no longer be able to subscribe to {{name}} through Humanitarian ID. We will NOT remove any subscribed users from the external service provider and thus recommend you do so if appropriate. Are you sure ?", { name: $scope.service.name });
     ngDialog.openConfirm({
-      template: 'partials/serviceDelete.html',
+      template: 'partials/confirm.html',
       scope: $scope,
     }).then(function () {
       profileService.deleteService($scope.service).then(function (response) {
@@ -273,7 +275,7 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
               service.subscribed = true;
             }
           }, function (message) {
-            alert(message);
+            $scope.flash.set(message, 'danger');
           });
         };
       }]
@@ -281,15 +283,16 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
   }
 
   $scope.unsubscribeDialog = function (service) {
-    $scope.service = service;
+    $scope.title = gettextCatalog.getString("Confirm unsubscription");
+    $scope.message = gettextCatalog.getString("Are you sure you want to unsubscribe from {{name}} ?", { name: service.name });
     ngDialog.openConfirm({
-      template: 'partials/unsubscribeService.html',
+      template: 'partials/confirm.html',
       scope: $scope,
     }).then(function () {
       profileService.unsubscribeService(service, userData.profile).then(function (response) {
         service.subscribed = false;
       }, function (message) {
-        alert('There was an error unsubscribing: ' + message);
+        $scope.flash.set('There was an error unsubscribing: ' + message, 'danger');
       });
     });
   }
