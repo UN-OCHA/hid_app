@@ -7,6 +7,7 @@ function NumbersCtrl($scope) {
     var unique_Org;
     
     var m=[0,0,0,0,0,0,0,0,0,0,0,0];
+    var m2=[0,0,0,0,0,0,0,0,0,0,0,0];
 
     var API = "https://fis-ocha.cartodb.com/api/v1/sql?q=SELECT*FROM hid_checkins";
     
@@ -57,6 +58,7 @@ function NumbersCtrl($scope) {
     $scope.sixMonthlyOrgDetails=[];     
     $scope.globalCountries=[];
     $scope.orig = angular.copy($scope.data);
+    $scope.monthlyDays = 0;
 
     function onlyUnique(value, index, self) { 
         return self.indexOf(value) === index;
@@ -159,25 +161,21 @@ function NumbersCtrl($scope) {
                 if(myData.rows[i].location_country==selected_Country || selected_Country=="World Numbers")
                 { 
 
-                    //for the current year
                     if(myData.rows[i].last_updated.substring(5,7) == (currtime.getMonth() + 1) && myData.rows[i].last_updated.substring(0,4) == currtime.getFullYear())
                     {
                           m[11]++;  
                     }
                     
 
-                    // for the last year
                     if(myData.rows[i].last_updated.substring(0,4) == (currtime.getFullYear() - 1))
                     {
                         if(myData.rows[i].last_updated.substring(5,7) > (currentDate.getMonth() + 5))
                         {
                             time=myData.rows[i].last_updated;
                             time=new Date(time);
-                            m[time.getMonth() - 1]++;
+                            m[(time.getMonth() - 1)]++;
                         }
                         currentDate.setMonth(currentDate.getMonth() + 1);
-
-                        
                     }
 
                 }
@@ -260,6 +258,7 @@ function NumbersCtrl($scope) {
             update();
             getStatistics();
         }
+
         $scope.data = angular.copy($scope.orig);
         var context = document.getElementById('clients').getContext('2d');
 
@@ -331,6 +330,15 @@ function NumbersCtrl($scope) {
         $scope.sortedCountries = unique;
         $scope.sortedOrg = unique_Org;
         var currentEpochTime_ms = currtime.getTime();
+        var numb_of_days = new Date(currtime.getFullYear(), currtime.getMonth()+1, 0).getDate();
+        var numb_days_6_Months = 0;
+
+        $scope.monthlyDays = numb_of_days;
+        for(var k = -1; k < 5; k++)
+        {
+            var temp = new Date(currtime.getFullYear(), currtime.getMonth() - k, 0).getDate(); 
+            numb_days_6_Months += temp;
+        }
 
         for(i=0;i<myData.rows.length;i++)
         {      
@@ -343,6 +351,7 @@ function NumbersCtrl($scope) {
 
                 var dataBaseEpochTime = dataBaseDate1.getTime();
                 var diff = Math.ceil(currentEpochTime_ms-dataBaseEpochTime)/(1000 * 3600 * 24);
+                
                 if( diff < 7 && diff > 0)
                 {
                     weekCount++;
@@ -359,7 +368,7 @@ function NumbersCtrl($scope) {
                 }
 
 
-                if(myData.rows[i].last_updated.substring(5,7) == (currtime.getMonth() + 1) && myData.rows[i].last_updated.substring(0,4) == currtime.getFullYear())
+                if(diff < numb_of_days && diff > 0)
                 { 
                     time=myData.rows[i].last_updated;
                     if(time!=null)
@@ -367,54 +376,33 @@ function NumbersCtrl($scope) {
                         time=new Date(time);
                         if(unique.indexOf(myData.rows[i].location_country) != -1){
                             countMC++;
-                            countSMC++;
                             sortedMonthlyCountries[countMC] = myData.rows[i].location_country;
-                            sortedSixMonthlyCountries[countSMC] = myData.rows[i].location_country;
                         }
                         if(unique_Org.indexOf(myData.rows[i].org_name) != -1){
                                 if(myData.rows[i].org_name !== "null"){
                                     countOrgM++;
-                                    countOrgSixM++;
                                     sortedOrgMonth[countOrgM] = myData.rows[i].org_name ;
-                                    sortedOrgSixMonth[countOrgSixM] = myData.rows[i].org_name;
                                 }
                         }       
                                     
                     }
                 }
-                while((tempTime.getMonth()  + 6) % 12 != (currtime.getMonth()))
-                {
-                    if(myData.rows[i].last_updated.substring(0,4) >= (currtime.getFullYear() - 1))
-                    {
-                        time=myData.rows[i].last_updated;
-                        if(time!=null)
-                        {
-                            time=new Date(time);
-                            if(myData.rows[i].last_updated.substring(5,7) == (tempTime.getMonth()  + 6)){
-                                var lastUpdatedTime = myData.rows[i].last_updated;
-                                if(lastUpdatedTime != null)
-                                {
-                                    if(unique.indexOf(myData.rows[i].location_country) != -1){
-                                        countSMC++;
-                                        sortedSixMonthlyCountries[countSMC] = myData.rows[i].location_country;
-                                    }
-                                    if(unique_Org.indexOf(myData.rows[i].org_name) != -1){
-                                        if(myData.rows[i].org_name !== "null" ){
-                                            countOrgSixM++;
-                                            sortedOrgSixMonth[countOrgSixM] = myData.rows[i].org_name;
-                                        }
-                                    }       
-                                }   
-
-                            }
-                        }
+                
+                if(diff < numb_days_6_Months && diff > 0)
+                {   
+                    if(unique.indexOf(myData.rows[i].location_country) != -1){
+                        countSMC++;
+                        sortedSixMonthlyCountries[countSMC] = myData.rows[i].location_country;
                     }
-                tempTime.setMonth(tempTime.getMonth() + 1);
-                }
-
+                    if(unique_Org.indexOf(myData.rows[i].org_name) != -1){
+                        if(myData.rows[i].org_name !== "null" ){
+                            countOrgSixM++;
+                            sortedOrgSixMonth[countOrgSixM] = myData.rows[i].org_name;
+                        }
+                    }       
+                }                
             }
         }
-        
 
         var length = m.length;
         monthlyCount = m[length-1];
@@ -610,9 +598,8 @@ function NumbersCtrl($scope) {
                 if($scope.monthlyDetails[i].country.toString().includes(country3))
                     $scope.monthlyDetails[i].country = 'Palestine';            
             }
-            //siz monthly count fix
+
             if($scope.sixMonthlyDetails[i] != undefined)
-            //Monthly Count Fix
             {
                 if($scope.sixMonthlyDetails[i].country.toString().includes(country1))
                    $scope.sixMonthlyDetails[i].country = 'DRC';
@@ -630,8 +617,8 @@ function NumbersCtrl($scope) {
 
 
         $scope.weeklyCount = weekCount;    
-        $scope.monthlyCount = monthlyCount;
-        $scope.sixMonthlyCount = sixMonthlyCount;
+        $scope.monthlyCount = countMC;
+        $scope.sixMonthlyCount = countSMC;
         $scope.globalCount = myData.rows.length;
     }
 
