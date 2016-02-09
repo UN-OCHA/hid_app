@@ -4,7 +4,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
 
   $scope.contact = contact;
   $scope.profileContacts = profileData.contacts;
-  $scope.globalContactId = profileData.global._id;
+  $scope.globalContactId = profileData.global ? profileData.global._id : '';
   $scope.profile = contact._profile;
   if (!contact.status) {
     if (contact.type === 'local') {
@@ -48,7 +48,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     }
   }, $scope.contact.protectedRolesByName);
 
-  if (profileData.global.image && profileData.global.image[0] && profileData.global.image[0].url) {
+  if (profileData.global && profileData.global.image && profileData.global.image[0] && profileData.global.image[0].url) {
     $scope.imageUrl = profileData.global.image[0].url;
   }
 
