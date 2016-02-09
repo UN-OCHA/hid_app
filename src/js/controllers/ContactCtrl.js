@@ -7,7 +7,12 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   $scope.globalContactId = profileData.global._id;
   $scope.profile = contact._profile;
   if (!contact.status) {
-    $scope.flash.set('This contact is already checked out and kept for archive reasons only', 'danger', false);
+    if (contact.type === 'local') {
+      $scope.flash.set('This contact is already checked out and kept for archive reasons only', 'danger', false);
+    }
+    else if (contact.type === 'global') {
+      $scope.flash.set('This contact has been deleted and is kept for archive reasons only', 'danger', false);
+    }
   }
 
   // Permissions
