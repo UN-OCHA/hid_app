@@ -8,6 +8,8 @@ function NumbersCtrl($scope) {
     
     var m=[0,0,0,0,0,0,0,0,0,0,0,0];
     var m2=[0,0,0,0,0,0,0,0,0,0,0,0];
+    var m3=[0,0,0,0,0,0,0,0,0,0,0,0];
+    var m4 =[];
 
     var API = "https://fis-ocha.cartodb.com/api/v1/sql?q=SELECT*FROM hid_checkins";
     
@@ -126,6 +128,9 @@ function NumbersCtrl($scope) {
         function start() {
             isChange++;
             m=[0,0,0,0,0,0,0,0,0,0,0,0];
+            m2=[0,0,0,0,0,0,0,0,0,0,0,0];
+            m3=[0,0,0,0,0,0,0,0,0,0,0,0];
+            m4 =[];    
             country=new Array(myData.rows.length);
             currtime=new Date();
             tempTime=new Date();
@@ -165,15 +170,28 @@ function NumbersCtrl($scope) {
                     {
                           m[11]++;  
                     }
-                    
-
-                    if(myData.rows[i].last_updated.substring(0,4) == (currtime.getFullYear() - 1))
+    
+                    if(myData.rows[i].last_updated.substring(0,4) == (currtime.getFullYear()))
                     {
-                        if(myData.rows[i].last_updated.substring(5,7) > (currentDate.getMonth() + 5))
+
+                        if(myData.rows[i].last_updated.substring(5,7) < (currtime.getMonth() + 1))
                         {
                             time=myData.rows[i].last_updated;
                             time=new Date(time);
-                            m[(time.getMonth() - 1)]++;
+                            m2[time.getMonth()]++;
+                        }
+                        currentDate.setMonth(currentDate.getMonth() + 1);
+                    }
+
+
+
+                    if(myData.rows[i].last_updated.substring(0,4) == (currtime.getFullYear() - 1))
+                    {
+                        if(myData.rows[i].last_updated.substring(5,7) > (currtime.getMonth() + 5))
+                        {
+                            time=myData.rows[i].last_updated;
+                            time=new Date(time);
+                            m3[time.getMonth()]++;
                         }
                         currentDate.setMonth(currentDate.getMonth() + 1);
                     }
@@ -181,6 +199,31 @@ function NumbersCtrl($scope) {
                 }
                 
             }
+
+
+            for(var i = 0; i < m.length; i++)
+            {
+                if(m3[i] != 0)
+                    m4.push(m3[i]);
+            }
+
+            var rem = 6 - m4.length;
+            for(var i = 0; i < rem; i++)
+            {
+                m4.push(m2[i]);
+            }
+            for(var i = 0; i < m.length; i++)
+            {
+                if(m[i] != 0)
+                    m4.push(m[i]);
+            }
+
+            var reqZeroe = 12 - m4.length;
+            for(var i = 0; i < reqZeroe; i++)
+                m4.unshift(0);
+
+            m = m4;
+
             callback();
         }
 
