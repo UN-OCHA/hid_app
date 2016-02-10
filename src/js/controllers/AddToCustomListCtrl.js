@@ -35,12 +35,19 @@ function AddToCustomListCtrl($scope, profileService) {
     angular.forEach($scope.customContacts, function(value, key) {
       if (value.addToList === true) {
 
-        profileService.addContactToList(value, $scope.contact._id).then(function(data) {
-          if (data && data.status && data.status === 'ok') {
-            console.log('updated');
+        profileService.addContactToList(value, $scope.contact._id).then(function(response) {
+          if (response.status != 201) {
+            $scope.flash.set('An error occurred while adding a contact to this list.', 'danger');
           }
-          else {
-            alert('An error occurred while unfollowing this contact list. Please reload and try the change again.');
+        }, function (response) {
+          if (response.status === 500) {
+            $scope.flash.set('An unknown error occurred while adding a contact to this list', 'danger');
+          }
+          if (response.status === 404) {
+            $scope.flash.set('Could not find list.', 'danger');
+          }
+          if (response.status === 409) {
+            $scope.flash.set('Contact is already in list', 'danger');
           }
         });
       }

@@ -609,14 +609,21 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     var list = (JSON.parse(JSON.stringify($scope.list)));
     index = $scope.list.contacts.indexOf(contact);
 
-    profileService.deleteContactFromList(list, contact).then(function(data) {
-      if (data && data.status && data.status === 'ok') {
+    profileService.deleteContactFromList(list, contact).then(function(response) {
+      if (response.status != 204) {
+        $scope.flash.set('An error occurred while trying to delete this contact. Please reload and try again.', 'danger');
+      }
+      else {
         $scope.contacts.splice(index, 1);
         $scope.contactsCount--;
         $scope.queryCount--;
       }
-      else {
-        $scope.flash.set('An error occurred while trying to delete this contact. Please reload and try the change again.', 'danger');
+    }, function (response) {
+      if (response.status === 500) {
+        $scope.flash.set('An unknown error occurred while trying to delete this contact. Please reload and try again.', 'danger');
+      }
+      if (response.status === 404) {
+        $scope.flash.set('Could not find list or contact.', 'danger');
       }
     });
   }
