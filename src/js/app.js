@@ -60,6 +60,10 @@ app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider){
   cfpLoadingBarProvider.includeSpinner = false;
 }]);
 
+app.config(['$compileProvider', function ($compileProvider) {
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel):/);
+}]);
+
 app.run(function ($rootScope, $location, $window, $timeout, authService) {
 
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
