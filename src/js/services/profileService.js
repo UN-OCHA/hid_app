@@ -382,7 +382,7 @@
         data: {'contact': contact},
         params: {access_token: authService.getAccessToken()}
       });
-      return (request.then(handleSuccess, handleError));
+      return request;
     }
 
     // Delete a contact from a list
@@ -393,7 +393,7 @@
         url: contactsId.profilesBaseUrl + "/v0.1/lists/" + list._id + "/contacts/" + contact._id,
         params: {access_token: authService.getAccessToken()},
       });
-      return (request.then(handleSuccess, handleError));
+      return request;
     }
 
     // Check a contact in
