@@ -10,6 +10,7 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.list.readers.push("");
   $scope.list.editors.push("");
+  $scope.list.services.push("");
 
   $scope.isOwner = $scope.list.userid === userData.profile.userid;
   if ($scope.isOwner) {
@@ -30,6 +31,37 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
       editor.userid = editor.userid.replace(/(_\d+)$/,'');
     }
   });
+
+  $scope.refreshServices = function(select, lengthReq) {
+    var helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
+        emptyOption = {action:'clear', name:"", alt: gettextCatalog.getString('No results found.'), disable: true};
+
+    // Remove text in parentheses.
+    select.search = select.search.replace(/ *\([^)]*\) */g, "");
+
+    if (select.search.length > (lengthReq || 0)) {
+      select.searching = true;
+
+      $http.get(contactsId.profilesBaseUrl + '/v0.1/services', {
+        'params': {
+          'access_token': authService.getAccessToken(),
+          'q': encodeURIComponent(select.search)
+        }
+        })
+        .then(function(response) {
+          select.searching = false;
+          $scope.services = response.data;
+          if (!$scope.services.length) {
+            $scope.services.push(emptyOption);
+          }
+        });
+    }
+    else {
+      $scope.services = []
+      $scope.services.push(helpOption);
+    }
+  };
+
 
   $scope.refreshUsers = function(select, lengthReq) {
     var helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
@@ -115,7 +147,7 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
 
   $scope.saveList = function() {
     // Replace contacts with id instead of object.
-    var contacts = [], readers = [], editors = [];
+    var contacts = [], readers = [], editors = [], services = [];
     angular.forEach($scope.list.contacts, function(contact, key) {
       if (contact && contact._id) {
         this.push(contact._id);
@@ -143,6 +175,13 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
     if ($scope.list.userid._userid) {
       $scope.list.userid = $scope.list.userid._userid;
     }
+
+    angular.forEach($scope.list.services, function (service, key) {
+      if (service && service._id) {
+        this.push(service._id);
+      }
+    }, services);
+    $scope.list.services = services;
 
     profileService.saveList($scope.list).then(function(data) {
       if (data && data.status && data.status === 'ok') {

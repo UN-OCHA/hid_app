@@ -88,6 +88,29 @@
           </ui-select>
         </div>
         <div class="form-group">
+          <h2 class="setting-heading" translate>Subscription Services</h2>
+          <p translate>Subscription Services associated with this list</p>
+          <div class="reveal btn-reveal" ng-repeat="service in list.services track by $index">
+            <ui-select
+              name="services[{{$index}}]"
+              class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
+              ng-model="list.services[$index]"
+              theme="bootstrap"
+              reset-search-input="true">
+                <ui-select-match allow-clear placeholder="{{'Please enter the names of the services you want to associate to this list'|translate}}">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices
+                  ng-class="{'not-empty': list.services.length}"
+                  repeat="service in services | orderBy:'name'"
+                  refresh="refreshServices($select, 2)">
+                  <div ng-class="{default: !service.name.length}" ng-bind-html="service.name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+            <button type="button" ng-click="changeFieldEntries('services')" ng-class="{'add' : $last && checkForValidEntry('services', $index)}">
+              <i class="fa" ng-class="styleFieldEntries('services')"></i>
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
           <h2 class="setting-heading" translate>Editing Rights</h2>
           <p translate>These people will be able to see and edit your list regardless of your privacy settings above</p>
           <div class="reveal btn-reveal" ng-repeat="editor in list.editors track by $index">
