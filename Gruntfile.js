@@ -173,7 +173,7 @@ module.exports = function(grunt) {
             'src/libraries/angular-csv-import-tmp/dist/angular-csv-import.min.js',
             'src/libraries/ng-csv/build/ng-csv.min.js',
             'src/libraries/intl-tel-input/build/js/intlTelInput.js',
-            'src/libraries/intl-tel-input/lib/libphonenumber/build/utils.js',
+            'src/libraries/intl-tel-input/build/js/utils.js',
             'src/libraries/ngDialog/js/ngDialog.js',
             'src/libraries/webshim/js-webshim/minified/polyfiller.js',
             'src/libraries/offline/offline.min.js',
