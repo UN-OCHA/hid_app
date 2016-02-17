@@ -4,6 +4,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     return false;
   }
 
+
   if (profileData.contact && profileData.profile) {
     profileData.contact._profile = profileData.profile;
   }
@@ -33,6 +34,8 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   $scope.selectedProtectedBundles = (profileData.contact && profileData.contact.protectedBundles && profileData.contact.protectedBundles.length) ? angular.copy(profileData.contact.protectedBundles) : [];
 
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
+  $scope.recieveDailyDigest = (profileData.profile && profileData.profile.dailyDigest) ? profileData.profile.dailyDigest : false;
+  $scope.recieveLocalDailyDigest = (profileData.profile && profileData.profile.localDailyDigest) ? profileData.profile.localDailyDigest : false;
   $scope.orgEditorRoles = (profileData.profile && profileData.profile.orgEditorRoles && profileData.profile.orgEditorRoles.length) ? profileData.profile.orgEditorRoles : [];
   $scope.passwordUrl = contactsId.authBaseUrl + "/#forgotPass";
 
@@ -55,6 +58,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
   $scope.submitProcessing = false;
   $scope.email = [];
+
 
   // Exclude operations for which the user is already checked in.
   var availOperations = angular.copy(operations);
@@ -156,6 +160,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   //Set update email flag to true during form load
   $scope.profile.notify = true;
 
+
   // Toggle logic for verified field.
   $scope.setVerified = function() {
     if ((!$scope.verified && $scope.userCanAddVerified) || ($scope.verified && $scope.userCanRemoveVerified)) {
@@ -163,6 +168,8 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       $scope.verified = verified;
     }
   };
+
+
 
   $scope.setCountryCode = function() {
     var countryInfo = jQuery('input[name="phone[' + this.$index + '][number]"]').intlTelInput('getSelectedCountryData');
@@ -531,6 +538,21 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     }
   }
 
+ // Add contact to the custom list.
+  $scope.showCountry = function() {
+    $scope.temp = profileData;
+    $scope.userid = userData.profile.userid;
+    ngDialog.open({
+      name: 'countryList',
+      template: 'partials/showCountryList.html',
+      showClose: false,
+      scope: $scope,
+      controller: 'ShowCountryListCtrl',
+    });
+  }
+
+ 
+
   $scope.submitProfile = function () {
     if ($scope.submitProcessing){
       return;
@@ -627,7 +649,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
       $scope.submitProcessing = true;
       profileService.saveContact(profile).then(function(data) {
-
         if (data && data.status && data.status === 'ok') {
           if (checkinFlow) {
             profileService.getServices({ location: profile.locationId }).then(function (resp) {
