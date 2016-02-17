@@ -43,6 +43,8 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.contactsCreated = false;
   $scope.isEditor = false;
   $scope.isVerified = userData.profile.verified;
+
+  $scope.userCanUseAdminFilters = profileService.canUseAdminFilters();
   
   setPermissions();
 

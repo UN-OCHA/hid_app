@@ -31,11 +31,11 @@ msgstr "Retour"
 #: src/js/app.js
 #: src/partials/dashboard.html loco:54d4936a14d725ee048b456b
 msgid "Check-in"
-msgstr "Se connecter"
+msgstr "Check-in"
 
 #: src/partials/dashboard.html loco:54d4936a14d725ee048b456c
 msgid "Checkout"
-msgstr "Se déconnecter"
+msgstr "Checkout"
 
 #: src/partials/contact.html
 #: src/partials/profile.html loco:54d4936a14d725ee048b456d
@@ -142,11 +142,11 @@ msgstr "Privilèges administratifs "
 
 #: src/partials/contact.html loco:54d4936a14d725ee048b4583
 msgid "Check-in User"
-msgstr "Connecter une personne"
+msgstr "Faire le check-in d'une personne"
 
 #: src/partials/contact.html loco:54d4936a14d725ee048b4584
 msgid "Check-out User"
-msgstr "Déconnecter une personne"
+msgstr "Faire le check-out d'une personne"
 
 #: src/partials/profile.html loco:54d4936a14d725ee048b4585
 msgid "Choose Type"
@@ -158,7 +158,7 @@ msgstr "Clusters"
 
 #: src/partials/contact.html loco:54d4936a14d725ee048b4586
 msgid "Confirm User Checkout"
-msgstr "Confirmer la déconnexion d'un utilisateur"
+msgstr "Confirmer le checkout d'un utilisateur"
 
 #: src/partials/list.html loco:54d4936a14d725ee048b4587
 msgid "Contact List"
