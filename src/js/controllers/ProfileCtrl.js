@@ -34,8 +34,9 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   $scope.selectedProtectedBundles = (profileData.contact && profileData.contact.protectedBundles && profileData.contact.protectedBundles.length) ? angular.copy(profileData.contact.protectedBundles) : [];
 
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
-  $scope.recieveDailyDigest = (profileData.profile && profileData.profile.dailyDigest) ? profileData.profile.dailyDigest : false;
-  $scope.recieveLocalDailyDigest = (profileData.profile && profileData.profile.localDailyDigest) ? profileData.profile.localDailyDigest : false;
+  // $scope.recieveDailyDigest = (profileData.profile && profileData.profile.dailyDigest) ? profileData.profile.dailyDigest : false;
+  $scope.dailyDigest  = profileData.profile.dailyDigest;
+  // $scope.recieveLocalDailyDigest = (profileData.profile && profileData.profile.localDailyDigest) ? profileData.profile.localDailyDigest : false;
   $scope.orgEditorRoles = (profileData.profile && profileData.profile.orgEditorRoles && profileData.profile.orgEditorRoles.length) ? profileData.profile.orgEditorRoles : [];
   $scope.passwordUrl = contactsId.authBaseUrl + "/#forgotPass";
 
@@ -540,20 +541,40 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
  // Add contact to the custom list.
   $scope.showCountry = function() {
-    $scope.temp = profileData;
+    var tempProfile = new Object();
     $scope.userid = userData.profile.userid;
-    ngDialog.open({
-      name: 'countryList',
-      template: 'partials/showCountryList.html',
-      showClose: false,
-      scope: $scope,
-      controller: 'ShowCountryListCtrl',
+
+    profileService.getProfileByUser(userData.profile.userid).then(function(data){
+      if(data){
+          $scope.temp= data;
+          var countryList = [];
+              profileData.contacts.forEach(function(contact){
+                if(contact.type == "local")
+                  countryList.push({
+                    location: contact.location,
+                    locationId: contact.locationId
+                  });
+              })
+              $scope.countryList = countryList;
+              ngDialog.open({
+                name: 'countryList',
+                template: 'partials/showCountryList.html',
+                showClose: false,
+                scope: $scope,
+                controller: 'ShowCountryListCtrl',
+              });
+          // console.log("t1:", $scope.temp);
+        }
     });
+    
+
+    
   }
 
  
 
   $scope.submitProfile = function () {
+    console.log("ifuweuofnewjdsjvbsd");
     if ($scope.submitProcessing){
       return;
     }
@@ -584,6 +605,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
 
       var profile = $scope.profile;
+
       if (profileData.profile && profileData.profile.userid && profileData.profile._id) {
         profile.userid = profileData.profile.userid;
         profile._profile = profileData.profile._id;
@@ -592,6 +614,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         profile.userid = accountData.user_id;
         profile._profile = null;
       }
+      console.log("okokok", profile);
       profile.status = 1;
 
       if (checkinFlow) {
@@ -622,6 +645,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       }
 
 
+
       profile.verified = $scope.verified;
       profile.verifiedByID = $scope.verifiedByID;
       profile.verifiedByName = $scope.verifiedByName;
@@ -648,6 +672,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       profile.orgEditorRoles = $scope.orgEditorRoles;
 
       $scope.submitProcessing = true;
+      console.log("test", profile);
       profileService.saveContact(profile).then(function(data) {
         if (data && data.status && data.status === 'ok') {
           if (checkinFlow) {
