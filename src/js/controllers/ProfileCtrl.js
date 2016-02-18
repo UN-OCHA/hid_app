@@ -35,7 +35,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
   // $scope.recieveDailyDigest = (profileData.profile && profileData.profile.dailyDigest) ? profileData.profile.dailyDigest : false;
-  $scope.dailyDigest  = profileData.profile.dailyDigest;
+  $scope.dailyDigest  = (profileData.profile && profileData.profile.dailyDigest) ? profileData.profile.dailyDigest : [];
   // $scope.recieveLocalDailyDigest = (profileData.profile && profileData.profile.localDailyDigest) ? profileData.profile.localDailyDigest : false;
   $scope.orgEditorRoles = (profileData.profile && profileData.profile.orgEditorRoles && profileData.profile.orgEditorRoles.length) ? profileData.profile.orgEditorRoles : [];
   $scope.passwordUrl = contactsId.authBaseUrl + "/#forgotPass";
@@ -547,6 +547,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     profileService.getProfileByUser(userData.profile.userid).then(function(data){
       if(data){
           $scope.temp= data;
+          console.log(data);
           var countryList = [];
               profileData.contacts.forEach(function(contact){
                 if(contact.type == "local")
