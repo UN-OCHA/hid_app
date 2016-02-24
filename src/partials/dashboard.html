@@ -85,7 +85,7 @@
       <h3><span translate>Custom Contacts lists</span> : <i ng-if="isCaching()" class="fa fa-refresh data-sync data-sync-animate" data-toggle="tooltip" data-placement="top" title="We are busy synchronizing your custom contact lists for offline access."></i>
       </h3>
 
-      <!-- <form class="search-form">
+      <form class="search-form">
         <div class="form-group">
           <label class="control-label element-invisible" for="text" translate>Search</label>
           <div class="input-groupx">
@@ -94,7 +94,7 @@
             <input class="btn btn-lg contact-search-submit" type="submit" ng-click="listsSearch()" ng-disabled="isOffline()" value="{{'Search'|translate}}"/>
           </div>
         </div>
-      </form>-->
+      </form>
 
       <ul class="custom-contacts-container list-group">
         <li class="profile-item list-group-item" ng-repeat="(index, list) in customContacts">
@@ -129,14 +129,14 @@
           </div>
           </form>
         </li>
-        <!-- <li class="profile-item list-group-item clearfix">
+        <li class="profile-item list-group-item clearfix">
           <div class="row">
             <div class="col-md-12 contact-inline-form">
               <a href="#/lists" class="pull-right btn btn-default" translate>View all lists</a>
             </div>
           </div>
           </form>
-        </li>-->
+        </li>
       </ul>
 
       <h3><span translate>Subscription Services</span> : <a href="#/services/add" class="btn btn-dashboard pull-right" title="Create New Service" ng-if="isAdmin || isManager"><i class="fa fa-plus-square"></i></a></h3>
