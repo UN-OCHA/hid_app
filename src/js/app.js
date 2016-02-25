@@ -195,7 +195,7 @@ app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$loc
 app.controller("DefaultCtrl", ["$scope", "$location", "authService", DefaultCtrl]);
 app.controller("404Ctrl", ["$scope", FourZeroFourCtrl]);
 app.controller("NumbersCtrl", ["$scope", NumbersCtrl]);
-app.controller("HeaderCtrl", ["$scope", "$rootScope", "$location", "profileService", "gettextCatalog", HeaderCtrl]);
+app.controller("HeaderCtrl", ["$scope", "$rootScope", "$location", "$route", "profileService", "gettextCatalog", HeaderCtrl]);
 app.controller("ListCtrl", ["$scope", "$route", "$routeParams", "$location", "$http", "$filter", "authService", "profileService", "userData", "operations", "gettextCatalog", "protectedRoles", "orgTypes", "countries", "roles", "ngDialog", ListCtrl]);
 app.controller("ListsCtrl", ["$scope", "$location", "userData", "profileService", "gettextCatalog", "ngDialog", ListsCtrl]);
 app.controller("LoginCtrl", ["$scope", "$location", "$routeParams", "authService", "profileService", LoginCtrl]);
@@ -213,7 +213,7 @@ app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routePara
 app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsCtrl]);
 app.controller("SubscriptionsAddCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsAddCtrl]);
 app.controller("BulkAddCtrl", ["$scope", "$http", "$timeout", "profileService", "operations", BulkAddCtrl]);
-
+app.controller("KioskCtrl", ["$scope", "profileService", "operations", KioskCtrl]);
 
 app.config(function($routeProvider, $locationProvider) {
   $routeProvider.
@@ -684,6 +684,18 @@ app.config(function($routeProvider, $locationProvider) {
   }).
   when('/AddProtectedRoles', {
     controller: 'AddProtectedRolesCtrl'
+  }).
+  when('/kiosk', {
+    templateUrl: contactsId.sourcePath + '/partials/kiosk.html',
+    controller: 'KioskCtrl',
+    requireAuth: true,
+    resolve: {
+      operations : function(profileService) {
+        return profileService.getOperationsData().then(function(data) {
+          return data;
+        });
+      }
+    }
   }).
   otherwise({
     templateUrl: contactsId.sourcePath + '/partials/404.html',

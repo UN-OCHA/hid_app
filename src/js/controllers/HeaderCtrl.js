@@ -1,4 +1,4 @@
-function HeaderCtrl($scope, $rootScope, $location, profileService, gettextCatalog) {
+function HeaderCtrl($scope, $rootScope, $location, $route, profileService, gettextCatalog) {
   $rootScope.$on("appLoginSuccess", function(ev, accountData) {
     $scope.isAuthenticated = accountData && accountData.user_id;
     $scope.nameGiven = accountData.name_given;
@@ -43,5 +43,8 @@ function HeaderCtrl($scope, $rootScope, $location, profileService, gettextCatalo
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     $scope.mainMenu = false;
     $scope.externalLinks = false;
+    if ($location.path() === '/kiosk') {
+      $scope.kioskMode = true;
+    }
   });
 };
