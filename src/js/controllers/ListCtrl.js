@@ -200,9 +200,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     }
   }
 
-  $scope.showQuickLinks = function(contact) {
-    return contact.ql.userCanEditProfile || contact.ql.userCanCheckIn || contact.ql.userCanCheckOut || contact.ql.userCanSendClaimEmail || contact.ql.userCanDeleteAccount;
-  }
   // On moblie quicklinks toggle on click, not hover.
   $scope.qlClick = function() {
     $scope.qlOpen = $scope.qlOpen === this.$index ? -1 : this.$index;

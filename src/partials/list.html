@@ -62,7 +62,7 @@
             </ul>
           </div>
         </div>
-        <div class="quick-link" ng-if="showQuickLinks(contact) && !isOffline()">
+        <div class="quick-link" ng-if="!isOffline()">
           <div class="dropdown" ng-class="{'ql-open': qlOpen === $index}">
             <button class="dropdown-toggle" data-toggle="dropdown" type="button" ng-click="qlClick()" ><span class="quick-link-dots"></span></button>
             <ul class="dropdown-menu dropdown-menu-right" role="menu">
