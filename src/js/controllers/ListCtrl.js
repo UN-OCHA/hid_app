@@ -775,7 +775,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
   function setCustomList(id, query) {
 
-    $scope.listPromise = profileService.getList(id).then(function(data) {
+    $scope.listPromise = profileService.getList(id, query.sort).then(function(data) {
       if (data) {
         $scope.list = data;
         $scope.queryCount = data.contacts.length;

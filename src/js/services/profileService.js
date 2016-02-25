@@ -221,8 +221,11 @@
     }
 
     // Get list by id
-    function getList(id) {
+    function getList(id, sort) {
       var terms = { access_token: authService.getAccessToken() };
+      if (sort) {
+        terms.sort = sort;
+      }
       return offlineCache.getData(contactsId.profilesBaseUrl + '/v0.1/lists/' + id, terms).then(handleSuccessv01, handleError);
     }
 
