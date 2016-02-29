@@ -29,3 +29,15 @@
 
 }
 
+.btn-search {
+  color: $primary-color-1;
+  background-color: $input-bg;
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
+  height: 40px;
+  border: none;
+
+  &:hover {
+    color: $primary-color-1;
+  }
+}
+

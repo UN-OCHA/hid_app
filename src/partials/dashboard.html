@@ -88,10 +88,12 @@
       <form class="search-form">
         <div class="form-group">
           <label class="control-label element-invisible" for="text" translate>Search</label>
-          <div class="input-groupx">
-            <input class="form-control contact-search" type="search" name="listsText"
+          <div class="input-group">
+            <input class="form-control" type="search" name="listsText"
                  placeholder="{{'Search contact lists'|translate}}" ng-model="listsText" ng-disabled="isOffline()"/>
-            <input class="btn btn-lg contact-search-submit" type="submit" ng-click="listsSearch()" ng-disabled="isOffline()" value="{{'Search'|translate}}"/>
+            <span class="input-group-btn">
+              <button class="btn btn-search" type="submit" ng-click="listsSearch()" ng-disabled="isOffline()"><i class="fa fa-search"></i></button>
+            </span>
           </div>
         </div>
       </form>
@@ -139,15 +141,17 @@
         </li>
       </ul>
 
-      <h3><span translate>Subscription Services</span> : <a href="#/services/add" class="btn btn-dashboard pull-right" title="Create New Service" ng-if="isAdmin || isManager"><i class="fa fa-plus-square"></i></a></h3>
+      <h3 class="clearfix"><span translate>Subscription Services</span> : <a href="#/services/add" class="btn btn-dashboard pull-right" title="Create New Service" ng-if="isAdmin || isManager"><i class="fa fa-plus-square"></i></a></h3>
 
       <form class="search-form">
         <div class="form-group">
           <label class="control-label element-invisible" for="text" translate>Search</label>
-          <div class="input-groupx">
-            <input class="form-control contact-search" type="search" name="servicesText"
+          <div class="input-group">
+            <input class="form-control" type="search" name="servicesText"
                  placeholder="{{'Search services'|translate}}" ng-model="servicesText" ng-disabled="isOffline()"/>
-            <input class="btn btn-lg contact-search-submit" type="submit" ng-click="servicesSearch()" ng-disabled="isOffline()" value="{{'Search'|translate}}"/>
+            <span class="input-group-btn">
+              <button class="btn btn-search" type="submit" ng-click="servicesSearch()" ng-disabled="isOffline()"><i class="fa fa-search"></i></button>
+            </span>
           </div>
         </div>
       </form>
