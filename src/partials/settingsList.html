@@ -34,7 +34,7 @@
           <div class="radio setting-radio" ng-class="{'setting-radio-selected' : list.privacy == 'all'}">
             <label>
               <input type="radio" name="privacy" value="all" ng-model="list.privacy" /> Anyone within Humanitarian ID can view/find the list<br />
-              <input class= "setting-radio-url" type="text" name="url" value="{{path}}" size="75" disabled ng-show="list.privacy == 'all'" />
+              <input class= "form-control" type="text" name="url" value="{{path}}" disabled ng-show="list.privacy == 'all'" />
             </label>
           </div>
           <div class="radio setting-radio" ng-class="{'setting-radio-selected' : list.privacy == 'verified'}">
