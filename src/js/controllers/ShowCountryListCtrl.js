@@ -13,9 +13,6 @@ function ShowCountryListCtrl($scope, profileService) {
       this.push(list)
    }, $scope.countries)
 
-
-
- 
   $scope.addToList = function (list) {
     list.addToList = list.addToList === false ? true: false;
   }
@@ -40,7 +37,6 @@ function ShowCountryListCtrl($scope, profileService) {
         else {
             $scope.flash.set('There was an error updating this profile.', 'danger');
         }
-
       });    
     $scope.closeThisDialog();
   }
