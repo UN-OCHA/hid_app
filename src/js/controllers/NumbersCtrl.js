@@ -256,23 +256,19 @@ function NumbersCtrl($scope) {
 
         var newLables = [];
         var length = 7;
-
-        for(var i =0; i < length-1; i++){   
-            if((currentMonth+6) < 12){
-                 newLables[i] = labelsArray[currentMonth+6];
+        var theMonths = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+        var today = new Date();
+        var aMonth = today.getMonth();
+        var i;
+        for (i=0; i<12; i++) {
+            newLables.push(theMonths[aMonth]); //here you can do whatever you want...
+            aMonth++;
+            if (aMonth > 11) {
+                aMonth = 0;
             }
-            else
-            {
-                currentMonth = 0
-                if(currentMonth <  ((new Date().getMonth())))
-                {
-                    newLables[i] = labelsArray[currentMonth];
-                }
-
-            }
-            currentMonth++;
         }
 
+        newLables.splice(0,6);
         newLables.push(labelsArray[new Date().getMonth()]);
       
         var half_length = Math.floor((m.length-1) / 2);    
