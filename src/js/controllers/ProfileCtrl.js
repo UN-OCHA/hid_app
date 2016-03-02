@@ -4,6 +4,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     return false;
   }
 
+
   if (profileData.contact && profileData.profile) {
     profileData.contact._profile = profileData.profile;
   }
@@ -33,6 +34,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   $scope.selectedProtectedBundles = (profileData.contact && profileData.contact.protectedBundles && profileData.contact.protectedBundles.length) ? angular.copy(profileData.contact.protectedBundles) : [];
 
   $scope.verified = (profileData.profile && profileData.profile.verified) ? profileData.profile.verified : false;
+  $scope.dailyDigest  = (profileData.profile && profileData.profile.dailyDigest) ? profileData.profile.dailyDigest : [];
   $scope.orgEditorRoles = (profileData.profile && profileData.profile.orgEditorRoles && profileData.profile.orgEditorRoles.length) ? profileData.profile.orgEditorRoles : [];
   $scope.passwordUrl = contactsId.authBaseUrl + "/#forgotPass";
 
@@ -55,6 +57,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
   $scope.submitProcessing = false;
   $scope.email = [];
+
 
   // Exclude operations for which the user is already checked in.
   var availOperations = angular.copy(operations);
@@ -156,6 +159,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   //Set update email flag to true during form load
   $scope.profile.notify = true;
 
+
   // Toggle logic for verified field.
   $scope.setVerified = function() {
     if ((!$scope.verified && $scope.userCanAddVerified) || ($scope.verified && $scope.userCanRemoveVerified)) {
@@ -163,6 +167,8 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       $scope.verified = verified;
     }
   };
+
+
 
   $scope.setCountryCode = function() {
     var countryInfo = jQuery('input[name="phone[' + this.$index + '][number]"]').intlTelInput('getSelectedCountryData');
@@ -531,6 +537,47 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     }
   }
 
+  $scope.showCountry = function() {
+    $scope.tempProfile = [];
+    $scope.userid = userData.profile.userid;
+    var tempOps = listObjectToArray($scope.operations);
+    profileService.getProfileByUser(userData.profile.userid).then(function(data){
+      if(data){
+          $scope.temp= data;
+          var countryList = [];
+              profileData.profile.roles.forEach(function(country){
+                if((country.indexOf('manager') > -1 )|| (country.indexOf('editor') > -1)){
+                  var locationID = country.split(/:(.+)?/)[1];
+                  var locationName = '';
+                  tempOps.forEach(function(operation){
+                    if(operation.key == locationID)
+                      locationName = operation.value.name;
+                    });
+                    countryList.push({
+                      locationId: locationID,
+                      location: locationName
+                   });
+                }
+              });
+
+              $scope.countryList = countryList;
+              ngDialog.open({
+                name: 'countryList',
+                template: 'partials/showCountryList.html',
+                showClose: false,
+                scope: $scope,
+                controller: 'ShowCountryListCtrl',
+              });
+        }
+    });
+    
+
+
+    
+  }
+
+ 
+
   $scope.submitProfile = function () {
     if ($scope.submitProcessing){
       return;
@@ -562,6 +609,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
 
       var profile = $scope.profile;
+
       if (profileData.profile && profileData.profile.userid && profileData.profile._id) {
         profile.userid = profileData.profile.userid;
         profile._profile = profileData.profile._id;
@@ -570,6 +618,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         profile.userid = accountData.user_id;
         profile._profile = null;
       }
+
       profile.status = 1;
 
       if (checkinFlow) {
@@ -600,6 +649,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       }
 
 
+
       profile.verified = $scope.verified;
       profile.verifiedByID = $scope.verifiedByID;
       profile.verifiedByName = $scope.verifiedByName;
@@ -627,11 +677,9 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
       $scope.submitProcessing = true;
       profileService.saveContact(profile).then(function(data) {
-
         if (data && data.status && data.status === 'ok') {
           if (checkinFlow) {
             profileService.getServices({ location: profile.locationId }).then(function (resp) {
-              console.log(resp);
               if (!resp.data.length) {
                 $scope.back();
               }
@@ -940,7 +988,9 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   function setPermissions() {
     var hasRoleAdmin = profileService.hasRole('admin'),
         contactNotEmpty = profileData.contact && Object.keys(profileData.contact).length;
-
+        
+    $scope.hasRoleEditor = profileService.hasRole('editor');
+    $scope.hasRoleManager = profileService.hasRole('manager');
     $scope.userCanEditRoles = profileService.canEditRoles(profileData.profile) && profileData.profile._id !== userData.profile._id;
     $scope.userCanEditKeyContact = profileService.canEditKeyContact($scope.selectedOperation);
     $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.selectedOperation);

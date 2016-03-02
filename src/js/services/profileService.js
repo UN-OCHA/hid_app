@@ -71,7 +71,8 @@
       canAssignOrganizationEditor: canAssignOrganizationEditor,
       isOrganizationEditor: isOrganizationEditor,
       canUseAdminFilters: canUseAdminFilters,
-      sendNotificationEmail: sendNotificationEmail
+      sendNotificationEmail: sendNotificationEmail,
+      getLocalDailyDigest: getLocalDailyDigest
     });
 
     // Get user data.
@@ -477,6 +478,16 @@
       return (request.then(handleSuccessv01, handleError));
     }
 
+    function getLocalDailyDigest(){
+      var request;
+      request = $http({
+        method: "get",
+        url: contactsId.profilesBaseUrl + "/v0.1/profiles/localDailyDigest",
+        params: { access_token: authService.getAccessToken() }
+      });
+      return (request.then(handleSuccessv01, handleError));
+    }
+
     function getProfileData(contactId) {
       contactId = contactId || '';
 
@@ -674,6 +685,8 @@
 
       return promise;
     }
+
+
 
     function getRoles() {
       var promise;
