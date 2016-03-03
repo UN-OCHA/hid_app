@@ -1,4 +1,4 @@
-function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, orgTypes, countries, roles, ngDialog) {
+function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $timeout, authService, profileService, userData, operations, gettextCatalog, protectedRoles, orgTypes, countries, roles, ngDialog) {
   var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'office.name', 'organization.name', 'organization.org_type_remote_id', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified', 'id', 'sort'],
       filter = $filter('filter');
 
@@ -45,6 +45,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.isVerified = userData.profile.verified;
 
   $scope.userCanUseAdminFilters = profileService.canUseAdminFilters();
+  $scope.appUrl = contactsId.appBaseUrl;
   
   setPermissions();
 
@@ -703,6 +704,14 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     else {
       profileService.unfollowList(list).then(cb);
     }
+  }
+
+  $scope.onCopySuccess = function (e) {
+    e.clearSelection();
+    $scope.urlCopied = true;
+    $timeout(function() {
+      $scope.urlCopied = false;
+    }, 2000);
   }
 
   // Builds the list of contacts.
