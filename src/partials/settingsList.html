@@ -40,7 +40,7 @@
           <div class="radio setting-radio" ng-class="{'setting-radio-selected' : list.privacy == 'verified'}">
             <label>
               <input type="radio" name="privacy" value="verified" ng-model="list.privacy" /> Only verified users within Humanitarian ID can view/find the list<br />
-              <input class= "setting-radio-url" type="text" name="url2" value="{{path}}" size="75" disabled ng-show="list.privacy == 'verified'" />
+              <input class= "form-control" type="text" name="url2" value="{{path}}" disabled ng-show="list.privacy == 'verified'" />
             </label>
           </div>
           <div class="radio setting-radio" ng-class="{'setting-radio-selected' : list.privacy == 'some'}">
