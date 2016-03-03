@@ -1,4 +1,4 @@
-function CustomListSettingsCtrl($scope, $route, $location, $http, authService, profileService, userData, list, gettextCatalog, ngDialog) {
+function CustomListSettingsCtrl($scope, $route, $location, $http, $timeout, authService, profileService, userData, list, gettextCatalog, ngDialog) {
   $scope.list = list;
   $scope.userData = userData;
 
@@ -216,5 +216,13 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
         }
       }]
     });
+  }
+
+  $scope.onCopySuccess = function (e) {
+    e.clearSelection();
+    $scope.urlCopied = true;
+    $timeout(function() {
+      $scope.urlCopied = false;
+    }, 2000);
   }
 }

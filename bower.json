@@ -18,8 +18,10 @@
     "angular": "~1.3.6",
     "angular-bootstrap": "~0.14.2",
     "angular-busy": "~4.1.1",
+    "angular-csv-import-tmp": "angular-csv-import#~0.0.27",
     "angular-gettext": "~1.1.4",
     "angular-inview": "~1.5.0",
+    "angular-loading-bar": "~0.8.0",
     "angular-md5": "~0.1.8",
     "angular-resource": "~1.3.0",
     "angular-route": "~1.3.0",
@@ -29,12 +31,11 @@
     "intl-tel-input": "~8.1.0",
     "jquery": "~1.11.0",
     "localforage": "~1.2.10",
+    "ng-csv": "~0.3.6",
     "ngDialog": "~0.3.12",
+    "ngclipboard": "~1.1.1",
     "offline": "0.7.13",
     "selectize": "~0.8.5",
-    "webshim": "~1.15.7",
-    "angular-loading-bar": "~0.8.0",
-    "angular-csv-import-tmp": "angular-csv-import#~0.0.27",
-    "ng-csv": "~0.3.6"
+    "webshim": "~1.15.7"
   }
 }
