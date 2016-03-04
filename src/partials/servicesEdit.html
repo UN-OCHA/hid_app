@@ -3,12 +3,12 @@
 </div>
 
 
-<div>
+<div class="masthead" ng-show="!isRouteLoading">
   <h2 ng-if="!service._id" translate>Create New Service</h2>
   <h2 ng-if="service._id" translate>Edit Service</h2>
 </div>
 
-<div ng-show='!isRouteLoading' class="main row page-dashboard">
+<div ng-show='!isRouteLoading' class="main row page-dashboard" ng-class="{'show-options': sidebarOptions}">
   <div class="main-content col-xs-12 col-sm-8 col-md-9 pull-right-hard">
     <div class="custom-contacts-wrapper">
       <i translate>* Required Field</i>
@@ -113,7 +113,16 @@
   </div>
 
   <div class="sidebar-left">
-    <div class="col-xs-12 col-sm-4 col-md-3">
+    <div ng-show="!isRouteLoading">
+      <div class="visible-xs">
+        <div class="bottom-fixed-btn" role="presentation">
+          <a href ng-click="sidebarOptions = !sidebarOptions">
+            <div class="bottom-fixed-btn__arrow"></div>
+              <span translate>Options</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
       <div class="actions">
         <a class="btn btn-primary btn-lg btn-block" ng-click="saveService()">
           <span translate>Save</span>
