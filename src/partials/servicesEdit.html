@@ -18,13 +18,45 @@
           <label class="control-label" for="name" translate>Service Name*</label>
           <input class="form-control" type="text" name="name" ng-model="service.name" required/>
         </div>
+
         <div class="form-group">
           <label class="control-label" for="description" translate>Service Description</label>
           <textarea class="form-control" ng-model="service.description" name="description" rows="4" cols="50"></textarea>
         </div>
+
         <div class="form-group">
-          <label class="control-label" for="hidden" translate>Hidden</label>
-          <input type="checkbox" ng-model="service.hidden" name="hidden" /> <span translate>Check this to hide this service</span>
+          <label class="control-label" for="type" translate>Service Type*</label>
+          <select name="type" ng-model="service.type" ng-change="changeServiceType()">
+            <option value="mailchimp">Mailchimp</option>
+            <option value="googlegroup">Google Group</option>
+          </select>
+        </div>
+
+        <div class="form-group" ng-if="service.type === 'mailchimp'">
+          <label class="control-label" for="mc_api_key" translate>Mailchimp API Key</label>
+          <input class="form-control" type="text" name="mc_api_key" ng-model="service.mc_api_key" ng-blur="getMailchimpLists()" />
+        </div>
+
+        <div class="form-group" ng-if="service.mc_api_key" ng-init>
+          <label class="control-label" for="mc_list" translate>Mailchimp list</label>
+          <select name="mc_list" ng-model="service.mc_list" ng-options="mc_list.name for mc_list in mc_lists track by mc_list.id">
+          </select>
+        </div>
+
+        <div class="form-group hidden" ng-if="service.type === 'googlegroup'">
+          <label class="control-label" for="googlegroup_domain" translate>Domain</label>
+          <select name="googlegroup_domain" ng-model="service.googlegroup.domain" ng-options="domain for domain in googlegroup_creds track by domain" ng-change="setGoogleGroups(service.googlegroup.domain)">
+          </select>
+        </div>
+
+        <div class="form-group" ng-if="service.googlegroup.domain" ng-init>
+          <label class="control-label" for="googlegroup_group" translate>Group</label>
+          <select name="googlegroup_group" ng-model="service.googlegroup.group" ng-options="googlegroup.name for googlegroup in googlegroups track by googlegroup.id">
+          </select>
+        </div>
+
+        <div class="form-group">
+          <input type="checkbox" ng-model="service.hidden" name="hidden" /> <span translate>Hide service from user discovery</span>
         </div>
         <div class="form-group">
           <label class="control-label" for="auto_add" translate>Automatic addition</label>
@@ -75,35 +107,6 @@
               <i class="fa" ng-class="styleFieldEntries('owners')"></i>
             </button>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="type" translate>Service Type*</label>
-          <select name="type" ng-model="service.type" ng-change="changeServiceType()">
-            <option value="mailchimp">Mailchimp</option>
-            <option value="googlegroup">Google Group</option>
-          </select>
-        </div>
-        <div class="form-group" ng-if="service.type === 'mailchimp'">
-          <label class="control-label" for="mc_api_key" translate>Mailchimp API Key</label>
-          <input class="form-control" type="text" name="mc_api_key" ng-model="service.mc_api_key" ng-blur="getMailchimpLists()" />
-        </div>
-
-        <div class="form-group" ng-if="service.mc_api_key" ng-init>
-          <label class="control-label" for="mc_list" translate>Mailchimp list</label>
-          <select name="mc_list" ng-model="service.mc_list" ng-options="mc_list.name for mc_list in mc_lists track by mc_list.id">
-          </select>
-        </div>
-
-        <div class="form-group hidden" ng-if="service.type === 'googlegroup'">
-          <label class="control-label" for="googlegroup_domain" translate>Domain</label>
-          <select name="googlegroup_domain" ng-model="service.googlegroup.domain" ng-options="domain for domain in googlegroup_creds track by domain" ng-change="setGoogleGroups(service.googlegroup.domain)">
-          </select>
-        </div>
-
-        <div class="form-group" ng-if="service.googlegroup.domain" ng-init>
-          <label class="control-label" for="googlegroup_group" translate>Group</label>
-          <select name="googlegroup_group" ng-model="service.googlegroup.group" ng-options="googlegroup.name for googlegroup in googlegroups track by googlegroup.id">
-          </select>
         </div>
       </form>
     </div>
