@@ -3,9 +3,8 @@
 </div>
 
 
-<div><h2 class="heading-custom-contacts-list" style="float: left;">
-  {{::list.name}} <small>(<span translate>Contacts</span> {{contactsCount}})</small>
-</h2>
+<div class="masthead" ng-show="!isRouteLoading">
+  <h2>{{::list.name}} <small>(<span translate>Contacts</span> {{contactsCount}})</small></h2>
 </div>
 
 <div ng-show='!isRouteLoading' class="main row page-dashboard" ng-class="{'show-options': sidebarOptions}">
@@ -144,7 +143,16 @@
   </div>
 
   <div class="sidebar-left">
-    <div class="col-xs-12 col-sm-4 col-md-3">
+    <div ng-show="!isRouteLoading">
+      <div class="visible-xs">
+        <div class="bottom-fixed-btn" role="presentation">
+          <a href ng-click="sidebarOptions = !sidebarOptions">
+            <div class="bottom-fixed-btn__arrow"></div>
+              <span translate>Options</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
       <div class="actions">
         <a class="btn btn-primary btn-lg btn-block" ng-click="saveList()">
           <span translate>Save</span>
