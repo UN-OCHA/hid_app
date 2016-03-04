@@ -35,7 +35,7 @@
             <label>
               <input type="radio" name="privacy" value="all" ng-model="list.privacy" /> Anyone within Humanitarian ID can view/find the list<br />
               <div ng-show="list.privacy == 'all'">
-                <span>{{path}}</span>
+                <span style="word-wrap: break-word;color: grey;">{{path}}</span>
                   <button class="btn btn-default" style="vertical-align: bottom;" type="button" uib-tooltip="Copied !" tooltip-trigger="none" tooltip-is-open="urlCopied == true" ngclipboard ngclipboard-success="onCopySuccess(e);" data-clipboard-text="{{path}}"><i class="fa fa-clipboard"></i></button>
               </div>
             </label>
@@ -44,7 +44,7 @@
             <label>
               <input type="radio" name="privacy" value="verified" ng-model="list.privacy" /> Only verified users within Humanitarian ID can view/find the list<br />
               <div ng-show="list.privacy == 'verified'">
-                <span>{{path}}</span>
+                <span style="word-wrap: break-word;color: grey;">{{path}}</span>
                 <button class="btn btn-default" style="vertical-align: bottom;" type="button" uib-tooltip="Copied !" tooltip-trigger="none" tooltip-is-open="urlCopied == true" ngclipboard ngclipboard-success="onCopySuccess(e);" data-clipboard-text="{{path}}"><i class="fa fa-clipboard"></i></button>
               </div>
             </label>
