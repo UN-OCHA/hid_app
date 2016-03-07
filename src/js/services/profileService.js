@@ -71,7 +71,7 @@
       canAssignOrganizationEditor: canAssignOrganizationEditor,
       isOrganizationEditor: isOrganizationEditor,
       canUseAdminFilters: canUseAdminFilters,
-      sendNotificationEmail: sendNotificationEmail,
+      sendNotificationEmail: sendNotificationEmail
     });
 
     // Get user data.
