@@ -556,10 +556,12 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
               });
 
               $scope.countryList = countryList;
+              var profile = $scope.profile;
+
               ngDialog.open({
                 name: 'countryList',
                 template: 'partials/showCountryList.html',
-                showClose: false,var profile = $scope.profile;
+                showClose: false,
                 scope: $scope,
                 controller: 'ShowCountryListCtrl',
               });
