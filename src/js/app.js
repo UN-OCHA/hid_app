@@ -201,6 +201,7 @@ app.controller("ListsCtrl", ["$scope", "$location", "userData", "profileService"
 app.controller("LoginCtrl", ["$scope", "$location", "$routeParams", "authService", "profileService", LoginCtrl]);
 app.controller("LogoutCtrl", ["$scope", "authService", LogoutCtrl]);
 app.controller("ProfileCtrl", ["$scope", "$location", "$route", "$routeParams", "$filter", "$timeout", "$http", "profileService", "authService", "operations", "profileData", "countries", "roles", "protectedRoles", "gettextCatalog", "userData", "md5", 'ngDialog', ProfileCtrl]);
+app.controller("ShowCountryListCtrl", ["$scope", "profileService",  ShowCountryListCtrl]);
 app.controller("RegisterCtrl", ["$scope", RegisterCtrl]);
 app.controller("AddToCustomListCtrl", ["$scope", "profileService", AddToCustomListCtrl]);
 app.controller("AddProtectedRolesCtrl", ["$scope", "profileService", AddProtectedRolesCtrl]);

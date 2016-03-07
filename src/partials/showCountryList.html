@@ -1,0 +1,13 @@
+<div class="panel panel-primary" id="contact-modal">
+  <div class="panel-heading">Recieve the daily daily digest for:</div>
+  <ul class="list-group">
+    <a class="list-group-item" ng-click="addToList(country)" ng-repeat="country in countries">
+      <i ng-if="country.addToList" class="fa fa-check"></i>
+      {{country.location}}
+    </a>
+<div class="row" id="contact-modal--confirm">
+  <div class="col-sm-6 margin-bottom"><button class="btn btn-primary btn-lg btn-block" ng-click="updateContact()" type="button">Save</button></div>
+  <div class="col-sm-6"><button class="btn btn-default btn-lg btn-block" ng-click="closeThisDialog()" type="button">Close</button></div>
+</div>
+
+
