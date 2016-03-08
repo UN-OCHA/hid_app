@@ -670,8 +670,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       profileService.saveContact(profile).then(function(data) {
         if (data && data.status && data.status === 'ok') {
           if (checkinFlow) {
-            profileService.getServices({ location: profile.locationId }).then(function (resp) {
-              console.log(resp);
+            profileService.getServices({ location: profile.locationId, auto_add: false, status: true }).then(function (resp) {
               if (!resp.data.length) {
                 $scope.back();
               }
