@@ -208,6 +208,7 @@ module.exports = function(grunt) {
             'src/js/controllers/BulkAddCtrl.js',
             'src/js/controllers/AddProtectedRolesCtrl.js',
             'src/js/controllers/AddProtectedGroupsCtrl.js',
+            'src/js/controllers/ShowCountryListCtrl.js',
             'src/js/Chart.min.js',
             'src/js/app.js',
             'src/js/partials.js',
