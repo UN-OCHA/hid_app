@@ -45,7 +45,8 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, $timeout, auth
       $http.get(contactsId.profilesBaseUrl + '/v0.1/services', {
         'params': {
           'access_token': authService.getAccessToken(),
-          'q': encodeURIComponent(select.search)
+          'q': encodeURIComponent(select.search),
+          'status': true
         }
         })
         .then(function(response) {
