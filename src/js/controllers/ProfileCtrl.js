@@ -675,7 +675,10 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
                 $scope.back();
               }
               else {
-                $location.path('/services/' + profile.locationId);
+                if(profile.userid == userData.profile.userid)
+                  $location.path('/services/' + profile.locationId);
+                else
+                  $location.path('/dashboard'); 
               }
               profileService.clearData();
             });
