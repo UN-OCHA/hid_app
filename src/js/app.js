@@ -214,7 +214,7 @@ app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routePara
 app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", "gettextCatalog", SubscriptionsCtrl]);
 app.controller("SubscriptionsAddCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsAddCtrl]);
 app.controller("BulkAddCtrl", ["$scope", "$http", "$timeout", "profileService", "operations", BulkAddCtrl]);
-
+app.controller("NewsLetterCtrl", ["$scope", "$location", "$route", "$routeParams","profileService", "userData","ngDialog", "gettextCatalog" ,  NewsLetterCtrl]);
 
 app.config(function($routeProvider, $locationProvider) {
   $routeProvider.
@@ -685,6 +685,21 @@ app.config(function($routeProvider, $locationProvider) {
   }).
   when('/AddProtectedRoles', {
     controller: 'AddProtectedRolesCtrl'
+  }).
+ when('/profile/:profileId/newsLetter', {
+    templateUrl: contactsId.sourcePath + '/partials/newsLetter.html',
+    controller: 'NewsLetterCtrl',
+    requireAuth: true,
+    resolve: {
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
+      }
+    }
   }).
   otherwise({
     templateUrl: contactsId.sourcePath + '/partials/404.html',
