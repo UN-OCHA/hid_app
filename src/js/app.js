@@ -215,6 +215,7 @@ app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", "ge
 app.controller("SubscriptionsAddCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsAddCtrl]);
 app.controller("BulkAddCtrl", ["$scope", "$http", "$timeout", "profileService", "operations", BulkAddCtrl]);
 
+
 app.config(function($routeProvider, $locationProvider) {
   $routeProvider.
   when('/', {
