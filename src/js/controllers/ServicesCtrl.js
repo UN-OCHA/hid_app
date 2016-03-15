@@ -240,7 +240,7 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
       $scope.servicesPromise = profileService.getServices($scope.query).then(function (response) {
         if (response.status == 200) {
           response.data.forEach(function (service) {
-            if(service.name == 'Humanitarian ID News'){
+            if(service._id == '56655a06785d0b8200ebdfcb'){
               $scope.email =  userData.global.email[0].address;
               profileService.subscribeService(service, $scope.email, userData.profile).then(function (response) {
                 if (response.status === 204) {
