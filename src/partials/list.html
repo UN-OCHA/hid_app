@@ -10,7 +10,7 @@
       <i class="fa fa-lock" ng-if="hid_access == 'closed'" data-toggle="tooltip" data-placement="top" title="This list is only accessible to verified Humanitarian ID users."></i> {{locationText()}} <small>(<span translate>Contacts</span> {{queryCount}})</small>
       <a href="#/settings/list/{{list._id}}" class="btn btn-primary pull-right-hard" ng-disabled="isOffline()" ng-if="locationId !== 'global' && (userData.profile.userid == list.userid || isEditor) && list._id" role="button">List Settings</a>
       <button ng-click="toggleFollow()" class="btn btn-primary pull-right-hard" ng-if="locationId !== 'global' && userData.profile.userid != list.userid && list._id" >{{toggleFollowButton}}</button>
-      <span class="pull-right-hard" uib-tooltip="Click to copy URL of this list"><button class="btn btn-primary pull-right-hard" type="button" ng-if="locationId !== 'global'" uib-tooltip="Copied !" tooltip-trigger="none" tooltip-is-open="urlCopied == true" ngclipboard ngclipboard-success="onCopySuccess(e);" data-clipboard-text="{{appUrl}}/#/list/contacts?id={{list._id}}"><i class="fa fa-clipboard"></i></button></span>
+      <span class="pull-right-hard" uib-tooltip="Click to copy URL of this list"><button class="btn btn-primary pull-right-hard" type="button" ng-if="locationId !== 'global'" uib-tooltip="Copied !" tooltip-trigger="none" tooltip-is-open="urlCopied == true" ngclipboard ngclipboard-success="onCopySuccess(e);" data-clipboard-text="{{listUrl}}"><i class="fa fa-clipboard"></i></button></span>
     </h2>
   </div>
 </div>

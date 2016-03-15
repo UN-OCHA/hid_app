@@ -45,7 +45,14 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
   $scope.isVerified = userData.profile.verified;
 
   $scope.userCanUseAdminFilters = profileService.canUseAdminFilters();
-  $scope.appUrl = contactsId.appBaseUrl;
+  $scope.listUrl = contactsId.appBaseUrl;
+
+  if ($scope.isContactList) {
+    $scope.listUrl += '/#/list/contacts?id=' + $routeParams.id;
+  }
+  else {
+    $scope.listUrl += '/#/list/' + $scope.locationId;
+  }
   
   setPermissions();
 
