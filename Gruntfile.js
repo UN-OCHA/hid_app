@@ -219,8 +219,7 @@ module.exports = function(grunt) {
             'src/js/services/authService.js',
             'src/js/services/profileService.js',
             'src/js/services/cacheService.js',
-            'src/js/services/flashService.js',
-            'src/js/controllers/NewsLetterCtrl.js'
+            'src/js/services/flashService.js'
           ]
         }]
       }
