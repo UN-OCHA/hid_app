@@ -682,7 +682,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
           }
           else {
             if(profile.created == profile.revised){
-              $location.path('/profile/' + profile._id + '/newsLetter');
+              $location.path('/profile/' + profile._id + '/services');
             }else{
               $scope.back();
               profileService.clearData();
