@@ -214,7 +214,6 @@ app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routePara
 app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", "gettextCatalog", SubscriptionsCtrl]);
 app.controller("SubscriptionsAddCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsAddCtrl]);
 app.controller("BulkAddCtrl", ["$scope", "$http", "$timeout", "profileService", "operations", BulkAddCtrl]);
-app.controller("NewsLetterCtrl", ["$scope", "$location", "$route", "$routeParams","profileService", "userData","ngDialog", "gettextCatalog" ,  NewsLetterCtrl]);
 
 app.config(function($routeProvider, $locationProvider) {
   $routeProvider.
