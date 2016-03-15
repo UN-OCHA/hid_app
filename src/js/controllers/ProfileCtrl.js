@@ -684,8 +684,12 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
             });
           }
           else {
-            $scope.back();
-            profileService.clearData();
+            if(profile.created == profile.revised){
+              $location.path('/profile/' + profile._id + '/services');
+            }else{
+              $scope.back();
+              profileService.clearData();
+            }
           }
         }
         else {

@@ -686,6 +686,26 @@ app.config(function($routeProvider, $locationProvider) {
   when('/AddProtectedRoles', {
     controller: 'AddProtectedRolesCtrl'
   }).
+ when('/profile/:profileId/services', {
+    templateUrl: contactsId.sourcePath + '/partials/services.html',
+    controller: 'ServicesListCtrl',
+    requireAuth: true,
+    resolve: {
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
+      },
+      operations : function(profileService) {
+        return profileService.getOperationsData().then(function(data) {
+          return data;
+        });
+      }
+    }
+  }).
   otherwise({
     templateUrl: contactsId.sourcePath + '/partials/404.html',
     controller: '404Ctrl'
