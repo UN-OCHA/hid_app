@@ -207,7 +207,7 @@ function ServicesCtrl($scope, $location, $route, $routeParams, $http, authServic
   }
 }
 
-function ServicesListCtrl($scope, $location, $route, $routeParams, profileService, userData, ngDialog, operations) {
+function ServicesListCtrl($scope, $location, $route, $routeParams, profileService, userData, ngDialog, operations, gettextCatalog) {
 
   var locationPath = $location.$$path.split("/")[1];
   $scope.alerts = [];
@@ -298,9 +298,11 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
       showClose: false,
       scope: $scope,
       controller: ['$scope', 'profileService', function ($scope, profileService) {
+        $scope.isDisabled = false;
         $scope.service = service;
         $scope.email = '';
         $scope.subscribe = function () {
+          $scope.isDisabled = true;
           profileService.subscribeService(service, $scope.email, userData.profile).then(function (response) {
             if (response.status === 204) {
               $scope.closeThisDialog();
