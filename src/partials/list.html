@@ -232,7 +232,8 @@
               class="form-control"
               name="country"
               reset-search-input="true"
-              on-select="submitSearch()">
+              on-select="submitSearch()"
+              autocomplete="off">
                 <ui-select-match allow-clear placeholder="{{'Country'|translate}}">{{$select.selected.name}}</ui-select-match>
                 <ui-select-choices ng-class="{'not-empty': countries.length}" repeat="country.name as country in countries | orderBy:'name' | filter: $select.search">
                   <div ng-bind-html="country.name | highlight: $select.search"></div>
