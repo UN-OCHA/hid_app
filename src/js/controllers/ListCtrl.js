@@ -58,8 +58,8 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
 
   function setPermissions() {
     var hasRoleAdmin = profileService.hasRole('admin');
-    $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.selectedOperation);
-    $scope.userCanEditProtectedBundle = profileService.canEditProtectedBundle($scope.selectedOperation);
+    $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.locationId);
+    $scope.userCanEditProtectedBundle = profileService.canEditProtectedBundle($scope.locationId);
     
     // Determine what roles are available to assign to a user
     if ($scope.userCanEditRoles && hasRoleAdmin) {
