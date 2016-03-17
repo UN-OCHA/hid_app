@@ -210,7 +210,7 @@ app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$htt
 app.controller("CheckInCtrl", ["$scope", "$location", "$routeParams", "$timeout", "profileService", CheckInCtrl]);
 app.controller("CheckOutCtrl", ["$scope", "$location", "$routeParams", "$timeout", "profileService", CheckOutCtrl]);
 app.controller("ServicesCtrl", ["$scope", "$location", "$route", "$routeParams", "$http", "authService", "profileService", "userData", "ngDialog", "operations", "gettextCatalog", "service", ServicesCtrl]);
-app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", "operations", ServicesListCtrl]);
+app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", "operations","gettextCatalog" , ServicesListCtrl]);
 app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", "gettextCatalog", SubscriptionsCtrl]);
 app.controller("SubscriptionsAddCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsAddCtrl]);
 app.controller("BulkAddCtrl", ["$scope", "$http", "$timeout", "profileService", "operations", BulkAddCtrl]);
