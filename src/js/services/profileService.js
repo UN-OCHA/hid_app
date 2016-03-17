@@ -851,7 +851,7 @@
 
     // Can use administrative contact list filters (orphan, ghost, admin role)
     function canUseAdminFilters() {
-      return hasRole('admin');
+      return (hasRole('admin') || hasRole('manager'));
     }
 
     //Verify editor role exists for specified location and organization
