@@ -221,12 +221,12 @@
     }
 
     // Get list by id
-    function getList(id, sort) {
-      var terms = { access_token: authService.getAccessToken() };
-      if (sort) {
-        terms.sort = sort;
+    function getList(id, query) {
+      if (!query) {
+        var query = {};
       }
-      return offlineCache.getData(contactsId.profilesBaseUrl + '/v0.1/lists/' + id, terms).then(handleSuccessv01, handleError);
+      query.access_token = authService.getAccessToken();
+      return offlineCache.getData(contactsId.profilesBaseUrl + '/v0.1/lists/' + id, query).then(handleSuccessv01, handleError);
     }
 
     function getLists(query) {
