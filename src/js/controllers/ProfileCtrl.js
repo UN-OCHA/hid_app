@@ -133,7 +133,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   }
 
   // Add the given and family name from the auth service as a default value.
-  if ((!$scope.profile.nameGiven || !$scope.profile.nameGiven.length) && (!$scope.profile.nameFamily || !$scope.profile.nameFamily.length)) {
+  if (!checkinFlow && (!$scope.profile.nameGiven || !$scope.profile.nameGiven.length) && (!$scope.profile.nameFamily || !$scope.profile.nameFamily.length)) {
     $scope.profile.nameGiven = accountData.name_given || '';
     $scope.profile.nameFamily = accountData.name_family || '';
   }
