@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2016-02-02T09:01:26.435Z\n"
+"Project-Id-Version: 2016-03-18T09:04:01.659Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
@@ -28,6 +28,10 @@ msgstr ""
 
 #: src/js/controllers/CreateAccountCtrl.js
 msgid "Account Created!"
+msgstr ""
+
+#: src/partials/lists.html
+msgid "Actions"
 msgstr ""
 
 #: src/js/controllers/ContactCtrl.js
@@ -79,11 +83,18 @@ msgid "Are you still responding to the humanitarian situation(s) above?"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Are you sure that you want to create an account for <b>{{profile.nameGiven}} {{profile.nameFamily}}</b> with no email address?"
 msgstr ""
 
-#: src/partials/unsubscribeService.html
-msgid "Are you sure you want to unsubscribe from {{service.name}} ?"
+#: src/js/controllers/ListsCtrl.js
+msgid "Are you sure you want to stop following {{name}} ?"
+msgstr ""
+
+#: src/js/controllers/DashboardCtrl.js
+#: src/js/controllers/ServicesCtrl.js
+#: src/js/controllers/SubscriptionsCtrl.js
+msgid "Are you sure you want to unsubscribe from {{name}} ?"
 msgstr ""
 
 #: src/js/controllers/ListCtrl.js
@@ -120,6 +131,10 @@ msgstr ""
 msgid "Check into"
 msgstr ""
 
+#: src/partials/kiosk.html
+msgid "Check into Humanitarian ID"
+msgstr ""
+
 #: src/partials/about.html
 msgid "Check out our animation,"
 msgstr ""
@@ -130,10 +145,6 @@ msgstr ""
 
 #: src/partials/servicesEdit.html
 msgid "Check this box to automatically unsubscribe users from your service, once they check out of the countries below."
-msgstr ""
-
-#: src/partials/servicesEdit.html
-msgid "Check this to hide this service"
 msgstr ""
 
 #: src/js/controllers/CreateAccountCtrl.js
@@ -202,11 +213,13 @@ msgstr ""
 msgid "Confirm User Checkout"
 msgstr ""
 
-#: src/partials/serviceDelete.html
-msgid "Confirm deletion of {{service.name}} Subscription Service"
+#: src/js/controllers/ServicesCtrl.js
+msgid "Confirm deletion of {{name}} Subscription Service"
 msgstr ""
 
-#: src/partials/unsubscribeService.html
+#: src/js/controllers/DashboardCtrl.js
+#: src/js/controllers/ServicesCtrl.js
+#: src/js/controllers/SubscriptionsCtrl.js
 msgid "Confirm unsubscription"
 msgstr ""
 
@@ -240,18 +253,22 @@ msgid "Country"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Country or Operation is required."
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Country or Operation of Response"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Create Account"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Create New Account"
 msgstr ""
 
@@ -271,12 +288,21 @@ msgstr ""
 msgid "Current Location"
 msgstr ""
 
+#: src/partials/lists.html
+msgid "Custom Contact Lists <small>({{totalCount}})</small>"
+msgstr ""
+
 #: src/partials/dashboard.html
 msgid "Custom Contacts lists"
 msgstr ""
 
+#: src/partials/profile.html
+msgid "Daily Digest"
+msgstr ""
+
 #: src/partials/createAccount.html
 #: src/partials/header.html
+#: src/partials/kiosk.html
 msgid "Dashboard"
 msgstr ""
 
@@ -338,6 +364,7 @@ msgstr ""
 
 #: src/partials/dashboard.html
 #: src/partials/list.html
+#: src/partials/lists.html
 #: src/partials/services.html
 #: src/partials/subscriptions.html
 msgid "Edit"
@@ -386,11 +413,13 @@ msgid "Editing Rights"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 #: src/partials/profile.html
 msgid "Email"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Email Address"
 msgstr ""
 
@@ -424,10 +453,12 @@ msgstr ""
 
 #: src/js/controllers/ProfileCtrl.js
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Family Name"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Family Name is required."
 msgstr ""
 
@@ -469,10 +500,12 @@ msgstr ""
 
 #: src/js/controllers/ProfileCtrl.js
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Given Name"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Given Name is required."
 msgstr ""
 
@@ -515,10 +548,11 @@ msgid "Groups"
 msgstr ""
 
 #: src/partials/servicesEdit.html
-msgid "Hidden"
+msgid "Hide service from user discovery"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Highly Encouraged Field"
 msgstr ""
 
@@ -538,6 +572,7 @@ msgid "Humanitarian ID is a way to help humanitarian responders find, connect, a
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "If a person does not have an email address associated with their information, they will not be able to claim their account."
 msgstr ""
 
@@ -576,6 +611,7 @@ msgstr ""
 
 #: src/partials/contact.html
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Job Title"
@@ -591,6 +627,10 @@ msgstr ""
 
 #: src/partials/settingsList.html
 msgid "List Name*"
+msgstr ""
+
+#: src/partials/lists.html
+msgid "List Owner"
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -647,6 +687,7 @@ msgid "My checked-in lists"
 msgstr ""
 
 #: src/partials/list.html
+#: src/partials/lists.html
 msgid "Name"
 msgstr ""
 
@@ -654,8 +695,7 @@ msgstr ""
 msgid "Name added to the list"
 msgstr ""
 
-#: src/partials/serviceDelete.html
-#: src/partials/unsubscribeService.html
+#: src/partials/confirm.html
 msgid "No"
 msgstr ""
 
@@ -665,6 +705,10 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "No contacts found"
+msgstr ""
+
+#: src/partials/lists.html
+msgid "No list found"
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -716,11 +760,14 @@ msgstr ""
 #: src/partials/contact.html
 #: src/partials/dashboard.html
 #: src/partials/profile.html
+#: src/partials/servicesEdit.html
+#: src/partials/settingsList.html
 msgid "Options"
 msgstr ""
 
 #: src/partials/contact.html
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 #: src/partials/list.html
 #: src/partials/profile.html
 msgid "Organization"
@@ -755,6 +802,7 @@ msgid "Owners"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Phone"
 msgstr ""
 
@@ -767,10 +815,12 @@ msgid "Phone Numbers"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Physical Location (Country)"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Please add an email address"
 msgstr ""
 
@@ -800,6 +850,10 @@ msgstr ""
 
 #: src/partials/servicesEdit.html
 msgid "Please enter the names of HID users who own this service"
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "Please enter the names of the services you want to associate to this list"
 msgstr ""
 
 #: src/partials/profile.html
@@ -877,11 +931,13 @@ msgid "Report a Problem"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 #: src/partials/profile.html
 msgid "Request to"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Required Field"
 msgstr ""
 
@@ -914,11 +970,13 @@ msgstr ""
 
 #: src/partials/dashboard.html
 #: src/partials/list.html
+#: src/partials/lists.html
 #: src/partials/services.html
 #: src/partials/subscriptionsAdd.html
 msgid "Search"
 msgstr ""
 
+#: src/partials/lists.html
 #: src/partials/services.html
 #: src/partials/subscriptionsAdd.html
 msgid "Search by name"
@@ -928,12 +986,18 @@ msgstr ""
 msgid "Search by name, title, or organization"
 msgstr ""
 
+#: src/partials/dashboard.html
+msgid "Search contact lists"
+msgstr ""
+
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 #: src/partials/profile.html
 msgid "Search for country"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Search for organizations"
 msgstr ""
 
@@ -1011,6 +1075,10 @@ msgstr ""
 msgid "Start typing a country name"
 msgstr ""
 
+#: src/js/controllers/ListsCtrl.js
+msgid "Stop following {{name}}"
+msgstr ""
+
 #: src/partials/services.html
 #: src/partials/subscribeService.html
 #: src/partials/subscriptionsAdd.html
@@ -1029,7 +1097,16 @@ msgid "Subscribed"
 msgstr ""
 
 #: src/partials/dashboard.html
+#: src/partials/settingsList.html
 msgid "Subscription Services"
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "Subscription Services associated with this list"
+msgstr ""
+
+#: src/partials/services.html
+msgid "Thank you for checking in."
 msgstr ""
 
 #: src/partials/services.html
@@ -1073,6 +1150,7 @@ msgid "This service should be suggested when checking into the following operati
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Title is required."
 msgstr ""
 
@@ -1093,6 +1171,7 @@ msgid "Unassign key contact"
 msgstr ""
 
 #: src/partials/dashboard.html
+#: src/partials/lists.html
 msgid "Unfollow"
 msgstr ""
 
@@ -1123,6 +1202,7 @@ msgid "Usual Location"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 msgid "Valid email is required."
 msgstr ""
 
@@ -1163,6 +1243,10 @@ msgid "View a Disaster"
 msgstr ""
 
 #: src/partials/dashboard.html
+msgid "View all lists"
+msgstr ""
+
+#: src/partials/dashboard.html
 msgid "View all services"
 msgstr ""
 
@@ -1198,13 +1282,12 @@ msgstr ""
 msgid "Would you like to check them in?"
 msgstr ""
 
-#: src/partials/serviceDelete.html
-#: src/partials/unsubscribeService.html
+#: src/partials/confirm.html
 msgid "Yes"
 msgstr ""
 
-#: src/partials/serviceDelete.html
-msgid "You are about to delete {{service.name}} Subscription Service from Humanitarian ID. By deleting {{service.name}}, users and managers will no longer be able to subscribe to {{service.name}} through Humanitarian ID. We will NOT remove any subscribed users from the external service provider and thus recommend you do so if appropriate."
+#: src/js/controllers/ServicesCtrl.js
+msgid "You are about to delete {{name}} Subscription Service from Humanitarian ID. By deleting {{name}}, users and managers will no longer be able to subscribe to {{name}} through Humanitarian ID. We will NOT remove any subscribed users from the external service provider and thus recommend you do so if appropriate. Are you sure ?"
 msgstr ""
 
 #: src/partials/services.html
@@ -1220,6 +1303,7 @@ msgid "add a missing group"
 msgstr ""
 
 #: src/partials/createAccount.html
+#: src/partials/kiosk.html
 #: src/partials/profile.html
 msgid "add a missing organization"
 msgstr ""
@@ -1290,4 +1374,12 @@ msgstr ""
 
 #: src/partials/list.html
 msgid "{{locationText()}} has been set as a private contact list by our field-level administrators. Only \"verified\" Humanitarian ID users can access the contact list. For information about \"verified\" users, please see our <a href=\"http://humanitarian.id/faqs\" target=\"_blank\">FAQs</a>."
+msgstr ""
+
+#: src/partials/confirm.html
+msgid "{{message}}"
+msgstr ""
+
+#: src/partials/confirm.html
+msgid "{{title}}"
 msgstr ""
