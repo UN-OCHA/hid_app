@@ -215,7 +215,7 @@
     }
 
     function cacheList(id) {
-      var terms = { access_token: authService.getAccessToken() };
+      var terms = { access_token: authService.getAccessToken(), sort: 'name' };
       var list = offlineCache.cacheData(contactsId.profilesBaseUrl + '/v0.1/lists/' + id, terms);
       return list;
     }
