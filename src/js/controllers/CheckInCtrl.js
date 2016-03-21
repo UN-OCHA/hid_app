@@ -18,7 +18,8 @@ function CheckInCtrl($scope, $location, $routeParams, $timeout, profileService) 
 function CheckOutCtrl($scope, $location, $routeParams, $timeout, profileService) {
   profileService.checkOutContact($routeParams.contactId).then(function (response) {
     if (response.status === 200) {
-      $scope.flash.set(response.data.nameGiven + ' ' + response.data.nameFamily + ' was successfully checked out.', 'success', false);
+      $scope.flash.set(response.data.nameGiven + ' ' + response.data.nameFamily + ' was successfully checked out from ' + response.data.location + '. You will be redirected in a few seconds...', 'success', false);
+      profileService.clearData();
     }
     else {
       $scope.flash.set('There was an error checking this contact out.', 'danger');
