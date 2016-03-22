@@ -1,6 +1,12 @@
-function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, currentContact, ngDialog, md5) {
-  var contact = currentContact,
-      filter = $filter('filter');
+function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, ngDialog, md5) {
+  var filter = $filter('filter');
+  var contact = {};
+
+  profileData.contacts.forEach(function (cont) {
+    if (cont._id == $routeParams.contactId) {
+      contact = cont;
+    }
+  });
 
   $scope.contact = contact;
   $scope.profileContacts = profileData.contacts;

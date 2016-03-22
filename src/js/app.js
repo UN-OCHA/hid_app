@@ -189,7 +189,7 @@ app.run(function ($rootScope, $location, $timeout, profileService, flashService)
 });
 
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
-app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "currentContact", "ngDialog", "md5", ContactCtrl]);
+app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", "md5", ContactCtrl]);
 app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", "countries", CreateAccountCtrl]);
 app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location","$timeout", "profileService", "globalProfileId", "userData", "operations", "ngDialog", "gettextCatalog", DashboardCtrl]);
 app.controller("DefaultCtrl", ["$scope", "$location", "authService", DefaultCtrl]);
@@ -440,9 +440,6 @@ app.config(function($routeProvider, $locationProvider) {
       },
       profileData : function(profileService, $route) {
         return profileService.getProfileData($route.current.params.contactId);
-      },
-      currentContact : function (profileService, $route) {
-        return profileService.getContact($route.current.params.contactId);
       }
     }
   }).
