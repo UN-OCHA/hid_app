@@ -790,8 +790,13 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
   }
 
   function setCustomList(id, query) {
-    var queryCustom = {};
-    queryCustom.sort = query.sort;
+    var queryCustom = JSON.parse(JSON.stringify(query));
+    delete queryCustom.locationId;
+    delete queryCustom.contactList;
+    delete queryCustom.id;
+    delete queryCustom.limit;
+    delete queryCustom.skip;
+    delete queryCustom.status;
     $scope.listPromise = profileService.getList(id, queryCustom).then(function(data) {
       if (data) {
         $scope.list = data;
