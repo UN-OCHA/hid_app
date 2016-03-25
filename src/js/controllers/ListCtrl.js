@@ -468,10 +468,10 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
     $scope.exportEmail();
   }
 
-  $scope.openPDF = function() {
+  $scope.openPDFHelper = function(exp) {
     var query = $scope.query;
     query.access_token = authService.getAccessToken();
-    query.export = 'pdf';
+    query.export = exp;
     query.limit = 0;
     query.skip = 0;
     if ($routeParams.id) {
@@ -479,6 +479,14 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
     } else {
       window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppPDF');
     }
+  }
+
+  $scope.openPDF = function () {
+    $scope.openPDFHelper('pdf');
+  }
+
+  $scope.openMeeting = function () {
+    $scope.openPDFHelper('meeting');
   }
 
   // Autocomplete call for Orgs
