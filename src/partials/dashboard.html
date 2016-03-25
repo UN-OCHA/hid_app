@@ -8,6 +8,19 @@
       <div class="alert alert-warning" role="alert" ng-show="!globalProfileId.length"><span translate>Please create a</span> <a href="#/profile" translate>Global Profile</a> <span translate>before checking-in to a country/emergency.</span></div>
       <browser-alert></browser-alert>
     </div>
+    <form class="search-form">
+      <div class="form-group">
+        <label class="control-label element-invisible" for="text" translate>Search</label>
+        <div class="input-group">
+          <input class="form-control" type="search" name="listsText"
+               placeholder="{{'Search a contact by name'|translate}}" ng-model="searchContact" ng-disabled="isOffline()"/>
+          <span class="input-group-btn">
+            <button class="btn btn-search" type="submit" ng-click="contactSearch()" ng-disabled="isOffline()"><i class="fa fa-search"></i></button>
+          </span>
+        </div>
+      </div>
+    </form>
+
     <div class="active-profiles-wrapper" ng-show="userData.contacts.length">
       <h3><span translate>General List</span> :</h3>
       <ul class="active-profiles-container list-group">

@@ -108,7 +108,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
 
 
   if ($scope.locationId === 'global' && !$scope.query.hasOwnProperty('globalContacts') && !$scope.query.hasOwnProperty('localContacts')) {
-    $scope.query.globalContacts = true;
+    $scope.query.globalContacts = 'true';
     $scope.query.localContacts = false;
   }
 
