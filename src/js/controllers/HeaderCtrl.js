@@ -43,6 +43,7 @@ function HeaderCtrl($scope, $rootScope, $location, $route, profileService, gette
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     $scope.mainMenu = false;
     $scope.externalLinks = false;
+    $scope.kioskMode = false;
     if ($location.path() === '/kiosk') {
       $scope.kioskMode = true;
     }
