@@ -686,7 +686,14 @@ app.config(function($routeProvider, $locationProvider) {
   when('/kiosk', {
     templateUrl: contactsId.sourcePath + '/partials/kiosk.html',
     controller: 'KioskCtrl',
-    requireAuth: true
+    requireAuth: true,
+    resolve: {
+      operations : function(profileService) {
+        return profileService.getOperationsData().then(function(data) {
+          return data;
+        });
+      }
+    }
   }).
   when('/profile/:profileId/services', {
     templateUrl: contactsId.sourcePath + '/partials/services.html',
