@@ -215,15 +215,18 @@
     }
 
     function cacheList(id) {
-      var terms = { access_token: authService.getAccessToken() };
+      var terms = { access_token: authService.getAccessToken(), sort: 'name' };
       var list = offlineCache.cacheData(contactsId.profilesBaseUrl + '/v0.1/lists/' + id, terms);
       return list;
     }
 
     // Get list by id
-    function getList(id) {
-      var terms = { access_token: authService.getAccessToken() };
-      return offlineCache.getData(contactsId.profilesBaseUrl + '/v0.1/lists/' + id, terms).then(handleSuccessv01, handleError);
+    function getList(id, query) {
+      if (!query) {
+        var query = {};
+      }
+      query.access_token = authService.getAccessToken();
+      return offlineCache.getData(contactsId.profilesBaseUrl + '/v0.1/lists/' + id, query).then(handleSuccessv01, handleError);
     }
 
     function getLists(query) {
@@ -848,7 +851,7 @@
 
     // Can use administrative contact list filters (orphan, ghost, admin role)
     function canUseAdminFilters() {
-      return hasRole('admin');
+      return (hasRole('admin') || hasRole('manager'));
     }
 
     //Verify editor role exists for specified location and organization

@@ -1,4 +1,4 @@
-function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authService, profileService, userData, operations, gettextCatalog, protectedRoles, orgTypes, countries, roles, ngDialog) {
+function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $timeout, authService, profileService, userData, operations, gettextCatalog, protectedRoles, orgTypes, countries, roles, ngDialog) {
   var searchKeys = ['address.administrative_area', 'address.country', 'bundle', 'disasters.remote_id', 'ghost', 'globalContacts', 'keyContact', 'localContacts', 'office.name', 'organization.name', 'organization.org_type_remote_id', 'orphan', 'protectedBundles', 'protectedRoles', 'role', 'text', 'verified', 'id', 'sort'],
       filter = $filter('filter');
 
@@ -45,13 +45,21 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   $scope.isVerified = userData.profile.verified;
 
   $scope.userCanUseAdminFilters = profileService.canUseAdminFilters();
+  $scope.listUrl = contactsId.appBaseUrl;
+
+  if ($scope.isContactList) {
+    $scope.listUrl += '/#/list/contacts?id=' + $routeParams.id;
+  }
+  else {
+    $scope.listUrl += '/#/list/' + $scope.locationId;
+  }
   
   setPermissions();
 
   function setPermissions() {
     var hasRoleAdmin = profileService.hasRole('admin');
-    $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.selectedOperation);
-    $scope.userCanEditProtectedBundle = profileService.canEditProtectedBundle($scope.selectedOperation);
+    $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.locationId);
+    $scope.userCanEditProtectedBundle = profileService.canEditProtectedBundle($scope.locationId);
     
     // Determine what roles are available to assign to a user
     if ($scope.userCanEditRoles && hasRoleAdmin) {
@@ -100,7 +108,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
 
 
   if ($scope.locationId === 'global' && !$scope.query.hasOwnProperty('globalContacts') && !$scope.query.hasOwnProperty('localContacts')) {
-    $scope.query.globalContacts = true;
+    $scope.query.globalContacts = 'true';
     $scope.query.localContacts = false;
   }
 
@@ -200,9 +208,6 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     }
   }
 
-  $scope.showQuickLinks = function(contact) {
-    return contact.ql.userCanEditProfile || contact.ql.userCanCheckIn || contact.ql.userCanCheckOut || contact.ql.userCanSendClaimEmail || contact.ql.userCanDeleteAccount;
-  }
   // On moblie quicklinks toggle on click, not hover.
   $scope.qlClick = function() {
     $scope.qlOpen = $scope.qlOpen === this.$index ? -1 : this.$index;
@@ -463,10 +468,10 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     $scope.exportEmail();
   }
 
-  $scope.openPDF = function() {
+  $scope.openPDFHelper = function(exp) {
     var query = $scope.query;
     query.access_token = authService.getAccessToken();
-    query.export = 'pdf';
+    query.export = exp;
     query.limit = 0;
     query.skip = 0;
     if ($routeParams.id) {
@@ -474,6 +479,14 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     } else {
       window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppPDF');
     }
+  }
+
+  $scope.openPDF = function () {
+    $scope.openPDFHelper('pdf');
+  }
+
+  $scope.openMeeting = function () {
+    $scope.openPDFHelper('meeting');
   }
 
   // Autocomplete call for Orgs
@@ -708,6 +721,14 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
     }
   }
 
+  $scope.onCopySuccess = function (e) {
+    e.clearSelection();
+    $scope.urlCopied = true;
+    $timeout(function() {
+      $scope.urlCopied = false;
+    }, 2000);
+  }
+
   // Builds the list of contacts.
   function createContactList() {
     var query = $scope.query;
@@ -777,8 +798,14 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, authS
   }
 
   function setCustomList(id, query) {
-
-    $scope.listPromise = profileService.getList(id).then(function(data) {
+    var queryCustom = JSON.parse(JSON.stringify(query));
+    delete queryCustom.locationId;
+    delete queryCustom.contactList;
+    delete queryCustom.id;
+    delete queryCustom.limit;
+    delete queryCustom.skip;
+    delete queryCustom.status;
+    $scope.listPromise = profileService.getList(id, queryCustom).then(function(data) {
       if (data) {
         $scope.list = data;
         $scope.queryCount = data.contacts.length;

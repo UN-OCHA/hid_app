@@ -1,4 +1,4 @@
-function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, profileService, globalProfileId, userData, operations, ngDialog) {
+function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, profileService, globalProfileId, userData, operations, ngDialog, gettextCatalog) {
   var filter = $filter('filter');
 
   $scope.logoutPath = '/#logout';
@@ -92,8 +92,10 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
 
   $scope.unsubscribeDialog = function (service) {
     $scope.service = service;
+    $scope.title = gettextCatalog.getString("Confirm unsubscription");
+    $scope.message = gettextCatalog.getString("Are you sure you want to unsubscribe from {{name}} ?", { name: service.name });
     ngDialog.openConfirm({
-      template: 'partials/unsubscribeService.html',
+      template: 'partials/confirm.html',
       scope: $scope
     }).then(function () {
       profileService.unsubscribeService(service, userData.profile).then(function (response) {
@@ -116,6 +118,10 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
 
   $scope.listsSearch = function () {
     $location.path('/lists').search('q', $scope.listsText);
+  }
+
+  $scope.contactSearch = function() {
+    $location.path('/list/global').search('text', $scope.searchContact).search('sort', 'name').search('globalContacts', 'true').search('localContacts', 'true');
   }
 
   $scope.unfollowContactList = function(list, index) {

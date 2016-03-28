@@ -34,19 +34,24 @@ function ListsCtrl($scope, $location, userData, profileService, gettextCatalog, 
     }
 
     if ($scope.queryCount < $scope.totalCount) {
-      $scope.submitSearch($scope.queryCount, $scope.itemsPerPage);
+      $scope.submitSearch($scope.queryCount, $scope.itemsPerPage, false);
     }
     else {
       $scope.listComplete = true;
     }
   }
 
-  $scope.submitSearch = function(skip, limit) {
+  $scope.submitSearch = function(skip, limit, reset) {
     $scope.query.limit = limit;
     $scope.query.skip = skip;
     $scope.listsPromise = profileService.getLists($scope.query).then(function (response) {
       if (response.status == 200) {
-        $scope.lists = $scope.lists.concat(response.data);
+        if (reset == false) {
+          $scope.lists = $scope.lists.concat(response.data);
+        }
+        else {
+          $scope.lists = response.data;
+        }
         $scope.totalCount = response.headers('X-Total-Count');
         $scope.queryCount = limit + skip;
         if ($scope.queryCount > $scope.totalCount) {

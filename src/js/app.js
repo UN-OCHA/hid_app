@@ -1,6 +1,6 @@
 (function($, angular, contactsId, Offline) {
 // Initialize ng
-var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-md5', 'ui.bootstrap', 'angular-loading-bar', 'ngIOS9UIWebViewPatch', 'ngCsvImport', 'ngCsv']);
+var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-md5', 'ui.bootstrap', 'angular-loading-bar', 'ngIOS9UIWebViewPatch', 'ngCsvImport', 'ngCsv', 'ngclipboard']);
 
 //Access to the facebook SDK 
 window.fbAsyncInit = function() {
@@ -189,28 +189,29 @@ app.run(function ($rootScope, $location, $timeout, profileService, flashService)
 });
 
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
-app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "currentContact", "ngDialog", "md5", ContactCtrl]);
+app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", "md5", ContactCtrl]);
 app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", "countries", CreateAccountCtrl]);
-app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location","$timeout", "profileService", "globalProfileId", "userData", "operations", "ngDialog", DashboardCtrl]);
+app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location","$timeout", "profileService", "globalProfileId", "userData", "operations", "ngDialog", "gettextCatalog", DashboardCtrl]);
 app.controller("DefaultCtrl", ["$scope", "$location", "authService", DefaultCtrl]);
 app.controller("404Ctrl", ["$scope", FourZeroFourCtrl]);
 app.controller("NumbersCtrl", ["$scope", NumbersCtrl]);
-app.controller("HeaderCtrl", ["$scope", "$rootScope", "$location", "$route", "profileService", "gettextCatalog", HeaderCtrl]);
-app.controller("ListCtrl", ["$scope", "$route", "$routeParams", "$location", "$http", "$filter", "authService", "profileService", "userData", "operations", "gettextCatalog", "protectedRoles", "orgTypes", "countries", "roles", "ngDialog", ListCtrl]);
+app.controller("HeaderCtrl", ["$scope", "$rootScope", "$location", "profileService", "gettextCatalog", HeaderCtrl]);
+app.controller("ListCtrl", ["$scope", "$route", "$routeParams", "$location", "$http", "$filter", "$timeout", "authService", "profileService", "userData", "operations", "gettextCatalog", "protectedRoles", "orgTypes", "countries", "roles", "ngDialog", ListCtrl]);
 app.controller("ListsCtrl", ["$scope", "$location", "userData", "profileService", "gettextCatalog", "ngDialog", ListsCtrl]);
 app.controller("LoginCtrl", ["$scope", "$location", "$routeParams", "authService", "profileService", LoginCtrl]);
 app.controller("LogoutCtrl", ["$scope", "authService", LogoutCtrl]);
 app.controller("ProfileCtrl", ["$scope", "$location", "$route", "$routeParams", "$filter", "$timeout", "$http", "profileService", "authService", "operations", "profileData", "countries", "roles", "protectedRoles", "gettextCatalog", "userData", "md5", 'ngDialog', ProfileCtrl]);
+app.controller("ShowCountryListCtrl", ["$scope", "profileService",  ShowCountryListCtrl]);
 app.controller("RegisterCtrl", ["$scope", RegisterCtrl]);
 app.controller("AddToCustomListCtrl", ["$scope", "profileService", AddToCustomListCtrl]);
 app.controller("AddProtectedRolesCtrl", ["$scope", "profileService", AddProtectedRolesCtrl]);
 app.controller("AddProtectedGroupsCtrl", ["$scope", "profileService", AddProtectedGroupsCtrl]);
-app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$http", "authService", "profileService", "userData", "list", "gettextCatalog", "ngDialog", CustomListSettingsCtrl]);
+app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$http", "$timeout", "authService", "profileService", "userData", "list", "gettextCatalog", "ngDialog", CustomListSettingsCtrl]);
 app.controller("CheckInCtrl", ["$scope", "$location", "$routeParams", "$timeout", "profileService", CheckInCtrl]);
 app.controller("CheckOutCtrl", ["$scope", "$location", "$routeParams", "$timeout", "profileService", CheckOutCtrl]);
 app.controller("ServicesCtrl", ["$scope", "$location", "$route", "$routeParams", "$http", "authService", "profileService", "userData", "ngDialog", "operations", "gettextCatalog", "service", ServicesCtrl]);
-app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", "operations", ServicesListCtrl]);
-app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsCtrl]);
+app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", "operations","gettextCatalog" , ServicesListCtrl]);
+app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", "gettextCatalog", SubscriptionsCtrl]);
 app.controller("SubscriptionsAddCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsAddCtrl]);
 app.controller("BulkAddCtrl", ["$scope", "$http", "$timeout", "profileService", "operations", BulkAddCtrl]);
 app.controller("KioskCtrl", ["$scope", "profileService", "operations", KioskCtrl]);
@@ -439,9 +440,6 @@ app.config(function($routeProvider, $locationProvider) {
       },
       profileData : function(profileService, $route) {
         return profileService.getProfileData($route.current.params.contactId);
-      },
-      currentContact : function (profileService, $route) {
-        return profileService.getContact($route.current.params.contactId);
       }
     }
   }).
@@ -688,8 +686,21 @@ app.config(function($routeProvider, $locationProvider) {
   when('/kiosk', {
     templateUrl: contactsId.sourcePath + '/partials/kiosk.html',
     controller: 'KioskCtrl',
+    requireAuth: true
+  }).
+  when('/profile/:profileId/services', {
+    templateUrl: contactsId.sourcePath + '/partials/services.html',
+    controller: 'ServicesListCtrl',
     requireAuth: true,
     resolve: {
+      userData : function(profileService) {
+        return profileService.getUserData().then(function(data) {
+          if (!data || !data.profile || !data.contacts) {
+            throw new Error('Your user data cannot be retrieved. Please sign in again.');
+          }
+          return data;
+        });
+      },
       operations : function(profileService) {
         return profileService.getOperationsData().then(function(data) {
           return data;

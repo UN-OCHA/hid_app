@@ -11,17 +11,24 @@
         Mailing Lists and Discussion Groups <small>({{services.length}})</small>
       </h2>
 
+    <div class="panel panel-danger" ng-if="services.length == 0 && !isCheckingIn">
+      <div class="panel-heading"><em translate>No service found</em></div>
+    </div>
   </div>
+
   <div ng-show= "isCheckingIn">
     <div class ="header1">
       <h2 class="heading-subscriptions-list" translate>
         You have succesfully checked into {{countryName}}!
       </h2>
-      <p class="subheading-subscriptions-list" translate>
+      <p class="subheading-subscriptions-list" ng-show="services.length > 0" translate>
         Thank you for checking in. Here are a few mailing lists and discussion groups that you might find useful:
       </p>
+      <p class="subheading-subscriptions-list" ng-show="services.length == 0" translate>
+        Thank you for checking in.
+      </p>
     </div>
-    <div class ="heading-subscriptions-list checkbox-properties" ng-show="isCheckingIn">
+    <div class ="heading-subscriptions-list checkbox-properties">
       <span > 
         <i class="fa fa-check-circle-o"></i>
       </span>
@@ -73,9 +80,7 @@
       </li>
     </ul>
 
-    <div class="panel panel-danger" ng-if="services.length == 0">
-      <div class="panel-heading"><em translate>No service found</em></div>
-    </div>
+   
 
   </div>
 </div>

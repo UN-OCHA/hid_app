@@ -3,9 +3,8 @@
 </div>
 
 
-<div><h2 class="heading-custom-contacts-list" style="float: left;">
-  {{::list.name}} <small>(<span translate>Contacts</span> {{contactsCount}})</small>
-</h2>
+<div class="masthead" ng-show="!isRouteLoading">
+  <h2>{{::list.name}} <small>(<span translate>Contacts</span> {{contactsCount}})</small></h2>
 </div>
 
 <div ng-show='!isRouteLoading' class="main row page-dashboard" ng-class="{'show-options': sidebarOptions}">
@@ -33,19 +32,25 @@
           </div>
           <div class="radio setting-radio" ng-class="{'setting-radio-selected' : list.privacy == 'all'}">
             <label>
-              <input type="radio" name="privacy" value="all" ng-model="list.privacy" /> Anyone within Humanitarian ID can view with link<br />
-              <input class= "setting-radio-url" type="text" name="url" value="{{path}}" size="75" disabled ng-show="list.privacy == 'all'" />
+              <input type="radio" name="privacy" value="all" ng-model="list.privacy" /> Anyone within Humanitarian ID can view/find the list<br />
+              <div ng-show="list.privacy == 'all'">
+                <span style="word-wrap: break-word;color: grey;">{{path}}</span>
+                  <button class="btn btn-default" style="vertical-align: bottom;" type="button" uib-tooltip="Copied !" tooltip-trigger="none" tooltip-is-open="urlCopied == true" ngclipboard ngclipboard-success="onCopySuccess(e);" data-clipboard-text="{{path}}"><i class="fa fa-clipboard"></i></button>
+              </div>
             </label>
           </div>
           <div class="radio setting-radio" ng-class="{'setting-radio-selected' : list.privacy == 'verified'}">
             <label>
-              <input type="radio" name="privacy" value="verified" ng-model="list.privacy" /> Only verified users within Humanitarian ID can view with link<br />
-              <input class= "setting-radio-url" type="text" name="url2" value="{{path}}" size="75" disabled ng-show="list.privacy == 'verified'" />
+              <input type="radio" name="privacy" value="verified" ng-model="list.privacy" /> Only verified users within Humanitarian ID can view/find the list<br />
+              <div ng-show="list.privacy == 'verified'">
+                <span style="word-wrap: break-word;color: grey;">{{path}}</span>
+                <button class="btn btn-default" style="vertical-align: bottom;" type="button" uib-tooltip="Copied !" tooltip-trigger="none" tooltip-is-open="urlCopied == true" ngclipboard ngclipboard-success="onCopySuccess(e);" data-clipboard-text="{{path}}"><i class="fa fa-clipboard"></i></button>
+              </div>
             </label>
           </div>
           <div class="radio setting-radio" ng-class="{'setting-radio-selected' : list.privacy == 'some'}">
             <label>
-              <input type="radio" name="privacy" value="some" ng-model="list.privacy" /> Only specified users of Humanitarian ID can view<br />
+              <input type="radio" name="privacy" value="some" ng-model="list.privacy" /> Only specified users of Humanitarian ID can view/find the list<br />
             </label>
             <div class="reveal btn-reveal" ng-show="list.privacy == 'some'" ng-repeat="reader in list.readers track by $index">
               <ui-select
@@ -138,7 +143,16 @@
   </div>
 
   <div class="sidebar-left">
-    <div class="col-xs-12 col-sm-4 col-md-3">
+    <div ng-show="!isRouteLoading">
+      <div class="visible-xs">
+        <div class="bottom-fixed-btn" role="presentation">
+          <a href ng-click="sidebarOptions = !sidebarOptions">
+            <div class="bottom-fixed-btn__arrow"></div>
+              <span translate>Options</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper">
       <div class="actions">
         <a class="btn btn-primary btn-lg btn-block" ng-click="saveList()">
           <span translate>Save</span>

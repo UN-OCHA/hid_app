@@ -1,4 +1,4 @@
-function SubscriptionsCtrl($scope, profileService, ngDialog) {
+function SubscriptionsCtrl($scope, profileService, ngDialog, gettextCatalog) {
     profileService.getSubscriptions($scope.profile_selected).then(function(response) {
         if (response.status == 200) {
             $scope.subscriptions = response.data;
@@ -10,8 +10,10 @@ function SubscriptionsCtrl($scope, profileService, ngDialog) {
 
     $scope.unsubscribeDialog = function(service) {
         $scope.service = service;
+        $scope.title = gettextCatalog.getString("Confirm unsubscription");
+        $scope.message = gettextCatalog.getString("Are you sure you want to unsubscribe from {{name}} ?", { name: service.name });
         ngDialog.openConfirm({
-            template: 'partials/unsubscribeService.html',
+            template: 'partials/confirm.html',
             scope: $scope,
         }).then(function() {
             profileService.unsubscribeService(service, $scope.profile_selected).then(function(response) {

@@ -10,6 +10,7 @@
       <i class="fa fa-lock" ng-if="hid_access == 'closed'" data-toggle="tooltip" data-placement="top" title="This list is only accessible to verified Humanitarian ID users."></i> {{locationText()}} <small>(<span translate>Contacts</span> {{queryCount}})</small>
       <a href="#/settings/list/{{list._id}}" class="btn btn-primary pull-right-hard" ng-disabled="isOffline()" ng-if="locationId !== 'global' && (userData.profile.userid == list.userid || isEditor) && list._id" role="button">List Settings</a>
       <button ng-click="toggleFollow()" class="btn btn-primary pull-right-hard" ng-if="locationId !== 'global' && userData.profile.userid != list.userid && list._id" >{{toggleFollowButton}}</button>
+      <span class="pull-right-hard" uib-tooltip="Click to copy URL of this list"><button class="btn btn-primary pull-right-hard" type="button" ng-if="locationId !== 'global'" uib-tooltip="Copied !" tooltip-trigger="none" tooltip-is-open="urlCopied == true" ngclipboard ngclipboard-success="onCopySuccess(e);" data-clipboard-text="{{listUrl}}"><i class="fa fa-clipboard"></i></button></span>
     </h2>
   </div>
 </div>
@@ -43,7 +44,7 @@
       <li class="profile-item list-group-item" ng-repeat="contact in contacts" ng-init="contactInit()" ng-class="{'has-quick-link': contact.ql.userCanEditProfile}">
         <div class="row">
           <div class="contact-item contact-item--name col-xs-12 col-md-3" >
-            <a href="#/contact/{{contact._id}}" title="{{contact.nameGiven}} {{contact.nameFamily}}">{{contact.nameGiven}} {{contact.nameFamily}}</a>
+            <a href="#/contact/{{contact._id}}" title="{{contact.nameGiven}} {{contact.nameFamily}}"><span ng-if="contact.type == 'local'"><i class="fa fa-map-marker"></i></span><span ng-if="contact.type == 'global'"><i class="fa fa-globe"></i></span> {{contact.nameGiven}} {{contact.nameFamily}}</a>
             <div class="contact-item__markers" ng-if="contact._profile.verified">
               <span class="contact-item__verified" title="Verified" ng-if="contact._profile.verified"><i class="fa fa-check-circle"></i></span>
             </div>
@@ -62,7 +63,7 @@
             </ul>
           </div>
         </div>
-        <div class="quick-link" ng-if="showQuickLinks(contact) && !isOffline()">
+        <div class="quick-link" ng-if="!isOffline()">
           <div class="dropdown" ng-class="{'ql-open': qlOpen === $index}">
             <button class="dropdown-toggle" data-toggle="dropdown" type="button" ng-click="qlClick()" ><span class="quick-link-dots"></span></button>
             <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -231,7 +232,8 @@
               class="form-control"
               name="country"
               reset-search-input="true"
-              on-select="submitSearch()">
+              on-select="submitSearch()"
+              autocomplete="off">
                 <ui-select-match allow-clear placeholder="{{'Country'|translate}}">{{$select.selected.name}}</ui-select-match>
                 <ui-select-choices ng-class="{'not-empty': countries.length}" repeat="country.name as country in countries | orderBy:'name' | filter: $select.search">
                   <div ng-bind-html="country.name | highlight: $select.search"></div>
@@ -330,11 +332,11 @@
           <div class="divider"></div>
 
           <div class="form-group">
-            <label class="control-label" for="globalContacts"><span translate>Global Profiles</span> <input type="checkbox" name="globalContacts" ng-model="query.globalContacts" /></label>
+            <label class="control-label" for="globalContacts"><span translate>Global Profiles</span> <input type="checkbox" name="globalContacts" ng-model="query.globalContacts" ng-true-value="'true'" /></label>
           </div>
 
           <div class="form-group">
-            <label class="control-label" for="localContacts"><span translate>Local Profiles</span> <input type="checkbox" name="localContacts" ng-model="query.localContacts" /></label>
+            <label class="control-label" for="localContacts"><span translate>Local Profiles</span> <input type="checkbox" name="localContacts" ng-model="query.localContacts" ng-true-value="'true'" /></label>
           </div>
 
         </div>
@@ -348,7 +350,8 @@
         <div class="form-group">
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportEmail()" ng-if="isVerified" value="{{'Copy Email Addresses'|translate}}" ng-disabled="isOffline()"/>
 
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openPDF()" value="{{'View PDF'|translate}}" ng-disabled="isOffline()"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openPDF()" value="{{'View PDF'|translate}}" ng-disabled="isOffline()" ng-show="isVerified"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openMeeting()" value="{{'Meeting Attendance'|translate}}" ng-disabled="isOffline()" ng-show="isVerified" />
 
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" ng-if="isVerified" value="{{'Export Results'|translate}}" ng-disabled="isOffline()"/>
 

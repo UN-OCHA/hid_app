@@ -1,4 +1,4 @@
-function CustomListSettingsCtrl($scope, $route, $location, $http, authService, profileService, userData, list, gettextCatalog, ngDialog) {
+function CustomListSettingsCtrl($scope, $route, $location, $http, $timeout, authService, profileService, userData, list, gettextCatalog, ngDialog) {
   $scope.list = list;
   $scope.userData = userData;
 
@@ -45,7 +45,8 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
       $http.get(contactsId.profilesBaseUrl + '/v0.1/services', {
         'params': {
           'access_token': authService.getAccessToken(),
-          'q': encodeURIComponent(select.search)
+          'q': encodeURIComponent(select.search),
+          'status': true
         }
         })
         .then(function(response) {
@@ -216,5 +217,13 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, authService, p
         }
       }]
     });
+  }
+
+  $scope.onCopySuccess = function (e) {
+    e.clearSelection();
+    $scope.urlCopied = true;
+    $timeout(function() {
+      $scope.urlCopied = false;
+    }, 2000);
   }
 }
