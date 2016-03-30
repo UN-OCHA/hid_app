@@ -80,6 +80,8 @@ function KioskCtrl($scope, $http, gettextCatalog, profileService, operations, co
     profile.type = 'local';
     profile.isNewContact = true;
     profile.notify = true;
+    profile.expires = true;
+    profile.expiresAfter = 7 * 24 * 3600; // Expires profiles created through the kiosk after 7 days
     //profile.adminName = userData.global.nameGiven + " " + userData.global.nameFamily;
     //profile.adminEmail = userData.global.email && userData.global.email[0] ? userData.global.email[0].address : "";
 
