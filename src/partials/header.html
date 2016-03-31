@@ -1,5 +1,5 @@
 <div class="header" ng-controller="HeaderCtrl">
-  <div class="utility navbar" ng-show="externalLinks || breakpoint.class !== 'smallscreen'">
+  <div class="utility navbar" ng-show="(externalLinks || breakpoint.class !== 'smallscreen') && !kioskMode">
     <div class="affiliate-logos pull-left-hard">
       <div class="affiliate-logo-wrapper"><a href="http://www.humanitarianresponse.info" target="_blank"><div class="affiliate-logo humanitarian-response"></div></a></div>
       <div class="affiliate-logo-wrapper"><a href="http://reliefweb.int/" target="_blank"><div class="affiliate-logo relief-web"></div></a></div>
