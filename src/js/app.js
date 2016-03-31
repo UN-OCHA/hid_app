@@ -214,7 +214,7 @@ app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routePara
 app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", "gettextCatalog", SubscriptionsCtrl]);
 app.controller("SubscriptionsAddCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsAddCtrl]);
 app.controller("BulkAddCtrl", ["$scope", "$http", "$timeout", "profileService", "operations", BulkAddCtrl]);
-
+app.controller("KioskCtrl", ["$scope", "$http", "gettextCatalog", "profileService", "operations", "countries", KioskCtrl]);
 
 app.config(function($routeProvider, $locationProvider) {
   $routeProvider.
@@ -683,7 +683,22 @@ app.config(function($routeProvider, $locationProvider) {
   when('/AddProtectedRoles', {
     controller: 'AddProtectedRolesCtrl'
   }).
- when('/profile/:profileId/services', {
+  when('/kiosk', {
+    templateUrl: contactsId.sourcePath + '/partials/kiosk.html',
+    controller: 'KioskCtrl',
+    requireAuth: true,
+    resolve: {
+      operations : function(profileService) {
+        return profileService.getOperationsData().then(function(data) {
+          return data;
+        });
+      },
+      countries : function(profileService) {
+        return profileService.getCountries();
+      },
+    }
+  }).
+  when('/profile/:profileId/services', {
     templateUrl: contactsId.sourcePath + '/partials/services.html',
     controller: 'ServicesListCtrl',
     requireAuth: true,

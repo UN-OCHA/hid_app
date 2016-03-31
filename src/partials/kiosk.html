@@ -1,0 +1,95 @@
+<div class="masthead" ng-show="!isRouteLoading">
+  <h2 ng-if="!profile.location" translate>Check into Humanitarian ID</h2>
+  <h2 ng-if="profile.location">Check into {{profile.location.name}}</h2>
+</div>
+
+<div class="main" ng-show="!isRouteLoading">
+  <div class="form-group" ng-show="!profile.location">
+    <label for="location">* <span translate>Country or Operation of Response</span></label>
+    <select class="form-control" name="location" ng-model="profile.location" ng-options="item.name for item in operations" ng-blur="focus=0" focus-field="focus" required ng-class="{invalid: submitted && createAccountForm.location.$invalid}" ng-change="setCountry(profile.location)">
+      <option value=""></option>
+    </select>
+    <div class="error" ng-show="createAccountForm.location.$error.required && submitted" translate>Country or Operation is required.</div>
+  </div>
+  <form name="createAccountForm" novalidate ng-submit="validateAccount()" ng-show="profile.location">
+    <div class="row">
+      <div class="account-create  col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+
+        <div class="form-group">
+          <label class="control-label-light small">* <span translate>Required Field</span></label>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="nameGiven">* <span translate>Given Name</span></label>
+          <input class="form-control" type="text" name="nameGiven" ng-model="profile.nameGiven" required  ng-class="{invalid: submitted && createAccountForm.nameGiven.$invalid }"/>
+
+          <div class="error" ng-show="createAccountForm.nameGiven.$error.required && submitted" translate>Given Name is required.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="nameFamily">* <span translate>Family Name</span></label>
+          <input class="form-control" type="text" name="nameFamily" ng-model="profile.nameFamily" required  ng-class="{invalid: submitted && createAccountForm.nameFamily.$invalid }"/>
+          <div class="error" ng-show="createAccountForm.nameFamily.$error.required && submitted" translate>Family Name is required.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="jobtitle">* <span translate>Job Title</span></label>
+          <input class="form-control" type="text" name="jobtitle" ng-model="profile.jobtitle" required  ng-class="{invalid: submitted && createAccountForm.jobtitle.$invalid }"/>
+          <div class="error" ng-show="createAccountForm.jobtitle.$error.required && submitted" translate>Title is required.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="address.country" translate>Physical Location (Country)</label>
+          <ui-select
+            name="address.country"
+            class="form-control form-control-light"
+            autocomplete="off"
+            ng-model="profile.address[0].country"
+            theme="bootstrap"
+            reset-search-input="true">
+              <ui-select-match allow-clear placeholder="{{'Search for country'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices ng-class="{'not-empty': countries.length}" repeat="country.name as country in countries | orderBy:'name' |filter: $select.search">
+                <div ng-bind-html="country.name | highlight: $select.search"></div>
+              </ui-select-choices>
+          </ui-select>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="organization" translate>Organization</label>
+
+          <ui-select
+            class="form-control form-control-light {{$select.searching ? 'searching' : ''}}"
+            name="organization"
+            ng-model="profile.organization[0].name"
+            theme="bootstrap"
+            reset-search-input="true"
+            on-select="onSelect($item, 'organization.name')">
+              <ui-select-match placeholder="{{'Search for organizations'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="org.name as org in organizations | orderBy:'name'" refresh="refreshOrganization($select, 2)" ui-disable-choice="org.disable">
+                <div ng-bind-html="org.alt || (org.name | highlight: $select.search) "></div>
+              </ui-select-choices>
+          </ui-select>
+
+          <div class="help-block"><span translate>Request to</span> <a href="http://www.humanitarianresponse.info/help/webform/add-new-organization-form" target="_blank" translate>add a missing organization</a>.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="phone" translate>Phone</label>
+          <input class="form-control" type="text" name="phone" ng-model="profile.phone[0].number" />
+        </div>
+
+        <div class="form-group">
+          <label class="control-label-light" for="email">* <span translate>Email</span></label>
+          <input class="form-control" type="text" name="email" required ng-pattern='/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/' ng-model="profile.email[0].address" ng-class="{invalid: submitted && createAccountForm.email.$invalid }" />
+          <div class="error" ng-show="createAccountForm.email.$error.pattern && submitted" translate>Valid email is required.</div>
+          <div class="error" ng-show="createAccountForm.email.$error.required && submitted" translate>Email is required.</div>
+        </div>
+
+        <button class="btn btn-default btn-lg btn-block" ng-disabled="createButtonDisabled" type="submit" translate>Check In</button>
+
+      </div>
+  </div>
+
+  </form>
+
+</div>
