@@ -22,7 +22,7 @@
     </form>
 
     <div class="active-profiles-wrapper" ng-show="userData.contacts.length">
-      <h3><span translate>General List</span> :</h3>
+      <h3 ng-if="globalProfileId.length"><span translate>General List</span> :</h3>
       <ul class="active-profiles-container list-group">
         <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts" ng-if="profile.type == 'global'">
           <h4>
