@@ -176,6 +176,11 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, $timeout, auth
     if ($scope.list.userid._userid) {
       $scope.list.userid = $scope.list.userid._userid;
     }
+    else {
+      if ($scope.list.userid.userid) {
+        $scope.list.userid = $scope.list.userid.userid;
+      }
+    }
 
     angular.forEach($scope.list.services, function (service, key) {
       if (service && service._id) {
