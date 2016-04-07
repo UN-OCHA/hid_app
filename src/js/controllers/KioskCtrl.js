@@ -101,7 +101,7 @@ function KioskCtrl($scope, $http, gettextCatalog, profileService, operations, co
       else {
         //If contact already exists and it was successfully returned, give the user the option to edit the contact
         if (data.contactExists && data.origContact){
-          $scope.flash.et('Thank you for checking into ' + profile.location + ', ' + name + '. The email address you provided was already associated with an existing account, so your account was checked into ' + profile.location + '.', 'success', true, 10000);
+          $scope.flash.set('Thank you for checking into ' + profile.location + ', ' + name + '. The email address you provided was already associated with an existing account, so your account was checked into ' + profile.location + '.', 'success', true, 10000);
         }
         else{
           var msg = (data && data.message) ? 'Error: ' + data.message : 'An error occurred while attempting to save this profile. Please try again or contact an administrator.';
