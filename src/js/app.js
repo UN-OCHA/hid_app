@@ -683,7 +683,6 @@ app.config(function($routeProvider, $locationProvider) {
   when('/AddProtectedRoles', {
     controller: 'AddProtectedRolesCtrl'
   }).
-  when('/profile/:profileId?/services', {
   when('/kiosk', {
     templateUrl: contactsId.sourcePath + '/partials/kiosk.html',
     controller: 'KioskCtrl',
