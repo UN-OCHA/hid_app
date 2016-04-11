@@ -485,8 +485,12 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
     $scope.openPDFHelper('pdf');
   }
 
-  $scope.openMeeting = function () {
-    $scope.openPDFHelper('meeting');
+  $scope.openMeetingComfortable = function () {
+    $scope.openPDFHelper('meeting-comfortable');
+  }
+
+  $scope.openMeetingCompact = function () {
+    $scope.openPDFHelper('meeting-compact');
   }
 
   // Autocomplete call for Orgs
