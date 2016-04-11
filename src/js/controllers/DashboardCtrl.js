@@ -120,6 +120,10 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
     $location.path('/lists').search('q', $scope.listsText);
   }
 
+  $scope.contactSearch = function() {
+    $location.path('/list/global').search('text', $scope.searchContact).search('sort', 'name').search('globalContacts', 'true').search('localContacts', 'true');
+  }
+
   $scope.unfollowContactList = function(list, index) {
     profileService.unfollowList(list).then(function(data) {
       if (data && data.status && data.status === 'ok') {

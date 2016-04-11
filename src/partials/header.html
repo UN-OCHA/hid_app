@@ -1,5 +1,5 @@
 <div class="header" ng-controller="HeaderCtrl">
-  <div class="utility navbar" ng-show="externalLinks || breakpoint.class !== 'smallscreen'">
+  <div class="utility navbar" ng-show="(externalLinks || breakpoint.class !== 'smallscreen') && !kioskMode">
     <div class="affiliate-logos pull-left-hard">
       <div class="affiliate-logo-wrapper"><a href="http://www.humanitarianresponse.info" target="_blank"><div class="affiliate-logo humanitarian-response"></div></a></div>
       <div class="affiliate-logo-wrapper"><a href="http://reliefweb.int/" target="_blank"><div class="affiliate-logo relief-web"></div></a></div>
@@ -7,7 +7,7 @@
       <div class="affiliate-logo-wrapper"><a href="https://interagencystandingcommittee.org" target="_blank"><img src="/images/affiliate-iasc.png" alt="IASC logo" /></a></div>
     </div>
 
-    <div class="navbar-form login-controls">
+    <div class="navbar-form login-controls" ng-show="!kioskMode">
       <div class="form-group">
         <div class="login-controls-name hidden-xs" ng-if="isAuthenticated"><span translate>Welcome</span>, <span ng-bind="nameGiven"></span> <span ng-bind="nameFamily"></span></div>
         <a class="btn-login-controls btn hidden-xs" ng-if="!isAuthenticated" href="#/login"><span translate>Login</span></a>
@@ -29,7 +29,7 @@
         <div class="col-sm-12">
           <a href="#/dashboard"><div class="logo"></div></a>
         </div>
-        <div class="col-sm-12">
+        <div class="col-sm-12" ng-show="!kioskMode">
           <div class="primary-nav">
             <span ng-click="menuToggle()" class="touch-button"><i class="fa fa-bars"></i></span>
             <ul ng-show="(mainMenu && !externalLinks) || breakpoint.class !== 'smallscreen'">

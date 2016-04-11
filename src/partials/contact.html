@@ -55,13 +55,11 @@
                 <h1 class="profile-view__name">{{contact.nameGiven}} {{contact.nameFamily}} ({{locationText()}})</h1>
 
                 <div class="profile-view__markers">
-                  <div class="contact-item__key-contact key-contact-profile-use" title="{{'key contact' | translate}}" ng-if="contact.keyContact"><i class="fa fa-asterisk"></i></div>
                   <div class="contact-item__verified verified-profile-use" ng-if="profile.verified"><i
                       class="fa fa-check-circle" title="{{'verified' | translate}}"></i></div>
 
-                  <span ng-if="profile.verified || contact.keyContact" class="profile-view__key-contact-verified">
-                    (<span ng-if="contact.keyContact" translate>key contact</span><span ng-if="profile.verified && contact.keyContact">/</span><span
-                        ng-if="profile.verified" translate>verified</span>)
+                  <span ng-if="profile.verified" class="profile-view__key-contact-verified">
+                    (<span ng-if="profile.verified" translate>verified</span>)
                   </span>
                 </div>
               </div>
@@ -160,13 +158,13 @@
               <span class="group-label" translate>Created</span>
               <span class="title"><strong>{{contact.displayCreatedDate}}</strong></span>
             </div>
-            <div class="right-sidebar-group" ng-if="contact._profile.verified && userIsAdmin">
+            <div class="right-sidebar-group" ng-if="profile.verified && userIsAdmin">
               <span class="group-label" translate>Verified By:</span>
               <span class="title"><strong><a href="#/contact/{{profile.verifiedByID}}">{{profile.verifiedByName}}</strong></a></span> 
             </div>
-            <div class="right-sidebar-group" ng-if="contact._profile.verified && userIsAdmin">
+            <div class="right-sidebar-group" ng-if="profile.verified && userIsAdmin">
               <span class="group-label" translate>Verification Date:</span>
-              <span class="title"><strong>{{contact._profile.verificationDate | date:'yyyy-MM-dd' }}</strong></span>
+              <span class="title"><strong>{{profile.verificationDate | date:'yyyy-MM-dd' }}</strong></span>
             </div>
           </div>
         </div>

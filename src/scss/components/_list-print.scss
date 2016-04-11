@@ -74,6 +74,15 @@
     float: right;
     text-align: right;
   }
+
+  &.meeting {
+    thead > th {
+      font-size: 14px;
+    }
+    td {
+      font-size: 12px;
+    }
+  }
 }
 
 .title-humanitarian {

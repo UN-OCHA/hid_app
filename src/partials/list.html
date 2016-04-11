@@ -44,7 +44,7 @@
       <li class="profile-item list-group-item" ng-repeat="contact in contacts" ng-init="contactInit()" ng-class="{'has-quick-link': contact.ql.userCanEditProfile}">
         <div class="row">
           <div class="contact-item contact-item--name col-xs-12 col-md-3" >
-            <a href="#/contact/{{contact._id}}" title="{{contact.nameGiven}} {{contact.nameFamily}}">{{contact.nameGiven}} {{contact.nameFamily}}</a>
+            <a href="#/contact/{{contact._id}}" title="{{contact.nameGiven}} {{contact.nameFamily}}"><span ng-if="contact.type == 'local'"><i class="fa fa-map-marker"></i></span><span ng-if="contact.type == 'global'"><i class="fa fa-globe"></i></span> {{contact.nameGiven}} {{contact.nameFamily}}</a>
             <div class="contact-item__markers" ng-if="contact._profile.verified">
               <span class="contact-item__verified" title="Verified" ng-if="contact._profile.verified"><i class="fa fa-check-circle"></i></span>
             </div>
@@ -332,11 +332,11 @@
           <div class="divider"></div>
 
           <div class="form-group">
-            <label class="control-label" for="globalContacts"><span translate>Global Profiles</span> <input type="checkbox" name="globalContacts" ng-model="query.globalContacts" /></label>
+            <label class="control-label" for="globalContacts"><span translate>Global Profiles</span> <input type="checkbox" name="globalContacts" ng-model="query.globalContacts" ng-true-value="'true'" /></label>
           </div>
 
           <div class="form-group">
-            <label class="control-label" for="localContacts"><span translate>Local Profiles</span> <input type="checkbox" name="localContacts" ng-model="query.localContacts" /></label>
+            <label class="control-label" for="localContacts"><span translate>Local Profiles</span> <input type="checkbox" name="localContacts" ng-model="query.localContacts" ng-true-value="'true'" /></label>
           </div>
 
         </div>
@@ -351,6 +351,7 @@
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportEmail()" ng-if="isVerified" value="{{'Copy Email Addresses'|translate}}" ng-disabled="isOffline()"/>
 
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openPDF()" value="{{'View PDF'|translate}}" ng-disabled="isOffline()" ng-show="isVerified"/>
+          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openMeeting()" value="{{'Meeting Attendance'|translate}}" ng-disabled="isOffline()" ng-show="isVerified" />
 
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" ng-if="isVerified" value="{{'Export Results'|translate}}" ng-disabled="isOffline()"/>
 

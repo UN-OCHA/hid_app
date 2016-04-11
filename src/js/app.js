@@ -189,7 +189,7 @@ app.run(function ($rootScope, $location, $timeout, profileService, flashService)
 });
 
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
-app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "currentContact", "ngDialog", "md5", ContactCtrl]);
+app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", "md5", ContactCtrl]);
 app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", "countries", CreateAccountCtrl]);
 app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location","$timeout", "profileService", "globalProfileId", "userData", "operations", "ngDialog", "gettextCatalog", DashboardCtrl]);
 app.controller("DefaultCtrl", ["$scope", "$location", "authService", DefaultCtrl]);
@@ -214,7 +214,7 @@ app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routePara
 app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", "gettextCatalog", SubscriptionsCtrl]);
 app.controller("SubscriptionsAddCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsAddCtrl]);
 app.controller("BulkAddCtrl", ["$scope", "$http", "$timeout", "profileService", "operations", BulkAddCtrl]);
-
+app.controller("KioskCtrl", ["$scope", "$http", "gettextCatalog", "profileService", "operations", "countries", KioskCtrl]);
 
 app.config(function($routeProvider, $locationProvider) {
   $routeProvider.
@@ -440,9 +440,6 @@ app.config(function($routeProvider, $locationProvider) {
       },
       profileData : function(profileService, $route) {
         return profileService.getProfileData($route.current.params.contactId);
-      },
-      currentContact : function (profileService, $route) {
-        return profileService.getContact($route.current.params.contactId);
       }
     }
   }).
@@ -687,23 +684,19 @@ app.config(function($routeProvider, $locationProvider) {
     controller: 'AddProtectedRolesCtrl'
   }).
   when('/profile/:profileId?/services', {
-    templateUrl: contactsId.sourcePath + '/partials/services.html',
-    controller: 'ServicesListCtrl',
+  when('/kiosk', {
+    templateUrl: contactsId.sourcePath + '/partials/kiosk.html',
+    controller: 'KioskCtrl',
     requireAuth: true,
     resolve: {
-      userData : function(profileService) {
-        return profileService.getUserData().then(function(data) {
-          if (!data || !data.profile || !data.contacts) {
-            throw new Error('Your user data cannot be retrieved. Please sign in again.');
-          }
-          return data;
-        });
-      },
       operations : function(profileService) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
-      }
+      },
+      countries : function(profileService) {
+        return profileService.getCountries();
+      },
     }
   }).
   when('/profile/:profileId?/:glideId?', {

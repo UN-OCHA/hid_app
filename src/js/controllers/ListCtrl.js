@@ -108,7 +108,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
 
 
   if ($scope.locationId === 'global' && !$scope.query.hasOwnProperty('globalContacts') && !$scope.query.hasOwnProperty('localContacts')) {
-    $scope.query.globalContacts = true;
+    $scope.query.globalContacts = 'true';
     $scope.query.localContacts = false;
   }
 
@@ -468,10 +468,10 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
     $scope.exportEmail();
   }
 
-  $scope.openPDF = function() {
+  $scope.openPDFHelper = function(exp) {
     var query = $scope.query;
     query.access_token = authService.getAccessToken();
-    query.export = 'pdf';
+    query.export = exp;
     query.limit = 0;
     query.skip = 0;
     if ($routeParams.id) {
@@ -479,6 +479,14 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
     } else {
       window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppPDF');
     }
+  }
+
+  $scope.openPDF = function () {
+    $scope.openPDFHelper('pdf');
+  }
+
+  $scope.openMeeting = function () {
+    $scope.openPDFHelper('meeting');
   }
 
   // Autocomplete call for Orgs
@@ -790,8 +798,13 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
   }
 
   function setCustomList(id, query) {
-    var queryCustom = {};
-    queryCustom.sort = query.sort;
+    var queryCustom = JSON.parse(JSON.stringify(query));
+    delete queryCustom.locationId;
+    delete queryCustom.contactList;
+    delete queryCustom.id;
+    delete queryCustom.limit;
+    delete queryCustom.skip;
+    delete queryCustom.status;
     $scope.listPromise = profileService.getList(id, queryCustom).then(function(data) {
       if (data) {
         $scope.list = data;

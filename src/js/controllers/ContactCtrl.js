@@ -1,11 +1,17 @@
-function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, currentContact, ngDialog, md5) {
-  var contact = currentContact,
-      filter = $filter('filter');
+function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, ngDialog, md5) {
+  var filter = $filter('filter');
+  var contact = {};
+
+  profileData.contacts.forEach(function (cont) {
+    if (cont._id == $routeParams.contactId) {
+      contact = cont;
+    }
+  });
 
   $scope.contact = contact;
   $scope.profileContacts = profileData.contacts;
   $scope.globalContactId = profileData.global ? profileData.global._id : '';
-  $scope.profile = contact._profile;
+  $scope.profile = profileData.profile;
   if (!contact.status) {
     if (contact.type === 'local') {
       $scope.flash.set('This contact is already checked out and kept for archive reasons only', 'danger', false);
@@ -18,7 +24,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
   // Permissions
   var isOwnProfile = userData.profile._id === contact._profile;
   $scope.userCanEditProfile = contact.status && (isOwnProfile || profileService.canEditProfile(contact.locationId));
-  $scope.userCanCheckIn = contact.status && profileService.canCheckIn(contact._profile);
+  $scope.userCanCheckIn = contact.status && profileService.canCheckIn($scope.profile);
   $scope.userCanCheckOut = contact.status && profileService.canCheckOut(contact);
   // Allow sending an orphan user claim email if the user has not made an edit
   // on HID, the contact has an email address (is not a ghost), and the actor
@@ -201,8 +207,8 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     var newOrg = [];
     var contact = {
       _id: $scope.contact._id,
-      _profile: $scope.contact._profile,
-      userid: $scope.contact._profile
+      _profile: $scope.profile,
+      userid: $scope.profile
     };
 
     if ($scope.selectedOrg){
