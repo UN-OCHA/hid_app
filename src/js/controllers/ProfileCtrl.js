@@ -8,6 +8,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     profileData.contact._profile = profileData.profile;
   }
 
+  $scope.automaticAddDisaster = false;
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
@@ -26,8 +27,9 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': [], 'disasters': ['remote_id']},
       pathParams = $location.path().split('/'),
       checkinFlow = pathParams[1] === 'checkin',
-      accountData = authService.getAccountData();
-
+      accountData = authService.getAccountData(),
+      locationPath = $location.$$path.split("/");
+  
   $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
   $scope.selectedProtectedRoles = (profileData.contact && profileData.contact.protectedRoles && profileData.contact.protectedRoles.length) ? angular.copy(profileData.contact.protectedRoles) : [];
   $scope.selectedProtectedBundles = (profileData.contact && profileData.contact.protectedBundles && profileData.contact.protectedBundles.length) ? angular.copy(profileData.contact.protectedBundles) : [];
@@ -49,9 +51,14 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     $scope.gravatarUrl = 'https://secure.gravatar.com/avatar/' + userEmail + '?s=200&d=' + encodeURIComponent('https://app.humanitarian.id/images/avatar.png');
   }
 
+
+  if(locationPath.length == 4)
+    $scope.automaticAddDisaster = true;
+
   // Setup scope variables from data injected by routeProvider resolve
   $scope.operations = operations;
   $scope.profileData = profileData;
+
   $scope.countries = countries;
 
   $scope.submitProcessing = false;
@@ -114,6 +121,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     $scope.profile = angular.copy(profileData.contact) || {};
     if ($scope.profile.locationId && $scope.operations.hasOwnProperty($scope.profile.locationId)) {
       $scope.selectedOperation = $scope.profile.locationId;
+      console.log("12", $scope.selectedOperation);
       setBundles();
       setDisasters();
       setOffices();
@@ -569,7 +577,37 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     });
   }
 
+  if($scope.automaticAddDisaster){
+      var glide_id = locationPath[3];
+      var profile = $scope.profile;
+      if (profileData.profile && profileData.profile.userid && profileData.profile._id) {
+        profile.userid = profileData.profile.userid;
+        profile._profile = profileData.profile._id;
+      }
+      else {
+        profile.userid = accountData.user_id;
+        profile._profile = null;
+      }
+      var disasterOptions = $scope.operations[$scope.selectedOperation].disasters;
+      var newDisaster = {};
+        disasterOptions.forEach(function(item){
+          if(item.glide_id == glide_id){
+            newDisaster.name = item.name;
+            newDisaster.remote_id = item.remote_id;
+            profile.disasters.push(newDisaster);
+             profileService.saveContact(profile).then(function(data) {
+              if (data && data.status && data.status === 'ok') {
+                $scope.flash.set('Thank you for updating your profile with the new disaster', 'success');
+              }
+              else {
+                $scope.flash.set('An error occurred while trying to trying to update your profile. Please reload and try again.', 'danger');
+              }
+            });
+          }
+        })
+  }
  
+
 
   $scope.submitProfile = function () {
     if ($scope.submitProcessing){
@@ -583,6 +621,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       $scope.checkEntryValidation('voip', 0);
     }
 
+
     // Ensure disasters are stored with the display name
     angular.forEach($scope.profile.disasters, function (item) {
       if (item.remote_id && $scope.operations[$scope.selectedOperation].disasters) {
@@ -592,6 +631,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
           }
         });
       }
+
     });
 
     // Checks for incomplete entries.
@@ -599,7 +639,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       // Removes empty entries.
       $scope.checkMultiFields(true);
       phoneJoin();
-
 
       var profile = $scope.profile;
       if (profileData.profile && profileData.profile.userid && profileData.profile._id) {
@@ -667,6 +706,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
       $scope.submitProcessing = true;
 
+      console.log("TEST", profile);
       profileService.saveContact(profile).then(function(data) {
         if (data && data.status && data.status === 'ok') {
           if (checkinFlow) {
@@ -937,6 +977,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   function setDisasters() {
     var disasterOptions = $scope.operations[$scope.selectedOperation].disasters;
     $scope.disasterOptions = listObjectToArray(disasterOptions);
+    console.log($scope.disasterOptions);
   }
 
   function setOffices() {
