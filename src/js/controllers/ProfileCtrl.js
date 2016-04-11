@@ -121,7 +121,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     $scope.profile = angular.copy(profileData.contact) || {};
     if ($scope.profile.locationId && $scope.operations.hasOwnProperty($scope.profile.locationId)) {
       $scope.selectedOperation = $scope.profile.locationId;
-      console.log("12", $scope.selectedOperation);
       setBundles();
       setDisasters();
       setOffices();
@@ -706,7 +705,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
       $scope.submitProcessing = true;
 
-      console.log("TEST", profile);
       profileService.saveContact(profile).then(function(data) {
         if (data && data.status && data.status === 'ok') {
           if (checkinFlow) {
@@ -973,7 +971,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   function setDisasters() {
     var disasterOptions = $scope.operations[$scope.selectedOperation].disasters;
     $scope.disasterOptions = listObjectToArray(disasterOptions);
-    console.log($scope.disasterOptions);
   }
 
   function setOffices() {
