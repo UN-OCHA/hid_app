@@ -358,6 +358,15 @@
         </div>
 
         <div class="col-sm-12 col-md-6" >
+          <div class="admin-area row" ng-if="!userCanEditRoles">
+            <div class="section col-sm-12">
+              <h4 translate>Admin Privileges</h4>
+              <ul>
+                <li ng-repeat="role in adminRoleOptions">{{role.name}}</li>
+              </ul>
+            </div>
+          </div>
+
           <div class="admin-area row" ng-if="userCanEditProtectedRoles|| userCanEditRoles || userCanEditVerified || userCanEditProtectedBundle || userCanAssignOrganizationEditor">
             <div class="section col-sm-12" ng-show="userCanEditProtectedRoles || userCanAssignOrganizationEditor">
               <h4 translate>Local Administration</h4>
