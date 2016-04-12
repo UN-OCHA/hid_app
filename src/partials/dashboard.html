@@ -25,38 +25,10 @@
     </div>
     <div class="col-sm-4">
     <h3 style="display: inline;"> OR </h3>&nbsp;
-    <a class="btn btn-primary text-uppercase" href="#/list/global?localContacts=true&globalContacts=true" style="font-size: 14px; height: 36px;">Go to Advanced Search</a>
+    <a class="btn btn-primary btn-lg text-uppercase" href="#/list/global?localContacts=true&globalContacts=true">Go to Advanced Search</a>
     </div>
     </div>
     <div class="active-profiles-wrapper" ng-show="userData.contacts.length">
-      <!-- <h3 ng-if="globalProfileId.length"><span translate>General List</span> :</h3>
-      <ul class="active-profiles-container list-group">
-        <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts" ng-if="profile.type == 'global'">
-          <h4>
-            <a href="#/list/global">
-              <span class="profile-item-name" translate>Global Contact List</span>
-            </a>
-          </h4>
-          <div class="btn-group">
-            <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" href="#/profile/{{profile._id}}" title="{{'Edit my global profile' | translate}}"><i class="fa fa-pencil"></i></a>
-          </div>
-          <div class="quick-link">
-          <div class="uib-dropdown" ng-class="{'ql-open': qlOpen === 0}" uib-dropdown dropdown-append-to-body>
-            <button class="uib-dropdown-toggle" ng-click="qlOpen = 0;" type="button" uib-dropdown-toggle ui-btn-checkbox><span class="quick-link-dots"></span></button>
-            <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
-            <li class="dropdown-header">Sharing</li>
-              <li ng-class="{'disabled' : isOffline()}" >
-                <a role="menuitem" tabindex="-1" ng-class="{'disabled' : isOffline()}" ng-click="share('Humanitarian ID','linkedin')" title="Share my profile on Linkedin"><i class="fa fa-linkedin"></i> LinkedIn</a>
-              </li>
-              <li ng-class="{'disabled' : isOffline()}" >
-                  <a role="menuitem" tabindex="-1" ng-class="{'disabled' : isOffline()}" ng-click="FBShare()" title="Facebook Share"><i class="fa fa-facebook"></i>Facebook</a>
-              </li>
-            </ul>
-          </div>
-          </div>
-        </li>
-      </ul>-->
-
       <h3><span translate>My checked-in lists</span> :</h3>
       <ul class="active-profiles-container list-group">
         <li class="profile-item list-group-item" ng-repeat="profile in userData.contacts | orderBy: 'location'" ng-if="profile.type == 'local'">
