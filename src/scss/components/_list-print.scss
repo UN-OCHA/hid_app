@@ -83,6 +83,15 @@
       font-size: 12px;
     }
   }
+
+  &.meeting-compact {
+    thead > th {
+      font-size: 12px;
+    }
+    td {
+      font-size: 10px;
+    }
+  }
 }
 
 .title-humanitarian {
