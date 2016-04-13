@@ -27,7 +27,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       pathParams = $location.path().split('/'),
       checkinFlow = pathParams[1] === 'checkin',
       accountData = authService.getAccountData();
-      
+
   $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
   $scope.selectedProtectedRoles = (profileData.contact && profileData.contact.protectedRoles && profileData.contact.protectedRoles.length) ? angular.copy(profileData.contact.protectedRoles) : [];
   $scope.selectedProtectedBundles = (profileData.contact && profileData.contact.protectedBundles && profileData.contact.protectedBundles.length) ? angular.copy(profileData.contact.protectedBundles) : [];
@@ -52,7 +52,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   // Setup scope variables from data injected by routeProvider resolve
   $scope.operations = operations;
   $scope.profileData = profileData;
-
   $scope.countries = countries;
 
   $scope.submitProcessing = false;
@@ -570,6 +569,8 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     });
   }
 
+
+
   $scope.submitProfile = function () {
     if ($scope.submitProcessing){
       return;
@@ -582,7 +583,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       $scope.checkEntryValidation('voip', 0);
     }
 
-
     // Ensure disasters are stored with the display name
     angular.forEach($scope.profile.disasters, function (item) {
       if (item.remote_id && $scope.operations[$scope.selectedOperation].disasters) {
@@ -592,7 +592,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
           }
         });
       }
-
     });
 
     // Checks for incomplete entries.
@@ -600,7 +599,8 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       // Removes empty entries.
       $scope.checkMultiFields(true);
       phoneJoin();
-
+      
+      
       var profile = $scope.profile;
       if (profileData.profile && profileData.profile.userid && profileData.profile._id) {
         profile.userid = profileData.profile.userid;
