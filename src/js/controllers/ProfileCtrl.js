@@ -570,7 +570,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   }
 
 
-
   $scope.submitProfile = function () {
     if ($scope.submitProcessing){
       return;
@@ -599,8 +598,8 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       // Removes empty entries.
       $scope.checkMultiFields(true);
       phoneJoin();
-      
-      
+
+
       var profile = $scope.profile;
       if (profileData.profile && profileData.profile.userid && profileData.profile._id) {
         profile.userid = profileData.profile.userid;
