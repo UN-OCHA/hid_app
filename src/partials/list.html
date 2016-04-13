@@ -351,7 +351,14 @@
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportEmail()" ng-if="isVerified" value="{{'Copy Email Addresses'|translate}}" ng-disabled="isOffline()"/>
 
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openPDF()" value="{{'View PDF'|translate}}" ng-disabled="isOffline()" ng-show="isVerified"/>
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openMeeting()" value="{{'Meeting Attendance'|translate}}" ng-disabled="isOffline()" ng-show="isVerified" />
+
+          <div class="btn-group" uib-dropdown style="width: 100%;">
+            <button class="btn btn-warning btn-lg btn-block" type="button" uib-dropdown-toggle ng-disabled="isOffline()" ng-show="isVerified">{{'Meeting Attendance' | translate}} <span class="caret" style="top: 40%; left: 90%; position: absolute;"></span></button>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+              <li role="menuitem"><a href ng-click="openMeetingCompact()">Compact</a></li>
+              <li role="menuitem"><a href ng-click="openMeetingComfortable()">Comfortable</a></li>
+            </ul>
+          </div>
 
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" ng-if="isVerified" value="{{'Export Results'|translate}}" ng-disabled="isOffline()"/>
 

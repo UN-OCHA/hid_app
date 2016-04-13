@@ -1,5 +1,6 @@
-function DefaultCtrl($scope, $location, authService) {
+function DefaultCtrl($scope, $location, $window, authService) {
   $scope.isCollapsed = true;
+  $scope.showIframe = $window.window.innerWidth > 460 ? true : false;
 
   function parseLocation(location) {
     var pairs = location.substring(1).split("&"),
