@@ -34,9 +34,8 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': [], 'disasters': ['remote_id']},
       pathParams = $location.path().split('/'),
       checkinFlow = pathParams[1] === 'checkin',
-      accountData = authService.getAccountData(),
-      locationPath = $location.$$path.split("/");
-  
+      accountData = authService.getAccountData();
+      
   $scope.adminRoles = (profileData.profile && profileData.profile.roles && profileData.profile.roles.length) ? profileData.profile.roles : [];
   $scope.selectedProtectedRoles = (profileData.contact && profileData.contact.protectedRoles && profileData.contact.protectedRoles.length) ? angular.copy(profileData.contact.protectedRoles) : [];
   $scope.selectedProtectedBundles = (profileData.contact && profileData.contact.protectedBundles && profileData.contact.protectedBundles.length) ? angular.copy(profileData.contact.protectedBundles) : [];
