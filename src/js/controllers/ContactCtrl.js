@@ -1,4 +1,4 @@
-function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, ngDialog, md5) {
+function ContactCtrl($scope, $route, $location, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, ngDialog, md5) {
   var filter = $filter('filter');
   var contact = null;
 
@@ -7,6 +7,7 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
       contact = cont;
     }
   });
+
 
   if (!contact) {
     $scope.flash.set('Sorry, you are not allowed to see this contact or this contact does not exist.', 'danger', false);
@@ -48,6 +49,37 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
       userEmail = md5.createHash(userEmail.trim().toLowerCase());
       $scope.gravatarUrl = 'https://secure.gravatar.com/avatar/' + userEmail + '?s=200&d=' + encodeURIComponent('https://app.humanitarian.id/images/avatar.png');
     }
+
+  if($location.$$search.disasterAdded != null ){
+    if($location.$$search.disasterAdded){
+      var disasterName = $scope.contact.disasters[$scope.contact.disasters.length-1].name
+      $scope.flash.set('Thank you for adding ' + disasterName +' to your profile', 'success');
+    }
+    else
+      $scope.flash.set('There was an error updating your profile', 'danger');
+  }
+  // Permissions
+  var isOwnProfile = userData.profile._id === contact._profile;
+  $scope.userCanEditProfile = contact.status && (isOwnProfile || profileService.canEditProfile(contact.locationId));
+  $scope.userCanCheckIn = contact.status && profileService.canCheckIn($scope.profile);
+  $scope.userCanCheckOut = contact.status && profileService.canCheckOut(contact);
+  // Allow sending an orphan user claim email if the user has not made an edit
+  // on HID, the contact has an email address (is not a ghost), and the actor
+  // is an admin or a manager/editor in the location of this contact.
+  $scope.userCanSendClaimEmail = contact.status && profileService.canSendClaimEmail(contact);
+  var hasRoleAdmin = profileService.hasRole('admin');
+  $scope.userIsAdmin = hasRoleAdmin;
+  // Get Gravatar URL
+  $scope.gravatarUrl = '';
+  var userEmails = (profileData.profile && profileData.profile._userid) ? profileData.profile._userid.split('_') : [];
+  if (!userEmails || !userEmails.length) {
+    userEmails = (profileData.profile && profileData.profile.userid) ? profileData.profile.userid.split('_') : [];
+  }
+  if (userEmails && userEmails.length) {
+    var userEmail = userEmails[0];
+    userEmail = md5.createHash(userEmail.trim().toLowerCase());
+    $scope.gravatarUrl = 'https://secure.gravatar.com/avatar/' + userEmail + '?s=200&d=' + encodeURIComponent('https://app.humanitarian.id/images/avatar.png');
+  }
 
 
     $scope.contact.protectedRolesByName = [];
