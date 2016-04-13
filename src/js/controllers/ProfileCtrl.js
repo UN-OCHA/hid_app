@@ -8,14 +8,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     profileData.contact._profile = profileData.profile;
   }
 
-  if($location.$$search.disasterAdded != null ){
-    if($location.$$search.disasterAdded)
-      $scope.flash.set('Thank you for adding the new disaster to your profile', 'success');
-    else
-      $scope.flash.set('There was an error updating your profile', 'danger');
-  }
-
-
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 

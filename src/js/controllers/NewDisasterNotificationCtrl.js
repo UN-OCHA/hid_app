@@ -8,11 +8,8 @@ function NewDisasterNotificationCtrl($scope, $location, $route, $routeParams, $h
   if (profileData.contact && profileData.profile) {
     profileData.contact._profile = profileData.profile;
   }
-  $scope.automaticAddDisaster = false;
-  if(locationPath.length == 4)
-    $scope.automaticAddDisaster = true;
 
-  if($scope.automaticAddDisaster){
+$scope.addDisaster = function(){
       var glide_id = locationPath[3];
       var profile = profileData.contact;
 
@@ -38,16 +35,17 @@ function NewDisasterNotificationCtrl($scope, $location, $route, $routeParams, $h
               if (data && data.status && data.status === 'ok') {
                 $scope.disasterAdd = true;
                 $location.search({ 'disasterAdded': $scope.disasterAdd });
-                $location.path('/profile/' + profile._id);
+                $location.path('/contact/' + profile._id);
               }
               else {
                 $location.search({ 'disasterAdded': $scope.disasterAdd });
-                $location.path('/profile/' + profile._id);
+                $location.path('/contact/' + profile._id);
               }
             });
           }
         })
   }
+  $scope.addDisaster();
 }
 
  

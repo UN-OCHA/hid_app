@@ -1,4 +1,4 @@
-function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, ngDialog, md5) {
+function ContactCtrl($scope, $route, $location, $routeParams, $filter, profileService, gettextCatalog, userData, protectedRoles, profileData, ngDialog, md5) {
   var filter = $filter('filter');
   var contact = {};
 
@@ -7,6 +7,8 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
       contact = cont;
     }
   });
+
+  
 
   $scope.contact = contact;
   $scope.profileContacts = profileData.contacts;
@@ -21,6 +23,15 @@ function ContactCtrl($scope, $route, $routeParams, $filter, profileService, gett
     }
   }
 
+  if($location.$$search.disasterAdded != null ){
+    if($location.$$search.disasterAdded){
+      var disasterName = $scope.contact.disasters[$scope.contact.disasters.length-1].name
+      console.log(disasterName);
+      $scope.flash.set('Thank you for adding ' + disasterName +' to your profile', 'success');
+    }
+    else
+      $scope.flash.set('There was an error updating your profile', 'danger');
+  }
   // Permissions
   var isOwnProfile = userData.profile._id === contact._profile;
   $scope.userCanEditProfile = contact.status && (isOwnProfile || profileService.canEditProfile(contact.locationId));
