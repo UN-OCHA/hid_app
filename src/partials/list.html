@@ -353,7 +353,7 @@
           <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openPDF()" value="{{'View PDF'|translate}}" ng-disabled="isOffline()" ng-show="isVerified"/>
 
           <div class="btn-group" uib-dropdown style="width: 100%;">
-            <button class="btn btn-warning btn-lg btn-block" type="button" uib-dropdown-toggle ng-disabled="isOffline()" ng-show="isVerified">{{'Meeting Attendance' | translate}} <span class="caret"></span></button>
+            <button class="btn btn-warning btn-lg btn-block" type="button" uib-dropdown-toggle ng-disabled="isOffline()" ng-show="isVerified">{{'Meeting Attendance' | translate}} <span class="caret" style="top: 40%; left: 90%; position: absolute;"></span></button>
             <ul class="dropdown-menu" uib-dropdown-menu>
               <li role="menuitem"><a href ng-click="openMeetingCompact()">Compact</a></li>
               <li role="menuitem"><a href ng-click="openMeetingComfortable()">Comfortable</a></li>
