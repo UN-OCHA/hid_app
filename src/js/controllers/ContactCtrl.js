@@ -26,7 +26,6 @@ function ContactCtrl($scope, $route, $location, $routeParams, $filter, profileSe
   if($location.$$search.disasterAdded != null ){
     if($location.$$search.disasterAdded){
       var disasterName = $scope.contact.disasters[$scope.contact.disasters.length-1].name
-      console.log(disasterName);
       $scope.flash.set('Thank you for adding ' + disasterName +' to your profile', 'success');
     }
     else
