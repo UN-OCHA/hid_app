@@ -570,6 +570,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   }
 
 
+
   $scope.submitProfile = function () {
     if ($scope.submitProcessing){
       return;
