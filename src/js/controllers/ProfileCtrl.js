@@ -8,7 +8,14 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     profileData.contact._profile = profileData.profile;
   }
 
-  $scope.automaticAddDisaster = false;
+  if($location.$$search.disasterAdded != null ){
+    if($location.$$search.disasterAdded)
+      $scope.flash.set('Thank you for adding the new disaster to your profile', 'success');
+    else
+      $scope.flash.set('There was an error updating your profile', 'danger');
+  }
+
+
   $scope.profileId = $routeParams.profileId || '';
   $scope.profile = {};
 
@@ -50,10 +57,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
     userEmail = md5.createHash(userEmail.trim().toLowerCase());
     $scope.gravatarUrl = 'https://secure.gravatar.com/avatar/' + userEmail + '?s=200&d=' + encodeURIComponent('https://app.humanitarian.id/images/avatar.png');
   }
-
-
-  if(locationPath.length == 4)
-    $scope.automaticAddDisaster = true;
 
   // Setup scope variables from data injected by routeProvider resolve
   $scope.operations = operations;
@@ -575,38 +578,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         }
     });
   }
-
-  if($scope.automaticAddDisaster){
-      var glide_id = locationPath[3];
-      var profile = $scope.profile;
-      if (profileData.profile && profileData.profile.userid && profileData.profile._id) {
-        profile.userid = profileData.profile.userid;
-        profile._profile = profileData.profile._id;
-      }
-      else {
-        profile.userid = accountData.user_id;
-        profile._profile = null;
-      }
-      var disasterOptions = $scope.operations[$scope.selectedOperation].disasters;
-      var newDisaster = {};
-        disasterOptions.forEach(function(item){
-          if(item.glide_id == glide_id){
-            newDisaster.name = item.name;
-            newDisaster.remote_id = item.remote_id;
-            profile.disasters.push(newDisaster);
-             profileService.saveContact(profile).then(function(data) {
-              if (data && data.status && data.status === 'ok') {
-                $scope.flash.set('Thank you for updating your profile with the new disaster', 'success');
-              }
-              else {
-                $scope.flash.set('An error occurred while trying to trying to update your profile. Please reload and try again.', 'danger');
-              }
-            });
-          }
-        })
-  }
- 
-
 
   $scope.submitProfile = function () {
     if ($scope.submitProcessing){

@@ -215,6 +215,7 @@ app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", "ge
 app.controller("SubscriptionsAddCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsAddCtrl]);
 app.controller("BulkAddCtrl", ["$scope", "$http", "$timeout", "profileService", "operations", BulkAddCtrl]);
 app.controller("KioskCtrl", ["$scope", "$http", "gettextCatalog", "profileService", "operations", "countries", KioskCtrl]);
+app.controller("NewDisasterNotificationCtrl", ["$scope", "$location", "$route", "$routeParams", "$http", "profileService", "operations", "profileData", NewDisasterNotificationCtrl]);
 
 app.config(function($routeProvider, $locationProvider) {
   $routeProvider.
@@ -700,7 +701,7 @@ app.config(function($routeProvider, $locationProvider) {
   }).
   when('/profile/:profileId?/:glideId?', {
     templateUrl: contactsId.sourcePath + '/partials/profile.html',
-    controller: 'ProfileCtrl',
+    controller: 'NewDisasterNotificationCtrl',
     requireAuth: true,
     resolve: {
       operations : function(profileService) {
@@ -712,46 +713,8 @@ app.config(function($routeProvider, $locationProvider) {
         profileService.clearData();
         return profileService.getProfileData($route.current.params.profileId);
       },
-      countries : function(profileService) {
-        return profileService.getCountries();
-      },
-      roles : function(profileService) {
-        return profileService.getRoles();
-      },
-      protectedRoles : function(profileService) {
-        return profileService.getProtectedRoles();
-      },
-      userData : function(profileService) {
-        return profileService.getUserData().then(function(data) {
-          if (!data || !data.profile || !data.contacts) {
-            throw new Error('Your user data cannot be retrieved. Please sign in again.');
-          }
-          return data;
-        });
-      },
-      routeAccess : function(profileService, $routeParams) {
-        return function(locals) {
-          if (typeof $routeParams.profileId === 'undefined') {
-            var redirect = null;
-            angular.forEach(locals.userData.contacts, function(contact) {
-              if (contact.type === 'global') {
-                redirect = "/profile/" + contact._id;
-              }
-            });
-            return redirect || true;
-          }
-          else if (!locals.profileData.profile) {
-            return false;
-          }
-          var profile = locals.profileData.contact,
-              hasRole = profileService.canEditProfile((profile ? profile.locationId : null)),
-              isOwnProfile = profile._profile === locals.userData.profile._id;
-
-          return (hasRole || isOwnProfile);
-        };
-      }
     }
-  }).
+  }). 
   otherwise({
     templateUrl: contactsId.sourcePath + '/partials/404.html',
     controller: '404Ctrl'

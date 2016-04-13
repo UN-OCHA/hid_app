@@ -210,6 +210,7 @@ module.exports = function(grunt) {
             'src/js/controllers/AddProtectedGroupsCtrl.js',
             'src/js/controllers/ShowCountryListCtrl.js',
             'src/js/controllers/KioskCtrl.js',
+            'src/js/controllers/NewDisasterNotificationCtrl.js',
             'src/js/Chart.min.js',
             'src/js/app.js',
             'src/js/partials.js',
