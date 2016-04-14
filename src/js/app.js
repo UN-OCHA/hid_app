@@ -189,7 +189,7 @@ app.run(function ($rootScope, $location, $timeout, profileService, flashService)
 });
 
 app.controller("AboutCtrl", ["$scope", AboutCtrl]);
-app.controller("ContactCtrl", ["$scope", "$route", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", "md5", ContactCtrl]);
+app.controller("ContactCtrl", ["$scope", "$route", "$location", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", "md5", ContactCtrl]);
 app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", "countries", CreateAccountCtrl]);
 app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location","$timeout", "profileService", "globalProfileId", "userData", "operations", "ngDialog", "gettextCatalog", DashboardCtrl]);
 app.controller("DefaultCtrl", ["$scope", "$location", "$window", "authService", DefaultCtrl]);
@@ -215,6 +215,7 @@ app.controller("SubscriptionsCtrl", ["$scope", "profileService", "ngDialog", "ge
 app.controller("SubscriptionsAddCtrl", ["$scope", "profileService", "ngDialog", SubscriptionsAddCtrl]);
 app.controller("BulkAddCtrl", ["$scope", "$http", "$timeout", "profileService", "operations", BulkAddCtrl]);
 app.controller("KioskCtrl", ["$scope", "$http", "gettextCatalog", "profileService", "operations", "countries", KioskCtrl]);
+app.controller("NewDisasterNotificationCtrl", ["$scope", "$location", "$route", "$routeParams", "$http", "profileService", "operations", "profileData", NewDisasterNotificationCtrl]);
 
 app.config(function($routeProvider, $locationProvider) {
   $routeProvider.
@@ -698,26 +699,22 @@ app.config(function($routeProvider, $locationProvider) {
       },
     }
   }).
-  when('/profile/:profileId/services', {
-    templateUrl: contactsId.sourcePath + '/partials/services.html',
-    controller: 'ServicesListCtrl',
+  when('/profile/:profileId?/:glideId?', {
+    templateUrl: contactsId.sourcePath + '/partials/profile.html',
+    controller: 'NewDisasterNotificationCtrl',
     requireAuth: true,
     resolve: {
-      userData : function(profileService) {
-        return profileService.getUserData().then(function(data) {
-          if (!data || !data.profile || !data.contacts) {
-            throw new Error('Your user data cannot be retrieved. Please sign in again.');
-          }
-          return data;
-        });
-      },
       operations : function(profileService) {
         return profileService.getOperationsData().then(function(data) {
           return data;
         });
-      }
+      },
+      profileData : function(profileService, $route) {
+        profileService.clearData();
+        return profileService.getProfileData($route.current.params.profileId);
+      },
     }
-  }).
+  }). 
   otherwise({
     templateUrl: contactsId.sourcePath + '/partials/404.html',
     controller: '404Ctrl'
