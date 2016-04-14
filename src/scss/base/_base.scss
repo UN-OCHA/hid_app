@@ -175,7 +175,12 @@ label[for=keyContact]{
   #atlwdg-frame {
     height: 75vh !important;
   }
+
+  #atlwdg-trigger {
+    display: none;
+  }
 }
+
 
 /* Alerts */
 .messages .alert {
