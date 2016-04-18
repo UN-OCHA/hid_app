@@ -151,7 +151,7 @@ function CreateAccountCtrl($scope, $location, $route, $http, profileService, aut
         }
         else{
           $scope.confirmTitle = gettextCatalog.getString("Account Created!");
-          $scope.confirmMessage = name + " " + gettextCatalog.getString("will receive an email to claim their account.");
+          $scope.confirmMessage = name + " " + gettextCatalog.getString("will receive an email to claim his/her account.");
         }
         $scope.editButtonText = gettextCatalog.getString('Edit New Account');
         $scope.editPath = '#/contact/' + data._id;
