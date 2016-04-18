@@ -421,10 +421,12 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
         if (data) {
           var contacts = [];
           angular.forEach(data.contacts, function(value, key) {
-            this.push({
-              name: value.nameGiven + " " + value.nameFamily,
-              email: value.email[0].address
-            });
+            if (value.email && value.email[0] && value.email[0].address) {
+              this.push({
+                name: value.nameGiven + " " + value.nameFamily,
+                email: value.email[0].address
+              });
+            }
           }, contacts);
 
           openEmailPopup(contacts);
