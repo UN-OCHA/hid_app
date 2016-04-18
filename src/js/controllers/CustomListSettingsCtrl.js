@@ -15,7 +15,7 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, $timeout, auth
   $scope.isOwner = $scope.list.userid === userData.profile.userid;
   if ($scope.isOwner) {
     $scope.list.userid = userData.profile;
-    $scope.list.userid.userid.replace(/(_\d+)$/,'');
+    $scope.list.userid.userid = $scope.list.userid.userid.replace(/(_\d+)$/,'');
   }
   else {
     $scope.list.userid = { userid: $scope.list.userid };
