@@ -417,7 +417,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
 
     // Custom contact list.
     if ($routeParams.id) {
-      $scope.listPromise = profileService.getList($routeParams.id).then(function(data) {
+      $scope.listPromise = profileService.getList($routeParams.id, query).then(function(data) {
         if (data) {
           var contacts = [];
           angular.forEach(data.contacts, function(value, key) {
