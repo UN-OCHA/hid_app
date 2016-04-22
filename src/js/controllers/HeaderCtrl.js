@@ -1,4 +1,4 @@
-function HeaderCtrl($scope, $rootScope, $location, $route, profileService, gettextCatalog) {
+function HeaderCtrl($scope, $rootScope, $location, profileService, gettextCatalog) {
   $rootScope.$on("appLoginSuccess", function(ev, accountData) {
     $scope.isAuthenticated = accountData && accountData.user_id;
     $scope.nameGiven = accountData.name_given;
