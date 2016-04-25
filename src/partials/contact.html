@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="actions">
-          <a class="btn btn-primary btn-lg btn-block" href="#/profile/{{contact._id}}" translate>Edit Profile</a>
+          <a class="btn btn-primary btn-lg btn-block" ng-show="userCanEditProfile" href="#/profile/{{contact._id}}" translate>Edit Profile</a>
           <a class="btn btn-primary btn-lg btn-block" ng-show="userCanEditProfile" ng-click="editSubscriptionsModal()" translate>Edit Subscriptions</a>
           <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="contact.status" ng-click="addContact()" ng-bind="contactListText()"></button>
           <a class="btn btn-primary btn-lg btn-block" ng-show="userCanCheckIn" href="#/checkin/{{profile._id}}" translate>Check-in User</a>
