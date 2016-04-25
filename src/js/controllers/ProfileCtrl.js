@@ -533,6 +533,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   }
 
   $scope.showCountry = function() {
+
     $scope.tempProfile = [];
     $scope.userid = userData.profile.userid;
     var tempOps = listObjectToArray($scope.operations);
@@ -540,8 +541,17 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       if(data){
           $scope.temp= data;
           var countryList = [];
+          profileData.contacts.forEach(function(contact){
+            if(contact.type == 'local')
+              countryList.push({
+                locationId: contact.locationId,
+                location: contact.location
+              });
+          });
+
               profileData.profile.roles.forEach(function(country){
                 if((country.indexOf('manager') > -1 )|| (country.indexOf('editor') > -1)){
+                  
                   var locationID = country.split(/:(.+)?/)[1];
                   var locationName = '';
                   tempOps.forEach(function(operation){
@@ -551,8 +561,8 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
                     countryList.push({
                       locationId: locationID,
                       location: locationName
-                   });
-                }
+                    });
+                  };
               });
 
               $scope.countryList = countryList;
@@ -570,7 +580,6 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   }
 
  
-
   $scope.submitProfile = function () {
     if ($scope.submitProcessing){
       return;
