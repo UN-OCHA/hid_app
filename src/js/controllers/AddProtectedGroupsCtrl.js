@@ -9,6 +9,10 @@ function AddProtectedGroupsCtrl($scope, profileService) {
           if(value.value.name === $scope.contact.protectedBundles[i])
             list.addToList = true;  
         }
+        for (var i in $scope.contact.bundle) {
+          if (value.value.name === $scope.contact.bundle[i])
+            list.addToList = true;
+        }
         this.push(list);
       }, $scope.allGroups)
   });
@@ -18,14 +22,26 @@ function AddProtectedGroupsCtrl($scope, profileService) {
   }
    
   $scope.updateContact = function(){
-    angular.forEach($scope.allGroups, function(value, key){
-      if($scope.contact.protectedBundles.indexOf(value.name) === -1){
-        if(value.addToList === true)
-          $scope.contact.protectedBundles.push(value.name);
+    angular.forEach($scope.allGroups, function(value, key) {
+      if (value.hid_access == "open" && $scope.contact.bundle.indexOf(value.name) === -1) {
+        if (value.addToList === true) {
+          $scope.contact.bundle.push(value.name);
+        }
       }
-      else{
-        if(value.addToList === false)
+      else {
+        if (value.hid_access == "open" && value.addToList === false) {
+          $scope.contact.bundle.splice($scope.contact.bundle.indexOf(value.name), 1);
+        }
+      }
+      if (value.hid_access == 'closed' && $scope.contact.protectedBundles.indexOf(value.name) === -1) {
+        if (value.addToList === true) {
+          $scope.contact.protectedBundles.push(value.name);
+        }
+      }
+      else {
+        if (value.hid_access == 'closed' && value.addToList === false) {
           $scope.contact.protectedBundles.splice($scope.contact.protectedBundles.indexOf(value.name), 1);
+        }
       }
     })
     var contact = {
