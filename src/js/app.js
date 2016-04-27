@@ -192,7 +192,7 @@ app.controller("AboutCtrl", ["$scope", AboutCtrl]);
 app.controller("ContactCtrl", ["$scope", "$route", "$location", "$routeParams", "$filter", "profileService", "gettextCatalog", "userData", "protectedRoles", "profileData", "ngDialog", "md5", ContactCtrl]);
 app.controller("CreateAccountCtrl", ["$scope", "$location", "$route", "$http", "profileService", "authService", "operations", "globalProfileId", "userData", "gettextCatalog", "countries", CreateAccountCtrl]);
 app.controller("DashboardCtrl", ["$scope", "$route", "$filter", "$window", "$location","$timeout", "profileService", "globalProfileId", "userData", "operations", "ngDialog", "gettextCatalog", DashboardCtrl]);
-app.controller("DefaultCtrl", ["$scope", "$location", "$window", "authService", DefaultCtrl]);
+app.controller("DefaultCtrl", ["$scope", "$location", "$window", "$sce", "authService", DefaultCtrl]);
 app.controller("404Ctrl", ["$scope", FourZeroFourCtrl]);
 app.controller("NumbersCtrl", ["$scope", NumbersCtrl]);
 app.controller("HeaderCtrl", ["$scope", "$rootScope", "$location", "profileService", "gettextCatalog", HeaderCtrl]);
