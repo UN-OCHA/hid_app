@@ -23,10 +23,15 @@
       </div>
     </form>
     </div>
-    <div class="col-md-4">
-    <!-- <h3 style="display: inline;"> OR </h3>&nbsp; -->
-    <a class="btn btn-primary btn-lg text-uppercase pull-right" href="#/list/global?localContacts=true&globalContacts=true">Go to Advanced Search</a>
+    <div class="col-sm-4 visible-lg visible-md visible-sm">
+    <a class="btn btn-primary btn-lg btn-block text-uppercase" href="#/list/global?localContacts=true&globalContacts=true"> Advanced Search</a>
+
     </div>
+
+    <div class="mobile-advancedSearch visible-xs">
+      <a class="btn btn-primary btn-lg btn-block text-uppercase" href="#/list/global?localContacts=true&globalContacts=true"> <span class="fa fa-angle-right"></span> <span translate> Advanced Search</span></a>
+    </div>
+
     </div>
     <div class="active-profiles-wrapper" ng-show="userData.contacts.length">
       <h3><span translate>My checked-in lists</span> :</h3>
@@ -71,8 +76,13 @@
         </li>
       </ul>
 
+      <div class="mobile-checkin visible-xs">
+        <a class="btn btn-primary btn-lg btn-block" href="#/checkin">
+          <span class="fa fa-angle-right"></span> <span translate>Check-in</span>
+        </a>
+      </div>
+
       <div class="alert alert-info" role="alert" ng-show="!localContacts.length && globalProfileId.length"><strong translate>Are you responding to a humanitarian situation?</strong> <a href="#/checkin" translate>Check into</a> <span translate>the relevant country to add your skills and contact details added to the appropriate contact list(s).</span></div>
-      <div class="alert alert-info" role="alert" ng-show="localContacts.length"><strong translate>Are you still responding to the humanitarian situation(s) above?</strong> <span translate>Click the airplane icon next to any of the contact lists you are no longer responding to.</span></div>
 
       <h3><span translate>Custom Contacts lists</span> : <i ng-if="isCaching()" class="fa fa-refresh data-sync data-sync-animate" data-toggle="tooltip" data-placement="top" title="We are busy synchronizing your custom contact lists for offline access."></i>
       </h3>
@@ -94,9 +104,12 @@
         <li class="profile-item list-group-item" ng-repeat="(index, list) in customContacts">
         <button ng-show="list.confirmUnfollow" class="slide btn btn-warning" href ng-click="unfollowContactList(list, index)" ng-if="userData.profile.userid != list.userid && list.isFollower" translate>Unfollow</button>
           <h4>
-            <a href="#/list/contacts?id={{list._id}}">
-              <span class="profile-item-name" translate>{{list.name}}</span>
+          <div class="row profile-item">
+             <a href="#/list/contacts?id={{list._id}}">
+              <span translate>{{list.name}}</span>
             </a>
+          </div>
+         
           </h4>
           <div class="btn-group">
             <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="userData.profile.userid != list.userid && list.isFollower" ng-click="list.confirmUnfollow = !list.confirmUnfollow" title="{{'Unfollow list' | translate}}"><i class="fa fa-times"></i></a>
@@ -117,7 +130,7 @@
                 <input type="text" class="form-control" id="listName" ng-model="list.name" required>
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" ng-disabled="contactInline.$invalid || isOffline()" ng-click="addCustomContactList(list)">Create List</button>
+                <button type="submit" class="btn btn-primary btn-list pull-right" ng-disabled="contactInline.$invalid || isOffline()" ng-click="addCustomContactList(list)">Create List</button>
               </div>
             </div>
           </div>
@@ -150,11 +163,22 @@
 
       <ul class="subscriptions-container list-group">
         <li class="profile-item list-group-item" ng-repeat="subscription in subscriptions" ng-if="subscription.service.status">
-          <div class="row">
-            <div class="contact-item contact-item--name col-xs-12 col-md-6" >
-              {{subscription.service.name}} <span class="label label-primary" translate>Subscribed</span>
+          <div class="row visible-xs service-width">
+            <div class="contact-item contact-item--name col-xs-12 col-md-6 service-name"  >
+              {{subscription.service.name}} 
             </div>
-            <div class="btn-group">
+             <span class="label label-primary" translate>Subscribed</span>
+          </div>
+          <div class="row visible-lg visible-md visible-sm">
+            <div class="contact-item contact-item--name col-xs-12 col-md-6 service-name" >
+              {{subscription.service.name}} 
+            </div>
+            <div style="padding-top: 1.8%">
+             <span class="label label-primary"  translate>Subscribed</span>
+            </div>
+          </div>
+          <div class ="service-margin">
+            <div class="btn-group pull-right" >
               <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-click="unsubscribeDialog(subscription.service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times"></i></a>
               <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="subscription.service.editAllowed" href="#/services/{{subscription.service._id}}/edit" title="{{'Edit' | translate}}"><i class="fa fa-cog"></i></a>
             </div>
@@ -171,11 +195,7 @@
       </ul>
 
 
-      <div class="mobile-checkin visible-xs">
-        <a class="btn btn-primary btn-lg btn-block" href="#/checkin">
-          <span class="fa fa-angle-right"></span> <span translate>Check-in</span>
-        </a>
-      </div>
+      
     </div>
     <div class="empty-profiles" ng-hide="userData.contacts.length">
       <p translate>Thank you for registering on Humanitarian ID. With your help, we will ensure that humanitarian contact lists are always up-to-date. As you will notice, you do not have access to any lists just yet.</p>
