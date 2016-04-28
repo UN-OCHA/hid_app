@@ -55,6 +55,14 @@
     margin-top: -5%;
   }
   
+  .alert-margin{
+    width: 95%;
+    float: inherit;
+    margin-left: 2%;
+    margin-top: -2%;
+    margin-bottom: 4%;
+  }
+  
   .custom-contacts-container {
     .contact-inline-form {
       @media (min-width: $screen-md-min) {
