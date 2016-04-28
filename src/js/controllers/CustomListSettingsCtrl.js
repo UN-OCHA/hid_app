@@ -20,6 +20,7 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, $timeout, auth
   }
   else {
     $scope.list.userid = { userid: $scope.list.userid };
+    $scope.list.userid.userid = $scope.list.userid.userid.replace(/(_\d+)$/,'');
   }
 
   angular.forEach($scope.list.readers, function(reader,key){
