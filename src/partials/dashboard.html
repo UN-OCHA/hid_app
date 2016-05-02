@@ -102,18 +102,21 @@
         </div>
       </form>
 
+
       <ul class="custom-contacts-container list-group">
         <li class="profile-item list-group-item" ng-repeat="(index, list) in customContacts">
         <button ng-show="list.confirmUnfollow" class="slide btn btn-warning" href ng-click="unfollowContactList(list, index)" ng-if="userData.profile.userid != list.userid && list.isFollower" translate>Unfollow</button>
-          <h4>
-          <div class="row profile-item">
-             <a href="#/list/contacts?id={{list._id}}">
-              <span translate>{{list.name}}</span>
-            </a>
+          <div class="row">
+            <h4>
+            <div class="profile-item">
+              <a href="#/list/contacts?id={{list._id}}">
+                <span translate>{{list.name}}</span>
+              </a>
+            </div>
           </div>
          
           </h4>
-          <div class="btn-group">
+          <div class="btn-group" style="margin-top: -10%;">
             <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="userData.profile.userid != list.userid && list.isFollower" ng-click="list.confirmUnfollow = !list.confirmUnfollow" title="{{'Unfollow list' | translate}}"><i class="fa fa-times"></i></a>
             <a ng-class="{'disabled' : isOffline()}" href="#/settings/list/{{list._id}}" class="btn btn-sm" role="button" ng-if="userData.profile.userid == list.userid || list.isEditor" title="{{'List Settings' | translate}}"><i class="fa fa-cog"></i></a>
           </div>
@@ -165,19 +168,11 @@
 
       <ul class="subscriptions-container list-group">
         <li class="profile-item list-group-item" ng-repeat="subscription in subscriptions" ng-if="subscription.service.status">
-          <div class="row visible-xs service-width">
-            <div class="contact-item contact-item--name col-xs-12 col-md-6 service-name"  >
-              {{subscription.service.name}} 
+          <div class="row service-width">
+            <div class="contact-item col-xs-12 col-md-6"  >
+              {{subscription.service.name}} <span class="label label-primary" translate>Subscribed</span>
             </div>
-             <span class="label label-primary" translate>Subscribed</span>
-          </div>
-          <div class="row visible-lg visible-md visible-sm">
-            <div class="contact-item contact-item--name col-xs-12 col-md-6 service-name" >
-              {{subscription.service.name}} 
-            </div>
-            <div style="padding-top: 1.8%">
-             <span class="label label-primary"  translate>Subscribed</span>
-            </div>
+             
           </div>
           <div class ="service-margin">
             <div class="btn-group pull-right" >
