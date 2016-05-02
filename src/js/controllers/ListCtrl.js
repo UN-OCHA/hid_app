@@ -399,7 +399,8 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
     var query = $scope.query;
     query.access_token = authService.getAccessToken();
     query.export = 'csv';
-    query.limit = $scope.contactsCount;
+    delete query.limit;
+    //query.limit = $scope.contactsCount;
     query.skip = 0;
     if ($routeParams.id) {
       window.open(contactsId.profilesBaseUrl + "/v0.1/lists/" + $routeParams.id + "?" + jQuery.param(query), 'hidAppCSV');
@@ -412,7 +413,8 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
     var query = $scope.query;
     query.access_token = authService.getAccessToken();
     query.export = 'email';
-    query.limit = $scope.contactsCount;
+    delete query.limit;
+    //query.limit = $scope.contactsCount;
     query.skip = 0;
 
     // Custom contact list.
@@ -474,7 +476,8 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
     var query = $scope.query;
     query.access_token = authService.getAccessToken();
     query.export = exp;
-    query.limit = $scope.contactsCount;
+    delete query.limit;
+    //query.limit = $scope.contactsCount;
     query.skip = 0;
     if ($routeParams.id) {
       window.open(contactsId.profilesBaseUrl + "/v0.1/lists/" + $routeParams.id + "?" + jQuery.param(query), 'hidAppCSV');
