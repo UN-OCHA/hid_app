@@ -15,6 +15,9 @@ function HeaderCtrl($scope, $rootScope, $location, profileService, gettextCatalo
       }
     }
   });
+  $scope.feedbackLink = "mailto:info@humanitarian.id" +
+                "?subject=Mobile app feedback" +
+                "&body=" +escape("\n\n\n\n\n")+"Phone details: " + navigator.userAgent + escape("\n\n");
   $scope.language = 'en';
   $scope.switchLanguage = function () {
     gettextCatalog.setCurrentLanguage($scope.language);
