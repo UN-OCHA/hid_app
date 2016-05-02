@@ -1,16 +1,17 @@
 function AddProtectedGroupsCtrl($scope, profileService) {
 
+  $scope.bundles = $scope.operations[$scope.contact.locationId].bundles;
   $scope.customGroups = profileService.getAllBundles().then(function(data){
       $scope.allGroups = [];
       angular.forEach($scope.bundles, function(value,key){
-        var list = value.value;
+        var list = value;
         list.addToList = false;
         for(var i in $scope.contact.protectedBundles){
-          if(value.value.name === $scope.contact.protectedBundles[i])
+          if(value.name === $scope.contact.protectedBundles[i])
             list.addToList = true;  
         }
         for (var i in $scope.contact.bundle) {
-          if (value.value.name === $scope.contact.bundle[i])
+          if (value.name === $scope.contact.bundle[i])
             list.addToList = true;
         }
         this.push(list);
@@ -62,21 +63,4 @@ function AddProtectedGroupsCtrl($scope, profileService) {
   $scope.closeThisDialog();
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

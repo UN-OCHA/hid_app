@@ -1,9 +1,9 @@
 <div class="panel panel-primary" id="contact-modal">
   <div class="panel-heading">Groups</div>
   <ul class="list-group">
-    <a class="list-group-item" ng-click="addToList(protectedGroup.value)" ng-repeat="protectedGroup in bundles">
-      <i ng-if="protectedGroup.value.addToList" class="fa fa-check"></i>
-      {{protectedGroup.value.name}}
+    <a class="list-group-item" ng-click="addToList(protectedGroup)" ng-repeat="protectedGroup in bundles">
+      <i ng-if="protectedGroup.addToList" class="fa fa-check"></i>
+      {{protectedGroup.name}}
     </a>
   </ul>
 </div>
