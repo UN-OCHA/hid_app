@@ -121,15 +121,9 @@
         <li class="profile-item list-group-item clearfix">
           <form name="contactInline" class="form-inline">
           <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-12">
               <div class="form-group">
-                <p class="form-control-static"><strong>Make new list</strong></p>
-              </div>
-            </div>
-            <div class="col-md-9 contact-inline-form">
-              <div class="form-group">
-                <label for="listName">List Name: </label>
-                <input type="text" class="form-control" id="listName" ng-model="list.name" required>
+                <input type="text" class="form-control" id="listName" ng-model="list.name" placeholder="Enter new list name" required>
               </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-list pull-right" ng-disabled="contactInline.$invalid || isOffline()" ng-click="addCustomContactList(list)">Create List</button>
