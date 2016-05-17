@@ -1,8 +1,6 @@
 .profile-item {
   margin-bottom: 8px;
   overflow: hidden;
-  @include border-radius($border-radius-small);
-  @include single-box-shadow(0, 0, 2px, 1px, rgba($primary-color-2, .05));
 
   .btn-warning.slide {
     background: $secondary-color-1;
