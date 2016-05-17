@@ -4,7 +4,7 @@
     <li class="profile-item list-group-item" ng-repeat="subscription in subscriptions" ng-if="subscription.service.status">
       <div class="row">
         <div class="contact-item contact-item--name col-xs-12 col-md-6" >
-          {{subscription.service.name}} <i class="fa fa-check-circle-o"></i>
+          {{subscription.service.name}} <i class="fa fa-check-circle-o fa-hid-blue"></i>
         </div>
         <div class="btn-group">
           <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-click="unsubscribeDialog(subscription.service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times"></i></a>
