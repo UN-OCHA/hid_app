@@ -16,7 +16,7 @@
     <li class="profile-item list-group-item" ng-repeat="service in services">
       <div class="row">
         <div class="contact-item contact-item--name col-xs-12 col-md-3" >
-          {{service.name}} <span class="label label-primary" ng-if="service.subscribed" translate>Subscribed</span>
+          {{service.name}} <i class="fa fa-check-circle-o" ng-if="service.subscribed"></i>
         </div>
         <div class="btn-group">
           <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-click="subscribeDialog(service)" ng-if="!service.subscribed" title="{{'Subscribe' | translate}}"><i class="fa fa-share-square"></i></a>
