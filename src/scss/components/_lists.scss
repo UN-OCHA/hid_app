@@ -4,3 +4,18 @@
   }
 }
 
+.list-group {
+  .list-group-item {
+    margin-bottom: 10px;
+    .row {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.hid-list-link {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+

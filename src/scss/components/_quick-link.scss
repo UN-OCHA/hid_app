@@ -72,11 +72,11 @@
 
   & > .dropdown > button {
     padding:0 5px;
-    height: 70px;
+    height: 35px;
     border: none;
     background: none;
     @media(min-width: $screen-md) {
-      height: 65px;
+      height: 35px;
     }
   }
   .dropdown-menu > li:last-child:after {
