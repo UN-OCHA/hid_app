@@ -608,43 +608,43 @@ function NumbersCtrl($scope) {
             var country1 = 'Congo, The Democratic Republic of the';
             var country2 = 'Central African Republic';
             var country3 = 'occupied Palestinian territory';
-            if($scope.globalCountryDetails2[i].countryName.toString().includes(country1))
+            if($scope.globalCountryDetails2[i].countryName.toString().indexOf(country1) > -1)
                 $scope.globalCountryDetails2[i].countryName = 'DRC';
-            if($scope.globalCountryDetails2[i].countryName.toString().includes(country2))
+            if($scope.globalCountryDetails2[i].countryName.toString().indexOf(country2) > -1)
                 $scope.globalCountryDetails2[i].countryName = 'CAR';
-            if($scope.globalCountryDetails2[i].countryName.toString().includes(country3))
+            if($scope.globalCountryDetails2[i].countryName.toString().indexOf(country3) > -1)
                 $scope.globalCountryDetails2[i].countryName = 'Palestine';
 
 
              //Weekly count name fix
             if($scope.topn[i]  != undefined)
             { 
-                if($scope.topn[i].country.toString().includes(country1))
+                if($scope.topn[i].country.toString().indexOf(country1) > -1)
                    $scope.topn[i].country = 'DRC';
-                if($scope.topn[i].country.toString().includes(country2))
+                if($scope.topn[i].country.toString().indexOf(country2) > -1)
                    $scope.topn[i].country = 'CAR';
-                if($scope.topn[i].country.toString().includes(country3))
+                if($scope.topn[i].country.toString().indexOf(country3) > -1)
                    $scope.topn[i].country = 'Palestine';
             }
 
             //Monthly Count Fix
             if($scope.monthlyDetails[i] != undefined)
             {
-                if($scope.monthlyDetails[i].country.toString().includes(country1))
+                if($scope.monthlyDetails[i].country.toString().indexOf(country1) > -1)
                     $scope.monthlyDetails[i].country = 'DRC';
-                if($scope.monthlyDetails[i].country.toString().includes(country2))
+                if($scope.monthlyDetails[i].country.toString().indexOf(country2) > -1)
                     $scope.monthlyDetails[i].country = 'CAR';
-                if($scope.monthlyDetails[i].country.toString().includes(country3))
+                if($scope.monthlyDetails[i].country.toString().indexOf(country3) > -1)
                     $scope.monthlyDetails[i].country = 'Palestine';            
             }
 
             if($scope.sixMonthlyDetails[i] != undefined)
             {
-                if($scope.sixMonthlyDetails[i].country.toString().includes(country1))
+                if($scope.sixMonthlyDetails[i].country.toString().indexOf(country1))
                    $scope.sixMonthlyDetails[i].country = 'DRC';
-                if($scope.sixMonthlyDetails[i].country.toString().includes(country2))
+                if($scope.sixMonthlyDetails[i].country.toString().indexOf(country2) > -1)
                    $scope.sixMonthlyDetails[i].country = 'CAR';
-                if($scope.sixMonthlyDetails[i].country.toString().includes(country3))
+                if($scope.sixMonthlyDetails[i].country.toString().indexOf(country3) > -1)
                    $scope.sixMonthlyDetails[i].country = 'Palestine'; 
             }
                        
