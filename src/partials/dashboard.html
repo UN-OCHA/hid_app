@@ -115,7 +115,7 @@
             </div>
             <div class="col-xs-5">
               <div class="btn-group pull-right">
-                <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid-grey" role="button" ng-if="userData.profile.userid != list.userid && list.isFollower" ng-click="list.confirmUnfollow = !list.confirmUnfollow" title="{{'Unfollow list' | translate}}"><i class="fa fa-times fa-2x"></i></a>
+                <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid-red" role="button" ng-if="userData.profile.userid != list.userid && list.isFollower" ng-click="list.confirmUnfollow = !list.confirmUnfollow" title="{{'Unfollow list' | translate}}"><i class="fa fa-times fa-2x"></i></a>
                 <a ng-class="{'disabled' : isOffline()}" href="#/settings/list/{{list._id}}" class="btn btn-xs btn-hid-grey" role="button" ng-if="userData.profile.userid == list.userid || list.isEditor" title="{{'List Settings' | translate}}"><i class="fa fa-cog fa-2x"></i></a>
             </div>
           </div>
@@ -158,7 +158,7 @@
             </div>
             <div class ="col-xs-5">
               <div class="btn-group pull-right" >
-                <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid-grey" role="button" ng-click="unsubscribeDialog(subscription.service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times fa-2x"></i></a>
+                <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid-red" role="button" ng-click="unsubscribeDialog(subscription.service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times fa-2x"></i></a>
                 <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid-grey" role="button" ng-if="subscription.service.editAllowed" href="#/services/{{subscription.service._id}}/edit" title="{{'Edit' | translate}}"><i class="fa fa-cog fa-2x"></i></a>
               </div>
             </div>
