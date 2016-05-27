@@ -67,9 +67,9 @@
                 </div>
               </div>
 
-              <div class="btn-group pull-right">
-                <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid-grey" href="#/profile/{{profile._id}}" title="{{'Edit my' | translate}} {{profile.location}} {{'profile' | translate}}"><i class="fa fa-pencil fa-2x"></i></a>
-                <a ng-class="{'disabled' : isOffline()}" class="btn btn-checkout btn-xs btn-hid-grey" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="{{'Check-out from' | translate}} {{profile.location}}"><i class="fa fa-plane fa-2x"></i></a>
+              <div class="pull-right">
+                <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid btn-hid-grey" href="#/profile/{{profile._id}}" title="{{'Edit my' | translate}} {{profile.location}} {{'profile' | translate}}"><i class="fa fa-pencil fa-2x"></i></a>
+                <a ng-class="{'disabled' : isOffline()}" class="btn btn-checkout btn-xs btn-hid btn-hid-grey" ng-click="profile.confirmDelete = !profile.confirmDelete" ng-if="profile.type == 'local'" title="{{'Check-out from' | translate}} {{profile.location}}"><i class="fa fa-plane fa-2x"></i></a>
               </div>
             </div>
           </div>
@@ -114,9 +114,9 @@
               <a href="#/list/contacts?id={{list._id}}" class="hid-list-link">{{list.name}}</a>
             </div>
             <div class="col-xs-5">
-              <div class="btn-group pull-right">
-                <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid-red" role="button" ng-if="userData.profile.userid != list.userid && list.isFollower" ng-click="list.confirmUnfollow = !list.confirmUnfollow" title="{{'Unfollow list' | translate}}"><i class="fa fa-times fa-2x"></i></a>
-                <a ng-class="{'disabled' : isOffline()}" href="#/settings/list/{{list._id}}" class="btn btn-xs btn-hid-grey" role="button" ng-if="userData.profile.userid == list.userid || list.isEditor" title="{{'List Settings' | translate}}"><i class="fa fa-cog fa-2x"></i></a>
+              <div class="pull-right">
+                <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid btn-hid-red" role="button" ng-if="userData.profile.userid != list.userid && list.isFollower" ng-click="list.confirmUnfollow = !list.confirmUnfollow" title="{{'Unfollow list' | translate}}"><i class="fa fa-times fa-2x"></i></a>
+                <a ng-class="{'disabled' : isOffline()}" href="#/settings/list/{{list._id}}" class="btn btn-xs btn-hid btn-hid-grey" role="button" ng-if="userData.profile.userid == list.userid || list.isEditor" title="{{'List Settings' | translate}}"><i class="fa fa-cog fa-2x"></i></a>
             </div>
           </div>
         </li>
@@ -157,9 +157,9 @@
               <b><i class="fa fa-check-circle-o fa-hid-blue"></i> {{subscription.service.name}}</b>
             </div>
             <div class ="col-xs-5">
-              <div class="btn-group pull-right" >
-                <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid-red" role="button" ng-click="unsubscribeDialog(subscription.service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times fa-2x"></i></a>
-                <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid-grey" role="button" ng-if="subscription.service.editAllowed" href="#/services/{{subscription.service._id}}/edit" title="{{'Edit' | translate}}"><i class="fa fa-cog fa-2x"></i></a>
+              <div class="pull-right" >
+                <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid btn-hid-red" role="button" ng-click="unsubscribeDialog(subscription.service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times fa-2x"></i></a>
+                <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid btn-hid-grey" role="button" ng-if="subscription.service.editAllowed" href="#/services/{{subscription.service._id}}/edit" title="{{'Edit' | translate}}"><i class="fa fa-cog fa-2x"></i></a>
               </div>
             </div>
           </div>
