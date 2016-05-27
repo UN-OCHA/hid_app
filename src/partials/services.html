@@ -69,7 +69,7 @@
       <li class=" list-group-item" ng-repeat="service in services" ng-show="!isCheckingIn">
         <div class="row">
           <div class="col-xs-7" >
-            {{service.name}} <i class="fa fa-check-circle-o" ng-if="service.subscribed"></i>
+            <i class="fa fa-check-circle-o fa-hid-blue" ng-if="service.subscribed"></i> {{service.name}}
           </div>
           <div class="col-xs-5">
             <div class="pull-right">
