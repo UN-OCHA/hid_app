@@ -79,5 +79,17 @@
   @media (min-width: 768px) {
     margin-top: 15px;
   }
+
+  .col-create-list {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .col-create-list-btn {
+    margin-top: 10px;
+    @media (min-width: 768px) {
+      margin-top: 0;
+    }
+  }
 }
 

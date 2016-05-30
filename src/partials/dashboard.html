@@ -122,10 +122,10 @@
         </li>
         <li class="list-group-item clearfix">
           <form name="contactInline">
-            <div class="col-sm-8">
-                <input type="text" class="form-control" id="listName" ng-model="list.name" placeholder="Enter new list name" required>
+            <div class="col-sm-8 col-create-list">
+                <input type="text" class="form-control" id="listName" ng-model="list.name" placeholder="Enter new list name" style="height: 32px;" required>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 col-create-list col-create-list-btn">
               <a class="btn btn-primary center-block" ng-disabled="contactInline.$invalid || isOffline()" ng-click="addCustomContactList(list)" translate>Create List</a>
             </div>
           </form>
