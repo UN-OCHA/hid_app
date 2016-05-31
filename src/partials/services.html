@@ -59,7 +59,7 @@
           </div>
           <div class="col-xs-5">
             <div class="pull-right">
-              <a  ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid btn-hid-red" role="button" ng-if="service.subscribed" ng-click="unsubscribeDialog(service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times fa-2x"></i></a>
+              <a  ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid btn-hid-red" role="button" ng-if="service.subscribed" ng-click="unsubscribeDialog(service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-trash fa-2x"></i></a>
               <button ng-class="{'disabled' : isOffline()}"  class="button-padding btn btn-xs btn-hid btn-hid-light-grey" role="button" ng-if="!service.subscribed" ng-click="subscribeDialog(service)" title="{{'Subscribe' | translate}}"><i class="fa fa-2x">Subscribe</i></button>
               <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid btn-hid-grey" role="button" ng-if="service.editAllowed" href="#/services/{{service._id}}/edit" title="{{'Edit' | translate}}"><i class="fa fa-cog fa-2x"></i></a>
             </div> 
@@ -73,7 +73,7 @@
           </div>
           <div class="col-xs-5">
             <div class="pull-right">
-              <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid btn-hid-red" role="button" ng-if="service.subscribed" ng-click="unsubscribeDialog(service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times fa-2x"></i></a>
+              <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid btn-hid-red" role="button" ng-if="service.subscribed" ng-click="unsubscribeDialog(service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-trash fa-2x"></i></a>
               <button ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid btn-hid-light-grey" role="button" ng-if="!service.subscribed" ng-click="subscribeDialog(service)" title="{{'Subscribe' | translate}}"><i class="fa fa-2x">Subscribe</i></button>
               <a ng-class="{'disabled' : isOffline()}" class="btn btn-xs btn-hid btn-hid-grey" role="button" ng-if="service.editAllowed" href="#/services/{{service._id}}/edit" title="{{'Edit' | translate}}"><i class="fa fa-cog fa-2x"></i></a>
             </div>

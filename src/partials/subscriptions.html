@@ -7,7 +7,7 @@
           {{subscription.service.name}} <i class="fa fa-check-circle-o fa-hid-blue"></i>
         </div>
         <div class="btn-group">
-          <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-click="unsubscribeDialog(subscription.service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-times"></i></a>
+          <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-click="unsubscribeDialog(subscription.service)" title="{{'Unsubscribe' | translate}}"><i class="fa fa-trash"></i></a>
           <a ng-class="{'disabled' : isOffline()}" class="btn btn-sm" role="button" ng-if="subscription.service.editAllowed" href="#/services/{{subscription.service._id}}/edit" title="{{'Edit' | translate}}"><i class="fa fa-cog"></i></a>
         </div>
       </div>
