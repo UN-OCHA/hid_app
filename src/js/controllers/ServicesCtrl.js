@@ -87,7 +87,7 @@ function ServicesCtrl($scope, $location, $route, $routeParams, $http, authServic
 
           if (!$scope.users.length) {
             $scope.users.push(emptyOption);
-          }
+          } 
         });
     }
     else {
@@ -216,13 +216,20 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
   $scope.spinTpl = contactsId.sourcePath + '/partials/busy2.html';
   $scope.query = $location.search();
   $scope.userEmails = [];
-  $scope.isCheckingIn = false;
+  $scope.action = 'services';
 
   if ($routeParams.locationId) {
     $scope.alerts.length = 0;
-    $scope.alerts.push({type: 'info', msg: 'Thank you for checking into ' + operations[$routeParams.locationId].name + '. We thought these services might be of interest to you. Feel free to subscribe to them.'});
-    $scope.isCheckingIn = true;
-    $scope.countryName = operations[$routeParams.locationId].name;
+    if ($routeParams.locationId != 'global') {
+      $scope.alerts.push({type: 'info', msg: 'Thank you for checking into ' + operations[$routeParams.locationId].name + '. We thought these services might be of interest to you. Feel free to subscribe to them.'});
+      $scope.action = 'checkingIn';
+      $scope.countryName = operations[$routeParams.locationId].name;
+    }
+    else {
+      $scope.alerts.push({type: 'info', msg: 'Thank you for creating your global profile. We thought these services might be of interest to you. Feel free to subscribe to them.'});
+      $scope.action = 'global';
+      $scope.countryName = 'Test';
+    }
   }
   
   userData.contacts.forEach(function (item) {
@@ -235,31 +242,16 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
     }
   });
 
-  $scope.subscribeToNewsLetter = function(){
-      $scope.query.status = true;
-      $scope.servicesPromise = profileService.getServices($scope.query).then(function (response) {
-        if (response.status == 200) {
-          response.data.forEach(function (service) {
-            if(service._id == '56655a06785d0b8200ebdfcb'){
-              $scope.email =  userData.global.email[0].address;
-              profileService.subscribeService(service, $scope.email, userData.profile).then(function (response) {
-                if (response.status === 204) {
-                  service.subscribed = true;
-                }
-              }, function (message) {
-                $scope.flash.set(message, 'danger');
-              });
-            }
-          }); 
-        }
-      });
-    }
-
   $scope.submitSearch = function() {
     $scope.query.status = true;
     if ($routeParams.locationId) {
-      $scope.query.location = $routeParams.locationId;
-      $scope.query.auto_add = false;
+      if ($routeParams.locationId != 'global') {
+        $scope.query.location = $routeParams.locationId;
+        $scope.query.auto_add = false;
+      }
+      else {
+        $scope.query.location = 'null';
+      }
     }
     $scope.servicesPromise = profileService.getServices($scope.query).then(function (response) {
       if (response.status == 200) {
@@ -333,10 +325,6 @@ function ServicesListCtrl($scope, $location, $route, $routeParams, profileServic
 
 
   $scope.submitSearch();
-
-  if(locationPath == 'profile')
-   $scope.subscribeToNewsLetter();
-   
 
 }
 

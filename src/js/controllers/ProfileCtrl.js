@@ -684,8 +684,13 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
             });
           }
           else {
-            $scope.back();
             profileService.clearData();
+            if (profile.type == 'global' && !profile._id) {
+              $location.path('/services/global');
+            }
+            else {
+              $scope.back();
+            }
           }
         }
         else {

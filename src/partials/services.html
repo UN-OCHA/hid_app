@@ -1,22 +1,22 @@
-<div class="back-btn back-btn-head back-btn-head-mob btn" ng-if="!isCheckingIn">
+<div class="back-btn back-btn-head back-btn-head-mob btn" ng-if="action == 'services'">
     <a ng-click="goBack(true)"><i class="fa fa-chevron-left"></i><span></span></a>
 </div>
 <div  ng-show='!isRouteLoading'>
-  <div class="col-md-1 back-btn back-btn-float btn" ng-if="!isCheckingIn">
+  <div class="col-md-1 back-btn back-btn-float btn" ng-if="action == 'services'">
     <a ng-click="goBack(true)"><i class="fa fa-chevron-left"></i><span></span></a>
   </div>
 
-  <div ng-show="!isCheckingIn" class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-2 pull-right-hard">
+  <div ng-show="action == 'services'" class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-2 pull-right-hard">
       <h2 class="heading-contact-list" translate>
         Mailing Lists and Discussion Groups <small>({{services.length}})</small>
       </h2>
 
-    <div class="panel panel-danger" ng-if="services.length == 0 && !isCheckingIn">
+    <div class="panel panel-danger" ng-if="services.length == 0 && action == 'services'">
       <div class="panel-heading"><em translate>No service found</em></div>
     </div>
   </div>
 
-  <div ng-show= "isCheckingIn">
+  <div ng-show= "action == 'checkingIn'">
     <div class ="header1">
       <h2 class="heading-subscriptions-list" translate>
         You have succesfully checked into {{countryName}}!
@@ -35,12 +35,31 @@
     </div>
   </div>
 
+  <div ng-show="action == 'global'">
+    <div class ="header1">
+      <h2 class="heading-subscriptions-list" translate>
+        Thank you for creating your profile.
+      </h2>
+      <p class="subheading-subscriptions-list" ng-show="services.length > 0" translate>
+        Thank you for creating your profile. Here are a few mailing lists and discussion groups that you might find useful:
+      </p>
+      <p class="subheading-subscriptions-list" ng-show="services.length == 0" translate>
+        Thank you for creating your profile.
+      </p>
+    </div>
+    <div class ="heading-subscriptions-list checkbox-properties">
+      <span >
+        <i class="fa fa-check-circle-o fa-hid-blue"></i>
+      </span>
+    </div>
+  </div>
+
 </div>
 <br>
 <div class="main" ng-show='!isRouteLoading' ng-class="{'show-options': sidebarOptions}">
-  <div class="col-xs-12 col-sm-8 col-md-9" ng-class="{'pull-right': !isCheckingIn}">
+  <div class="col-xs-12 col-sm-8 col-md-9" ng-class="{'pull-right': action == 'services'}">
     <browser-alert></browser-alert>
-    <form class="search-form" ng-if="!isCheckingIn">
+    <form class="search-form" ng-if="action == 'services'">
       <div class="form-group">
         <label class="control-label element-invisible" for="q" translate>Search</label>
         <div class="input-groupx">
@@ -52,7 +71,7 @@
     </form>
 
     <ul class="list-group" cg-busy="servicesPromise" >
-      <li class="list-group-item" ng-repeat="service in services" ng-show="isCheckingIn">
+      <li class="list-group-item" ng-repeat="service in services" ng-show="action != 'services'">
         <div class="row">
           <div class="col-xs-7">
             <i class="fa fa-check-circle-o" ng-if="service.subscribed"></i> {{service.name}}
@@ -66,7 +85,7 @@
           </div>
         </div>
       </li>
-      <li class=" list-group-item" ng-repeat="service in services" ng-show="!isCheckingIn">
+      <li class=" list-group-item" ng-repeat="service in services" ng-show="action == 'services'">
         <div class="row">
           <div class="col-xs-7" >
             <i class="fa fa-check-circle-o fa-hid-blue" ng-if="service.subscribed"></i> {{service.name}}
@@ -85,7 +104,7 @@
   </div>
 </div>
 <br>
-<div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper submit-left-align" ng-if="isCheckingIn">
+<div class="col-xs-12 col-sm-4 col-md-3 actions-wrapper submit-left-align" ng-if="action != 'services'">
   <div class="actions">
     
       <a  class="btn btn-primary btn-lg btn-block " ng-disabled="submitProcessing" href="/#dashboard" translate>
