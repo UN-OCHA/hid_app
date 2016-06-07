@@ -42,12 +42,12 @@
 
     <ul class="list-group" cg-busy="contactsPromise">
       <li class="profile-item list-group-item" ng-repeat="contact in contacts" ng-init="contactInit()" ng-class="{'has-quick-link': contact.ql.userCanEditProfile}">
-        <div style="margin-left: -15px; margin-right: -15px;">
+        <div class="row" style="display: block;">
           <div class="contact-item contact-item--name col-xs-12 col-md-3" >
             <a href="#/contact/{{contact._id}}" title="{{contact.nameGiven}} {{contact.nameFamily}}"><span title="Verified" ng-if="contact._profile.verified"><i class="fa fa-check-circle"></i></span> <span ng-if="contact.type == 'local'"><i class="fa fa-map-marker"></i></span><span ng-if="contact.type == 'global'"><i class="fa fa-globe"></i></span> {{contact.nameGiven}} {{contact.nameFamily}}</a>
           </div>
           <div class="contact-item contact-item--jobtitle col-xs-7 col-md-3"><span title="{{contact.jobtitle}}">{{contact.jobtitle}}</span></div>
-          <div class="contact-item contact-item--bundle col-md-3"><span title="{{contact.bundle.join(', ')}}">{{contact.bundle.join(', ')}}</span></div>
+          <div class="contact-item contact-item--bundle col-md-3" ng-hide="!contact.bundle.length"><span title="{{contact.bundle.join(', ')}}">{{contact.bundle.join(', ')}}</span></div>
           <div class="contact-item contact-item--organization col-xs-5 col-md-2"><span title="{{parseAcronym(contact.organization[0].name)}}">{{parseAcronym(contact.organization[0].name)}}</span></div>
         </div>
         <div class="quick-link" ng-if="!isOffline()">
