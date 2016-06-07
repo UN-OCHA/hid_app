@@ -150,7 +150,7 @@
 
         <div class="form-group form-group-reset clearfix">
           <h2>
-            <small class="control-label"><span class='title' translate>Filter Results</span> <input class="btn btn-warning btn-lg btn-reset" type="button" ng-if="showResetBtn" ng-click="resetSearch()" value="{{'Clear All'|translate}}"/></small>
+            <small class="control-label"><span class='title' translate>Filter Results</span> <input class="btn btn-default btn-lg btn-reset" type="button" ng-if="showResetBtn" ng-click="resetSearch()" value="{{'Clear All'|translate}}"/></small>
           </h2>
         </div>
 
@@ -348,19 +348,19 @@
         </div>
         <div class="divider"></div>
         <div class="form-group">
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportEmail()" ng-if="isVerified" value="{{'Copy Email Addresses'|translate}}" ng-disabled="isOffline()"/>
+          <input class="btn btn-default btn-lg btn-block" type="button" ng-click="exportEmail()" ng-if="isVerified" value="{{'Copy Email Addresses'|translate}}" ng-disabled="isOffline()"/>
 
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="openPDF()" value="{{'View PDF'|translate}}" ng-disabled="isOffline()" ng-show="isVerified"/>
+          <input class="btn btn-default btn-lg btn-block" type="button" ng-click="openPDF()" value="{{'View PDF'|translate}}" ng-disabled="isOffline()" ng-show="isVerified"/>
 
           <div class="btn-group" uib-dropdown style="width: 100%;">
-            <button class="btn btn-warning btn-lg btn-block" type="button" uib-dropdown-toggle ng-disabled="isOffline()" ng-show="isVerified">{{'Meeting Attendance' | translate}} <span class="caret" style="top: 40%; left: 90%; position: absolute;"></span></button>
+            <button class="btn btn-default btn-lg btn-block" type="button" uib-dropdown-toggle ng-disabled="isOffline()" ng-show="isVerified">{{'Meeting Attendance' | translate}} <span class="caret" style="top: 40%; left: 90%; position: absolute;"></span></button>
             <ul class="dropdown-menu" uib-dropdown-menu>
               <li role="menuitem"><a href ng-click="openMeetingCompact()">Compact</a></li>
               <li role="menuitem"><a href ng-click="openMeetingComfortable()">Comfortable</a></li>
             </ul>
           </div>
 
-          <input class="btn btn-warning btn-lg btn-block" type="button" ng-click="exportSearch()" ng-if="isVerified" value="{{'Export Results'|translate}}" ng-disabled="isOffline()"/>
+          <input class="btn btn-default btn-lg btn-block" type="button" ng-click="exportSearch()" ng-if="isVerified" value="{{'Export Results'|translate}}" ng-disabled="isOffline()"/>
 
         </div>
       </form>
