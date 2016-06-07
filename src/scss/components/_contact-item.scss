@@ -37,8 +37,10 @@
 
 .contact-item--organization {
   text-align: right;
+  padding-right: 30px;
   @media(min-width: $screen-md) {
     text-align: left;
+    padding-right: 15px;
   }
 }
 
