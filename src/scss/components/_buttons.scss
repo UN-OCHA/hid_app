@@ -71,5 +71,8 @@
 .btn-hid-transparent {
   background: transparent;
   color: #767676;
+  &:hover {
+    color: #767676;
+  }
 }
 

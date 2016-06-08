@@ -108,9 +108,9 @@
 
       <ul class="list-group">
         <li class="list-group-item" ng-repeat="(index, list) in customContacts">
-          <button ng-show="list.confirmUnfollow" class="slide btn btn-warning" href ng-click="unfollowContactList(list, index)" ng-if="userData.profile.userid != list.userid && list.isFollower" translate>Unfollow</button>
           <div class="row">
             <div class="col-xs-7">
+              <button ng-show="list.confirmUnfollow" class="slide btn btn-warning" href ng-click="unfollowContactList(list, index)" ng-if="userData.profile.userid != list.userid && list.isFollower" translate>Unfollow</button>
               <a href="#/list/contacts?id={{list._id}}" class="hid-list-link">{{list.name}}</a>
             </div>
             <div class="col-xs-5">
