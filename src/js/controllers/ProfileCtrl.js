@@ -23,6 +23,11 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
   $scope.verifiedByName = '';
   $scope.verificationDate = '';
 
+  $scope.hidSubscribe = false;
+  if (!$scope.profileId) {
+    $scope.hidSubscribe = true;
+  }
+
   var multiFields = {'uri': [], 'voip': ['number', 'type'], 'email': ['address'], 'phone': ['number', 'type'], 'bundle': [], 'disasters': ['remote_id']},
       pathParams = $location.path().split('/'),
       checkinFlow = pathParams[1] === 'checkin',
@@ -686,7 +691,23 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
           else {
             profileService.clearData();
             if (profile.type == 'global' && !profile._id) {
-              $location.path('/services/global');
+              if ($scope.hidSubscribe) {
+                profileService.getService(contactsId.hidService).then(function (resp) {
+                  var serv = resp.data;
+                  var prof = { _id: data.data._profile };
+                  profileService.subscribeService(serv, profile.email[0].address, prof).then(function (response) {
+                    if (response.status === 204) {
+                      $location.path('/services/global');
+                    }
+                  }, function (message) {
+                    alert(message);
+                  });
+                });
+              }
+              else {
+                // Redirect to the list of global services
+                $location.path('/services/global');
+              }
             }
             else {
               $scope.back();

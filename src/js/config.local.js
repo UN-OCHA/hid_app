@@ -12,5 +12,6 @@ var contactsId = {
    "authBaseUrl": "http://auth.contactsid.vm",
    "profilesBaseUrl": "http://profiles.contactsid.vm",
 //    "hrinfoBaseUrl": "http://hrinfo.local"
-    "googlePlusApiKey": "AIzaSyBJOqcOsd8lS2ifx_FjwGyeKVOKBijCDks"
+    "googlePlusApiKey": "AIzaSyBJOqcOsd8lS2ifx_FjwGyeKVOKBijCDks",
+    "hidService": "565ec3652b6fa7ec00b1a628"
   };
