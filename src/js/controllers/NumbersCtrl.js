@@ -640,7 +640,7 @@ function NumbersCtrl($scope) {
 
             if($scope.sixMonthlyDetails[i] != undefined)
             {
-                if($scope.sixMonthlyDetails[i].country.toString().indexOf(country1))
+                if($scope.sixMonthlyDetails[i].country.toString().indexOf(country1) > -1)
                    $scope.sixMonthlyDetails[i].country = 'DRC';
                 if($scope.sixMonthlyDetails[i].country.toString().indexOf(country2) > -1)
                    $scope.sixMonthlyDetails[i].country = 'CAR';
