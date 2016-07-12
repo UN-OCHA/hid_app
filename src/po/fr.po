@@ -1,367 +1,1546 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: H.ID French\n"
+"Project-Id-Version: HID-Fr-2016-07-12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-06 10:02+0000\n"
-"PO-Revision-Date: 2015-02-06 10:17+0000\n"
-"Last-Translator: Andrej Verity\n"
-"Language-Team: andrejverity\n"
-"Language: fr\n"
+"POT-Creation-Date: 2016-07-12 13:34+0100\n"
+"PO-Revision-Date: 2016-07-12 14:54+0100\n"
+"Last-Translator: yaelle link\n"
+"Language-Team: French (France)\n"
+"Language: fr-FR\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Loco https://localise.biz\n"
-"X-Loco-Source-Locale: en_GB\n"
-"X-Loco-Target-Locale: fr_FR\n"
-"X-Loco-Project-Id: 5384\n"
-"X-Loco-Api-Version: 1.0.8"
+"X-Loco-Source-Locale: en-GB\n"
+"X-Loco-Project-Id: 16608\n"
+"X-Loco-Api-Version: 1.0.14 20160610-1"
 
-#: src/partials/header.html
-#: src/partials/index.html loco:54d4936a14d725ee048b4569
+#: src/partials/profile.html loco:5784e3da14d725bd668b4567
+msgid ""
+"* Enter your local contact details. Changes made to this profile will not "
+"affect your global profile."
+msgstr ""
+"* Saisissez les details de votre compte local. Les changements effectués sur "
+"ce profil n'affecteront pas votre profil global."
+
+#: src/partials/servicesEdit.html src/partials/settingsList.html 
+#: loco:5784e3da14d725bd668b4568
+msgid "* Required Field"
+msgstr "* Champ obligatoire"
+
+#: src/partials/services.html loco:5784e3da14d725bd668b4569
+msgid ""
+"<span class=\"fa fa-angle-left\"></span>\n"
+"        Back to Dashboard"
+msgstr "Revenir au Tableau de bord"
+
+#: src/partials/header.html loco:5784e3da14d725bd668b456a
 msgid "About"
-msgstr "A propos"
+msgstr "A propos de"
 
-#: src/partials/contact.html
-#: src/partials/profile.html loco:54d4936a14d725ee048b456a
+#: src/partials/about.html loco:5784e3da14d725bd668b456b
+msgid "About Humanitarian ID"
+msgstr "A propos de Humanitarian ID"
+
+#: src/js/controllers/CreateAccountCtrl.js loco:5784e3da14d725bd668b456c
+msgid "Account Created!"
+msgstr "Compte Créé !"
+
+#: src/partials/lists.html loco:5784e3da14d725bd668b456d
+msgid "Actions"
+msgstr "Actions"
+
+#: src/js/controllers/ContactCtrl.js loco:5784e3da14d725bd668b456e
+msgid "Add to List"
+msgstr "Ajouter à la liste"
+
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b456f
+msgid "Add to My Contacts"
+msgstr "Ajouter à mes contacts"
+
+#: src/partials/list.html loco:5784e3da14d725bd668b4570
+msgid "Add to list"
+msgstr "Ajouter à la liste"
+
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b4571
+msgid "Adding..."
+msgstr "Ajout en cours..."
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4572
+msgid "Address"
+msgstr "Adresse"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4573
+msgid "Admin Privileges"
+msgstr "Privilèges administrateur"
+
+#: src/partials/list.html loco:5784e3da14d725bd668b4574
+msgid "Admin Role"
+msgstr "Profil administrateur"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4575
+msgid "Advanced Search"
+msgstr "Recherche avancée"
+
+#: src/partials/contact.html loco:5784e3da14d725bd668b4576
+msgid "Affiliation"
+msgstr "Affiliation"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4577
+msgid "Again, thanks for helping to make humanitarian contact lists accurate."
+msgstr ""
+"Merci encore de nous aider à garder la liste de contacts des humanitaires "
+"précise."
+
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b4578
+msgid "Allows you to change the owner of this list"
+msgstr "Vous permet de modifier le propriétaire de cette liste"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4579
+msgid "Are you responding to a humanitarian situation?"
+msgstr "Avez vous le statut d'humanitaire ?"
+
+#: src/partials/createAccount.html loco:5784e3da14d725bd668b457a
+msgid ""
+"Are you sure that you want to create an account for <b>{{profile.nameGiven}} "
+"{{profile.nameFamily}}</b> with no email address?"
+msgstr ""
+"Etes vous sûre de vouloir créer un compte pour <b>{{profile.nameGiven}} "
+"{{profile.nameFamily}}</b> sans préciser d'adresse email ?"
+
+#: src/js/controllers/ListsCtrl.js loco:5784e3da14d725bd668b457b
+msgid "Are you sure you want to stop following {{name}} ?"
+msgstr "Etes vous sûre de vouloir arrêter de suivre ce {{name}} ?"
+
+#: src/js/controllers/DashboardCtrl.js src/js/controllers/ServicesCtrl.js 
+#: src/js/controllers/SubscriptionsCtrl.js loco:5784e3da14d725bd668b457c
+msgid "Are you sure you want to unsubscribe from {{name}} ?"
+msgstr "Etes vous sûre de vouloir vous désabonner ce {{name}} ?"
+
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b457d
+msgid "Are you sure?"
+msgstr "Etes vous sûre ?"
+
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b457e
+msgid "Assign key contact"
+msgstr "Assigner le contact clé"
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b457f
+msgid "Automatic addition"
+msgstr "Ajout automatique"
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b4580
+msgid "Automatic removal"
+msgstr "Suppression automatique"
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b4581
+msgid ""
+"Automatically subscribe users when you add them to a Custom Contact List "
+"associated to this service"
+msgstr ""
+"Abonnez automatiquement des utilisateurs lorsque vous les ajoutez à une "
+"liste de contacts personnalisée associée à ce service"
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b4582
+msgid ""
+"Automatically unsubscribe users when you remove them from a Custom Contact "
+"List associated to this service"
+msgstr ""
+"Désinscrire automatiquement des utilisateurs lorsque vous les supprimez "
+"d'une liste de contacts personnalisée associée à ce service"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4583
 msgid "Back"
 msgstr "Retour"
 
-#: src/js/app.js
-#: src/partials/dashboard.html loco:54d4936a14d725ee048b456b
+#: src/js/controllers/ProfileCtrl.js loco:5784e3da14d725bd668b4584
+msgid "Both type and number are required."
+msgstr "Les champs type et numéro sont obligatoires."
+
+#: src/partials/profile.html src/partials/servicesEdit.html 
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b4585
+msgid "Cancel"
+msgstr "Annuler"
+
+#: src/partials/kiosk.html loco:5784e3da14d725bd668b4586
+msgid "Check In"
+msgstr "Check In"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4587
+msgid "Check into"
+msgstr "Check in dans"
+
+#: src/partials/kiosk.html loco:5784e3da14d725bd668b4588
+msgid "Check into Humanitarian ID"
+msgstr "Check in dans Humanitarian ID"
+
+#: src/partials/about.html loco:5784e3da14d725bd668b4589
+msgid "Check out our animation,"
+msgstr "Découvrez notre animation,"
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b458a
+msgid ""
+"Check this box to automatically subscribe users to your service once they "
+"check in to one of the countries below."
+msgstr ""
+"Cocher cette boîte pour souscrire automatiquement les utilisateurs à votre "
+"service une fois qu'ils s'enregistrent dans un des pays ci-dessous"
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b458b
+msgid ""
+"Check this box to automatically unsubscribe users from your service, once "
+"they check out of the countries below."
+msgstr ""
+"Cocher cette boîte pour désinscire automatiquement les utilisateurs de votre "
+"service une fois qu'ils ne se sont pas encore enregistrés dans un des pays "
+"ci-dessous"
+
+#: src/js/controllers/CreateAccountCtrl.js src/js/controllers/ProfileCtrl.js 
+#: src/partials/dashboard.html src/partials/list.html 
+#: loco:5784e3da14d725bd668b458c
 msgid "Check-in"
 msgstr "Check-in"
 
-#: src/partials/dashboard.html loco:54d4936a14d725ee048b456c
+#: src/partials/contact.html loco:5784e3da14d725bd668b458d
+msgid "Check-in User"
+msgstr "Check-in utilisateur"
+
+#: src/js/controllers/ListCtrl.js src/partials/profile.html 
+#: loco:5784e3da14d725bd668b458e
+msgid "Check-out"
+msgstr "Check-out"
+
+#: src/partials/contact.html loco:5784e3da14d725bd668b458f
+msgid "Check-out User"
+msgstr "Check-out utilisateur"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4590
+msgid "Check-out from"
+msgstr "Check-out de"
+
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b4591
+msgid "Checking-out..."
+msgstr "Checking-out..."
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4592
 msgid "Checkout"
 msgstr "Checkout"
 
-#: src/partials/contact.html
-#: src/partials/profile.html loco:54d4936a14d725ee048b456d
-msgid "City"
-msgstr "Ville"
+#: src/partials/profile.html loco:5784e3da14d725bd668b4593
+msgid "Choose Type"
+msgstr "Choisir type"
 
-#: src/partials/contact.html
-#: src/partials/profile.html loco:54d4936a14d725ee048b456e
+#: src/partials/list.html loco:5784e3da14d725bd668b4594
+msgid "Clear All"
+msgstr "Nettoyer tout"
+
+#: src/partials/subscribeService.html loco:5784e3da14d725bd668b4595
+msgid "Close"
+msgstr "Fermer"
+
+#: src/partials/about.html src/partials/emailExport.html 
+#: loco:5784e3da14d725bd668b4596
+msgid "Code of Conduct"
+msgstr "Code de conduite"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4597
+msgid "Confirm Delete Account"
+msgstr "Confirmer la suppression du compte"
+
+#: src/partials/contact.html src/partials/profile.html 
+#: loco:5784e3da14d725bd668b4598
+msgid "Confirm Send Claim Email"
+msgstr "Confirmer l'email de la réclamation était envoyé"
+
+#: src/partials/contact.html loco:5784e3da14d725bd668b4599
+msgid "Confirm User Checkout"
+msgstr "Confirmer le check-out du utilisateur"
+
+#: src/js/controllers/ServicesCtrl.js loco:5784e3da14d725bd668b459a
+msgid "Confirm deletion of {{name}} Subscription Service"
+msgstr "Confirmer la suppression du {{name}} Service d'abonnement"
+
+#: src/js/controllers/DashboardCtrl.js src/js/controllers/ServicesCtrl.js 
+#: src/js/controllers/SubscriptionsCtrl.js loco:5784e3da14d725bd668b459b
+msgid "Confirm unsubscription"
+msgstr "Confirmer le désabonnement"
+
+#: src/partials/list.html loco:5784e3da14d725bd668b459c
+msgid "Contact List Filters"
+msgstr "Filtrer la liste de contact"
+
+#: src/js/controllers/CreateAccountCtrl.js loco:5784e3da14d725bd668b459d
+msgid "Contact already exists"
+msgstr "Ce contact existe déjà"
+
+#: src/partials/list.html src/partials/settingsList.html 
+#: loco:5784e3da14d725bd668b459e
+msgid "Contacts"
+msgstr "Contacts"
+
+#: src/partials/list.html src/partials/profile.html 
+#: loco:5784e3da14d725bd668b459f
+msgid "Coordination Office"
+msgstr "Bureau de coordination"
+
+#: src/partials/emailExport.html src/partials/list.html 
+#: loco:5784e3da14d725bd668b45a0
+msgid "Copy Email Addresses"
+msgstr "Copie les adresses email"
+
+#: src/partials/dashboard.html src/partials/list.html src/partials/profile.html 
+#: loco:5784e3da14d725bd668b45a1
 msgid "Country"
 msgstr "Pays"
 
-#: src/partials/header.html loco:54d4936a14d725ee048b456f
+#: src/partials/createAccount.html src/partials/kiosk.html 
+#: loco:5784e3da14d725bd668b45a2
+msgid "Country or Operation is required."
+msgstr "Pays ou opération obligatoire"
+
+#: src/partials/createAccount.html src/partials/kiosk.html 
+#: loco:5784e3da14d725bd668b45a3
+msgid "Country or Operation of Response"
+msgstr "Pays ou opération de la réponse"
+
+#: src/partials/createAccount.html loco:5784e3da14d725bd668b45a4
+msgid "Create Account"
+msgstr "Créer un compte"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b45a5
+msgid "Create List"
+msgstr "Créer liste"
+
+#: src/partials/createAccount.html loco:5784e3da14d725bd668b45a6
+msgid "Create New Account"
+msgstr "Créer un nouveau compte"
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b45a7
+msgid "Create New Service"
+msgstr "Créer un nouveau service"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b45a8
+msgid "Create a Responder"
+msgstr "Créer un intervenant"
+
+#: src/partials/contact.html loco:5784e3da14d725bd668b45a9
+msgid "Created"
+msgstr "Créé"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b45aa
+msgid "Current Location"
+msgstr "Lieu courante"
+
+#: src/partials/lists.html loco:5784e3da14d725bd668b45ab
+msgid "Custom Contact Lists <small>({{totalCount}})</small>"
+msgstr "Liste des contacts personalisée <small>({{totalCount}})</small>"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b45ac
+msgid "Custom Contacts lists"
+msgstr "Liste de contacts personalisée"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b45ad
+msgid "Daily Digest"
+msgstr "Résumé quotidien"
+
+#: src/partials/createAccount.html src/partials/header.html 
+#: loco:5784e3da14d725bd668b45ae
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b4570
-msgid "Email"
-msgstr "émail"
+#: src/partials/profile.html loco:5784e3da14d725bd668b45af
+msgid "Date"
+msgstr "Date"
 
-#: src/js/app.js loco:54d4936a14d725ee048b4571
-msgid "Global"
-msgstr "Global"
+#: src/partials/profile.html loco:5784e3da14d725bd668b45b0
+msgid "Delete Account"
+msgstr "Supprimer compte"
 
-#: src/partials/contact.html
-#: src/partials/list.html
-#: src/partials/profile.html loco:54d4936a14d725ee048b4567
-msgid "Group"
-msgid_plural "Groups"
-msgstr[0] "Group"
-msgstr[1] "Groupes "
+#: src/partials/profile.html loco:5784e3da14d725bd668b45b1
+msgid "Delete My Account"
+msgstr "Supprimer mon compte"
 
-#: src/partials/header.html loco:54d4936a14d725ee048b4572
-msgid "Home"
-msgstr "Accueil"
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b45b2
+msgid "Delete My List"
+msgstr "Supprimer ma liste"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b4573
-msgid "Location"
-msgstr "Lieu"
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b45b3
+msgid "Delete Service"
+msgstr "Supprimer le service"
 
-#: src/partials/header.html
-#: src/partials/index.html loco:54d4936a14d725ee048b4574
-msgid "Login"
-msgstr "Connexion"
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b45b4
+msgid "Delete account"
+msgstr "Supprimer compte"
 
-#: src/partials/dashboard.html
-#: src/partials/header.html loco:54d4936a14d725ee048b4575
-msgid "Logout"
-msgstr "Déconnexion"
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b45b5
+msgid "Deleting..."
+msgstr "Suppression en cours..."
 
-#: src/partials/contact.html
-#: src/partials/profile.html loco:54d4936a14d725ee048b4576
-msgid "Notes"
-msgstr "Notes"
+#: src/partials/contact.html src/partials/profile.html 
+#: loco:5784e3da14d725bd668b45b6
+msgid "Departure from"
+msgstr "Départ depuis"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b4577
-msgid "Number"
-msgstr "Numéro"
+#: src/partials/dashboard.html src/partials/list.html src/partials/profile.html 
+#: loco:5784e3da14d725bd668b45b7
+msgid "Disaster"
+msgstr "Désastre"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b4578
-msgid "Organization"
-msgstr "Organisation"
+#: src/partials/contact.html src/partials/list.html 
+#: loco:5784e3da14d725bd668b45b8
+msgid "Disasters"
+msgstr "Désastres"
 
-#: src/partials/index.html loco:54d4936a14d725ee048b4579
-msgid "Register"
-msgstr "S'inscrire"
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b45b9
+msgid "Domain"
+msgstr "Domaine"
 
-#: src/partials/list.html loco:54d4936a14d725ee048b457a
-msgid "Search"
-msgstr "Rechercher"
+#: src/partials/browser-alert.html loco:5784e3da14d725bd668b45ba
+msgid "Download Google Chrome"
+msgstr "Télécharger Google Chrome"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b457b
-msgid "Searching..."
-msgstr "Recherche..."
+#: src/partials/browser-alert.html loco:5784e3da14d725bd668b45bb
+msgid "Download Mozilla Firefox"
+msgstr "Télécharger Mozilla Firefox"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b457c
-msgid "Title"
-msgstr "Titre"
+#: src/partials/dashboard.html src/partials/list.html src/partials/lists.html 
+#: src/partials/services.html src/partials/subscriptions.html 
+#: loco:5784e3da14d725bd668b45bc
+msgid "Edit"
+msgstr "Modifier"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b457d
-msgid "Type"
-msgstr "Type"
-
-#: src/partials/profile.html loco:54d4936a14d725ee048b457e
-msgid "URL"
-msgstr "URL"
-
-#: src/partials/profile.html loco:54d4936a14d725ee048b457f
-msgid "VOIP"
-msgstr "VOIP"
-
-#: src/partials/header.html loco:54d4936a14d725ee048b4580
-msgid "Welcome"
-msgstr "Bienvenue"
-
-#: src/partials/about.html loco:54d4936a14d725ee048b4581
-msgid "About Humanitarian.ID"
-msgstr ""
-"A propos \n"
-"Humanitarian.ID"
-
-#: src/partials/profile.html loco:54d4936a14d725ee048b4582
-msgid "Admin Privileges"
-msgstr "Privilèges administratifs "
-
-#: src/partials/contact.html loco:54d4936a14d725ee048b4583
-msgid "Check-in User"
-msgstr "Faire le check-in d'une personne"
-
-#: src/partials/contact.html loco:54d4936a14d725ee048b4584
-msgid "Check-out User"
-msgstr "Faire le check-out d'une personne"
-
-#: src/partials/profile.html loco:54d4936a14d725ee048b4585
-msgid "Choose Type"
-msgstr "Sélectionner un type"
-
-#: loco:54d4946714d725ce078b4583
-msgid "Clusters"
-msgstr "Clusters"
-
-#: src/partials/contact.html loco:54d4936a14d725ee048b4586
-msgid "Confirm User Checkout"
-msgstr "Confirmer le checkout d'un utilisateur"
-
-#: src/partials/list.html loco:54d4936a14d725ee048b4587
-msgid "Contact List"
-msgstr "Liste de contacts"
-
-#: src/partials/list.html loco:54d4936a14d725ee048b4588
-msgid "Contact List Filters"
-msgstr "Filtre liste de contacts"
-
-#: src/partials/dashboard.html loco:54d4936a14d725ee048b4589
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b45bd
 msgid "Edit Global Profile"
-msgstr "Modifier profil global"
+msgstr "Modifier le profil global"
 
-#: loco:54d4948414d7255d0a8b456a
+#: src/partials/list.html loco:5784e3da14d725bd668b45be
+msgid "Edit Groups"
+msgstr "Modifier les groupes"
+
+#: src/js/controllers/CreateAccountCtrl.js loco:5784e3da14d725bd668b45bf
+msgid "Edit New Account"
+msgstr "Modifier le nouveau compte"
+
+#: src/partials/contact.html loco:5784e3da14d725bd668b45c0
 msgid "Edit Profile"
-msgstr "Modifier profile"
+msgstr "Modifier le profil"
 
-#: src/partials/contact.html loco:54d4936a14d725ee048b458a
-msgid ""
-"Edit\n"
-"        Profile"
-msgstr "Modifier profil"
+#: src/partials/list.html loco:5784e3da14d725bd668b45c1
+msgid "Edit Roles"
+msgstr "Modifier les roles"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b458b
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b45c2
+msgid "Edit Service"
+msgstr "Modifier les services"
+
+#: src/partials/contact.html src/partials/list.html src/partials/profile.html 
+#: loco:5784e3da14d725bd668b45c3
+msgid "Edit Subscriptions"
+msgstr "Modifier les abonnements"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b45c4
+msgid "Edit my"
+msgstr "Modifier mon"
+
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b45c5
+msgid "Editing Rights"
+msgstr "Droits d'édition"
+
+#: src/partials/createAccount.html src/partials/kiosk.html 
+#: src/partials/profile.html loco:5784e3da14d725bd668b45c6
+msgid "Email"
+msgstr "Email"
+
+#: src/partials/createAccount.html loco:5784e3da14d725bd668b45c7
+msgid "Email Address"
+msgstr "Adresse email"
+
+#: src/js/controllers/ProfileCtrl.js loco:5784e3da14d725bd668b45c8
+msgid "Email Address entry"
+msgstr "L'entrée de l’adresse email"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b45c9
 msgid "Email Addresses"
-msgstr "Adresse émail"
+msgstr "Adresses email"
 
-#: loco:54d4949a14d72566058b457a
-msgid "External Links"
-msgstr "Autres liens"
+#: src/partials/kiosk.html loco:5784e3da14d725bd668b45ca
+msgid "Email is required."
+msgstr "Une adresse email est requise."
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b458c
+#: src/partials/contact.html loco:5784e3da14d725bd668b45cb
+msgid "Export Contact Info"
+msgstr "Exporter les info des contacts"
+
+#: src/partials/list.html loco:5784e3da14d725bd668b45cc
+msgid "Export Results"
+msgstr "Exporter les résultats"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b45cd
+msgid "Ext."
+msgstr "Ext."
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b45ce
+msgid "Extension"
+msgstr "Extension"
+
+#: src/partials/about.html loco:5784e3da14d725bd668b45cf
+msgid "FAQ page"
+msgstr "Page FAQ"
+
+#: src/js/controllers/ProfileCtrl.js src/partials/createAccount.html 
+#: src/partials/kiosk.html loco:5784e3da14d725bd668b45d0
 msgid "Family Name"
-msgstr "Nom"
+msgstr "Nom de famille"
 
-#: src/partials/dashboard.html loco:54d4936a14d725ee048b458d
-msgid "General List"
-msgstr "Liste générale"
+#: src/partials/createAccount.html src/partials/kiosk.html 
+#: loco:5784e3da14d725bd668b45d1
+msgid "Family Name is required."
+msgstr "Nom de famille requis."
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b458e
+#: src/partials/profile.html loco:5784e3da14d725bd668b45d2
+msgid "Family Name*"
+msgstr "Nom de famille*"
+
+#: src/partials/header.html loco:5784e3da14d725bd668b45d3
+msgid "Feedback"
+msgstr "Commentaires"
+
+#: src/js/controllers/ProfileCtrl.js loco:5784e3da14d725bd668b45d4
+msgid "Field is required."
+msgstr "Champ requis."
+
+#: src/partials/list.html loco:5784e3da14d725bd668b45d5
+msgid "Filter Results"
+msgstr "Filtrer les résultats"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b45d6
+msgid "Find contact lists"
+msgstr "Trouver les listes de contacts"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b45d7
+msgid "Find services"
+msgstr "Trouver les services"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b45d8
+msgid ""
+"First, you will need to <em>create your Global profile</em>. In this profile,"
+" you will provide your usual details or information of where you are usually "
+"located.  After you have completed this step, you will see and have access "
+"to the Global contact list."
+msgstr ""
+"Premièrement vous devez <em>créer votre profil global</em>. Dans ce profil, "
+"vous devrez fournir vos contacts et informations sur le lieu où vous êtes "
+"habituellement. Après avoir compléter cette étape vous aurez accès à la "
+"liste de contact globale."
+
+#: src/partials/browser-alert.html loco:5784e3da14d725bd668b45d9
+msgid ""
+"For security and performance, this is built to run in Internet Explorer 10 "
+"and above, Apple Safari, Google Chrome, or Mozilla Firefox."
+msgstr ""
+"Pour raisons de sécurité et de performance, il est conçu pour Internet "
+"Explorer 10 et supérieur, Apple Safari, Google Chrome ou Mozilla Firefox."
+
+#: src/partials/list.html loco:5784e3da14d725bd668b45da
+msgid "Frequent Searches"
+msgstr "Recherches fréquentes"
+
+#: src/partials/list.html loco:5784e3da14d725bd668b45db
+msgid "Ghost User"
+msgstr "Utilisateur fantome"
+
+#: src/js/controllers/ProfileCtrl.js src/partials/createAccount.html 
+#: src/partials/kiosk.html loco:5784e3da14d725bd668b45dc
 msgid "Given Name"
 msgstr "Prénom"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b458f
+#: src/partials/createAccount.html src/partials/kiosk.html 
+#: loco:5784e3da14d725bd668b45dd
+msgid "Given Name is required."
+msgstr "Le prénom est requis."
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b45de
+msgid "Given Name*"
+msgstr "Prénom*"
+
+#: src/js/controllers/ContactCtrl.js src/js/controllers/ProfileCtrl.js 
+#: src/partials/contact.html loco:5784e3da14d725bd668b45df
+msgid "Global"
+msgstr "Global"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b45e0
 msgid "Global Administration"
-msgstr "Administration Globale"
+msgstr "Administration globale"
 
-#: src/partials/dashboard.html loco:54d4936a14d725ee048b4590
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b45e1
 msgid "Global Contact List"
-msgstr "Liste de contacts globale"
+msgstr "Liste de contact globale"
 
-#: src/partials/dashboard.html loco:54d4936a14d725ee048b4591
+#: src/partials/contact.html src/partials/dashboard.html 
+#: loco:5784e3da14d725bd668b45e2
 msgid "Global Profile"
 msgstr "Profil global"
 
-#: loco:54d4936a14d725ee048b4592
-msgid "H.ID Template"
-msgstr "H.ID brouillon"
+#: src/partials/list.html loco:5784e3da14d725bd668b45e3
+msgid "Global Profiles"
+msgstr "Profils globaux"
 
-#: src/partials/dashboard.html
-#: src/partials/profile.html loco:54d4936a14d725ee048b4593
+#: src/partials/list.html src/partials/profile.html 
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b45e4
+msgid "Group"
+msgstr "Groupe"
+
+#: src/partials/contact.html loco:5784e3da14d725bd668b45e5
+msgid "Groups"
+msgstr "Groupes"
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b45e6
+msgid "Hide service from user discovery"
+msgstr "Masquer le service aux utilisateurs"
+
+#: src/partials/createAccount.html loco:5784e3da14d725bd668b45e7
+msgid "Highly Encouraged Field"
+msgstr "Champ hautement recommandé"
+
+#: src/partials/header.html loco:5784e3da14d725bd668b45e8
+msgid "Home"
+msgstr "Accueil"
+
+#: src/index.html src/partials/about.html src/partials/dashboard.html 
+#: src/partials/profile.html loco:5784e3da14d725bd668b45e9
 msgid "Humanitarian ID"
 msgstr "Humanitarian ID"
 
-#: src/partials/index.html loco:54d4936a14d725ee048b4594
-msgid "Humanitarian.ID: Responders"
-msgstr "Humanitarian.ID : Responders"
+#: src/partials/about.html loco:5784e3da14d725bd668b45ea
+msgid ""
+"Humanitarian ID is a way to help humanitarian responders find, connect, and "
+"collaborate at the time of a humanitarian crisis (protracted or sudden onset)"
+". By making this process faster and smoother, the responders have more time "
+"to focus on what is needed most: saving lives and alleviating suffering."
+msgstr ""
+"Humanitarian ID est une manière pour aider les intervenants humanitaires "
+"quand ils essayent de trouver, rapprocher, et collaborer pendant une crise "
+"humanitaire (prolongée ou soudaine). En faisant ce processus plus vite et "
+"moins turbulent, les intervenants ont plus de temps pour se concentrer sur "
+"ce que c'est le plus important: sauver les vies et soulager la souffrance."
 
-#: src/partials/list.html
-#: src/partials/profile.html loco:54d4936a14d725ee048b4595
-msgid "Key Contact"
-msgstr "Contact clé"
+#: src/partials/createAccount.html loco:5784e3da14d725bd668b45eb
+msgid ""
+"If a person does not have an email address associated with their information,"
+" they will not be able to claim their account."
+msgstr ""
+"Si quelqu'un n'a pas un adresse email lié aux informations personnelles, il "
+"ne sera pas capable d'accéder au compte."
 
-#: src/partials/contact.html loco:54d4936a14d725ee048b4596
-msgid "key contact"
-msgstr "Contact clé"
+#: src/partials/about.html loco:5784e3da14d725bd668b45ec
+msgid "If you would like to find out more about the project,"
+msgstr "Si vous voulez en savoir plus sur le projet,"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b4597
+#: src/partials/profile.html loco:5784e3da14d725bd668b45ed
+msgid "Image Type"
+msgstr "Type d'image"
+
+#: src/js/controllers/ProfileCtrl.js src/partials/profile.html 
+#: loco:5784e3da14d725bd668b45ee
+msgid "Image URL"
+msgstr "URL de l'image"
+
+#: src/js/controllers/ProfileCtrl.js loco:5784e3da14d725bd668b45ef
+msgid "Instant Messenger entry"
+msgstr "L'entrée du message instantané"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b45f0
+msgid "Instant Messengers"
+msgstr "La messagerie instantanée"
+
+#: src/js/controllers/ProfileCtrl.js loco:5784e3da14d725bd668b45f1
+msgid "Invalid entry."
+msgstr "Entrée invalide."
+
+#: src/js/controllers/ProfileCtrl.js loco:5784e3da14d725bd668b45f2
+msgid "Invalid phone number."
+msgstr "Numero de téléphone invalide."
+
+#: src/partials/createAccount.html loco:5784e3da14d725bd668b45f3
+msgid "Invite From"
+msgstr "Invitation de"
+
+#: src/partials/contact.html src/partials/createAccount.html 
+#: src/partials/kiosk.html src/partials/list.html src/partials/profile.html 
+#: loco:5784e3da14d725bd668b45f4
+msgid "Job Title"
+msgstr "Intitulé du poste"
+
+#: src/partials/contact.html loco:5784e3da14d725bd668b45f5
+msgid "Last Updated"
+msgstr "Mise en jour pour le dernier fois"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b45f6
+msgid ""
+"Link to a photo you've already uploaded to the internet. The URL must end in "
+".JPG, .PNG, or .GIF."
+msgstr ""
+"Relier un image que vous avez déjà mis en ligne. L'URL doit finir en .JPG, ."
+"PNG. ou .GIF."
+
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b45f7
+msgid "List Name*"
+msgstr "Nom liste*"
+
+#: src/partials/lists.html loco:5784e3da14d725bd668b45f8
+msgid "List Owner"
+msgstr "Liste propriétaire"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b45f9
+msgid "List Settings"
+msgstr "Paramètres de la liste"
+
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b45fa
+msgid "List owner"
+msgstr "Liste propriétaire"
+
+#: src/js/directives/routeLoadingIndicator.js loco:5784e3da14d725bd668b45fb
+msgid "Loading..."
+msgstr "Chargement..."
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b45fc
 msgid "Local Administration"
 msgstr "Administration locale"
 
-#: src/partials/index.html loco:54d4936a14d725ee048b4598
-msgid ""
-"Manage your details on global and emergency-level humanitarian contact lists. "
-"Find and be found by other responders when needed. Check-in. Connect. Respond."
-msgstr ""
-"Gérez vos détails sur les listes de contacts humanitaires ou sur une liste "
-"globale. Trouvez d’autres humanitaires et permettez aux autres de vous "
-"trouver. Check-in. Connecter. Agir. \n"
-"\n"
-"\n"
+#: src/partials/list.html loco:5784e3da14d725bd668b45fd
+msgid "Local Profiles"
+msgstr "Profils locaux"
 
-#: src/partials/dashboard.html loco:54d4936a14d725ee048b4599
+#: src/partials/contact.html loco:5784e3da14d725bd668b45fe
+msgid "Location"
+msgstr "Lieu"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b45ff
+msgid "Location Details"
+msgstr "Détails sur le lieu"
+
+#: src/partials/header.html src/partials/index.html 
+#: loco:5784e3da14d725bd668b4600
+msgid "Login"
+msgstr "Se connecter"
+
+#: src/partials/header.html loco:5784e3da14d725bd668b4601
+msgid "Logout"
+msgstr "Se déconnecter"
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b4602
+msgid "Mailchimp API Key"
+msgstr "Clé API Mailchimp"
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b4603
+msgid "Mailchimp list"
+msgstr "Liste Mailchimp"
+
+#: src/partials/services.html loco:5784e3da14d725bd668b4604
+msgid ""
+"Mailing Lists and Discussion Groups <small>({{services.length}})</small>"
+msgstr ""
+"Listes de distribution et groupes de discussion <small>({{services.length}})"
+"</small>"
+
+#: src/partials/list.html loco:5784e3da14d725bd668b4605
+msgid "Meeting Attendance"
+msgstr "Liste de présence"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4606
 msgid "My checked-in lists"
 msgstr "Mes listes de check-in"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b459a
+#: src/partials/list.html src/partials/lists.html loco:5784e3da14d725bd668b4607
+msgid "Name"
+msgstr "Nom"
+
+#: src/js/controllers/CreateAccountCtrl.js loco:5784e3da14d725bd668b4608
+msgid "Name added to the list"
+msgstr "Nom ajouté à la liste"
+
+#: src/partials/confirm.html loco:5784e3da14d725bd668b4609
+msgid "No"
+msgstr "Non"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b460a
 msgid "No active operations found."
-msgstr "Aucune opération active n'a pu être trouvée. "
+msgstr "Aucune opération active trouvée."
 
-#: src/partials/list.html loco:54d4936a14d725ee048b459b
+#: src/partials/list.html loco:5784e3da14d725bd668b460b
 msgid "No contacts found"
-msgstr ""
-"Aucun contact\n"
-" trouvée.\n"
-"\n"
+msgstr "Aucun contact trouvé"
 
-#: src/partials/dashboard.html loco:54d4936a14d725ee048b459c
+#: src/partials/lists.html loco:5784e3da14d725bd668b460c
+msgid "No list found"
+msgstr "Aucune liste trouvée"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b460d
 msgid "No profiles found."
-msgstr ""
-"Aucun profil \n"
-"trouvé."
+msgstr "Aucun profil trouvé."
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b459d
+#: src/js/controllers/CreateAccountCtrl.js 
+#: src/js/controllers/CustomListSettingsCtrl.js src/js/controllers/KioskCtrl.js 
+#: src/js/controllers/ListCtrl.js src/js/controllers/ProfileCtrl.js 
+#: src/js/controllers/ServicesCtrl.js loco:5784e3da14d725bd668b460e
 msgid "No results found."
 msgstr "Aucun résultat trouvé."
 
-#: src/partials/404.html loco:54d4936a14d725ee048b459e
-msgid "Not Found"
-msgstr "Aucun résultat"
+#: src/partials/services.html loco:5784e3da14d725bd668b460f
+msgid "No service found"
+msgstr "Aucun service trouvé."
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b459f
+#: src/partials/contact.html src/partials/profile.html 
+#: loco:5784e3da14d725bd668b4610
+msgid "Notes"
+msgstr "Notes"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4611
+msgid "Notification of Change"
+msgstr "Notification de changement"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4612
+msgid "Number"
+msgstr "Chiffre"
+
+#: src/partials/header.html loco:5784e3da14d725bd668b4613
+msgid "Numbers"
+msgstr "Chiffres"
+
+#: src/partials/list.html loco:5784e3da14d725bd668b4614
+msgid "Office"
+msgstr "Bureau"
+
+#: src/partials/about.html loco:5784e3da14d725bd668b4615
+msgid ""
+"Once registered, simply check into a country / emergency and specify your "
+"contact details for the contact list. You are always in control. You choose "
+"what details are available. When you are no longer responding, simply check "
+"out and your details will automatically be removed."
+msgstr ""
+"Après vous vous inscrivez, simplement enregistrez dans un pays / une urgence "
+"et précisez votre coordonnées pour la liste contact. Vos coordonnées sont "
+"toujours sous votre contrôle. Vous choisissez quels détails sont disponibles."
+" Quand vous ne répondez plus à l'urgence, seulement vous désengagez et vos "
+"coordonnées seront supprimées automatiquement."
+
+#: src/partials/contact.html src/partials/servicesEdit.html 
+#: loco:5784e3da14d725bd668b4616
+msgid "Operations"
+msgstr "Opérations"
+
+#: src/partials/contact.html src/partials/dashboard.html 
+#: src/partials/profile.html src/partials/servicesEdit.html 
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b4617
+msgid "Options"
+msgstr "Options"
+
+#: src/partials/contact.html src/partials/createAccount.html 
+#: src/partials/kiosk.html src/partials/list.html src/partials/profile.html 
+#: loco:5784e3da14d725bd668b4618
+msgid "Organization"
+msgstr "Organisation"
+
+#: src/partials/contact.html loco:5784e3da14d725bd668b4619
+msgid "Organization Administration"
+msgstr "L'administration d'organisation"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b461a
+msgid "Organization Editor for {{profile.organization[0].name}}"
+msgstr "Éditeur d'organisation pour {{profile.organization[0].name}} "
+
+#: src/partials/list.html loco:5784e3da14d725bd668b461b
+msgid "Organization Type"
+msgstr "Type d'organisation"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b461c
 msgid "Organizational Information"
 msgstr "Information sur l'organisation"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b45a0
+#: src/partials/profile.html loco:5784e3da14d725bd668b461d
+msgid "Orphan Account"
+msgstr "Compte orphelin"
+
+#: src/partials/list.html loco:5784e3da14d725bd668b461e
+msgid "Orphan User"
+msgstr "Utilisateur orphelin"
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b461f
+msgid "Owners"
+msgstr "Propriétaires"
+
+#: src/partials/createAccount.html src/partials/kiosk.html 
+#: loco:5784e3da14d725bd668b4620
+msgid "Phone"
+msgstr "Téléphone"
+
+#: src/js/controllers/ProfileCtrl.js loco:5784e3da14d725bd668b4621
+msgid "Phone Number entry"
+msgstr "Entrée de numéro de téléphone"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4622
 msgid "Phone Numbers"
+msgstr "Numéros de téléphone"
+
+#: src/partials/createAccount.html src/partials/kiosk.html 
+#: loco:5784e3da14d725bd668b4623
+msgid "Physical Location (Country)"
+msgstr "Emplacement (pays)"
+
+#: src/partials/createAccount.html loco:5784e3da14d725bd668b4624
+msgid "Please add an email address"
+msgstr "Merci d'ajouter un addresse email"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4625
+msgid "Please create a"
+msgstr "Merci de créer un"
+
+#: src/partials/emailExport.html loco:5784e3da14d725bd668b4626
+msgid "Please email responsibly."
+msgstr "Merci pour envoyer les emails de manière responsable."
+
+#: src/partials/createAccount.html loco:5784e3da14d725bd668b4627
+msgid "Please enter the name of the HID user who the invite should come from"
 msgstr ""
-"Numéros de t\n"
-"éléphone\n"
-"\n"
-"\n"
-"\n"
+"Merci d'entrer le nom d'un utilisateur de HID qui est le auteur de "
+"l'invitation."
 
-#: loco:54d4945714d725b70b8b4568
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b4628
+msgid "Please enter the name of the new owner of this list"
+msgstr "Merci pour entrer le nom de nouveau propriétaire de cette liste."
+
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b4629
+msgid "Please enter the names of HID users who can edit the list"
+msgstr ""
+"Merci pour entrer les noms des utilisateurs de HID qui peuvent inspecter "
+"cette liste."
+
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b462a
+msgid "Please enter the names of HID users who can view the list"
+msgstr ""
+"Merci pour entrer les noms des utilisateurs de HID qui peuvent voir cette "
+"liste."
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b462b
+msgid "Please enter the names of HID users who own this service"
+msgstr ""
+"Merci pour entrer les nomes des utilisateurs de HID qui possèdent cet "
+"service."
+
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b462c
+msgid ""
+"Please enter the names of the services you want to associate to this list"
+msgstr ""
+"Merci de préciser les noms des services vous aimeriez associer à cette liste."
+" "
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b462d
+msgid "Please search for your organization"
+msgstr "Merci de chercher votre organisation"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b462e
+msgid "Please update your {{profileName()}} profile."
+msgstr "Merci de mette à jour votre profil {{profileName()}} ."
+
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b462f
+msgid "Privacy"
+msgstr "Privé"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4630
 msgid "Profile"
-msgstr "Profile"
+msgstr "Profil"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b45a1
-msgid "{{profileName}} Profile"
-msgstr "{{profileName}} Profil"
+#: src/partials/profile.html loco:5784e3da14d725bd668b4631
+msgid "Profile Image"
+msgstr "Image de profil"
 
-#: src/partials/list.html loco:54d4936a14d725ee048b45a2
-msgid "Reset Filters"
-msgstr "Réinitialisez les filtres"
+#: src/partials/contact.html src/partials/profile.html 
+#: loco:5784e3da14d725bd668b4632
+msgid "Protected Groups"
+msgstr "Groupes protégés"
 
-#: src/partials/list.html loco:54d4936a14d725ee048b45a3
+#: src/partials/profile.html loco:5784e3da14d725bd668b4633
+msgid "Protected Roles"
+msgstr "Roles protégés"
+
+#: src/js/directives/routeLoadingIndicator.js loco:5784e3da14d725bd668b4634
+msgid "Redirecting to authentication system..."
+msgstr "Redirection vers le système d'authentification"
+
+#: src/partials/list.html loco:5784e3da14d725bd668b4635
+msgid "Region"
+msgstr "Région"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4636
+msgid "Region / State"
+msgstr "Région / Etat"
+
+#: src/partials/index.html loco:5784e3da14d725bd668b4637
+msgid "Register"
+msgstr "S'enregistrer"
+
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b4638
+msgid "Remind Orphan"
+msgstr "Rappel orphelin"
+
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b4639
+msgid "Reminder sent"
+msgstr "Rappel envoyé"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b463a
+msgid "Remove Image"
+msgstr "Supprimer l'image"
+
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b463b
+msgid "Remove from My Contacts"
+msgstr "Supprimer de mes contacts"
+
+#: src/partials/list.html loco:5784e3da14d725bd668b463c
+msgid "Remove from list"
+msgstr "Supprimer de ma list"
+
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b463d
+msgid "Removing..."
+msgstr "Suppression en cours..."
+
+#: src/partials/contact.html src/partials/profile.html 
+#: loco:5784e3da14d725bd668b463e
+msgid "Report a Problem"
+msgstr "Rapporter un problème"
+
+#: src/partials/createAccount.html src/partials/kiosk.html 
+#: src/partials/profile.html loco:5784e3da14d725bd668b463f
+msgid "Request to"
+msgstr "Demander à"
+
+#: src/partials/createAccount.html src/partials/kiosk.html 
+#: loco:5784e3da14d725bd668b4640
+msgid "Required Field"
+msgstr "Champs requis"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4641
+msgid "Required field"
+msgstr "Champs requis"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4642
+msgid "Reset My Password"
+msgstr "Réinitialliser mon mot de passe"
+
+#: src/partials/contact.html src/partials/list.html 
+#: loco:5784e3da14d725bd668b4643
+msgid "Role"
+msgstr "Role"
+
+#: src/js/controllers/ProfileCtrl.js src/partials/servicesEdit.html 
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b4644
+msgid "Save"
+msgstr "Enregistrer"
+
+#: src/partials/contact.html loco:5784e3da14d725bd668b4645
+msgid "Save Verification"
+msgstr "Enregistrer la vérification"
+
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b4646
+msgid "Saving..."
+msgstr "Enregistrement en cours..."
+
+#: src/partials/dashboard.html src/partials/list.html src/partials/lists.html 
+#: src/partials/services.html src/partials/subscriptionsAdd.html 
+#: loco:5784e3da14d725bd668b4647
+msgid "Search"
+msgstr "Rechercher"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4648
+msgid "Search any contact"
+msgstr "Rechercher un contact"
+
+#: src/partials/lists.html src/partials/services.html 
+#: src/partials/subscriptionsAdd.html loco:5784e3da14d725bd668b4649
+msgid "Search by name"
+msgstr "Recherche par nom"
+
+#: src/partials/list.html loco:5784e3da14d725bd668b464a
 msgid "Search by name, title, or organization"
-msgstr "Recherchez des noms, titres ou organisations"
+msgstr "Recherche par nom, titre ou organisation"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b45a4
-msgid "Search for countries"
-msgstr "Recherchez des pays"
+#: src/partials/createAccount.html src/partials/kiosk.html 
+#: src/partials/profile.html loco:5784e3da14d725bd668b464b
+msgid "Search for country"
+msgstr "Rechercher un pays"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b45a5
+#: src/partials/createAccount.html src/partials/kiosk.html 
+#: loco:5784e3da14d725bd668b464c
 msgid "Search for organizations"
-msgstr "Recherchez des organisations"
+msgstr "Rechercher des organisations"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b45a6
+#: src/js/controllers/CreateAccountCtrl.js 
+#: src/js/controllers/CustomListSettingsCtrl.js src/js/controllers/KioskCtrl.js 
+#: src/js/controllers/ListCtrl.js src/js/controllers/ProfileCtrl.js 
+#: src/js/controllers/ServicesCtrl.js loco:5784e3da14d725bd668b464d
+msgid "Search term must be at least 3 characters long."
+msgstr "Terme de recherche doit avoir au moins 3 caractères."
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b464e
+msgid ""
+"Second, if you are in a country/emergency, you should <em>\"Check-in\" for "
+"that country/emergency</em>.  When you perform the check-in, you will see a "
+"copy of your profile that you can edit for that country/emergency.  Once "
+"checked-in, you will then have access to the contact list specific to the "
+"country/emergency.  And, other responders will be able to easily find you."
+msgstr ""
+"Deuxièmement, si vous êtes dans le pays / l’urgence, vous devriez faire le "
+"<em>\"Check-in\" pour ce pays/cette urgence</em>. Une fois le check-in est "
+"fait, vous allez voir une copie de votre profil. Vous pouvez modifier ce "
+"profil du pays/d’urgence. De plus, vous pourriez accéder toutes les listes "
+"spécifiques. Et d’autres humanitaires puissent vous trouver. "
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b464f
 msgid "Select a country"
 msgstr "Sélectionner un pays"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b45a7
-msgid "Select an operation"
+#: src/partials/profile.html loco:5784e3da14d725bd668b4650
+msgid "Select a region"
+msgstr "Sélectionner une région"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4651
+msgid "Select an office"
+msgstr "Sélectionner un bureau"
+
+#: src/partials/subscribeService.html loco:5784e3da14d725bd668b4652
+msgid ""
+"Select the email address you would like to subscribe to {{service.name}}"
 msgstr ""
-"Sélectionner une \n"
-"opération"
+"Sélectionner l'adresse email vous voulez utiliser pour vous souscrire à "
+"{{service.name}}"
 
-#: src/partials/contact.html
-#: src/partials/profile.html loco:54d4936a14d725ee048b45a8
-msgid "State/Province/Region"
-msgstr "Pays/Département/Région"
+#: src/partials/contact.html src/partials/profile.html 
+#: loco:5784e3da14d725bd668b4653
+msgid "Send Claim Email"
+msgstr "Envoyer un email pour réclamer le compte"
 
-#: src/js/app.js loco:54d4936a14d725ee048b45a9
-msgid "Update Profile"
-msgstr "Modifier profil"
+#: src/partials/contact.html src/partials/profile.html 
+#: loco:5784e3da14d725bd668b4654
+msgid "Send Notification"
+msgstr "Envoyer une notification"
 
-#: src/partials/contact.html loco:54d4936a14d725ee048b45aa
-msgid "verified"
-msgstr "vérifié\n"
+#: src/partials/profile.html loco:5784e3da14d725bd668b4655
+msgid "Send Profile Update Email to Contact"
+msgstr "Envoyer la mise à jour du profil à un contact par email"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b45ab
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b4656
+msgid "Sending..."
+msgstr "Envoi en cours..."
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b4657
+msgid "Service Description"
+msgstr "Description du service"
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b4658
+msgid "Service Name*"
+msgstr "Nom du service*"
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b4659
+msgid "Service Type*"
+msgstr "Type de service*"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b465a
+msgid "Social Media Id"
+msgstr "Id réseau social"
+
+#: src/partials/list.html loco:5784e3da14d725bd668b465b
+msgid "Sort by"
+msgstr "Trié par"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b465c
+msgid "Start typing a country name"
+msgstr "Commencer par taper un nom de pays"
+
+#: src/js/controllers/ListsCtrl.js loco:5784e3da14d725bd668b465d
+msgid "Stop following {{name}}"
+msgstr "Arrêter de suivre {{name}}"
+
+#: src/partials/services.html src/partials/subscribeService.html 
+#: src/partials/subscriptionsAdd.html loco:5784e3da14d725bd668b465e
+msgid "Subscribe"
+msgstr "S'abonner"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b465f
+msgid "Subscribe to Humanitarian ID News"
+msgstr "S'abonner aux nouvelles Humanitarian ID"
+
+#: src/partials/subscribeService.html loco:5784e3da14d725bd668b4660
+msgid "Subscribe to {{service.name}}"
+msgstr "S'abonner à {{service.name}}"
+
+#: src/partials/dashboard.html src/partials/settingsList.html 
+#: loco:5784e3da14d725bd668b4661
+msgid "Subscription Services"
+msgstr "Services d'abonnement "
+
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b4662
+msgid "Subscription Services associated with this list"
+msgstr "Services d'abonnement associés avec cette liste"
+
+#: src/partials/services.html loco:5784e3da14d725bd668b4663
+msgid "Thank you for checking in."
+msgstr "Merci pour votre check-in."
+
+#: src/partials/services.html loco:5784e3da14d725bd668b4664
+msgid ""
+"Thank you for checking in. Here are a few mailing lists and discussion "
+"groups that you might find useful:"
+msgstr ""
+"Merci d’avoir fait le check-in. Voici quelques listes emails et groupes de "
+"discussions lesquels pourraient vous intéressés : "
+
+#: src/partials/services.html loco:5784e3da14d725bd668b4665
+msgid "Thank you for creating your profile."
+msgstr "Merci d'avoir créé votre profil."
+
+#: src/partials/services.html loco:5784e3da14d725bd668b4666
+msgid ""
+"Thank you for creating your profile. Here are a few mailing lists and "
+"discussion groups that you might find useful:"
+msgstr ""
+"Merci d’avoir créé votre profil. Voici quelques listes emails et groupes de "
+"discussions lesquels pourraient vous intéressés : "
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4667
+msgid ""
+"Thank you for registering on Humanitarian ID. With your help, we will ensure "
+"that humanitarian contact lists are always up-to-date. As you will notice, "
+"you do not have access to any lists just yet."
+msgstr ""
+"Merci d’avoir créé votre compte sur Humanitarian ID. Avec votre aide, nous "
+"allons assurer que les listes des contacts humanitaires restent toujours à "
+"jour. Vous n’avez pas accès à toutes les listes. "
+
+#: src/partials/about.html loco:5784e3da14d725bd668b4668
+msgid ""
+"The Humanitarian ID solution has been created and is maintained by the "
+"United Nations Office for the Coordination of Humanitarian Affairs (OCHA). "
+"OCHA freely provides the solution to the humanitarian community."
+msgstr ""
+"La solution Humanitarian ID a été créée par le Bureau de la coordination des "
+"affaires humanitaires (BCAH/ UN OCHA). UN OCHA offre cette solution "
+"gratuitement à la communauté humanitaire. "
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4669
+msgid "The Humanitarian ID team"
+msgstr "L'équipe Humanitarian ID"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b466a
+msgid ""
+"The name which appears in your Facebook URL. For example: https://www."
+"facebook.com/[use_this_name]"
+msgstr ""
+"Le nom qui s’afficher dans votre URL sur Facebook. Par exemple : \n"
+"https://www.facebook.com/[use_this_name]\n"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b466b
+msgid ""
+"The name which appears in your Google+ profile URL. For example: https:"
+"//plus.google.com/[use_this_name]/posts"
+msgstr ""
+"Le nom qui s’afficher sur votre profil Google+ URL. Par exemple : \n"
+"https://plus.google.com/[use_this_name]/posts \n"
+
+#: src/js/controllers/CreateAccountCtrl.js loco:5784e3da14d725bd668b466c
+msgid "There is already an account associated with"
+msgstr "Il y a déjà un compte associé avec "
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b466d
+msgid "These people will be able to edit this service"
+msgstr "Ces gens puissant modifier votre service"
+
+#: src/partials/settingsList.html loco:5784e3da14d725bd668b466e
+msgid ""
+"These people will be able to see and edit your list regardless of your "
+"privacy settings above"
+msgstr ""
+"Ces gens puissant voir et modifier votre liste (indépendamment des "
+"paramètres en haut). "
+
+#: src/partials/servicesEdit.html loco:5784e3da14d725bd668b466f
+msgid ""
+"This service should be suggested when checking into the following operations:"
+msgstr ""
+"Ce service devrait être suggéré dès qu’on fait le check-in dans les pays "
+"suivants : "
+
+#: src/partials/createAccount.html src/partials/kiosk.html 
+#: loco:5784e3da14d725bd668b4670
+msgid "Title is required."
+msgstr "Le titre est requis."
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4671
+msgid "To update your photo, edit your global profile."
+msgstr "Pour mettre à jour votre photo, éditer votre profil global."
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4672
+msgid "Type"
+msgstr "Type"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4673
+msgid "URL"
+msgstr "URL"
+
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b4674
+msgid "Unassign key contact"
+msgstr "Contact clé non assigné"
+
+#: src/partials/dashboard.html src/partials/lists.html 
+#: loco:5784e3da14d725bd668b4675
+msgid "Unfollow"
+msgstr "Ne plus suivre"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4676
+msgid "Unfollow list"
+msgstr "Ne plus suivre la liste"
+
+#: src/partials/dashboard.html src/partials/services.html 
+#: src/partials/subscriptions.html loco:5784e3da14d725bd668b4677
+msgid "Unsubscribe"
+msgstr "Se désabonner"
+
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b4678
+msgid "Unverify account"
+msgstr "Compte non vérifié"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4679
+msgid "Update Image"
+msgstr "Mettre à jour l'image"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b467a
+msgid "Username"
+msgstr "Utilisateur"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b467b
+msgid "Usual Location"
+msgstr "Lieu habituelle"
+
+#: src/partials/createAccount.html src/partials/kiosk.html 
+#: loco:5784e3da14d725bd668b467c
+msgid "Valid email is required."
+msgstr "Adresse email valide requise"
+
+#: src/partials/list.html loco:5784e3da14d725bd668b467d
+msgid "Verification"
+msgstr "Vérification"
+
+#: src/partials/contact.html loco:5784e3da14d725bd668b467e
+msgid "Verification Date:"
+msgstr "Date de vérification :"
+
+#: src/partials/contact.html loco:5784e3da14d725bd668b467f
+msgid "Verified By:"
+msgstr "Vérifié par :"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4680
 msgid "Verified Responder"
-msgstr "Responder vérifié"
+msgstr "Répondeur vérifié"
 
-#: src/partials/list.html loco:54d4936a14d725ee048b45ac
+#: src/partials/list.html loco:5784e3da14d725bd668b4681
 msgid "Verified User"
 msgstr "Utilisateur vérifié"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b45ad
+#: src/js/controllers/ListCtrl.js loco:5784e3da14d725bd668b4682
+msgid "Verify account"
+msgstr "Compte vérifié"
+
+#: src/partials/list.html loco:5784e3da14d725bd668b4683
+msgid "View PDF"
+msgstr "Voir PDF"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4684
+msgid "View a Country"
+msgstr "Voir Pays"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4685
+msgid "View a Disaster"
+msgstr "Voir un désastre"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4686
+msgid "View all lists"
+msgstr "Voir toutes les listes"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4687
+msgid "View all services"
+msgstr "Voir tous les services"
+
+#: src/partials/about.html loco:5784e3da14d725bd668b4688
 msgid ""
-"We are not currently taking note of administrative areas or localities in "
-"this country."
-msgstr "En ce moment, nous ne tenons pas compte des lieux administratifs de ce pays. "
+"We guess that if you have landed on this page you may have questions. Rest "
+"assured, we have an <a href=\"http://about.humanitarian.id/faqs/\">FAQ "
+"page</a> that addresses the most common questions that we receive. Ranging "
+"from checking into multiple emergencies to explaining verified users to "
+"detailing how to have a missing organization added to requesting one's "
+"information be removed, we hope that the"
+msgstr ""
+"Si vous êtes sure cette page, vous auriez des questions. Nous avons mis en "
+"ligne la page an <a href=\"http://about.humanitarian.id/faqs/\">FAQ page</a> "
+"pour répondre a la plupart de vos questions, par exemple comment faire les "
+"check-in dans plusieurs urgences, comment ajouter une organisation ou "
+"comment enlever des informations du système.  "
 
-#: src/partials/contact.html loco:54d4936a14d725ee048b45ae
+#: src/partials/about.html loco:5784e3da14d725bd668b4689
+msgid ""
+"We require that all of those who register and make use of the solution "
+"behave according to our"
+msgstr ""
+"Nous demandons à tous ceux qui s’enregistrent et utilisent Humanitarian ID "
+"de se comporter conforment à"
+
+#: src/partials/contact.html loco:5784e3da14d725bd668b468a
 msgid "Website/Social Media"
-msgstr ""
-"Site web/\n"
-"Medias sociaux"
+msgstr "Site/réseau social"
 
-#: src/partials/profile.html loco:54d4936a14d725ee048b45af
+#: src/js/controllers/ProfileCtrl.js loco:5784e3da14d725bd668b468b
+msgid "Websites & Social Media entry"
+msgstr "Saisie Website et Média Sociaux"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b468c
 msgid "Websites &amp; Social Media"
+msgstr "Saisie Website et Média Sociaux"
+
+#: src/partials/header.html loco:5784e3da14d725bd668b468d
+msgid "Welcome"
+msgstr "Bienvenue"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b468e
+msgid ""
+"When you leave a country/emergency, remember that <em>you need to check-"
+"out</em>. By doing so, you will remove your details from the contact list."
 msgstr ""
-"Sites web et \n"
-"Medias sociaux"
+"Quand vous quittez un pays (ou une urgence), n’oubliez pas de faire le check-"
+"out. En faisant le check-out, vous enlèverez tous vous détails de contact de "
+"cette liste. "
+
+#: src/js/controllers/CreateAccountCtrl.js loco:5784e3da14d725bd668b468f
+msgid "Would you like to check them in?"
+msgstr "Est-ce que vous voulez bien faire le check-in de cette personne ?"
+
+#: src/partials/confirm.html loco:5784e3da14d725bd668b4690
+msgid "Yes"
+msgstr "Oui"
+
+#: src/js/controllers/ServicesCtrl.js loco:5784e3da14d725bd668b4691
+msgid ""
+"You are about to delete {{name}} Subscription Service from Humanitarian ID. "
+"By deleting {{name}}, users and managers will no longer be able to subscribe "
+"to {{name}} through Humanitarian ID. We will NOT remove any subscribed users "
+"from the external service provider and thus recommend you do so if "
+"appropriate. Are you sure ?"
+msgstr ""
+"Vous êtes en train de supprimer le service de souscription {{name}} de "
+"Humanitarian ID. En supprimant {{name}}, les utilisateurs et managers ne "
+"puissant plus se souscrire a {{name}} dans Humanitarian ID. Nous "
+"n’enlèverons pas des utilisateurs souscris au service externe lie dans "
+"Humanitarian ID. Donc, on vous invite de bien le faire si appropriée. Etes-"
+"vous sures ? "
+
+#: src/partials/services.html loco:5784e3da14d725bd668b4692
+msgid "You have succesfully checked into {{countryName}}!"
+msgstr "Vous vous êtes enregistré dans le pays {{countryName}} avec succès!"
+
+#: src/partials/about.html loco:5784e3da14d725bd668b4693
+msgid "YouTube channel"
+msgstr "Canal Youtube"
+
+#: src/partials/profile.html loco:5784e3da14d725bd668b4694
+msgid "add a missing group"
+msgstr "Ajouter un groupe manquant"
+
+#: src/partials/createAccount.html src/partials/kiosk.html 
+#: src/partials/profile.html loco:5784e3da14d725bd668b4695
+msgid "add a missing organization"
+msgstr "Ajouter une organisation manquante"
+
+#: src/partials/about.html loco:5784e3da14d725bd668b4696
+msgid "and subscribe to our"
+msgstr "et souscrire à notre"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b4697
+msgid "before checking-in to a country/emergency."
+msgstr "avant de vous enregistrer dans un pays/une urgence."
+
+#: src/partials/about.html loco:5784e3da14d725bd668b4698
+msgid "contact us"
+msgstr "Contactez-nous"
+
+#: src/partials/about.html loco:5784e3da14d725bd668b4699
+msgid "follow us on Twitter"
+msgstr "Suivez-nous sur Twitter"
+
+#: src/partials/about.html loco:5784e3da14d725bd668b469a
+msgid "join our mailing list"
+msgstr "Joignez notre liste de diffusion"
+
+#: src/partials/about.html loco:5784e3da14d725bd668b469b
+msgid "or simply"
+msgstr "ou simplement"
+
+#: src/partials/about.html loco:5784e3da14d725bd668b469c
+msgid "our Blog"
+msgstr "notre Blog"
+
+#: src/partials/about.html loco:5784e3da14d725bd668b469d
+msgid "our FAQs"
+msgstr "notre FAQ"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b469e
+msgid "profile"
+msgstr "profil"
+
+#: src/partials/about.html loco:5784e3da14d725bd668b469f
+msgid "read"
+msgstr "lire"
+
+#: src/partials/dashboard.html loco:5784e3da14d725bd668b46a0
+msgid ""
+"the relevant country to add your skills and contact details added to the "
+"appropriate contact list(s)."
+msgstr ""
+"le pays appropriée pour ajouter vos compétences et détails de contact pour "
+"être ajouter aux bonnes listes."
+
+#: src/partials/contact.html loco:5784e3da14d725bd668b46a1
+msgid "verified"
+msgstr "vérifié"
+
+#: src/partials/about.html loco:5784e3da14d725bd668b46a2
+msgid "will answer your question. If not, do not be afraid to"
+msgstr "répondra à votre question. Si non, n'hésitez pas à"
+
+#: src/js/controllers/CreateAccountCtrl.js loco:5784e3da14d725bd668b46a3
+msgid ""
+"will be added to the contact list.  They will not be able to claim their "
+"account."
+msgstr ""
+"sera ajouté à la liste de contact. Ils ne pourrons pas demander leur compte."
+
+#: src/js/controllers/CreateAccountCtrl.js loco:5784e3da14d725bd668b46a4
+msgid "will receive an email to claim his/her account."
+msgstr "recevra un email pour demander son compte."
+
+#: src/partials/list.html loco:5784e3da14d725bd668b46a5
+msgid ""
+"{{locationText()}} has been set as a private contact list by our field-level "
+"administrators. Only \"verified\" Humanitarian ID users can access the "
+"contact list. For information about \"verified\" users, please see our <a "
+"href=\"http://humanitarian.id/faqs\" target=\"_blank\">FAQs</a>."
+msgstr ""
+"{{locationText}} a été défini comme liste de contacts privée par nos "
+"administrateurs de terrain. Seuls les utilisateurs \"vérifiés\" peuvent "
+"accéder à la liste de contacts. Pour plus d'information sur les utilisateurs "
+"\"vérifiés\", consulter <a href=\"http://humanitarian.id/faqs\" "
+"target=\"_blank\">FAQs</a>"
+
+#: src/partials/confirm.html loco:5784e3da14d725bd668b46a6
+msgid "{{message}}"
+msgstr "{{message}}"
+
+#: src/partials/confirm.html loco:5784e3da14d725bd668b46a7
+msgid "{{title}}"
+msgstr "{{title}}"
