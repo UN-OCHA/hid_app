@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2016-07-12T12:25:28.463Z\n"
+"Project-Id-Version: 2016-07-12T15:12:18.046Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
@@ -76,6 +76,10 @@ msgstr ""
 
 #: src/partials/settingsList.html
 msgid "Allows you to change the owner of this list"
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "Anyone within Humanitarian ID can view/find the list"
 msgstr ""
 
 #: src/partials/dashboard.html
@@ -763,6 +767,22 @@ msgstr ""
 
 #: src/partials/about.html
 msgid "Once registered, simply check into a country / emergency and specify your contact details for the contact list. You are always in control. You choose what details are available. When you are no longer responding, simply check out and your details will automatically be removed."
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "Only specified users of Humanitarian ID can view/find the list"
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "Only verified users within Humanitarian ID can view/find the list"
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "Only visible to list owner and editors"
+msgstr ""
+
+#: src/partials/settingsList.html
+msgid "Only visible to people on the list"
 msgstr ""
 
 #: src/partials/contact.html

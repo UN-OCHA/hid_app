@@ -93,6 +93,10 @@ msgstr ""
 "Merci encore de nous aider à garder la liste de contacts des humanitaires "
 "précise."
 
+#: src/partials/settingsList.html
+msgid "Anyone within Humanitarian ID can view/find the list"
+msgstr "N'importe quel utilisateur de Humanitarian ID peut voir/trouver cette liste"
+
 #: src/partials/settingsList.html loco:5784e3da14d725bd668b4578
 msgid "Allows you to change the owner of this list"
 msgstr "Vous permet de modifier le propriétaire de cette liste"
@@ -824,6 +828,23 @@ msgstr ""
 "toujours sous votre contrôle. Vous choisissez quels détails sont disponibles."
 " Quand vous ne répondez plus à l'urgence, seulement vous désengagez et vos "
 "coordonnées seront supprimées automatiquement."
+
+#: src/partials/settingsList.html
+msgid "Only specified users of Humanitarian ID can view/find the list"
+msgstr "Seulement des utilisateurs spécifiques de Humanitarian ID peuvent voir/trouver la liste"
+
+#: src/partials/settingsList.html
+msgid "Only verified users within Humanitarian ID can view/find the list"
+msgstr "Seulement des utilisateurs vérifiés de Humanitarian ID peuvent voir/trouver la liste"
+
+#: src/partials/settingsList.html
+msgid "Only visible to list owner and editors"
+msgstr "Visible seulement au propriétaire de la liste et aux éditeurs"
+
+#: src/partials/settingsList.html
+msgid "Only visible to people on the list"
+msgstr "Visible seulement aux contacts de la liste"
+
 
 #: src/partials/contact.html src/partials/servicesEdit.html 
 #: loco:5784e3da14d725bd668b4616
