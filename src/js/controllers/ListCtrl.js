@@ -399,9 +399,9 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
     var query = $scope.query;
     query.access_token = authService.getAccessToken();
     query.export = 'csv';
-    delete query.limit;
     query.skip = 0;
     if ($routeParams.id) {
+      delete query.limit;
       window.open(contactsId.profilesBaseUrl + "/v0.1/lists/" + $routeParams.id + "?" + jQuery.param(query), 'hidAppCSV');
     } else {
       window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppCSV');
@@ -412,11 +412,11 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
     var query = $scope.query;
     query.access_token = authService.getAccessToken();
     query.export = 'email';
-    delete query.limit;
     query.skip = 0;
 
     // Custom contact list.
     if ($routeParams.id) {
+      delete query.limit;
       $scope.listPromise = profileService.getList($routeParams.id, query).then(function(data) {
         if (data) {
           var contacts = [];
@@ -474,9 +474,9 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
     var query = $scope.query;
     query.access_token = authService.getAccessToken();
     query.export = exp;
-    delete query.limit;
     query.skip = 0;
     if ($routeParams.id) {
+      delete query.limit;
       window.open(contactsId.profilesBaseUrl + "/v0.1/lists/" + $routeParams.id + "?" + jQuery.param(query), 'hidAppCSV');
     } else {
       window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppPDF');
