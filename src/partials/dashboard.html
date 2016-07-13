@@ -24,7 +24,7 @@
     </form>
     </div>
     <div class="col-sm-4 visible-lg visible-md visible-sm">
-    <a class="btn btn-primary btn-lg btn-block text-uppercase" href="#/list/global?localContacts=true&globalContacts=true"> Advanced Search</a>
+    <a class="btn btn-primary btn-lg btn-block text-uppercase" href="#/list/global?localContacts=true&globalContacts=true"><span translate>Advanced Search</span></a>
 
     </div>
 
@@ -122,7 +122,7 @@
         <li class="list-group-item clearfix">
           <form name="contactInline">
             <div class="col-sm-8 col-create-list">
-                <input type="text" class="form-control" id="listName" ng-model="list.name" placeholder="Enter new list name" style="height: 32px;" required>
+                <input type="text" class="form-control" id="listName" ng-model="list.name" placeholder="{{'Enter new list name'|translate}}" style="height: 32px;" required>
             </div>
             <div class="col-sm-4 col-create-list col-create-list-btn">
               <a class="btn btn-primary center-block" ng-disabled="contactInline.$invalid || isOffline()" ng-click="addCustomContactList(list)" translate>Create List</a>

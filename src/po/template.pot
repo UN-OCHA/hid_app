@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Language: <<specify ISO language string here>>\n"
-"Project-Id-Version: 2016-07-12T15:12:18.046Z\n"
+"Project-Id-Version: 2016-07-13T07:02:50.171Z\n"
 
 #: src/partials/profile.html
 msgid "* Enter your local contact details. Changes made to this profile will not affect your global profile."
@@ -440,6 +440,10 @@ msgstr ""
 
 #: src/partials/kiosk.html
 msgid "Email is required."
+msgstr ""
+
+#: src/partials/dashboard.html
+msgid "Enter new list name"
 msgstr ""
 
 #: src/partials/contact.html

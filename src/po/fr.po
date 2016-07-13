@@ -472,6 +472,10 @@ msgstr "Adresses email"
 msgid "Email is required."
 msgstr "Une adresse email est requise."
 
+#: src/partials/dashboard.html
+msgid "Enter new list name"
+msgstr "Entrez le nom de la nouvelle liste"
+
 #: src/partials/contact.html loco:5784e3da14d725bd668b45cb
 msgid "Export Contact Info"
 msgstr "Exporter les info des contacts"
