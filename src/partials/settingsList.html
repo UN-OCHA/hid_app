@@ -92,7 +92,7 @@
               </ui-select-choices>
           </ui-select>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-show="isManager || isAdmin">
           <h2 class="setting-heading" translate>Subscription Services</h2>
           <p translate>Subscription Services associated with this list</p>
           <div class="reveal btn-reveal" ng-repeat="service in list.services track by $index">

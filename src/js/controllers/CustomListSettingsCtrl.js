@@ -11,6 +11,8 @@ function CustomListSettingsCtrl($scope, $route, $location, $http, $timeout, auth
   $scope.list.readers.push("");
   $scope.list.editors.push("");
   $scope.list.services.push("");
+  $scope.isManager = profileService.hasRole('manager');
+  $scope.isAdmin = profileService.hasRole('admin');
 
   $scope.isOwner = $scope.list.userid === userData.profile.userid;
   if ($scope.isOwner) {
