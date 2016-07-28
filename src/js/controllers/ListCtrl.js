@@ -404,6 +404,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
       delete query.limit;
       window.open(contactsId.profilesBaseUrl + "/v0.1/lists/" + $routeParams.id + "?" + jQuery.param(query), 'hidAppCSV');
     } else {
+      query.limit = $scope.queryCount;
       window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppCSV');
     }
   }
@@ -433,6 +434,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
         }
       });
     } else {
+      query.limit = $scope.queryCount;
       $scope.contactsPromise = profileService.getContacts(query).then(function(data) {
         if (data && data.status && data.status === 'ok') {
           data.contacts = data.contacts || [];
@@ -479,6 +481,7 @@ function ListCtrl($scope, $route, $routeParams, $location, $http, $filter, $time
       delete query.limit;
       window.open(contactsId.profilesBaseUrl + "/v0.1/lists/" + $routeParams.id + "?" + jQuery.param(query), 'hidAppCSV');
     } else {
+      query.limit = $scope.queryCount;
       window.open(contactsId.profilesBaseUrl + "/v0/contact/view?" + jQuery.param(query), 'hidAppPDF');
     }
   }
