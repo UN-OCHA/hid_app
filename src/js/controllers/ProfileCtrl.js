@@ -511,9 +511,11 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
 
   $scope.onRoleChange = function(item, prop) {
     var i = $scope[prop].indexOf(item.id);
+    console.log(prop);
     if (i > -1) {
       $scope[prop].splice(i, 1);
       if (!$scope['selectedProtectedRoles'].length && !$scope['adminRoles'].length) {
+        console.log(profileData);
         profileData.contact.protectedRoles = $scope['selectedProtectedRoles'];
         $scope.userCanRemoveVerified = profileService.canRemoveVerified(profileData.contact, profileData.profile)
       }
