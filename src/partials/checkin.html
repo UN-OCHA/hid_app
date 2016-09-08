@@ -1,0 +1,25 @@
+<div class="back-btn back-btn-head btn">
+  <a ng-click="goBack()"><i class="fa fa-chevron-left"></i><span></span></a>
+</div>
+<div class="masthead" ng-show="!isRouteLoading">
+  <h2 translate>Check back in</h2>
+</div>
+
+<div class="main" ng-show="!isRouteLoading">
+  <form name="checkInForm" novalidate ng-submit="checkBackIn()">
+    <div class="row">
+      <div class="account-create col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+
+        <div class="form-group" ng-class="{'has-error': checkInForm.$submitted && checkInForm.departureDate.$invalid}">
+          <label class="control-label-light" for="departureDateDisplay" translate>Departure Date</label>
+          <input class="form-control" type="date" name="departureDate" ng-model="contact.departureDate" ng-init="initDepartureDate()" min="{{todaysDate}}" />
+          <div class="help-block" ng-show="checkInForm.$submitted && checkInForm.departureDate.$invalid">
+            <span ng-repeat="(type, errors) in checkInForm.departureDate.$error">{{alertMsg(type)}}<br></span>
+          </div>
+          <p translate>Please update your departure date</p>
+        </div>
+
+        <button class="btn btn-default btn-lg btn-block" ng-disabled="createButtonDisabled" type="submit" translate>Check Back In</button>
+      </div>
+  </div>
+</div>

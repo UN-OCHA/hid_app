@@ -207,7 +207,7 @@ app.controller("AddToCustomListCtrl", ["$scope", "profileService", AddToCustomLi
 app.controller("AddProtectedRolesCtrl", ["$scope", "profileService", AddProtectedRolesCtrl]);
 app.controller("AddProtectedGroupsCtrl", ["$scope", "profileService", AddProtectedGroupsCtrl]);
 app.controller("CustomListSettingsCtrl", ["$scope", "$route", "$location", "$http", "$timeout", "authService", "profileService", "userData", "list", "gettextCatalog", "ngDialog", CustomListSettingsCtrl]);
-app.controller("CheckInCtrl", ["$scope", "$location", "$routeParams", "$timeout", "profileService", CheckInCtrl]);
+app.controller("CheckInCtrl", ["$scope", "$location", "$routeParams", "$timeout", "profileService", "userData", CheckInCtrl]);
 app.controller("CheckOutCtrl", ["$scope", "$location", "$routeParams", "$timeout", "profileService", CheckOutCtrl]);
 app.controller("ServicesCtrl", ["$scope", "$location", "$route", "$routeParams", "$http", "authService", "profileService", "userData", "ngDialog", "operations", "gettextCatalog", "service", ServicesCtrl]);
 app.controller("ServicesListCtrl", ["$scope", "$location", "$route", "$routeParams", "profileService", "userData", "ngDialog", "operations","gettextCatalog" , ServicesListCtrl]);
@@ -445,9 +445,16 @@ app.config(function($routeProvider, $locationProvider) {
     }
   }).
   when('/contact/:contactId/checkin', {
-    template: '',
+    templateUrl: contactsId.sourcePath + '/partials/checkin.html',
     controller: 'CheckInCtrl',
-    requireAuth: true
+    requireAuth: true,
+    resolve: {
+      userData: function (profileService) {
+       return profileService.getUserData().then(function(data) {
+          return data;
+        });
+      },
+    },
   }).
   when('/contact/:contactId/checkout', {
     template: '',
