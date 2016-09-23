@@ -93,5 +93,19 @@ body.index {
     #contactsid-app-view {
       width: 100%;
     }
+    
   }
+
+  @media (min-width: 990px) {
+    #mobile {
+      margin-top: 160px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    #mobile {
+      margin-top: 150px;
+    }
+  }
+
 }
