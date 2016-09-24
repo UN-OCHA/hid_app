@@ -1,9 +1,21 @@
 function ShowCountryListCtrl($scope, profileService) {
-
+  
   var temp = $scope.countryList;
+  var arrResult = {};
+  for (i = 0, n = temp.length; i < n; i++) {
+      var item = temp[i];
+      arrResult[ item.locationId + " - " + item.location ] = item;
+  }
+
+  var i = 0;
+  var nonDuplicatedArray = [];    
+  for(var item in arrResult) {
+      nonDuplicatedArray[i++] = arrResult[item];
+  }
+
   var profile = $scope.temp;
   $scope.countries = [];
-  $scope.customCountries = angular.forEach(temp , function(value, key){
+  $scope.customCountries = angular.forEach(nonDuplicatedArray , function(value, key){
       var list = value;
       list.addToList = false;
       
