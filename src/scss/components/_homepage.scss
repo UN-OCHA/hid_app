@@ -80,7 +80,15 @@ body.index {
     color: #54b1c8;
   }
 
+  #mobile a {
+    margin-top: 15px;
+    display: inline-block;
+  }
+
   @media (min-width: 768px) {
+    #mobile a {
+      margin-top: 0;
+    }
 
     #contactsid-app {
       vertical-align: middle;
