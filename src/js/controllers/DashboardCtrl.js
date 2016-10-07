@@ -169,7 +169,11 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
 
   $scope.qlOpen = -1;
   
-  $scope.FBShare = function(){
+  $scope.FBShare = function(checkinName){
+    var caption = 'I\'ve just checked into ' + checkinName + '!';
+    if (checkinName == 'Humanitarian ID') {
+      caption = 'I have joined Humanitarian ID !';
+    }
     FB.ui(
     {
       method: 'share',
@@ -177,7 +181,7 @@ function DashboardCtrl($scope, $route, $filter, $window, $location, $timeout, pr
       app_id: 593963747410690,
       redirect_uri: 'http://about.humanitarian.id/close.html',
       display: 'iframe',
-      caption: 'Humanitarian ID - always my latest details.',
+      caption: caption,
       description: 'In a humanitarian crisis, an accurate contact list is critical to help ensure an effective response. You can "check-in" to a crisis and provide your locally relevant contact details. When you leave the crisis, you simply "check-out".',
       picture: 'http://about.humanitarian.id/wp-content/uploads/2015/08/HID_fbshare.png',
     });
