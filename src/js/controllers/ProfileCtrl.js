@@ -546,6 +546,15 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
       if(data){
           $scope.temp= data;
           var countryList = [];
+          if (profileData.profile.roles.indexOf('admin') != -1) {
+            tempOps.forEach(function(operation) {
+              countryList.push({
+                locationId: operation.key,
+                location: operation.value.name
+              });
+            });
+          }
+          else {
               profileData.profile.roles.forEach(function(country){
                 if((country.indexOf('manager') > -1 )|| (country.indexOf('editor') > -1)){
                   var locationID = country.split(/:(.+)?/)[1];
@@ -560,6 +569,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
                    });
                 }
               });
+          }
 
               $scope.countryList = countryList;
               var profile = $scope.profile;
