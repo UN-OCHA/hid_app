@@ -1012,6 +1012,7 @@ function ProfileCtrl($scope, $location, $route, $routeParams, $filter, $timeout,
         
     $scope.hasRoleEditor = profileService.hasRole('editor');
     $scope.hasRoleManager = profileService.hasRole('manager');
+    $scope.hasRoleAdmin = hasRoleAdmin;
     $scope.userCanEditRoles = profileService.canEditRoles(profileData.profile) && profileData.profile._id !== userData.profile._id;
     $scope.userCanEditKeyContact = profileService.canEditKeyContact($scope.selectedOperation);
     $scope.userCanEditProtectedRoles = profileService.canEditProtectedRoles($scope.selectedOperation);
