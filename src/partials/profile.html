@@ -548,7 +548,7 @@
           <a class="btn btn-lg btn-primary btn-block" ng-disabled="submitProcessing" ng-click="profile.confirmNotify = !profile.confirmNotify" translate>Report a Problem</a>
           <a ng-show="profile.confirmNotify" class="fade btn btn-warning btn-lg btn-block" ng-click="reportProblem()" translate>Send Notification</a> 
           <a class="btn btn-lg btn-primary btn-block btn-danger" ng-disabled="submitProcessing" ng-if="userCanDeleteAccount" ng-click="profile.confirmDelete = !profile.confirmDelete" translate>Delete Account</a>
-          <button type="button" class="btn btn-primary btn-lg btn-block" ng-disabled="submitProcessing"  ng-click="showCountry()"  ng-if="hasRoleEditor || hasRoleManager" translate>Daily Digest</button> 
+          <button type="button" class="btn btn-primary btn-lg btn-block" ng-disabled="submitProcessing"  ng-click="showCountry()"  ng-if="hasRoleEditor || hasRoleManager || hasRoleAdmin" translate>Daily Digest</button> 
           <a ng-show="profile.confirmDelete" class="fade btn btn-warning btn-lg btn-block" ng-click="deleteAccount()" translate>Confirm Delete Account</a>
         </div>
       </div>
