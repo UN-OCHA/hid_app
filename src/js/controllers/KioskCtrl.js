@@ -2,6 +2,7 @@ function KioskCtrl($scope, $http, gettextCatalog, profileService, operations, co
   $scope.operations = [];
   $scope.hrinfoBaseUrl = contactsId.hrinfoBaseUrl;
   $scope.countries = countries;
+  $scope.selectedOrganization = {};
 
   angular.forEach(operations, function (value, key) {
     $scope.operations.push(value);
@@ -10,6 +11,14 @@ function KioskCtrl($scope, $http, gettextCatalog, profileService, operations, co
     return a.name && b.name ? String(a.name).localeCompare(b.name) : false;
   });
 
+  $scope.onSelect = function(item, qProp) {
+    if (!item) {
+      $scope.query[qProp] = undefined;
+    }
+    if (item.name && item.remote_id){
+      $scope.selectedOrganization = item;
+    }
+  };
 
   $scope.refreshOrganization = function(select, lengthReq) {
     var helpOption = {action:'clear', name:"", alt: gettextCatalog.getString('Search term must be at least 3 characters long.'), disable: true},
