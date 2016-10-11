@@ -83,6 +83,10 @@ function KioskCtrl($scope, $http, gettextCatalog, profileService, operations, co
       profile.phone[0].type = 'Mobile';
     }
 
+    if (profile.email && profile.email[0] && profile.email[0].address) {
+      profile.email[0].type = 'Work';
+    }
+
     profile.userid = '';
     profile._profile = null;
     profile.status = 1;
