@@ -80,10 +80,18 @@ function KioskCtrl($scope, $http, gettextCatalog, profileService, operations, co
     $scope.createButtonDisabled = true;
 
     if (profile.phone && profile.phone[0] && profile.phone[0].number) {
+      var phone = profile.phone;
+      profile.phone = new Array();
+      profile.phone[0] = {};
+      profile.phone[0].number = phone[0].number;
       profile.phone[0].type = 'Mobile';
     }
 
     if (profile.email && profile.email[0] && profile.email[0].address) {
+      var email = profile.email;
+      profile.email = new Array();
+      profile.email[0] = {};
+      profile.email[0].address = email[0].address;
       profile.email[0].type = 'Work';
     }
 
