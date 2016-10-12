@@ -2,6 +2,8 @@
 // Initialize ng
 var app = angular.module('contactsId', ['ngAnimate', 'ngRoute', 'ngSanitize', 'cgBusy', 'gettext', 'ui.select', 'breakpointApp', 'angular-spinkit', 'internationalPhoneNumber', 'angular-inview', 'ngDialog', 'angular-md5', 'ui.bootstrap', 'angular-loading-bar', 'ngIOS9UIWebViewPatch', 'ngCsvImport', 'ngCsv', 'ngclipboard']);
 
+console.log('deployed properly');
+
 //Access to the facebook SDK 
 window.fbAsyncInit = function() {
   FB.init({
