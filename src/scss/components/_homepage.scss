@@ -80,12 +80,21 @@ body.index {
     color: #54b1c8;
   }
 
+  #mobile {
+    visibility: hidden;
+    height: 100px;
+  }
+
   #mobile a {
     margin-top: 15px;
     display: inline-block;
   }
 
   @media (min-width: 768px) {
+    #mobile {
+      height: auto;
+    }
+    
     #mobile a {
       margin-top: 0;
     }
@@ -108,6 +117,7 @@ body.index {
 
   @media (min-width: 1200px) {
     #mobile {
+      visibility: visible;
       margin-top: 150px;
     }
   }
