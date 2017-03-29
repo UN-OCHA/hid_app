@@ -82,7 +82,7 @@ body.index {
 
   #mobile {
     visibility: hidden;
-    height: 100px;
+    height: 0;
   }
 
   #mobile a {
@@ -91,9 +91,6 @@ body.index {
   }
 
   @media (min-width: 768px) {
-    #mobile {
-      height: auto;
-    }
     
     #mobile a {
       margin-top: 0;
@@ -109,16 +106,11 @@ body.index {
     
   }
 
-  @media (min-width: 990px) {
-    #mobile {
-      margin-top: 160px;
-    }
-  }
-
   @media (min-width: 1200px) {
     #mobile {
       visibility: visible;
-      margin-top: 150px;
+      height: 0;
+      margin-top: 50px;
     }
   }
 
