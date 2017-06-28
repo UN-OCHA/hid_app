@@ -1,3 +1,7 @@
+# !!! DEPRECATED !!!
+
+This repository contains HID v1 code which is now deprecated.
+
 # Humanitarian ID Web App
 
 ## Running the App Locally
